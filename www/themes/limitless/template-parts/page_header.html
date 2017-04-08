@@ -1,0 +1,35 @@
+{% menus data="main_menu" %}
+<!-- Page header -->
+<div class="page-header page-header-inverse">
+
+    <!-- Main navbar -->
+    <div class="navbar navbar-inverse navbar-transparent">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                DEADLINE_ {#<img src="/themes/limitless/assets/images/logo_light.png" alt="">#}
+            </a>
+
+            <ul class="nav navbar-nav pull-right visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-grid3"></i></a></li>
+            </ul>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            <p class="navbar-text"><span class="label bg-success-400">Picker</span></p>
+            <ul class="nav navbar-nav">
+                {% for item in main_menu %}
+                    <li class="{% if http.url == item.path %}active{% endif %}">
+                        <a href="<$ item.path | safe $>"><span><$ item.title $></span></a>
+                    </li>
+                {% endfor %}
+            </ul>
+            {#<ul class="nav navbar-nav">#}
+            {#<li><a href="#">Upgrade</a></li>#}
+            {#</ul>#}
+
+        </div>
+    </div>
+    <!-- /main navbar -->
+
+</div>
+<!-- /page header -->

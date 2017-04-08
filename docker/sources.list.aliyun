@@ -1,0 +1,11 @@
+#阿里云
+deb http://mirrors.aliyun.com/ubuntu/ quantal main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ quantal-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ quantal-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ quantal-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ quantal-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ quantal main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ quantal-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ quantal-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ quantal-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ quantal-backports main restricted universe multiverse

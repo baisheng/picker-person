@@ -1,0 +1,926 @@
+{% extends "./_layout.html" %}
+
+{% block body_style %} sidebar-opposite-visible {% endblock %}
+
+{% block content %}
+    <div class="row" data-plugin="masonry">
+
+        <div class=" col-md-6 col-xs-12 masonry-item" v-for="_ in pageAll">
+
+
+                <div class="panel-footer text-center no-padding" v-if="snippet_id === _.id">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <a @click="save(_)" class="display-block p-10 text-muted">
+                                <i class="icon-spinner2 spinner position-left text-primary" v-if="status === 'saving'"></i>
+                                <i class="icon-check position-left text-success" v-else-if="status === 'success'"></i>
+                                <i class=" icon-exclamation position-left text-danger" v-else-if="status === 'error'"></i>
+                                <i class="icon-spinner2 position-left text-muted" v-else></i>
+                                保存
+                            </a>
+                        </div>
+
+
+                        <div class="col-xs-4">
+                            <a href="#" class="display-block p-10 text-muted" data-popup="tooltip" data-placement="top"
+                               data-container="body" title="" data-original-title="下在成 MD 文件"><i
+                                        class="icon-pencil position-left"></i>编辑</a>
+                        </div>
+
+                        <div class="col-xs-4">
+                            {#<a href="#" class="display-block p-10 text-muted ajax delete" ><i class=" icon-trash position-left"></i> 回收站</a>#}
+                            <a :href="'/admin/posts/'+ _.id+'/delete'"
+                               class="display-block p-10 text-muted ajax delete"><i
+                                        class=" icon-trash position-left"></i> 回收站</a>
+                        </div>
+                    </div>
+                </div>
+
+                <blockquote class="panel panel-body border-left-lg border-left-warning " v-html="_.content" v-if="_.meta['_snippet_type'] === 'quote'"></blockquote>
+
+                <pre class="panel panel-body " :class="'language-' + _.meta['_snippet_code_lang']" v-else-if="typeof(_.meta['_snippet_code_lang']) !== 'undefined'">
+                                <code>{{ _.content }}</code>
+                    {#<code>{{ _.content }}</code>#}
+                            </pre>
+                {# Idea 一段思想#}
+                <div class="panel panel-body  text-center" style="background-image: url(http://demo.interface.club/limitless/assets/images/bg.png);" v-else-if="_.meta['_snippet_type'] === 'idea'">
+                    {#<div class="content-group mt-5">#}
+                    {#<i class="icon-brain icon-2x text-teal-400"></i>#}
+                    {#</div>#}
+                    <p class="mt-10 text-primary" v-html="_.content"></p>
+                </div>
+
+                <div class="panel panel-body" v-else-if="_.meta['_snippet_type'] === 'comment'">
+                    <ul class="media-list chat-list content-group">
+                        <li class="media reversed">
+                            <div class="media-body">
+                                <div class="media-content" v-html="_.content"></div>
+                                <span class="media-annotation display-block mt-10">{{ _.modified | moment }}</span>
+                            </div>
+
+                            <div class="media-right">
+                                <a href="/static/assets/images/demo/images/3.png">
+                                    <img src="/static/assets/images/demo/users/face1.jpg" class="img-circle" alt="">
+                                </a>
+                            </div>
+                        </li>
+
+
+                    </ul>
+
+                    <textarea name="enter-message" class="form-control content-group" rows="3" cols="1" placeholder="输入你的回复..."></textarea>
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <ul class="icons-list icons-list-extended mt-10">
+                                <li><a href="#" data-popup="tooltip" data-container="body" title="" data-original-title="Send photo"><i class="icon-file-picture"></i></a></li>
+                                <li><a href="#" data-popup="tooltip" data-container="body" title="" data-original-title="Send video"><i class="icon-file-video"></i></a></li>
+                                <li><a href="#" data-popup="tooltip" data-container="body" title="" data-original-title="Send file"><i class="icon-file-plus"></i></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-xs-6 text-right">
+                            <button type="button" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-circle-right2"></i></b> 发送</button>
+                        </div>
+                    </div>
+                </div>
+
+                {# 进程 #}
+                <div class="panel panel-body" v-else-if="_.meta['_snippet_type'] === 'feed'">
+                    <ul class="list-feed">
+                        <li class="border-pink-400">
+                            <div class="text-muted text-size-small mb-5">{{ _.date | moment }}</div>
+                            开始
+                            {#User <a href="#">Christopher Wallace</a> is awaiting for staff reply#}
+                        </li>
+                        <li class="border-pink-400">
+                            <div class="text-muted text-size-small mb-5">{{ _.modified | moment }}</div>
+                            <a href="#">{{ _.author }}</a> {{ _.content }}
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                {# 人物 #}
+                <div class="" v-else-if="_.meta['_snippet_type'] === 'person'">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="/static/assets/images/demo/images/3.png">
+                                <img src="/static/assets/images/demo/users/face1.jpg" class="img-circle img-lg" alt="">
+                            </a>
+                        </div>
+
+                        <div class="media-body">
+                            <h6 class="media-heading">{{ _.title }}</h6>
+                            <span class="text-muted">{{ _.content }}</span>
+                        </div>
+
+                        <div class="media-right media-middle">
+                            <ul class="icons-list">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="icon-menu7"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="#"><i class="icon-comment-discussion pull-right"></i> Start chat</a></li>
+                                        <li><a href="#"><i class="icon-phone2 pull-right"></i> Make a call</a></li>
+                                        <li><a href="#"><i class="icon-mail5 pull-right"></i> Send mail</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#"><i class="icon-statistics pull-right"></i> 转换</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {# 默认 文字 #}
+                <div class="panel panel-body" v-else>{{ _.content }}</div>
+
+            </div>
+
+
+
+
+
+        </div>
+
+    <div class="row">
+        <div class="text-center content-group-lg pt-20">
+            <page :allpage="allpage" :page="page" v-on:increment="incrementTotal"></page>
+        </div>
+    </div>
+
+
+	{#<div class="text-center content-group-lg pt-20">#}
+		{#<$ pagerData | safe $>#}
+{##}
+	{#</div>#}
+
+	<!-- /pagination -->
+{% endblock %}
+
+{% block opposite_sidebar %}
+    <div class="sidebar sidebar-opposite sidebar-default">
+
+        <div class="sidebar-content">
+            <div class="category-title bg-grey-50">
+                <span><a href="/"><i class="icon-arrow-left8 position-left"></i>返回</a></span>
+                <div class="heading-elements"></div>
+            </div>
+            <div class="sidebar-category">
+
+                <div class="category-content">
+
+                    <form action="#">
+
+                        <div class="form-group">
+                            <legend class="text-size-mini text-muted no-border no-padding">碎片分类</legend>
+
+                            {#<li class="active"><a href="/admin/snippets"><i class="icon-files-empty position-left"></i> 全部</a></li>#}
+                            {##}
+                            {#<li><a @click="fetch('text')"><i class="fa fa-file-text-o position-left"></i> 文字</a></li>#}
+                            {#<li><a @click="fetch('quote')"><i class="fa fa-quote-left position-left"></i> 引用</a></li>#}
+                            {##}
+                            {#<li><a @click="fetch('code')"><i class="fa fa-code position-left"></i> 代码</a></li>#}
+                            {#<li><a @click="fetch('idea')"><i class="fa fa-lightbulb-o position-left"></i> 思考</a></li>#}
+                            {#<li><a @click="fetch('feed')"><i class="fa fa-history position-left"></i> 进程</a></li>#}
+                            {#<li><a @click="fetch('comment')"><i class="fa fa-comments-o position-left"></i> 对话</a></li>#}
+                            {#<li><a @click="fetch('person')"><i class="fa fa-smile-o position-left"></i> 人物</a></li>#}
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="snippet-filter" @click="fetch()">
+                                    全部碎片
+                                </label>
+                            </div>
+
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="snippet-filter" @click="fetch('text')">
+                                    文字
+                                </label>
+                            </div>
+
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="snippet-filter"  @click="fetch('quote')">
+                                    引用
+                                </label>
+                            </div>
+
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="snippet-filter" @click="fetch('code')">
+                                    代码片段
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="snippet-filter" @click="fetch('idea')">
+                                    想法
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="snippet-filter" @click="fetch('feed')">
+                                    事务进程
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="snippet-filter" @click="fetch('comment')">
+                                    会话
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="snippet-filter"  @click="fetch('person')">
+                                    人物
+                                </label>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+{% endblock %}
+
+{% block script %}
+
+    <script>
+
+        Vue.filter('moment', function (time, format) {
+            moment.locale('zh-cn');
+
+            if (format === "default") {
+                format = 'YYYY-MM-DD HH:mm:ss';
+                return moment(time).format(format);
+            }
+            return moment(time).fromNow();
+        });
+    //        Vue.component('v-select', VueSelect.VueSelect);
+
+    Vue.component("pageButton", {
+        delimiters: ['${', '}'],
+        template: '<template><p class="navbar-text">共 <span class="text-semibold">${pagedata.totalPages} </span> 页 <span class="text-semibold">${pagedata.count} 条记录</span></p>' +
+        '<div class="btn-group navbar-left navbar-btn">' +
+        '<button type="button" class="btn btn-default btn-icon " :class="disabled: pagedata.currentPage == 1"><i class="icon-arrow-left12"></i></button>' +
+        '<button type="button" class="btn btn-default btn-icon"><i class="icon-arrow-right13"></i></button> ' +
+        '</div></template>',
+        data: function(){
+            return {
+                current: this.page || 1
+            }
+        },
+        props: [
+//                "count",
+//                "totalpage",
+//                "page",
+            "pagedata"
+        ],
+        computed: {
+            pageIndex: function(){
+                var num = 5;
+                var pageIndex = []
+            },
+            pages: function () {
+                var pag = [];
+                if (this.current < this.showItem) { //如果当前的激活的项 小于要显示的条数
+                    //总页数和要显示的条数那个大就显示多少条
+                    var i = Math.min(this.showItem, this.allpage);
+                    while (i) {
+                        pag.unshift(i--);
+                    }
+                } else { //当前页数大于显示页数了
+                    var middle = this.current - Math.floor(this.showItem / 2),//从哪里开始
+                        i = this.showItem;
+                    if (middle > (this.allpage - this.showItem)) {
+                        middle = (this.allpage - this.showItem) + 1
+                    }
+                    while (i--) {
+                        pag.push(middle++);
+                    }
+                }
+                return pag
+            }
+        }
+    });
+
+    Vue.component("page", {
+        delimiters: ['${', '}'],
+//            template:"#page",
+        template: '<ul class="pagination pagination-flat pagination-xs" > <li v-show="current != 1" @click="current-- && goto(current)" ><a href="#">上一页</a></li> <li v-for="index in pages" @click="goto(index)" :class="{\'active\':current == index}" :key="index"> <a href="javascript:;" >${index}</a> </li> <li v-show="allpage != current && allpage != 0 " @click="current++ && goto(current++)"><a href="#" >下一页</a></li> </ul>',
+        data: function () {
+            return {
+                current: this.page || 1,
+                showItem: 5,
+            }
+        },
+        props: [
+            "allpage",
+            "page"
+        ],
+        computed: {
+            pages: function () {
+                var pag = [];
+                if (this.current < this.showItem) { //如果当前的激活的项 小于要显示的条数
+                    //总页数和要显示的条数那个大就显示多少条
+                    var i = Math.min(this.showItem, this.allpage);
+                    while (i) {
+                        pag.unshift(i--);
+                    }
+                } else { //当前页数大于显示页数了
+                    var middle = this.current - Math.floor(this.showItem / 2),//从哪里开始
+                        i = this.showItem;
+                    if (middle > (this.allpage - this.showItem)) {
+                        middle = (this.allpage - this.showItem) + 1
+                    }
+                    while (i--) {
+                        pag.push(middle++);
+                    }
+                }
+                return pag
+            }
+        },
+        methods: {
+            goto: function (index) {
+
+                if (index == this.current) return;
+                this.current = index;
+//                    $.event.trigger({
+//                        type: "message"
+//                    });
+                this.$emit('increment', index)
+                //这里可以发送ajax请求
+            }
+        }
+    })
+    //只能输入正整数过滤器
+    Vue.filter('onlyNumeric', {
+        // model -> view
+        // 在更新 `<input>` 元素之前格式化值
+        read: function (val) {
+            return val;
+        },
+        // view -> model
+        // 在写回数据之前格式化值
+        write: function (val, oldVal) {
+            var number = +val.replace(/[^\d]/g, '')
+            return isNaN(number) ? 1 : parseFloat(number.toFixed(2))
+        }
+    })
+
+    Vue.filter('text', function(val){
+        return val.replace(/<[^>]+>/g,"");//去掉所有的html标记
+
+    });
+
+    Vue.filter('trim', function(val){
+        var result;
+//            result = val.replace(/(^\s+)|(\s+$)/g,"");
+//            if(is_global.toLowerCase()=="g")
+//            {
+        result = val.replace(/\s/g,"");
+//            }
+        return result;
+
+    })
+
+    //数组删除某项功能
+    Array.prototype.remove = function (dx) {
+        if (isNaN(dx) || dx > this.length) {
+            return false;
+        }
+        for (var i = 0, n = 0; i < this.length; i++) {
+            if (this[i] != this[dx]) {
+                this[n++] = this[i]
+            }
+        }
+        this.length -= 1
+    }
+
+    Vue.component('select2', {
+        props: ['options', 'value'],
+        template: '#select2-template',
+        mounted: function () {
+            var vm = this
+            var select_option = {
+                data: this.idFormat(this.options.data),
+                placeholder: 'Select an optio'
+//            placeholder: this.options.placeholder == null ? "请选择一个选项": this.options.placeholder
+            }
+            if (this.options.icon == true){
+                select_option.templateResult = vm.iconFormat,
+                    select_option.minimumResultsForSearch = Infinity,
+                    select_option.templateSelection = vm.iconFormat,
+                    select_option.escapeMarkup = function(m) { return m; }
+            }
+            $(this.$el)
+                .val(this.value)
+                // init select2
+                .select2(select_option)
+                // emit event on change.
+                .on('change', function () {
+                    vm.$emit('input', this.value)
+                })
+        },
+        methods: {
+            iconFormat: function(item){
+                var originalOption = item.element;
+
+                if (!item.id) { return item.text; }
+                var $icon = item.text;
+                if (item.icon != null && item.icon != undefined) {
+                    $icon = "<i class='icon-" + item.icon + "'></i>" + item.text;
+                }
+                return $icon;
+            },
+            dataFormat: function(data){
+                return $.map(data, function (obj) {
+                    obj.text = obj.text || obj.name; // replace name with the property used for the text
+
+                    return obj;
+                });
+            },
+            idFormat: function(data){
+                return $.map(data, function (obj) {
+                    obj.id = obj.id || obj.slug; // replace pk with your identifier
+
+                    return obj;
+                });
+            }
+        },
+        watch: {
+            value: function (value) {
+                // update value
+                $(this.$el).val(value)
+            },
+            options: function (options) {
+                // update options
+                $(this.$el).select2({ data: options })
+            }
+        },
+        destroyed: function () {
+            $(this.$el).off().select2('destroy')
+        }
+    })
+
+
+    new Vue({
+//            delimiters: ['${', '}'],
+            el: "#page-container",
+            data: {
+                {#userInfo: '{{ userInfo | dump}}',#}
+//                headline: lang["pages"],
+                addPageModal: false,
+                pageName: "",
+                pageParent: 0,
+                pageGrid: 0,
+                pageParentName: "",
+                pageAll: '',
+                searchBoxShow: false,
+                searchBox: "",
+                allpage: 0,
+                total: 1,
+                page: 0,
+                current: this.page || 1,
+                pagedata:{},
+                meta: {
+                    _snippet_image: '',
+                    _snippet_audio: '',
+                    _snippet_quote: '',
+                    _snippet_link: '',
+                    _snippet_chat: '',
+                    _snippet_text: '',
+                    _snippet_status: '',
+                    _snippet_feed: '',
+                    _snippet_note: '',
+                    _snippet_person: '',
+                    _snippet_idea: '',
+                    _snippet_code:'markup',
+                },
+                post_meta: {},
+                checked: [],
+                selected: 0,
+    codelang: {
+        data: [
+            {id: 'markup', text: 'markup'},
+            {id: 'css', text: 'css'},
+            {id: 'javascript', text: 'javascript'},
+            {id: 'java', text: 'java'},
+            {id: 'php', text: 'php'},
+            {id: 'scss', text: 'scss'},
+            {id: 'c', text: 'c'},
+            {id: 'python', text: 'python'},
+            {id: 'sql', text: 'sql'},
+            {id: 'swift', text: 'swift'}
+        ],
+            icon: false
+    },
+    snippet_id: 0,
+        snippet: '',
+        snippet_type: 'text',
+        query_type: '',
+        isSave: false,
+        isActive: true,
+        status: false
+    },
+    watch: {
+        checked: function() {
+            var vue = this;
+//                    console.log(vue.checked)
+//                    $.ajax({
+//                        method: "POST",
+//                        url: "'.url::admin('user', ['groups', 'edit']).'",
+//                        data: {
+//                            id: vue.groupID,
+//                            perms: vue.checked
+//                        }
+//                    });
+        },
+        selected: function(){
+            var vue = this;
+
+            Vue.nextTick(function () {
+                // 渲染 select2 样式
+//                        vue.renderSelect2();
+
+                vue.render();
+                Prism.highlightAll();
+                // DOM updated
+                var $grid = $('[data-plugin="masonry"]');
+                $grid.masonry();
+                $grid.masonry('reloadItems')
+                $grid.masonry('layout');
+            })
+        },
+        meta: {
+            handler: function (val, oldVal) {
+//                        switch(val)
+//                        {
+//                            case val['_snippet_code']:
+//                                console.log(1)
+//                                break;
+//                            case val['_snippet_']:
+//                                执行代码块 2
+//                                break;
+//                            default:
+//                                n 与 case 1 和 case 2 不同时执行的代码
+//                        }
+
+                if (val['_snippet_code'] != null && val['_snippet_code'] != undefined){
+//                           val._snippet_code_lang = val;
+//                           val._snippet_code = '';
+                    this.post_meta._snippet_code = val['_snippet_code'];
+//                           this.post_meta._snippet_code_lang = val['_snippet_code'];
+                }
+
+
+            },
+            deep: true
+
+        },
+//                snippet_id: function(){
+//                    var vue = this;
+//                    console.log(vue.snippet_id)
+//                },
+        snippet_type: function(){
+            console.log(this.snippet_id + ":" +this.snippet_type)
+        }
+    },
+    mounted: function () {
+
+        var vue = this;
+        this.page = vue.urlParam("page");
+
+        $(document).on("fetch", function () {
+            vue.fetch();
+        });
+        $(document).on("message", function () {
+            vue.message();
+        });
+        vue.fetch();
+
+//                $(document).on("click", "[data-toggle='tab']", function(e){
+//                    $('#panel-tab2-292').tab('show');
+//                    vue.reLayout()
+
+//                })
+//                $(window).load(function(){ $('[data-plugin="masonry"]').masonry(); });
+
+        // Reverse last 3 dropdowns orientation
+        $('.content > .row').slice(-1).find('.dropdown, .btn-group').addClass('dropup');
+
+
+        // Multiple switchery toggles
+        if (Array.prototype.forEach) {
+            var elems = Array.prototype.slice.call(document.querySelectorAll('.switch-mode'));
+
+            elems.forEach(function (html) {
+                var switchery = new Switchery(html);
+            });
+        }
+        else {
+            var elems = document.querySelectorAll('.switch-mode');
+
+            for (var i = 0; i < elems.length; i++) {
+                var switchery = new Switchery(elems[i]);
+            }
+        }
+
+
+
+        // Bootstrap switches
+//                $(".switch").bootstrapSwitch();
+
+//                eventHub.$on("setHome", this.setHome);
+//                eventHub.$on("setSearchbox", this.setParent);
+//                vue.setDrag();
+
+        vue.render();
+
+//        eventHub.$on("snippet_id", function (id) {
+//
+//            vue.snippet_id = id;
+//            vue.reLayout();
+//
+//        });
+
+
+    },
+
+    methods: {
+        setting: function(id){
+            eventHub.$emit('snippet_id', id)
+        },
+        render:function(){
+            // Custom code
+            // ------------------------------
+
+            // Highlight row when checkbox is checked
+            $('.table-inbox').find('tr > td:first-child').find('input[type=checkbox]').on('change', function() {
+                if($(this).is(':checked')) {
+                    $(this).parents('tr').addClass('warning');
+                }
+                else {
+                    $(this).parents('tr').removeClass('warning');
+                }
+            });
+
+            // Grab first letter and insert to the icon
+            $(".table-inbox tr").each(function (i) {
+
+                // Title
+                var $title = $(this).find('.letter-icon-title'),
+                    letter = $title.eq(0).text().charAt(0).toUpperCase();
+
+                // Icon
+                var $icon = $(this).find('.letter-icon');
+                $icon.eq(0).text(letter);
+            });
+
+
+            // Plugins
+            // ------------------------------
+
+            // Default initialization
+//            $(".styled, .multiselect-container input").uniform({
+//                radioClass: 'choice'
+//            });
+
+            // Initialize Row link plugin
+//            $('tbody.rowlink').rowlink();
+        },
+        incrementTotal: function (id) {
+            this.total += 1
+            History.pushState({state: id}, "State", '?page=' + id.toString());
+            this.page = id;
+            this.fetch();
+
+        },
+        pageTo: function (index) {
+//                    console.log(index);
+            if (index < 1) {
+                this.current = 1;
+                return;
+            }
+            if (index > this.pagedata.totalPages){
+                this.current = this.pagedata.totalPages;
+                return;
+            }
+//                    if (index == this.current) return;
+            this.current = index;
+            this.page = index;
+//                    if (num < 1 || num >= this.pagedata.totalPages) return;
+//                    console.log(index);
+
+//                    this.total += 1
+            History.pushState({state: index}, "State", '?page=' + index.toString());
+//                    this.page = num;
+            this.fetch();
+
+        },
+        save: function(_snippet){
+
+            this.post(_snippet);
+        },
+        post: function (_snippet) {
+
+            var self = this;
+            self.status = 'saving';
+
+            var postData = {
+                "id": _snippet.id,
+//                        "title": this.title,
+//                        "name": this.name,
+//                        "date": this.date,
+//                        "content": this.content,
+                "meta": this.post_meta
+            }
+
+            fetch('/admin/posts/snippet', {
+                credentials: 'include',
+                method: 'POST',
+//                        mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+
+            }).then(function (response) {
+
+                if (response.ok) {
+
+                    return response.json();
+
+                } else {
+                    self.status = 'error';
+
+                    var error = new Error(response.statusText)
+                    error.response = response
+                    throw error
+                }
+            }).then(function (json) {
+                fetch('/admin/posts/snippet?id='+json._id, {
+                    credentials: 'include',
+                    method: 'GET',
+//                        mode: 'cors',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+//                            body: JSON.stringify(postData)
+
+                }).then(function (response) {
+
+                    if (response.ok) {
+                        // 触发 eventHub set snippet_id = 0, reset 为了恢复现在的操作的状态
+//                                setTimeout(function() {
+//                                    self.status = 'success';
+//
+//                                }, 2200);
+                        return response.json();
+
+                    } else {
+                        self.status = 'error';
+
+                        var error = new Error(response.statusText)
+                        error.response = response
+                        throw error
+                    }
+                }).then(function (json) {
+//                            console.log(JSON.stringify(json))
+                    _snippet.meta = json.meta;
+                    // 触发 eventHub set snippet_id = 0, reset 为了恢复现在的操作的状态
+//                            for(var item in self.post_meta){
+//                                console.log(self.meta[item])
+//                                self.meta[item] = '';
+                    self.selected = '';
+
+//                            }
+//                            _snippet = json;
+//                            setTimeout(function() {
+                    self.status = 'success';
+                    self.setting(0);
+
+//                            }, 2200);
+//                            self.setting(0);
+
+
+//                        console.log(json._id + "--------")
+
+//                    if (json.snippet_id != null) {
+//                        self.snippet_id = json.snippet_id;
+//                        // 设置页面路径信息，页面刷新后也可以获得当前编辑的信息
+//                        History.pushState({state: 1}, "State 1", self.snippet_id.toString());
+//                    }
+                })
+
+
+//                        console.log(json._id + "--------")
+
+//                    if (json.snippet_id != null) {
+//                        self.snippet_id = json.snippet_id;
+//                        // 设置页面路径信息，页面刷新后也可以获得当前编辑的信息
+//                        History.pushState({state: 1}, "State 1", self.snippet_id.toString());
+//                    }
+            })
+        },
+
+        fetch: function (meta_type) {
+
+            var vue = this;
+            var _url = "/snippets/list";
+
+            if (meta_type !== null && meta_type !== undefined) {
+                _url += "?meta_type=" + meta_type + "&";
+
+                History.pushState({state: meta_type}, "State", "?meta_type=" + meta_type);
+
+            }
+
+            if (this.page != 0 && Number.parseInt(this.page)) {
+                _url += "?page=" + this.page;
+            }
+
+            $.ajax({
+                method: "GET",
+                url: _url,
+                dataType: "json",
+                success: function (data) {
+                    vue.pageAll = data.data;
+                    vue.allpage = data.totalPages;
+//                            vue.pageTree = data.tree;
+//                            vue.setDrag();
+//                            delete data.data;
+                    vue.pagedata = data;
+
+                    vue.reLayout();
+                }
+            });
+
+
+        },
+
+        renderSelect2: function(){
+            function iconFormat(icon) {
+                var originalOption = icon.element;
+                if (!icon.id) { return icon.text; }
+                var $icon = "<i class='icon-" + $(icon.element).data('icon') + "'></i>" + icon.text;
+
+                return $icon;
+            }
+            // Initialize with options
+            $(".select-icons").select2({
+                templateResult: iconFormat,
+                minimumResultsForSearch: Infinity,
+                templateSelection: iconFormat,
+                escapeMarkup: function(m) { return m; }
+            });
+
+        },
+        reLayout: function () {
+
+            var vue = this;
+
+            Vue.nextTick(function () {
+                // 渲染 select2 样式
+//                        vue.renderSelect2();
+
+                vue.render();
+                Prism.highlightAll();
+                // DOM updated
+                var $grid = $('[data-plugin="masonry"]');
+                $grid.masonry();
+                $grid.masonry('reloadItems')
+                $grid.masonry('layout');
+            })
+        },
+        urlParam: function (name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            // decodeURIComponent()
+            if (r != null)return decodeURI(r[2]);
+            return null;
+        }
+
+    },
+    computed: {
+        pageTreeLength: function () {
+            return !jQuery.isEmptyObject(this.pageTree);
+        },
+
+    }
+    });
+</script>
+
+{% endblock %}

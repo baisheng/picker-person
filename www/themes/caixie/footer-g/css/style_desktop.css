@@ -1,0 +1,176 @@
+/* FOOTER GENERAL */
+
+#footer-general
+{
+    width: 100%;
+    background: #FFF;
+    padding-top: 50px;
+    text-align: center;
+    position: relative;
+    z-index: 3;
+    font-size: 0px;
+}
+
+#footer-general .logo
+{
+    width: 95px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 32px;
+    margin-left: 32px;
+}
+
+#footer-general .social
+{
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 32px;
+    margin-left: 32px;
+    text-align: left;
+}
+#footer-general .social .title
+{
+    color: #3b3b48;
+    font-size: 16px;
+    margin-bottom: 7px;
+}
+#footer-general .social .subtitle
+{
+    color: #818186;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+#footer-general .social .link a
+{
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+#footer-general .social .link a svg
+{
+    height: 17px;
+    fill: #3b3b48;
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -ms-transition: all .25s ease;
+    -o-transition: all .25s ease;
+    transition: all .25s ease;
+}
+#footer-general .social .link a:hover svg
+{
+    opacity: 0.5;
+}
+
+#footer-general .hire
+{
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 32px;
+    margin-left: 32px;
+    text-align: left;
+}
+#footer-general .hire .title
+{
+    color: #3b3b48;
+    font-size: 16px;
+    margin-bottom: 7px;
+}
+#footer-general .hire .subtitle
+{
+    color: #818186;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+#footer-general .hire a
+{
+    text-decoration: none;
+    color: #ff5f26;
+    font-size: 14px;
+}
+#footer-general .hire a svg:nth-child(1)
+{
+    height: 10px;
+    stroke: #ff5f26;
+    display: inline-block;
+    vertical-align: middle;
+}
+#footer-general .hire a svg:nth-child(2)
+{
+    height: 17px;
+    stroke: #ff5f26;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+}
+
+#footer-general .market
+{
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 32px;
+    margin-left: 32px;
+    text-align: left;
+}
+#footer-general .market .title
+{
+    margin-bottom: 7px;
+}
+#footer-general .market .title .new
+{
+    padding: 5px 12px 5px 12px;
+    background-color: #5064f1;
+    border-radius: 30px;
+    color: white;
+    font-size: 11px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+#footer-general .market .title svg
+{
+    display: inline-block;
+    vertical-align: middle;
+    height: 18px;
+    margin-left: 13px;
+}
+#footer-general .market .subtitle
+{
+    color: #818186;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+#footer-general .market a
+{
+    color: #3b3b48;
+    font-size: 14px;
+    text-decoration: underline;
+}
+#footer-general .car
+{
+    position: relative;
+    width: 90%;
+    margin: auto;
+    margin-top: 50px;
+    padding: 10px;
+    text-align: center;
+    color: #818186;
+    font-size: 11px;
+}
+#footer-general .car:before
+{
+    content: '';
+    background-color: #9297a3;
+    width: 90%;
+    height: 1px;
+    opacity: 0.25;
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+/* END FOOTER GENERAL */

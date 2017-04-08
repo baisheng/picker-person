@@ -1,0 +1,17 @@
+<div class="panel panel-body">
+    <h6 class=" text-semibold">
+        <i class="icon-trophy3 position-left"></i>所获奖项
+    </h6>
+    <ul class="list-feed">
+        {% for award in resume.awards %}
+        <li>
+            <div class="feed-time text-muted"><$ award.date $></div>
+            <strong><$ award.title $></strong>
+            <span content="label label-default"><$ award.awarder $></span>
+
+            <p><$ award.summary $></p>
+        </li>
+        {% endfor %}
+
+    </ul>
+</div>

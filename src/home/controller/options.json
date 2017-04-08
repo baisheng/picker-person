@@ -1,0 +1,15 @@
+{
+  "analyze_code":"<script> var _hmt = _hmt || []; (function() { var hm = document.createElement(\"script\");hm.src = \"https://hm.baidu.com/hm.js?4e00e9cee680b4b4ab27cb87472c8972\";var s = document.getElementsByTagName(\"script\")[0];s.parentNode.insertBefore(hm, s);})();</script>",
+  "copyright":"&copy; <a href=\"http://picker.cc\" class=\"navbar-link\">Picker</a>",
+  "icp": "京ICP备16048884号-1",
+  "title": "picker",
+  "desc": "让内容富用！",
+  "keywords": "自品牌,自媒体,blog,内容管理,cms",
+  "password_salt": "picker",
+  "site_url": "http://resume.picker.la",
+  "stylesheet": "caixie",
+  "theme_path": "/resume_themes/material",
+  "default_index": "",
+  "default_app": "",
+  "current_theme": ""
+}

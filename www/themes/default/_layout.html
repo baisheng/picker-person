@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+{% include "./template-parts/_head.html" %}
+
+<body class=" " data-smooth-scroll-offset='64'>
+<a id="start"></a>
+{% include "./template-parts/navbar.html" %}
+<div class="main-container">
+    {% block main %}{% endblock %}
+
+
+    <div class="modal-container">
+        <div class="modal-content">
+            <section class="imageblock feature-large bg--white border--round ">
+                <div class="imageblock__content col-md-5 col-sm-3 pos-left">
+                    <div class="background-image-holder">
+                        <img alt="image" src="img/cowork-8.jpg"/>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5 col-md-push-6 col-sm-7 col-sm-push-4">
+                            <h1>Ideal for design conscious startups.</h1>
+                            <p class="lead">
+                                Start building a beautiful site for your startup &mdash; right in the comfort of your
+                                browser.
+                            </p>
+                            <hr class="short">
+                            <form>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <input type="email" name="Email Address" placeholder="Email Address"/>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <input type="password" name="Password" placeholder="Password"/>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <button type="submit" class="btn btn--primary type--uppercase">Create Account
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-12">
+                                                <span class="type--fine-print">By signing up, you agree to the
+                                                    <a href="#">Terms of Service</a>
+                                                </span>
+                                    </div>
+                                </div>
+                                <!--end row-->
+                            </form>
+                        </div>
+                    </div>
+                    <!--end of row-->
+                </div>
+                <!--end of container-->
+            </section>
+        </div>
+    </div>
+
+    {% include "./template-parts/footer.html" %}
+
+</div>
+<!--<div class="loader"></div>-->
+<a class="back-to-top inner-link" href="#start" data-scroll-class="100vh:active">
+    <i class="stack-interface stack-up-open-big"></i>
+</a>
+<script src="/themes/default/js/jquery-3.1.1.min.js"></script>
+<script src="/themes/default/js/flickity.min.js"></script>
+<script src="/themes/default/js/easypiechart.min.js"></script>
+<script src="/themes/default/js/parallax.js"></script>
+<script src="/themes/default/js/typed.min.js"></script>
+<script src="/themes/default/js/datepicker.js"></script>
+<script src="/themes/default/js/isotope.min.js"></script>
+<script src="/themes/default/js/ytplayer.min.js"></script>
+<script src="/themes/default/js/lightbox.min.js"></script>
+<script src="/themes/default/js/granim.min.js"></script>
+<script src="/themes/default/js/countdown.min.js"></script>
+<script src="/themes/default/js/twitterfetcher.min.js"></script>
+<script src="/themes/default/js/spectragram.min.js"></script>
+<script src="/themes/default/js/smooth-scroll.min.js"></script>
+<script src="/themes/default/js/scripts.js"></script>
+
+{% block script %}{% endblock %}
+</body>
+</html>

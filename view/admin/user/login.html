@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><$ options.site.title $> - <$ options.site.desc $></title>
+
+    <!-- Global stylesheets -->
+    {#<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"type="text/css">#}
+    <link href="/static/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/material/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/material/css/core.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/material/css/components.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/material/css/colors.min.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+
+    <style type="text/css">
+        .login-cover {
+            background: url('/static/limitless/assets/images/login_cover.jpg') no-repeat;
+            background-size: cover;
+        }
+
+        .nux-fullscreen {
+            /*background-color: #fc7279;*/
+            /*background-image: -webkit-linear-gradient(bottom left, #fc7279 10%, #ff7b9c 65%, #ffc019 125%);*/
+            /*background-image: linear-gradient(to top right, #fc7279 10%, #ff7b9c 65%, #ffc019 125%);*/
+            /*bottom: auto;*/
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0
+        }
+
+        .nux-fullscreen.nux-grey-background {
+            background-image: radial-gradient(circle, #fafafa 30%, #f5f5f5 100%)
+        }
+
+        .hero {
+            height: 100%;
+        }
+
+        .hero.navbar-fixed-top-hero {
+            margin-top: 134px;
+        }
+
+        .hero-content {
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+        }
+
+        .hero-content .container-fluid {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 35%;
+            transform: translateY(-50%);
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            line-height: 75px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 span {
+            position: relative;
+        }
+
+        .hero-content h1 span.cd-words-wrapper {
+            display: inline-block;
+            position: relative;
+            text-align: left;
+            border-bottom: 0;
+        }
+
+        .hero-content h1 span.cd-words-wrapper b {
+            display: inline-block;
+            position: absolute;
+            white-space: nowrap;
+            left: 0;
+            top: 0;
+        }
+
+        .hero-content h1 span.cd-words-wrapper b.is-visible {
+            position: relative;
+        }
+
+        .no-js .hero-content h1 span.cd-words-wrapper b {
+            opacity: 0;
+        }
+
+        .no-js .hero-content h1 span.cd-words-wrapper b.is-visible {
+            opacity: 1;
+        }
+
+        .hero-content p {
+            font-size: 1.125em;
+            line-height: 2em;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+            color: #000;
+        }
+
+        .dot {
+            border-radius: 50%;
+            position: absolute;
+            z-index: 0;
+        }
+
+        .dot_red {
+            background-color: #CE4841;
+        }
+
+        .dot_black {
+            background-color: #000;
+        }
+
+        .dot_blue {
+            background-color: #74C0C0;
+        }
+
+        .dot_orange {
+            background-color: #F6AA3D;
+        }
+
+        .hero-dot_1 {
+            position: absolute;
+            top: 8vh;
+            left: 5vw;
+            height: 6px;
+            width: 6px;
+        }
+
+        .hero-dot_2 {
+            position: absolute;
+            top: 12vh;
+            left: -3vw;
+            height: 84px;
+            width: 84px;
+        }
+
+        .hero-dot_3 {
+            position: absolute;
+            top: 35vh;
+            left: 2vw;
+            height: 12px;
+            width: 12px;
+        }
+
+        .hero-dot_4 {
+            position: absolute;
+            top: 50vh;
+            left: 4vw;
+            height: 55px;
+            width: 55px;
+        }
+
+        .hero-dot_5 {
+            position: absolute;
+            top: 70vh;
+            left: 2vw;
+            height: 9px;
+            width: 9px;
+        }
+
+        .hero-dot_6 {
+            position: absolute;
+            top: 7vh;
+            right: 6vw;
+            height: 9px;
+            width: 9px;
+        }
+
+        .hero-dot_7 {
+            position: absolute;
+            top: 22vh;
+            right: 3vw;
+            height: 65px;
+            width: 65px;
+        }
+
+        .hero-dot_8 {
+            position: absolute;
+            top: 46vh;
+            right: 4vw;
+            height: 27px;
+            width: 27px;
+        }
+
+        .hero-dot_9 {
+            position: absolute;
+            top: 60vh;
+            right: 2vw;
+            height: 7px;
+            width: 7px;
+        }
+
+        .hero-dot_10 {
+            position: absolute;
+            top: 71vh;
+            right: 4vw;
+            height: 8px;
+            width: 8px;
+        }
+
+        /* ---- particles.js container ---- */
+        #particlesred-js, #particlesblack-js, #particlesblue-js, #particlesorange-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            background-image: url("");
+            background-size: cover;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+        }
+
+        #particlesred-js-expect, #particlesred-js-thanks, #particlesblack-js-expect, #particlesblack-js-thanks, #particlesblue-js-expect, #particlesblue-js-thanks, #particlesorange-js-expect, #particlesorange-js-thanks {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            background-image: url("");
+            background-size: cover;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+        }
+
+        /* =========================================================================
+           Responsive
+           ========================================================================= */
+        @media screen and (max-width: 767px) {
+            .hero {
+                height: auto;
+                padding-bottom: 96px;
+            }
+
+            .hero.navbar-fixed-top-hero {
+                margin-top: 50px;
+            }
+
+            .hero-content .container-fluid {
+                position: static;
+                left: 0;
+                right: 0;
+                top: 0;
+                transform: none;
+            }
+
+            .hero-content h1 {
+                font-size: 3em;
+                line-height: 1.33;
+                margin-bottom: 25px;
+            }
+
+            .hero-content p {
+                font-size: 0.875em;
+                line-height: 1.85;
+                padding-left: 28px;
+                padding-right: 28px;
+            }
+
+            .hero-dot_2,
+            .hero-dot_5,
+            .hero-dot_9 {
+                display: none;
+            }
+
+            .hero-dot_1 {
+                top: 82%;
+                left: 15px;
+            }
+
+            .hero-dot_2 {
+                display: none;
+            }
+
+            .hero-dot_3 {
+                left: -5px;
+                top: 46%;
+            }
+
+            .hero-dot_4 {
+                left: -39px;
+                bottom: auto;
+                top: 2%;
+                display: none;
+            }
+
+            .hero-dot_6 {
+                right: 39px;
+            }
+
+            .hero-dot_7 {
+                right: -50px;
+                display: none;
+            }
+
+            .hero-dot_8 {
+                right: -10px;
+            }
+
+            .hero-dot_10 {
+                right: 42px;
+                bottom: 24%;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body class="login-container nux-fullscreen nux-grey-background">
+
+<div id="particlesred-js"></div>
+<div id="particlesblack-js"></div>
+<div id="particlesblue-js"></div>
+<div id="particlesorange-js"></div>
+
+{#
+<!-- Main navbar -->
+<div class="navbar navbar-inverse bg-slate-800">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">
+            <$ options.title $>
+
+            <img src="/static/assets/images/logo_light.png" alt="">
+        </a>
+
+        <ul class="nav navbar-nav pull-right visible-xs-block">
+            <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+        </ul>
+    </div>
+
+    <div class="navbar-collapse collapse" id="navbar-mobile">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#">
+                    <i class="icon-display4"></i> <span class="visible-xs-inline-block position-right"> 首页</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="icon-user-tie"></i> <span
+                            class="visible-xs-inline-block position-right"> Contact admin</span>
+                </a>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-cog3"></i>
+                    <span class="visible-xs-inline-block position-right"> Options</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- /main navbar -->
+#}
+
+<!-- Page container -->
+<div class="page-container">
+    <!-- Page content -->
+    <div class="page-content">
+
+        <!-- Main content -->
+        <div class="content-wrapper">
+
+            <!-- Content area -->
+            <div class="content">
+
+                <!-- Simple login form -->
+                <form metod="post" class="form-validate" id="_form">
+
+                    <div class="panel panel-body login-form">
+                        <div class="text-center">
+                            <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                            <h5 class="content-group"><$ options.site.title $>
+                                <small class="display-block"><$ options.site.desc $></small>
+                            </h5>
+                        </div>
+
+                        <div class="form-group has-feedback has-feedback-left">
+                            <input id="name" name="user_login" type="text" class="form-control" placeholder="账户名">
+                            <div class="form-control-feedback">
+                                <i class="icon-user text-muted"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback has-feedback-left">
+                            <input id="password" name="user_pass" type="password" class="form-control" placeholder="密码">
+                            <div class="form-control-feedback">
+                                <i class="icon-lock2 text-muted"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            <button type="submit" class="btn bg-primary btn-block">登录 <i
+                                        class="icon-circle-right2 position-right"></i></button>
+                        </div>
+
+                        {#<div class="text-center">#}
+                            {#<a href="login_password_recover.html">忘记密码?</a>#}
+                        {#</div>#}
+                    </div>
+                </form>
+                <!-- /simple login form -->
+
+
+                <!-- Footer -->
+                <div class="footer text-muted text-center">
+                    <$ options.site.copyright | safe $>
+                    ・
+                    <a href="#"><$ options.site.icp $></a>
+                </div>
+                <!-- /footer -->
+
+            </div>
+            <!-- /content area -->
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+    <!-- /page content -->
+
+</div>
+<!-- /page container -->
+
+<!-- Core JS files -->
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/bootstrap.min.js"></script>
+<!-- /core JS files -->
+<script type="text/javascript" src="/static/assets/js/plugins/noty/packaged/jquery.noty.packaged.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/notifications/pnotify.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/forms/validation/validate.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/forms/validation/localization/messages_zh.js"></script>
+<script type="text/javascript" src="/static/assets/js/pages/form_validation.js"></script>
+
+
+<script src="/static/assets/js/particles/particles.min.js"></script>
+<script src="/static/assets/js/viewport/lib/isInViewport.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/pages/login.js"></script>
+{#<script src="/static/themes/picker/js/particles.js" type="text/javascript" name="main-scripts"></script>#}
+{#<script src="/static/themes/picker/js/particles.js" type="text/javascript" name="main-scripts"></script>#}
+
+<script>
+
+    $('#_form').submit(function (e) {
+        e.preventDefault();
+        if ($(".form-validate").valid()) {
+
+            $.post("<$ http.url $>",
+                $(this).serialize()).done(function (data) {
+
+                if (data.errno > 0) {
+//                    noty({
+//                        text: 'NOTY - a jquery notification library!',
+//                        animation: {
+//                            open: {height: 'toggle'},
+//                            close: {height: 'toggle'},
+//                            easing: 'swing',
+//                            layout      : 'topCenter',
+//                            theme       : 'relax',
+//                            speed: 500 // opening & closing animation speed
+//                        }
+//                    });
+//
+                    noty({
+                        text        : data.errmsg,
+                        type        : 'error',
+                        dismissQueue: true,
+                        layout      : 'topCenter',
+                        theme       : 'relax',
+                        closeWith   : ['click'],
+                        timeout     : 10000,
+                    });
+
+                } else {
+                    noty({
+                        text        : "登录成功",
+                        type        : 'success',
+                        dismissQueue: true,
+                        layout      : 'topCenter',
+                        theme       : 'relax',
+                        closeWith   : ['click'],
+                        timeout     : 10000,
+                    });
+
+                    location.reload();
+
+                }
+            }).fail(function () {
+                new PNotify({
+                    title: '出错啦',
+                    icon: 'icon-blocked',
+                    text: data.errmsg,
+                    addclass: 'bg-danger',
+                    type: 'danger',
+                    animate: {
+                        animate: true,
+                        in_class: 'bounceIn',
+                        out_class: 'bounceOut'
+                    }
+                });
+            });
+        }
+    });
+</script>
+
+{% block script %}{% endblock %}
+</body>
+</html>

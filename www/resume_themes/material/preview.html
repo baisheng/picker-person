@@ -1,0 +1,50 @@
+{% extends "./template-parts/_layout.html" %}
+
+{% block content %}
+
+    <div class="row col-lg-8 col-md-12 col-lg-offset-2">
+
+        {% if resume.basics %}
+            {#{% set basics = resume.basics %}#}
+            {% include "./template-parts/section-basics.html" %}
+        {% endif %}
+
+        {# 工作信息 #}
+        {% if resume.work %}
+            {% include "./template-parts/section-works.html" %}
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-12">
+
+                {# 技能信息 #}
+                {% if resume.skills %}
+                    {% include "./template-parts/section-skills.html" %}
+                {% endif %}
+
+                {# 教育信息#}
+                {% if resume.education %}
+                    {% include "./template-parts/section-education.html" %}
+                {% endif %}
+
+                {# 兴趣爱好 #}
+                {% if resume.interests %}
+                    {% include "./template-parts/section-interests.html" %}
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {# 项目经验 #}
+        {% if resume.additionalWork %}
+            {% include "./template-parts/section-additional_work.html" %}
+        {% endif %}
+
+        {# 友情推荐#}
+        {% if resume.references %}
+            {% include "./template-parts/section-references.html" %}
+        {% endif %}
+    </div>
+
+{% endblock %}

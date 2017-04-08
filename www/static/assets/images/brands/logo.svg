@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="32" height="32">
+	<circle cx="24" cy="24" r="24" style="fill: rgba(120,130,140,0.7);"/>
+	<circle cx="24" cy="0" r="2"  fill="#ffffff" class="brand-animate"/>
+	<text dy="10" x="50%" y="50%" text-anchor="middle" style="fill: #ffffff; stroke: none; font-size: 40px;">c</text>
+</svg>

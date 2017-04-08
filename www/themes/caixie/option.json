@@ -1,0 +1,17 @@
+{
+  "analyze_code": "<script>\nvar _hmt = _hmt || [];\n(function() {\n  var hm = document.createElement(\"script\");\n  hm.src = \"https://hm.baidu.com/hm.js?4e00e9cee680b4b4ab27cb87472c8972\";\n  var s = document.getElementsByTagName(\"script\")[0]; \n  s.parentNode.insertBefore(hm, s);\n})();\n</script>\n",
+  "copyright": "&copy; <a href=\"http://picker.cc\" class=\"navbar-link\">Picker</a>",
+  "current_theme": "default",
+  "default_app": "resumes",
+  "description": "让内容富用！Picker 提供了一个可多人、多团队共同协作使用的内容管理系统， 让内容的生p",
+  "icp": "京ICP备16048884号-1",
+  "keywords": "自品牌,自媒体,blog,内容管理,cms",
+  "lang": "zh_CN",
+  "logo_url": "/static/img/firekylin.jpg",
+  "menus": "[{'title':''}]"
+
+}
+
+
+//"[{\"label\":\"首页\",\"url\":\"/\",\"op},{\"label\":\"归档\",\"url\":\"/archives/\",\"option\":\"archive\"},{\"label\":\"标签\",\"url\":\"/tags\",\"option\":\"tags\"},{\"label\":\"关于\",\"url\":\"/about\",\"option\":\"user\"},{\"labe"
+//

@@ -1,0 +1,56 @@
+@media screen and (max-width: 1000px) {
+    #footer-general
+    {
+        padding-top: 25px;
+    }
+    #footer-general .logo
+    {
+        display: block;
+        margin: auto;
+        margin-bottom: 25px;
+    }
+    #footer-general .social
+    {
+        width: 45%;
+        padding-left: 25px;
+        padding-right: 25px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    #footer-general .hire
+    {
+        width: 55%;
+        padding-left: 25px;
+        padding-right: 25px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    #footer-general .market
+    {
+        margin-top: 25px;
+        display: block;
+        padding-left: 25px;
+        padding-right: 25px;
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+    #footer-general .car
+    {
+        margin-top: 20px;
+    }
+}
+
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px)
+and (orientation : portrait) {
+    /* iPhone 6 */
+
+}
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : portrait) {
+    /* iPhone 5 */
+
+}

@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><$ options.title $> - <$ options.description $></title>
+    <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
+    {#<link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">#}
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
+    <link href="/static/assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/full/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/colors.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/extras/animate.min.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <style>
+        a.delete {
+            z-index: 5;
+            position: relative;
+        }
+
+        a.delete div {
+            width: 76px;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            background: #fefefe;
+            position: absolute;
+            z-index: 5;
+            margin: -20px 0 0 -38px;
+            -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            -moz-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+        }
+
+        a.delete div .confirm,
+        a.delete div .abort {
+            vertical-align: top;
+            line-height: 32px;
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            font-size: 21px !important;
+            top: 4px;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        a.delete div .confirm:before,
+        a.delete div .abort:before {
+            line-height: 32px;
+            display: block;
+        }
+
+        a.delete div .confirm {
+            color: #fff;
+            background: #ef4748;
+            left: 4px;
+        }
+
+        a.delete div .abort {
+            /*color: #858a95;*/
+            /*color: #;*/
+            right: 4px;
+        }
+        /* 定制化 */
+        /*html .layer-snippet{background-color:#eee;}*/
+        /*.layer-snippet .layui-layer-title{border:none; background-color:#333; color:#fff;}*/
+
+        /*.runtest {*/
+            /*position: relative;*/
+            /*display: none;*/
+        /*}*/
+
+        .runtest textarea {
+            display: block;
+            /*width: 420px;*/
+            /*height: 200px;*/
+            /*border: 10px solid #F8F8F8;*/
+            /*border-top-width: 0;*/
+            padding: 20px;
+            line-height: 20px;
+            overflow: auto;
+            background-color: #3F3F3F;
+            color: #eee;
+            font-size: 12px;
+            font-family: Courier New;
+        }
+
+        /*.runtest a {*/
+            /*position: absolute;*/
+            /*right: 20px;*/
+            /*bottom: 20px;*/
+        /*}*/
+
+        .layer-photos-demo {
+            margin: 10px 0;
+        }
+
+        .layer-photos-demo img {
+            width: 160px;
+            height: 100px;
+        }
+    </style>
+    <style>
+        #messages {
+            position: fixed;
+            top: 65px;
+            left: 50%;
+            z-index: 110;
+            margin-left: 125px;
+            -webkit-transform: translate(-50%, 0);
+            -moz-transform: translate(-50%, 0);
+            -o-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+        #messages .animated {
+            -webkit-animation-duration: 0.2s;
+            animation-duration: 0.2s;
+        }
+        @media (max-width: 992px ) {
+            #messages {
+                margin-left: 0;
+            }
+        }
+        @media (max-width: 768px) {
+            #messages {
+                left: 15px;
+                right: 15px;
+                top: 61px;
+                -webkit-transform: translate(0, 0);
+                -moz-transform: translate(0, 0);
+                -o-transform: translate(0, 0);
+                -ms-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        .message {
+            padding: 8px 10px;
+            color: #fff;
+            margin: 0 0 5px 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+        .message.success {
+            background: #41da54;
+        }
+        .message.info {
+            background: #3f82d7;
+        }
+        .message.warning {
+            background: #e4c139;
+        }
+        .message.error {
+            background: #ef4748;
+        }
+        .message ol {
+            margin: 0;
+            padding: 0 0 0 18px;
+        }
+        .message ol li {
+            margin: 4px 0;
+        }
+
+    </style>
+    <style>
+        .layout__loader {
+            border-bottom: 1px solid #0079aa;
+            height: 46px;
+            margin-left: -10%;
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 20%;
+            z-index: 200;
+            visibility: hidden;
+            opacity: 0;
+            -webkit-transition: opacity 0.1s linear;
+            transition: opacity 0.1s linear;
+            -webkit-transition-delay: 0.4s;
+            transition-delay: 0.4s;
+        }
+
+        .pulsing-dot {
+            background: #f3f6f8;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            margin-left: -20px 0 0 -20px;
+            display: block;
+            width: 6px;
+            height: 6px;
+            border: none;
+            box-shadow: 0 0 0 0 rgba(168, 190, 206, 0.7);
+            border-radius: 100%;
+            v-align: middle;
+            -webkit-animation: dot-pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+            animation: dot-pulse 1.25s infinite cubic-bezier(0.66, 0, 0, 1);
+            -webkit-animation-play-state: paused;
+            animation-play-state: paused;
+        }
+
+        @-webkit-keyframes dot-pulse {
+            to {
+                box-shadow: 0 0 0 15px rgba(90, 153, 220, 0);
+            }
+        }
+
+        @keyframes dot-pulse {
+            to {
+                box-shadow: 0 0 0 15px rgba(90, 153, 220, 0);
+            }
+        }
+    </style>
+    {% block style %}{% endblock %}
+
+</head>
+
+
+<body class="navbar-top">
+<div id="app">
+
+    <div class="navbar navbar-default header-highlight navbar-fixed-top">
+
+        <div class="navbar-header navbar-inverse bg-slate-800">
+            <ul class="nav navbar-nav navbar-left">
+                <li class="{% if app.name == controller.app_name %}active{% endif %}"><a href="/admin">
+                        <i class="icon-puzzle2 position-left"></i>
+                        我的应用
+                    </a></li>
+
+                <li class=""><a href="/admin/discover" class=""><i class="icon-droplets position-left"></i>发现</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="layout__loader">
+            <div class="pulsing-dot"></div>
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            {#<ul class="nav navbar-nav">#}
+            {#<li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>#}
+            {% block navbar %}
+            {% endblock %}
+            {#</ul>#}
+
+            {#
+            <p class="navbar-text">
+                <span class="label bg-success">成员</span>
+            </p>
+            #}
+
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+
+                    {% block navbar_right %}
+                        <li><a class="snippet"><i class="icon-stack-plus position-left"></i>碎片</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-plus2 text-teal"></i>
+
+                                <span class="position-right text-semibold">内容</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="/admin/posts/article"><i class="icon-pencil7"></i> 写文章</a></li>
+                                <li><a href="/admin/posts/goods"><i class="icon-bag"></i> 发布作品</a></li>
+                            </ul>
+                        </li>
+                    {% endblock %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+            <!-- Main sidebar -->
+            {% block sidebar_main %}
+                <!-- Main sidebar -->
+                <div class="sidebar sidebar-main sidebar-default sidebar-fixed">
+                    <div class="sidebar-content">
+
+                        <div class="tabbable sortable ui-sortable">
+                            <div class="tab-content">
+
+                                <div class="tab-pane no-padding active" id="app-nav">
+
+                                    <!-- Main navigation -->
+                                    <div class="sidebar-category sidebar-category-visible">
+                                        <div class="category-content no-padding">
+
+                                            <ul class="navigation navigation-main navigation-accordion">
+                                                {#<li class=""><a><i class="icon-statistics"></i>统计</a></li>#}
+                                                <li class="navigation-header">内容</li>
+                                                <li>
+                                                    <a href="/admin/posts"><i class="icon-files-empty"></i>
+                                                        <span>内容</span></a>
+                                                </li>
+                                                <li class=""><a href="/admin/snippets"><i class="icon-stack4"></i><span>碎片内容</span></a></li>
+                                                <li><a href="/admin/resumes"><i class="icon-magazine"></i> 简历管理</a></li>
+                                                <li><a href="/admin/resumes/themes"><i class="icon-magazine"></i> 简历模板</a></li>
+
+
+                                                                                            <li class="navigation-header">个性化</li>
+
+                                                                                            <li class="{% if http.controller == 'design' %}active{% endif %}"><a href="/admin/design"><i class="icon-droplet2"></i> 主题</a>
+                                                                                            </li>
+
+                                                <li><a href="/admin/menus"><i class=" icon-three-bars"></i> 菜单</a></li>
+
+                                                <li class="navigation-divider"></li>
+                                                <li class="navigation-header">配置</li>
+
+                                                <li><a href="/admin/options"><i
+                                                                class="icon-wrench3"></i>
+                                                        系统信息</a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <!-- /support -->
+                                </div>
+                                <div class="tab-pane no-padding" id="forms-tab">
+                                    <div class="category-title alpha-grey ">
+                                    <span><a href="#app-nav" data-toggle="tab">返回<i
+                                                    class="icon-arrow-right13 position-right "></i></a>
+                                    </span>
+                                    </div>
+
+                                    <!-- Sidebar search -->
+                                    <div class="sidebar-category">
+                                        <ul class="navigation navigation-alt navigation-accordion">
+                                            <li><a href="extension_blockui.html"><i class="icon-history"></i>
+
+                                                    <span>全部应用</span> <span class="badge bg-slate-400">8</span></a>
+
+                                            </li>
+                                            <li class="list-group-divider"></li>
+
+                                            {% for app in apps %}
+
+                                                <li class="{% if app.name == controller.app_name %}active {% endif %}">
+                                                    <a href="navbar_single.html">
+                                                        <i class="{% if app.type == 'website' %} icon-earth {% elseif app.type == 'wechat' %} fa fa-wechat {% elseif app.type == 'blog' %}  icon-pencil7 {% endif %} position-left"></i>
+                                                        <span><$ app.title $></span>
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+
+                                            <li class="list-group-divider"></li>
+                                            <li>
+                                                <a>
+                                                    <i class="icon-plus22 position-left "></i>
+                                                    <span>添加新应用</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /sidebar search -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /main sidebar -->
+
+            {% endblock %}
+            <!-- /main sidebar -->
+
+            <!-- Secondary sidebar -->
+            {% block sidebar_secondary %}{% endblock %}
+            <!-- /secondary sidebar -->
+
+            <!-- Main content -->
+            <div class="content-wrapper ">
+                {% block fab_menu %}{% endblock %}
+                {% block page_navbar %} {% endblock %}
+                <!-- Page header -->
+                {% block page_header %}{% endblock %}
+                <!-- /page header -->
+
+                <!-- Content area -->
+                <div class="content">
+                    <div id="messages"></div>
+
+                    {% block content %}{% endblock %}
+
+                    <!-- Footer -->
+                    {% block footer %}
+                        <div class="footer text-muted">
+                            &copy; 2017. Power by <a
+                                    href="http://themeforest.net/user/Kopyov"
+                                    target="_blank">Picker</a>
+                        </div>
+                    {% endblock %}
+                    <!-- /footer -->
+
+                </div>
+                <!-- /content area -->
+
+            </div>
+            <!-- /main content -->
+
+            <!-- Opposite sidebar -->
+            {% block opposite_sidebar %}{% endblock %}
+            <!-- /opposite sidebar -->
+
+        </div>
+        <!-- /page content -->
+    </div>
+    <!-- /page container -->
+    <!-- Core JS files -->
+    <div id="overlay"></div>
+
+
+
+</div>
+
+{#{% include "../components/modal.html" %}#}
+<div class="runtest" id="snippet-layer" style="display:none">
+
+        <div class="content-group p-20 no-margin">
+            {#<div class="panel-body no-shadow">#}
+            {#<div class="form-group">#}
+                {#<select2 :options="options" v-model="selected">#}
+                    {#<option disabled value="standard">默认类型</option>#}
+                {#</select2>#}
+            {#</div>#}
+            <div class="form-group">
+                <input class="layui-input" :id="dateId" placeholder="发布日期（可选）"
+                       onclick="layui.laydate({elem: this, festival:true, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"
+                       v-model="date" @click="changeDate(dateId)">
+
+            </div>
+            {#<form class="layui-form" action="">#}
+            {#<div class="layui-form-item">#}
+                {#<label class="layui-form-label">选择框</label>#}
+                {#<div class="layui-input-block">#}
+                    {#<select name="city" lay-verify="required">#}
+                        {#<option value=""></option>#}
+                        {#<option value="0">北京</option>#}
+                        {#<option value="1">上海</option>#}
+                        {#<option value="2">广州</option>#}
+                        {#<option value="3">深圳</option>#}
+                        {#<option value="4">杭州</option>#}
+                    {#</select>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="form-group">#}
+                {#<label>Your message:</label>#}
+                <textarea rows="5" cols="5" class="form-control no-border " placeholder="在这里输入内容" v-model="snippet_content"></textarea>
+            {#</div>#}
+            {#</div>#}
+    </div>
+</div>
+
+<script type="text/x-template" id="select2-template">
+    <select>
+        <slot></slot>
+    </select>
+</script>
+{% block components %}
+    {#{% include "../components/modal.html" %}#}
+
+{#    <template id="modal-template">
+
+        <div v-show="show" :transition="transition">
+            <div class="modal" @click.self="clickMask">
+                <div class="modal-dialog" :class="modalClass">
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div class="modal-header">
+                            <slot name="header">
+                                <a type="button" class="close" @click="cancel">x</a>
+                                <h4 class="modal-title">
+                                    <slot name="title">
+                                        {{ title }}
+                                    </slot>
+                                </h4>
+                            </slot>
+                        </div>
+                        <!--Container-->
+                        <div class="modal-body">
+                            <slot></slot>
+                        </div>
+                        <!--Footer-->
+                        <div class="modal-footer">
+                            <slot name="footer">
+                                <button type="button" :class="cancelClass" @click="cancel">{{ cancelText }}</button>
+                                <button type="button" :class="okClass" @click="ok">{{ okText }}</button>
+                            </slot>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-backdrop in"></div>
+        </div>
+    </template>#}
+
+{% endblock %}
+
+<script type="text/javascript">
+    //    <$ controller.lang $>
+    var lang = <$ 'zh-cn' | language | dump | safe $>;
+</script>
+<script type="text/javascript" src="/static/assets/js/fetch.js"></script>
+
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+<!-- Core JS files -->
+{#./layui/css/layui.css#}
+{#./layui/layui.js#}
+
+<script type="text/javascript" src="/static/assets/js/plugins/loaders/pace.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/loaders/blockui.min.js"></script>
+<!-- /core JS files -->
+
+<!-- Plugin JS files -->
+<script type="text/javascript" src="/static/assets/js/masonry/masonry.pkgd.min.js"></script>
+
+{#<script type="text/javascript" src="/static/assets/js/plugins/notifications/pnotify.min.js"></script>#}
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/selects/select2.min.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/validation/validate.min.js"></script>
+<script type="text/javascript"
+        src="/static/assets/js/plugins/forms/validation/localization/messages_zh.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/dragula/dragula.min.js"></script>
+{#<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script>#}
+<!-- /plugin js files -->
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/core.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/effects.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/trees/fancytree_all.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/trees/fancytree_childcounter.js"></script>
+
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/uniform.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/forms/tags/tagsinput.min.js"></script>
+{##}
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/core.min.js"></script>
+{#<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/effects.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/interactions.min.js"></script>#}
+{##}
+{#<script type="text/javascript" src="/static/assets/js/plugins/extensions/cookie.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switchery.min.js"></script>#}
+
+
+{#<script type="text/javascript" src="/static/assets/js/plugins/uploaders/webuploader/webuploader.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/pages/mail_list_write.js"></script>#}
+<!-- Theme JS files -->
+{#<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/uniform.min.js"></script>#}
+<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switchery.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switch.min.js"></script>
+{#<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/uniform.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switchery.min.js"></script>#}
+
+<script src="/static/assets/js/vue/vue.js"></script>
+<script>
+    Vue.config.debug = true;
+    Vue.config.devtools = true;
+
+//    Vue.component("modal", {
+//        template: "#modal-template",
+//        props: {
+//            size: {
+//                type: String,
+//                default: ""
+//            }
+//        },
+//        data: function () {
+//            return {
+//                "animated": ""
+//            };
+//        },
+//        methods: {
+//            beforeEnter: function () {
+//                this.animated = "animated fadeInDown";
+//            }
+//        }
+//    });
+
+
+    //    Vue.component("modal", {
+    //        template: "#modal-template",
+    //
+    //    })
+</script>
+
+<script type="text/javascript" src="/static/assets/js/native.history.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/core/app.min.js"></script>
+
+{#<script type="text/javascript" src="/static/assets/js/pages/form_checkboxes_radios.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/pages/extra_fab.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/pages/sidebar_detached_sticky_native.js"></script>#}
+
+{#<script type="text/javascript" src="/static/assets/js/plugins/ui/ripple.min.js"></script>#}
+<!-- /theme JS files -->
+<script>
+    jQuery(document).ready(function ($) {
+
+        $(document).on("click", ".delete", function (e) {
+
+            e.preventDefault();
+
+            var _this = $(this);
+
+            if (!_this.hasClass("active")) {
+
+                _this.addClass("active");
+
+                var div = $("<div><i class='icon confirm ion-ios-checkmark-outline'></i><i class='icon abort ion-ios-close-empty'></i></div>");
+                var element = $(this).append(div);
+
+                div.addClass("animated zoomIn");
+
+                div.on("click", ".abort", function () {
+                    div.fadeOut(300, function () {
+                        div.remove();
+                        _this.removeClass("active");
+                    });
+                });
+
+                div.on("click", ".confirm", function () {
+
+                    if (_this.hasClass("ajax")) {
+                        $.ajax({
+                            method: "POST",
+                            url: _this.attr("href"),
+                            success: function () {
+                                div.fadeOut(300, function () {
+                                    div.remove();
+                                    _this.removeClass("active");
+                                });
+                                $.event.trigger({
+                                    type: "fetch"
+                                });
+                            }
+                        });
+                    } else {
+                        window.location = _this.attr("href");
+                    }
+                });
+
+            }
+
+        });
+        var focus;
+
+        $(window).focus(function () {
+            focus = true;
+        }).blur(function () {
+            focus = false;
+        });
+
+        setInterval("getMessages(focus)", 1000);
+
+//            setTabs();
+
+    });
+
+
+    function getMessages(focus) {
+
+        if(focus && document.hasFocus()) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/ajax/messages",
+                data: {
+                    method: "getMessages"
+                },
+                dataType: "json",
+                success: function(message) {
+                    if(!jQuery.isEmptyObject(message)) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/admin/ajax/messages",
+                            data: {
+                                method: "deleteMessage",
+                                index: message.index
+                            },
+                            success: function() {
+
+                                var element = $(message.html).appendTo("#messages");
+
+                                element.addClass("animated fadeInDown");
+
+                                setTimeout(function() {
+                                    element.removeClass("fadeInDown").addClass("fadeOutUp");
+                                    element.one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function() {
+                                        element.remove();
+                                    });
+                                }, 2200);
+
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+    }
+</script>
+<script>
+    Vue.component('select2', {
+        props: ['options', 'value'],
+        template: '#select2-template',
+        mounted: function () {
+            var vm = this
+            var select_option = {
+                data: this.idFormat(this.options.data),
+//            placeholder: 'Select an optio'
+                placeholder: this.options.placeholder == null ? "请选择一个选项": this.options.placeholder
+            }
+            if (this.options.icon == true){
+                select_option.templateResult = vm.iconFormat,
+                    select_option.minimumResultsForSearch = Infinity,
+                    select_option.templateSelection = vm.iconFormat,
+                    select_option.escapeMarkup = function(m) { return m; }
+            }
+            $(this.$el)
+                .val(this.value)
+                // init select2
+                .select2(select_option)
+                // emit event on change.
+                .on('change', function () {
+                    vm.$emit('input', this.value)
+                })
+        },
+        methods: {
+            iconFormat: function(item){
+                var originalOption = item.element;
+
+                if (!item.id) { return item.text; }
+                var $icon = item.text;
+                if (item.icon != null && item.icon != undefined) {
+                    $icon = "<i class='icon-" + item.icon + "'></i>" + item.text;
+                }
+                return $icon;
+            },
+            dataFormat: function(data){
+                return $.map(data, function (obj) {
+                    obj.text = obj.text || obj.name; // replace name with the property used for the text
+
+                    return obj;
+                });
+            },
+            idFormat: function(data){
+                return $.map(data, function (obj) {
+                    obj.id = obj.id || obj.slug; // replace pk with your identifier
+
+                    return obj;
+                });
+            }
+        },
+        watch: {
+            value: function (value) {
+                // update value
+                $(this.$el).val(value)
+            },
+            options: function (options) {
+                // update options
+                $(this.$el).select2({ data: options })
+            }
+        },
+        destroyed: function () {
+            $(this.$el).off().select2('destroy')
+        }
+    })
+
+</script>
+{% block script %}{% endblock %}
+
+<script>
+
+    jQuery(document).ready(function ($) {
+
+        $(document).on("click", ".snippet", function (e) {
+
+            e.preventDefault();
+
+            var _this = $(this);
+            eventHub.$emit('snippet', 'message');
+
+        });
+
+    });
+
+
+    new Vue({
+        el: "#snippet-layer",
+        data: {
+            dateId: 'laydate_' + Date.now(),
+            date: "",
+            isTime: true,
+            snippet_content: "",
+            options: {
+                data: <$ snippet_terms | safe $>,
+                icon: true,
+                placeholder: '选择内容类型'
+
+            },
+        },
+        created: function () {
+            var vue = this;
+//            eventHub.$on("setHeadline", function (data) {
+//                vue.headline = data.headline;
+//                    vue.showSearch = data.showSearch;
+//            });
+            layui.use('layer');
+            layui.use('laydate');
+            layui.use('form');
+
+        },
+        mounted: function () {
+
+            var vue = this;
+//            this.page = vue.urlParam("page");
+//
+//            $(document).on("fetch", function () {
+//                vue.fetch();
+////            });
+//            $(document).on("message", function () {
+//                vue.message();
+//            });
+
+            eventHub.$on("snippet", this.render);
+//                eventHub.$on("setSearchbox", this.setParent);
+//                vue.setDrag();
+
+//            vue.render();
+
+
+        },
+        methods: {
+            render: function(){
+                var vue = this;
+
+                layui.use('layer', function () {
+                    var $ = layui.jquery
+                        , layer = layui.layer;
+                        layer.open({
+                            type: 1
+                            , title: '保存内容碎片'
+                            , id: 'Lay_layer_debug'
+                            , content: $('.runtest')
+                            , shade: false
+                            , anim: 2
+                            , closeBtn: 0 // 不显示开关
+                            , offset: 'auto'
+                            , resize: false
+                            , area: ['420px', '340px']
+                            ,btn: ['保存', '取消']
+                            ,  yes: function(index, layero){
+                                if (vue.snippet_content.length > 0){
+                                    vue.save(index, layer);
+                                } else {
+                                    layer.msg('没有需要保存的内容');
+                                    return;
+                                }
+                            }
+                            , success: function (layero, index) {
+//                               vue.save()
+                            }
+                            , end: function () {
+                                vue.snippet_content = "";
+                                vue.date = "";
+                            }
+                        });
+
+                });
+
+            },
+            changeDate(dateId){
+                let self = this;
+                layui.laydate({
+                    elem: document.getElementById(dateId),
+                    istime: self.isTime || false,
+                    format: self.dateFormat || 'YYYY-MM-DD hh:mm:ss',
+                    choose: function (dates) { //选择好日期的回调
+                        self.date = dates;
+                    }
+                })
+            },
+            save: function (index, layer) {
+//                    notify("正在提交内容...");
+//                this.status = 'saving';
+                var loader_index = layer.load(1)
+
+                var self = this;
+                var postData = {
+//                    "id": this._id,
+//                    "title": this.title,
+//                    "name": this.name,
+//                    "date": this.date,
+//                    "category": ""
+//                    "type": "snippet",
+                    "status": "pending",
+                    "date": self.date,
+                    "content": self.snippet_content
+                }
+                fetch('/admin/posts/snippet', {
+                        credentials: 'include',
+                    method: 'POST',
+//                        mode: 'cors',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(postData)
+
+                }).then(function (response) {
+
+                    if (response.ok) {
+                        layer.close(loader_index);
+                        layer.close(index);
+
+                        return response.json();
+                    } else {
+//                        notify(data.errmsg, "danger");
+                        var error = new Error(response.statusText)
+                        error.response = response
+                        throw error
+                    }
+                }).then(function (json) {
+                    eventHub.$emit('new_snippet', 'have_new');
+
+//                    if (json._id != null) {
+//                        self._id = json._id;
+//                        // 设置页面路径信息，页面刷新后也可以获得当前编辑的信息
+//                        History.pushState({state: 1}, "State 1", self._id.toString());
+//                    }
+                })
+            }
+        },
+        watch: {//深度 watcher
+            'snippet_content': function () {
+                if (this.snippet_content.length) {
+
+                    console.log(this.snippet_content)
+//                    eventHub.$emit("setHeadline", {
+//                        headline: '<span class="text-semibold text-danger">' + this.checked.length + ' 内容被选中</span>',
+//                            headline: this.checked.length + " " + lang["checked"] + "<a href='?delete=" + this.checked + "' class='icon delete ajax icon-ios-trash-outline'></a>",
+//                            showSearch: false
+//                    });
+                } else {
+//                    eventHub.$emit("setHeadline", {
+//                        headline: this.oldHeadline,
+//                        showSearch: true
+//                    });
+                }
+
+            }
+        },
+    });
+
+
+
+</script>
+
+</body>
+</html>

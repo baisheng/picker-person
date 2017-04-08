@@ -1,0 +1,772 @@
+{% extends "./inc/_base.html" %}
+
+{% block style %}
+    <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
+
+    <style>
+        .post-image {
+            position: relative;
+            width: 100%;
+            margin-top: 16px;
+            background-color: #f3f6f8;
+            text-align: center;
+        }
+
+        .post-image:first-child {
+            margin-top: 0;
+        }
+
+        .post-image.is-placeholder {
+            background-color: #e9eff3;
+            -webkit-animation: loading-fade 1.6s ease-in-out infinite;
+            animation: loading-fade 1.6s ease-in-out infinite;
+        }
+
+        @media (min-width: 481px) {
+            .post-image.is-collapsed, .post-image.is-placeholder {
+                height: 232px;
+            }
+        }
+
+        @-webkit-keyframes loading-fade {
+            0% {
+                opacity: .5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: .5;
+            }
+        }
+
+        @keyframes loading-fade {
+            0% {
+                opacity: .5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: .5;
+            }
+        }
+
+        @-webkit-keyframes appear {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes appear {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes pulse-light {
+            50% {
+                background-color: #e9eff3;
+            }
+        }
+
+        @keyframes pulse-light {
+            50% {
+                background-color: #e9eff3;
+            }
+        }
+
+        @-webkit-keyframes loading-dot-pulse {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes loading-dot-pulse {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+    </style>
+
+    <style>
+        a.delete {
+            z-index: 5;
+            position: relative;
+        }
+
+        a.delete div {
+            width: 76px;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            background: #fefefe;
+            position: absolute;
+            z-index: 5;
+            margin: -20px 0 0 -38px;
+            -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            -moz-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+        }
+
+        a.delete div .confirm,
+        a.delete div .abort {
+            vertical-align: top;
+            line-height: 32px;
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            font-size: 21px !important;
+            top: 4px;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        a.delete div .confirm:before,
+        a.delete div .abort:before {
+            line-height: 32px;
+            display: block;
+        }
+
+        a.delete div .confirm {
+            color: #fff;
+            background: #ef4748;
+            left: 4px;
+        }
+
+        a.delete div .abort {
+            /*color: #858a95;*/
+            /*color: #;*/
+            right: 4px;
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block navbar %}
+    {#<p class="navbar-text"><a><i class="icon-search4 text-muted text-size-base"></i></a></p>#}
+    {#<li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-star-empty3"></i></a></li>#}
+{#
+    <li><a href="#"><i class="icon-question7"></i> 文章</a></li>
+    <li><a href="#"><i class="icon-accessibility"></i> 图片</a></li>
+    <li><a href="#"><i class="icon-reading"></i> 视频</a></li>
+    <li><a href="#"><i class="icon-gear"></i> 音频</a></li>
+    <li><a href="#"><i class="icon-graduation"></i> 链接</a></li>
+    <li><a href="#"><i class="icon-mail-read"></i> 全部</a></li>
+
+    <div class="btn-group navbar-btn no-margin-left">
+        <button type="button" class="btn btn-default "><i class="icon-search4 text-muted text-size-base"></i></button>
+        <button type="button" class="btn btn-default"><i class=" icon-file-text2"></i> <span class="hidden-xs position-right">文章</span></button>
+        <button type="button" class="btn btn-default"><i class=" icon-file-picture"></i><span class="hidden-xs position-right">图片</span></button>
+        <button type="button" class="btn btn-default"><i class=" icon-play"></i><span class="hidden-xs position-right">视频</span></button>
+        <button type="button" class="btn btn-default"><i class="icon-portfolio"></i> <span class="hidden-xs position-right">作品</span></button>
+        <button type="button" class="btn btn-default"><span>全部 </span></button>
+    </div>
+#}
+    <li class="active"><a href="#"><i class="icon-files-empty position-left"></i> 全部</a></li>
+
+    <li><a href="#"><i class="icon-file-text2 position-left"></i> 文章</a></li>
+    <li><a href="#"><i class="icon-file-picture position-left"></i> 图片</a></li>
+    <li><a href="#"><i class="icon-play position-left"></i> 视频</a></li>
+    <li><a href="#"><i class="icon-portfolio position-left"></i> 作品</a></li>
+
+
+    {#
+    <li class="dropdown">
+        <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-stack2 position-left"></i> 内容类别 <span class="caret"></span>
+        </a>
+
+        <ul class="dropdown-menu">
+            <li><a href="#"><i class="icon-file-text2"></i> 文章</a></li>
+            <li><a href="#"><i class="icon-file-picture"></i> 图片</a></li>
+            <li><a href="#"><i class="icon-play"></i> 视频</a></li>
+            <li><a href="#"><i class="icon-portfolio"></i> 作品</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="icon-files-empty"></i> 全部</a></li>
+        </ul>
+    </li>
+    #}
+    {#<li><a href="#" class="btn btn-link"><i class=" position-left"></i> 已发布</a></li>#}
+    {#<li><a href="#" class="btn btn-link"><i class=" position-left"></i> 待审</a></li>#}
+    {#<li><a href="#" class="btn btn-link"><i class=" position-left"></i> 草稿</a></li>#}
+    {#<li><a href="#" class="btn btn-link"><i class=" position-left"></i> </a></li>#}
+{% endblock %}
+
+    {% block content %}
+
+
+{#
+    <div class="navbar navbar-default navbar-xs navbar-component">
+        <ul class="nav navbar-nav no-border visible-xs-block">
+            <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-filter"><i
+                            class="icon-menu7"></i></a></li>
+        </ul>
+
+        <div class="navbar-collapse collapse" id="navbar-filter">
+            <p class="navbar-text"><a><i class="icon-search4 text-muted text-size-base"></i></a></p>
+
+            <ul class="nav navbar-nav">
+
+                <li class="dropdown">
+                    <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-stack2 position-left"></i> 内容类别 <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="icon-question7"></i> 文章</a></li>
+                        <li><a href="#"><i class="icon-accessibility"></i> 图片</a></li>
+                        <li><a href="#"><i class="icon-reading"></i> 视频</a></li>
+                        <li><a href="#"><i class="icon-gear"></i> 音频</a></li>
+                        <li><a href="#"><i class="icon-graduation"></i> 链接</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="icon-mail-read"></i> 全部</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" class="btn btn-link"><i class=" position-left"></i> 已发布</a></li>
+                <li><a href="#" class="btn btn-link"><i class=" position-left"></i> 待审</a></li>
+                <li><a href="#" class="btn btn-link"><i class=" position-left"></i> 草稿</a></li>
+                #}
+{#<li><a href="#" class="btn btn-link"><i class=" position-left"></i> </a></li>#}{#
+
+            </ul>
+
+            <div class="navbar-right">
+                #}
+{#<p class="navbar-text">View mode:</p>#}{#
+
+                <form class="navbar-form navbar-left" action="#">
+                    <div class="form-group">
+                        <label class="checkbox-inline switchery-double checkbox-switchery switchery-xs">
+                            列表
+                            <input type="checkbox" class="switch-mode" checked="checked">
+                            表格
+                        </label>
+                    </div>
+                </form>
+                <ul class="nav navbar-nav">
+                    <li><a href="/admin/posts/list" class="btn btn-link"><i class="icon-trash-alt position-left"></i>
+                            回收站 #}
+{#<span class="badge bg-teal-400">9</span>#}{#
+</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+#}
+
+    <div class="row" data-plugin="masonry">
+
+
+        <div class="col-lg-6 col-md-12 col-xs-12 masonry-item" v-for="_ in pageAll">
+            <div class="panel panel-flat">
+                {#            <div class="panel-heading">
+                              <h5 class="panel-title text-semibold">
+                                <a href="/read/{{ _.id }}">{{ _.title | truncate(18, true) }}</a>
+
+                              </h5>
+                            </div>#}
+                <div class="panel-body">
+
+                    <div class="thumb content-group ">
+                        {#<img src="/static/assets/images/demo/blog/3.jpg" alt="" class="img-responsive">#}
+                        <div class="post-image is-placeholder"></div>
+                        <div class="caption-overflow">
+										<span>
+											<a href="blog_single.html"
+                                               class="btn btn-flat border-white text-white btn-rounded btn-icon legitRipple"><i
+                                                        class="icon-arrow-right8"></i></a>
+										</span>
+                        </div>
+                    </div>
+
+
+                    <div class="content-group">
+
+                        <h5 class="blog-title text-semibold" style="margin-top: 0; margin-bottom: 5px;">
+                            <a class="text-default" :href="'/read/'+  _.id">${ _.title }</a>
+
+                        </h5>
+                        <ul class="list-inline list-inline-separate">
+                            <li><i class=" icon-watch2 text-muted"></i></li>
+                            {#<li><a href="#" class="text-muted">采撷科技官网</a></li>#}
+                            <li><a class="text-size-small text-muted">
+                                    <time :datetime="_.modified">${ _.modified | moment}</time>
+                                </a></li>
+                            <li><a href="#" class="text-muted">image</a>, <a href="#" class="text-muted">blog</a>, <a
+                                        href="#" class="text-muted">post</a></li>
+                        </ul>
+
+                    </div>
+
+                    <div class="content-group" v-html="_.excerpt">
+                        {#${ _.excerpt}#}
+                    </div>
+
+                    <div class="thumb content-group">
+                        {#<img src="/static/assets/images/demo/blog/1.jpg" alt="" class="img-responsive">#}
+                        <div class="caption-overflow">
+										<span>
+											<a href="blog_single.html"
+                                               class="btn btn-flat border-white text-white btn-rounded btn-icon legitRipple"><i
+                                                        class="icon-arrow-right8"></i></a>
+										</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="panel-footer text-center no-padding">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <a :href="'/admin/posts/'+ _.id + '/edit'" class="display-block p-10 text-muted"><i class="icon-pencil position-left"></i>编辑</a>
+                        </div>
+
+                        <div class="col-xs-3">
+                            <a href="#" class="display-block p-10 text-muted"><i
+                                        class="icon-eye position-left"></i>查看</a>
+                        </div>
+
+                        <div class="col-xs-3">
+                            <a href="#" class="display-block p-10 text-muted" data-popup="tooltip" data-placement="top"
+                               data-container="body" title="" data-original-title="下在成 MD 文件"><i
+                                        class="icon-file-download position-left"></i>下载</a>
+                        </div>
+
+                        <div class="col-xs-3">
+                            {#<a href="#" class="display-block p-10 text-muted ajax delete" ><i class=" icon-trash position-left"></i> 回收站</a>#}
+                            <a :href="'/admin/posts/'+ _.id+'/delete'"
+                               class="display-block p-10 text-muted ajax delete"><i
+                                        class=" icon-trash position-left"></i> 回收站</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="text-center content-group-lg pt-20">
+            <page :allpage="allpage" :page="page" v-on:increment="incrementTotal"></page>
+        </div>
+    </div>
+
+    {#{% include "../admin/components/data-table.html" %}#}
+{% endblock %}
+
+
+{% block script %}
+    <script type="text/javascript" src="/static/assets/js/core/libraries/jasny_bootstrap.min.js"></script>
+    {#<script type="text/javascript" src="/static/assets/js/pages/mail_list.js"></script>#}
+    <script>
+        $(document).on("click", ".delete", function (e) {
+
+            e.preventDefault();
+
+            var _this = $(this);
+
+            if (!_this.hasClass("active")) {
+
+                _this.addClass("active");
+
+                var div = $("<div><i class='icon confirm ion-ios-checkmark-outline'></i><i class='icon abort ion-ios-close-empty'></i></div>");
+                var element = $(this).append(div);
+
+                div.addClass("animated zoomIn");
+
+                div.on("click", ".abort", function () {
+                    div.fadeOut(300, function () {
+                        div.remove();
+                        _this.removeClass("active");
+                    });
+                });
+
+                div.on("click", ".confirm", function () {
+                    if (_this.hasClass("ajax")) {
+                        $.ajax({
+                            method: "POST",
+                            url: _this.attr("href"),
+                            success: function () {
+                                div.fadeOut(300, function () {
+                                    div.remove();
+                                    _this.removeClass("active");
+                                });
+                                $.event.trigger({
+                                    type: "fetch"
+                                });
+                            }
+                        });
+                    } else {
+                        window.location = _this.attr("href");
+                    }
+                });
+
+            }
+
+        });
+    </script>
+
+
+    <script>
+        Vue.component("pageButton", {
+            delimiters: ['${', '}'],
+            template: '<template><p class="navbar-text">共 <span class="text-semibold">${pagedata.totalPages} </span> 页 <span class="text-semibold">${pagedata.count} 条记录</span></p>' +
+            '<div class="btn-group navbar-left navbar-btn">' +
+            '<button type="button" class="btn btn-default btn-icon " :class="disabled: pagedata.currentPage == 1"><i class="icon-arrow-left12"></i></button>' +
+            '<button type="button" class="btn btn-default btn-icon"><i class="icon-arrow-right13"></i></button> ' +
+            '</div></template>',
+            data: function(){
+                return {
+                    current: this.page || 1
+                }
+            },
+            props: [
+//                "count",
+//                "totalpage",
+//                "page",
+                "pagedata"
+            ],
+            computed: {
+                pageIndex: function(){
+                    var num = 5;
+                    var pageIndex = []
+                },
+                pages: function () {
+                    var pag = [];
+                    if (this.current < this.showItem) { //如果当前的激活的项 小于要显示的条数
+                        //总页数和要显示的条数那个大就显示多少条
+                        var i = Math.min(this.showItem, this.allpage);
+                        while (i) {
+                            pag.unshift(i--);
+                        }
+                    } else { //当前页数大于显示页数了
+                        var middle = this.current - Math.floor(this.showItem / 2),//从哪里开始
+                            i = this.showItem;
+                        if (middle > (this.allpage - this.showItem)) {
+                            middle = (this.allpage - this.showItem) + 1
+                        }
+                        while (i--) {
+                            pag.push(middle++);
+                        }
+                    }
+                    return pag
+                }
+            }
+        });
+
+        Vue.component("page", {
+            delimiters: ['${', '}'],
+//            template:"#page",
+            template: '<ul class="pagination pagination-flat pagination-xs" > <li v-show="current != 1" @click="current-- && goto(current)" ><a href="#">上一页</a></li> <li v-for="index in pages" @click="goto(index)" :class="{\'active\':current == index}" :key="index"> <a href="javascript:;" >${index}</a> </li> <li v-show="allpage != current && allpage != 0 " @click="current++ && goto(current++)"><a href="#" >下一页</a></li> </ul>',
+            data: function () {
+                return {
+                    current: this.page || 1,
+                    showItem: 5,
+                }
+            },
+            props: [
+                "allpage",
+                "page"
+            ],
+            computed: {
+                pages: function () {
+                    var pag = [];
+                    if (this.current < this.showItem) { //如果当前的激活的项 小于要显示的条数
+                        //总页数和要显示的条数那个大就显示多少条
+                        var i = Math.min(this.showItem, this.allpage);
+                        while (i) {
+                            pag.unshift(i--);
+                        }
+                    } else { //当前页数大于显示页数了
+                        var middle = this.current - Math.floor(this.showItem / 2),//从哪里开始
+                            i = this.showItem;
+                        if (middle > (this.allpage - this.showItem)) {
+                            middle = (this.allpage - this.showItem) + 1
+                        }
+                        while (i--) {
+                            pag.push(middle++);
+                        }
+                    }
+                    return pag
+                }
+            },
+            methods: {
+                goto: function (index) {
+
+                    if (index == this.current) return;
+                    this.current = index;
+//                    $.event.trigger({
+//                        type: "message"
+//                    });
+                    this.$emit('increment', index)
+                    //这里可以发送ajax请求
+                }
+            }
+        })
+        //只能输入正整数过滤器
+        Vue.filter('onlyNumeric', {
+            // model -> view
+            // 在更新 `<input>` 元素之前格式化值
+            read: function (val) {
+                return val;
+            },
+            // view -> model
+            // 在写回数据之前格式化值
+            write: function (val, oldVal) {
+                var number = +val.replace(/[^\d]/g, '')
+                return isNaN(number) ? 1 : parseFloat(number.toFixed(2))
+            }
+        })
+
+        Vue.filter('text', function(val){
+            return val.replace(/<[^>]+>/g,"");//去掉所有的html标记
+
+        });
+
+        Vue.filter('trim', function(val){
+            var result;
+//            result = val.replace(/(^\s+)|(\s+$)/g,"");
+//            if(is_global.toLowerCase()=="g")
+//            {
+                result = val.replace(/\s/g,"");
+//            }
+            return result;
+
+        })
+
+        //数组删除某项功能
+        Array.prototype.remove = function (dx) {
+            if (isNaN(dx) || dx > this.length) {
+                return false;
+            }
+            for (var i = 0, n = 0; i < this.length; i++) {
+                if (this[i] != this[dx]) {
+                    this[n++] = this[i]
+                }
+            }
+            this.length -= 1
+        }
+
+        new Vue({
+            delimiters: ['${', '}'],
+            el: "#app",
+            data: {
+                {#userInfo: '{{ userInfo | dump}}',#}
+//                headline: lang["pages"],
+                addPageModal: false,
+                pageName: "",
+                pageParent: 0,
+                pageGrid: 0,
+                pageParentName: "",
+                pageAll: '',
+                searchBoxShow: false,
+                searchBox: "",
+                allpage: 0,
+                total: 1,
+                page: 0,
+                current: this.page || 1,
+                pagedata:{},
+                isActive: true,
+            },
+            components: {},
+            mounted: function () {
+
+                var vue = this;
+                this.page = vue.urlParam("page");
+
+                $(document).on("fetch", function () {
+                    vue.fetch();
+                });
+                $(document).on("message", function () {
+                    vue.message();
+                });
+                vue.fetch();
+//                $(window).load(function(){ $('[data-plugin="masonry"]').masonry(); });
+
+                // Reverse last 3 dropdowns orientation
+                $('.content > .row').slice(-1).find('.dropdown, .btn-group').addClass('dropup');
+
+
+                // Multiple switchery toggles
+                if (Array.prototype.forEach) {
+                    var elems = Array.prototype.slice.call(document.querySelectorAll('.switch-mode'));
+
+                    elems.forEach(function (html) {
+                        var switchery = new Switchery(html);
+                    });
+                }
+                else {
+                    var elems = document.querySelectorAll('.switch-mode');
+
+                    for (var i = 0; i < elems.length; i++) {
+                        var switchery = new Switchery(elems[i]);
+                    }
+                }
+//                eventHub.$on("setHome", this.setHome);
+//                eventHub.$on("setSearchbox", this.setParent);
+//                vue.setDrag();
+
+                vue.render();
+
+
+
+
+            },
+            methods: {
+//                layout: function(){
+//                    $('[data-plugin="masonry"]').masonry('layout')
+//
+//                },
+                render:function(){
+                    // Custom code
+                    // ------------------------------
+
+                    // Highlight row when checkbox is checked
+                    $('.table-inbox').find('tr > td:first-child').find('input[type=checkbox]').on('change', function() {
+                        if($(this).is(':checked')) {
+                            $(this).parents('tr').addClass('warning');
+                        }
+                        else {
+                            $(this).parents('tr').removeClass('warning');
+                        }
+                    });
+
+                    // Grab first letter and insert to the icon
+                    $(".table-inbox tr").each(function (i) {
+
+                        // Title
+                        var $title = $(this).find('.letter-icon-title'),
+                            letter = $title.eq(0).text().charAt(0).toUpperCase();
+
+                        // Icon
+                        var $icon = $(this).find('.letter-icon');
+                        $icon.eq(0).text(letter);
+                    });
+
+
+                    // Plugins
+                    // ------------------------------
+
+                    // Default initialization
+                    $(".styled, .multiselect-container input").uniform({
+                        radioClass: 'choice'
+                    });
+
+                    // Initialize Row link plugin
+                    $('tbody.rowlink').rowlink();
+                },
+                incrementTotal: function (id) {
+                    this.total += 1
+                    History.pushState({state: id}, "State", '?page=' + id.toString());
+                    this.page = id;
+                    this.fetch();
+
+                },
+                pageTo: function (index) {
+                    console.log(index);
+                    if (index < 1) {
+                        this.current = 1;
+                        return;
+                    }
+                    if (index > this.pagedata.totalPages){
+                       this.current = this.pagedata.totalPages;
+                       return;
+                    }
+//                    if (index == this.current) return;
+                    this.current = index;
+                    this.page = index;
+//                    if (num < 1 || num >= this.pagedata.totalPages) return;
+//                    console.log(index);
+
+//                    this.total += 1
+                    History.pushState({state: index}, "State", '?page=' + index.toString());
+//                    this.page = num;
+                    this.fetch();
+
+                },
+                fetch: function () {
+                    var vue = this;
+                    var _url = "/admin/posts/list";
+                    if (this.page != 0 && Number.parseInt(this.page)) {
+                        _url += "?page=" + this.page;
+                    }
+                    $.ajax({
+                        method: "POST",
+                        url: _url,
+                        dataType: "json",
+                        success: function (data) {
+                            vue.pageAll = data.data;
+                            vue.allpage = data.totalPages;
+//                            vue.pageTree = data.tree;
+//                            vue.setDrag();
+//                            delete data.data;
+                            vue.pagedata = data;
+
+                            vue.reLayout();
+                        }
+                    });
+                },
+
+                reLayout: function () {
+                    var _vue = this;
+                    Vue.nextTick(function () {
+                        _vue.render();
+
+                        // DOM updated
+                        var $grid = $('[data-plugin="masonry"]');
+                        $grid.masonry();
+                        $grid.masonry('reloadItems')
+                        $grid.masonry('layout');
+                    })
+                },
+                urlParam: function (name) {
+                    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                    var r = window.location.search.substr(1).match(reg);
+                    // decodeURIComponent() 
+                    if (r != null)return decodeURI(r[2]);
+                    return null;
+                }
+
+            },
+            computed: {
+                pageTreeLength: function () {
+                    return !jQuery.isEmptyObject(this.pageTree);
+                },
+
+            }
+        });
+    </script>
+{% endblock %}

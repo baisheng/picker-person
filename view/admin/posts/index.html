@@ -1,0 +1,479 @@
+{% extends "../_layout.html" %}
+
+{% block style %}
+    <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
+
+    <style>
+        .post-image {
+            position: relative;
+            width: 100%;
+            margin-top: 16px;
+            background-color: #f3f6f8;
+            text-align: center;
+        }
+
+        .post-image:first-child {
+            margin-top: 0;
+        }
+
+        .post-image.is-placeholder {
+            background-color: #e9eff3;
+            -webkit-animation: loading-fade 1.6s ease-in-out infinite;
+            animation: loading-fade 1.6s ease-in-out infinite;
+        }
+
+        @media (min-width: 481px) {
+            .post-image.is-collapsed, .post-image.is-placeholder {
+                height: 232px;
+            }
+        }
+
+        @-webkit-keyframes loading-fade {
+            0% {
+                opacity: .5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: .5;
+            }
+        }
+
+        @keyframes loading-fade {
+            0% {
+                opacity: .5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: .5;
+            }
+        }
+
+        @-webkit-keyframes appear {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes appear {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes pulse-light {
+            50% {
+                background-color: #e9eff3;
+            }
+        }
+
+        @keyframes pulse-light {
+            50% {
+                background-color: #e9eff3;
+            }
+        }
+
+        @-webkit-keyframes loading-dot-pulse {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes loading-dot-pulse {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+    </style>
+
+    <style>
+
+
+        #messages {
+            position: fixed;
+            top: 65px;
+            left: 50%;
+            z-index: 110;
+            margin-left: 125px;
+            -webkit-transform: translate(-50%, 0);
+            -moz-transform: translate(-50%, 0);
+            -o-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        #messages .animated {
+            -webkit-animation-duration: 0.2s;
+            animation-duration: 0.2s;
+        }
+
+        @media (max-width: 992px ) {
+            #messages {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #messages {
+                left: 15px;
+                right: 15px;
+                top: 61px;
+                -webkit-transform: translate(0, 0);
+                -moz-transform: translate(0, 0);
+                -o-transform: translate(0, 0);
+                -ms-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        .message {
+            padding: 8px 10px;
+            color: #fff;
+            margin: 0 0 5px 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        .message.success {
+            background: #41da54;
+        }
+
+        .message.info {
+            background: #3f82d7;
+        }
+
+        .message.warning {
+            background: #e4c139;
+        }
+
+        .message.error {
+            background: #ef4748;
+        }
+
+        .message ol {
+            margin: 0;
+            padding: 0 0 0 18px;
+        }
+
+        .message ol li {
+            margin: 4px 0;
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block navbar %}
+
+    <div class="navbar-btn btn-group ">
+        {#<button type="button" class="btn btn-default "><i class="icon-star-empty3"></i></button>#}
+        <a type="button" class="btn btn-default" href="/admin/posts"><i class="icon-files-empty position-left"></i>
+            全部</a>
+        <a type="button" class="btn btn-default" @click="fetch('publish')"><i class="icon-check"></i>
+            <span class="hidden-xs position-right">
+                    {{ 'publish' | lang }}
+
+                </span>
+        </a>
+        <a type="button" class="btn btn-default" @click="fetch('pending')"><i class="icon-eye-plus"></i><span
+                    class="hidden-xs position-right">
+                    {{ 'pending' | lang }}
+                </span></a>
+
+        <a type="button" class="btn btn-default " @click="fetch('drafts')"><i class="icon-box"></i> <span
+                    class="hidden-xs position-right">
+                    {{ 'draft' | lang }}
+                    </span></a>
+
+        <a type="button" class="btn btn-default " @click="fetch('trashed')"><i class=" icon-bin2"></i> <span
+                    class="hidden-xs position-right">
+                    {{ 'trash' | lang }}
+            </span></a>
+
+
+    </div>
+
+
+{% endblock %}
+
+{% block sidebar_main %}
+    <div class="sidebar sidebar-main sidebar-default sidebar-separate">
+        <div class="sidebar-content">
+
+            <!-- Actions -->
+            <div class="sidebar-category">
+
+
+                <div class="category-content">
+                    <a href="/admin/post" class="btn btn-primary border-primary btn-block legitRipple">添加文章</a>
+                </div>
+            </div>
+            <!-- /actions -->
+
+
+            <!-- Sub navigation -->
+            <div class="sidebar-category">
+                {#<div class="category-title">#}
+                    {#<span>Navigation</span>#}
+                    {#<ul class="icons-list">#}
+                        {#<li><a href="#" data-action="collapse"></a></li>#}
+                    {#</ul>#}
+                {#</div>#}
+
+                <div class="category-content no-padding">
+                    <ul class="navigation navigation-alt navigation-accordion no-padding-bottom">
+                        {#<li class="navigation-header">内容管理</li>#}
+                        <li class="active"><a href="#" class="legitRipple"><i class="icon-drawer-in"></i> 全部文章 <span
+                                        class="badge badge-success">32</span></a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-drawer3"></i> 草稿</a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-drawer-out"></i> 已发布</a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-stars"></i> 标星</a></li>
+                        <li class="navigation-divider"></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-bin"></i> 回收站</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /sub navigation -->
+            {#
+            <div class="sidebar-category">
+                <div class="category-title">
+                    <span>分类与标签</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content no-padding">
+                    <ul class="navigation navigation-alt navigation-accordion no-padding-bottom">
+                        <li class="navigation-header">内容分类</li>
+
+                        <li v-for="cate in category"><a :href="cate.id">{{ cate.name }}</a></li>
+
+                        <li class="navigation-header">内容标签</li>
+
+                        <li v-for="tag in post_tag"><a :href="tag.id" class="legitRipple"><span class="status-mark border-primary position-left"></span>{{ tag.name }}</a></li>
+                    </ul>
+                </div>
+            </div>
+            #}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+    <div id="messages"></div>
+
+    <!-- Multiple lines -->
+    <div class="panel panel-white">
+
+        <div class="panel-heading">
+            <h6 class="panel-title" v-html="headline">我的内容</h6>
+
+            <div class="heading-elements not-collapsible">
+                <a><span class="label bg-slate-400 heading-text">10 待审内容</span></a>
+                <a><span class="label bg-slate-400 heading-text">50 草稿</span></a>
+            </div>
+        </div>
+
+
+        <div class="panel-toolbar panel-toolbar-inbox">
+            <div class="navbar navbar-default">
+                <ul class="nav navbar-nav visible-xs-block no-border">
+                    <li>
+                        <a class="text-center collapsed" data-toggle="collapse"
+                           data-target="#inbox-toolbar-toggle-multiple">
+                            <i class="icon-circle-down2"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
+                    <div class="btn-group navbar-btn">
+                        <button type="button" class="btn btn-default btn-icon btn-checkbox-all">
+                            {#<input type="checkbox" class="styled" v-model='checked' v-on:click='checkedAll'>#}
+                            <input type="checkbox" class="styled" v-model="selectAll">
+                        </button>
+                        {#
+
+                        <button type="button" class="btn btn-default btn-icon dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li><a href="#">选择全部</a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#">Select unread</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Clear selection</a></li>
+                        </ul>
+                        #}
+                    </div>
+
+                    <div class="btn-group navbar-btn" v-show="checked.length > 0">
+                        {#<h1 v-html="headline"></h1>#}
+                        {#<p class="navbar-text" v-html="headline"></p>#}
+
+                        {#<button type="button" class="btn btn-default"><i class="icon-pencil7"></i> <span class="hidden-xs position-right">添加</span></button>#}
+                        <a :href="'/admin/posts/delete?ids=' +checked" type="button"
+                           class="btn btn-default delete ajax"><i class="icon-bin"></i> <span
+                                    class="hidden-xs position-right">删除</span></a>
+                        <!--
+
+                        <a type="button" class="btn btn-default"><i class=" icon-folder2"></i> <span
+                                    class="hidden-xs position-right">移动</span></a>
+                        <a type="button" class="btn btn-default"><i class=" icon-price-tag2"></i> <span
+                                    class="hidden-xs position-right">标签</span></a>
+                                    -->
+                    </div>
+
+                    <div class="navbar-right">
+                        <p class="navbar-text">共：<span class="text-semibold">{{ pagedata.totalPages }} </span> 页 <span
+                                    class="text-semibold">{{ pagedata.count }} 条记录</span></p>
+                        <div class="btn-group navbar-left navbar-btn">
+                            <button type="button" class="btn btn-default btn-icon" :class="{disabled: page <= 1}"
+                                    @click="current-- && pageTo(current--)"><i class="icon-arrow-left12"></i></button>
+                            <button type="button" class="btn btn-default btn-icon"
+                                    :class="{disabled: page >= pagedata.totalPages}"
+                                    @click="current++ && pageTo(current++)"><i class="icon-arrow-right13"></i></button>
+                        </div>
+                        <div class="btn-group navbar-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-filter3"></i>
+                                <span class="caret"></span>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                {#<li><a href="#"><i class="icon-question7"></i> 文章</a></li>#}
+                                {#<li><a href="#"><i class="icon-accessibility"></i> 图片</a></li>#}
+                                {#<li><a href="#"><i class="icon-reading"></i> 视频</a></li>#}
+                                {#<li><a href="#"><i class="icon-gear"></i> 音频</a></li>#}
+                                {#<li><a href="#"><i class="icon-graduation"></i> 作品</a></li>#}
+                                {#<li class="divider"></li>#}
+                                {#<li><a href="#"><i class="icon-mail-read"></i> 全部</a></li>#}
+
+
+                                <li><a href="#"><i class="icon-question7 position-left"></i> 文章</a></li>
+                                <li><a href="#"><i class="icon-eye-plus position-left"></i> 图片</a></li>
+                                <li><a href="#"><i class="icon-play position-left"></i> 视频</a></li>
+                                <li><a href="#"><i class="icon-portfolio position-left"></i> 作品</a></li>
+                                <li class="divider"></li>
+                                <li class="active"><a href="#"><i class="icon-files-empty position-left"></i> 全部</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover default table-inbox  ">
+                <tbody data-link="row" class="rowlink">
+
+                <tr class="unread" v-for="_ in pageAll">
+
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input :id="'data' + _.id" :value="_.id" type="checkbox" class="styled" v-model='checked'>
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a :href="'/admin/post/'+ _.id + '/star'">
+                            <i class="icon-star-empty3 text-muted"></i>
+                        </a>
+                    </td>
+
+                    <td class="table-inbox-name">
+                        <a class="letter-icon-title  pr-10" v-for="term in _.terms">{{ term.name }}</a>
+                    </td>
+                    <td class="table-inbox-message  rowlink-skip">
+                        <div class="table-inbox-subject">
+                            <a :href="'/admin/post/' + _.id"> {{ _.title }} </a>
+                        </div>
+                        <span class="table-inbox-preview">
+                            {#<a class="text-muted" :href="'/admin/article/' + _.id">{{ _.excerpt | text | trim }}</a>#}
+                            <a class="text-muted" :href="'/admin/post/' + _.id">{{ _.excerpt | text | trim }}</a>
+                            {#<div class="content-group" v-html="_.excerpt">#}
+                        </span>
+                    </td>
+                    {#<td class="table-inbox-attachment">#}
+                        {#<i class="icon-attachment text-muted"></i>#}
+                    {#</td>#}
+                    <td class="table-inbox-time">
+                        {{ _.modified | moment }}
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /multiple lines -->
+
+    {#{% include "../admin/components/data-table.html" %}#}
+{% endblock %}
+
+
+{% block script %}
+
+    <script>
+        //只能输入正整数过滤器
+        Vue.filter('onlyNumeric', {
+            // model -> view
+            // 在更新 `<input>` 元素之前格式化值
+            read: function (val) {
+                return val;
+            },
+            // view -> model
+            // 在写回数据之前格式化值
+            write: function (val, oldVal) {
+                var number = +val.replace(/[^\d]/g, '')
+                return isNaN(number) ? 1 : parseFloat(number.toFixed(2))
+            }
+        })
+
+        Vue.filter('text', function (val) {
+            if (val !== null)
+                return val.replace(/<[^>]+>/g, "");//去掉所有的html标记
+
+        });
+
+        Vue.filter('trim', function (val) {
+            var result;
+//            result = val.replace(/(^\s+)|(\s+$)/g,"");
+//            if(is_global.toLowerCase()=="g")
+//            {
+            result = val.replace(/\s/g, "");
+//            }
+            return result;
+
+        })
+
+    </script>
+    {#<script type="text/javascript" src="/static/assets/js/core/libraries/jasny_bootstrap.min.js"></script>#}
+
+    <script type="text/javascript" src="/static/components/post/main.js"></script>
+{% endblock %}

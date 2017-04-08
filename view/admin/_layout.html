@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><$ options.site.title $> - <$ options.site.desc $></title>
+    <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+
+    <link href="/static/assets/layout4/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/layout4/css/core.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/layout4/css/components.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/layout4/css/colors.min.css" rel="stylesheet" type="text/css">
+
+
+    <link href="/static/assets/css/extras/animate.min.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <style>
+        a.delete {
+            z-index: 5;
+            position: relative;
+        }
+
+        a.delete div {
+            width: 76px;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            background: #fefefe;
+            position: absolute;
+            z-index: 5;
+            margin: -20px 0 0 -38px;
+            -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            -moz-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+        }
+
+        a.delete div .confirm,
+        a.delete div .abort {
+            vertical-align: top;
+            line-height: 32px;
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            font-size: 21px !important;
+            top: 4px;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        a.delete div .confirm:before,
+        a.delete div .abort:before {
+            line-height: 32px;
+            display: block;
+        }
+
+        a.delete div .confirm {
+            color: #fff;
+            background: #ef4748;
+            left: 4px;
+        }
+
+        a.delete div .abort {
+            color: #858a95;
+            right: 4px;
+        }
+
+        /* 定制化 */
+        /*html .layer-snippet{background-color:#eee;}*/
+        /*.layer-snippet .layui-layer-title{border:none; background-color:#333; color:#fff;}*/
+
+        /*.runtest {*/
+        /*position: relative;*/
+        /*display: none;*/
+        /*}*/
+
+        .runtest textarea {
+            display: block;
+            /*width: 420px;*/
+            /*height: 200px;*/
+            /*border: 10px solid #F8F8F8;*/
+            /*border-top-width: 0;*/
+            padding: 20px;
+            line-height: 20px;
+            overflow: auto;
+            background-color: #3F3F3F;
+            color: #eee;
+            font-size: 12px;
+            font-family: Courier New;
+        }
+
+        /*.runtest a {*/
+        /*position: absolute;*/
+        /*right: 20px;*/
+        /*bottom: 20px;*/
+        /*}*/
+
+        .layer-photos-demo {
+            margin: 10px 0;
+        }
+
+        .layer-photos-demo img {
+            width: 160px;
+            height: 100px;
+        }
+    </style>
+    <style>
+        #messages {
+            position: fixed;
+            top: 65px;
+            left: 50%;
+            z-index: 110;
+            margin-left: 125px;
+            -webkit-transform: translate(-50%, 0);
+            -moz-transform: translate(-50%, 0);
+            -o-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        #messages .animated {
+            -webkit-animation-duration: 0.2s;
+            animation-duration: 0.2s;
+        }
+
+        @media (max-width: 992px ) {
+            #messages {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #messages {
+                left: 15px;
+                right: 15px;
+                top: 61px;
+                -webkit-transform: translate(0, 0);
+                -moz-transform: translate(0, 0);
+                -o-transform: translate(0, 0);
+                -ms-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        .message {
+            padding: 8px 10px;
+            color: #fff;
+            margin: 0 0 5px 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        .message.success {
+            background: #41da54;
+        }
+
+        .message.info {
+            background: #3f82d7;
+        }
+
+        .message.warning {
+            background: #e4c139;
+        }
+
+        .message.error {
+            background: #ef4748;
+        }
+
+        .message ol {
+            margin: 0;
+            padding: 0 0 0 18px;
+        }
+
+        .message ol li {
+            margin: 4px 0;
+        }
+
+    </style>
+    {% block style %}{% endblock %}
+
+</head>
+<body data-spy="scroll" data-target="#resume-section" data-offset="70" class=" {% block body_style %}{% endblock %}">
+{#<body data-spy="scroll" data-target=".sidebar-fixed" class=" {% block body_style %}{% endblock %}">#}
+
+{#<body class="navbar-top  sidebar-opposite-visible ">#}
+<div id="app">
+
+    <!-- Multiple navbars wrapper -->
+    {#<div class="navbar-fixed-top">#}
+
+        <!-- Main navbar -->
+        <div class="navbar navbar-inverse bg-primary header-highlight ">
+            <div class="navbar-header navbar-inverse bg-primary">
+                <a class="navbar-brand" href="/admin"><img src="/static/assets/images/logo_light.png" alt=""></a>
+                <ul class="nav navbar-nav">
+                    {#<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-magazine position-left"></i></a></li>#}
+                    <li class="disabled"><a data-toggle="collapse" data-target="#navbar-mobile"><i class=" icon-feed position-left"></i>发现</a></li>
+
+                </ul>
+            </div>
+
+            <div class="navbar-collapse collapse" id="navbar-mobile">
+
+
+                {% block main_nav %}
+
+                {% endblock %}
+                <ul class="nav navbar-nav navbar-right">
+                    {% block right_nav %}
+                        <li class="active"><a class="list-group-item"><i class="icon-magazine"></i>我的简历</a></li>
+                        <li><a href="/admin/resumes/themes" class="list-group-item"><i class="icon-bucket "></i>简历主题</a>
+                        <li class="disabled"><a href="/admin/resumes/template" class="list-group-item"><i class=" icon-profile"></i>简历内容模板</a></li>
+                    <li><a class="" href="/admin/posts/resume"><i class="icon-plus22 position-left"></i>新简历</a></li>
+                    {% endblock %}
+
+                    <li class="dropdown dropdown-user">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            {#<img src="/static/assets/images/avatar.png" alt="">#}
+                            <span><$ user_info.user_login $></span>
+                            <i class="caret"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class=""><a href="/admin/account"><i class="icon-user-plus"></i> 个人信息</a></li>
+                            {#<li><a href="#"><i class="icon-coins"></i> My balance</a></li>#}
+                            {#<li><a href="#"><span class="badge badge-warning pull-right">58</span> <i class="icon-comment-discussion"></i> Messages</a></li>#}
+                            <li class="divider"></li>
+                            <li class="disabled"><a href="#"><i class="icon-cog5"></i> 账户设置</a></li>
+                            <li><a href="/admin/logout"><i class="icon-switch2"></i> 登出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /main navbar -->
+
+
+        {% block navbar2 %}{% endblock %}
+    {#</div>#}
+    <!-- /multiple navbars wrapper -->
+    <div id="messages"></div>
+
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+            <!-- Main sidebar -->
+            {% block sidebar_main %}
+                <!-- Main sidebar -->
+                <div class="sidebar sidebar-main sidebar-default sidebar-fixed">
+                    <div class="sidebar-content">
+
+                        <div class="tabbable sortable ui-sortable">
+                            <div class="tab-content">
+
+                                <div class="tab-pane no-padding active" id="app-nav">
+                                    {#
+                                    <div class="category-title bg-grey-50">
+                                        <span><a href="#forms-tab" data-toggle="tab"><i
+                                                        class="icon-arrow-left12 position-left"></i>切换应用</a></span>
+                                    </div>
+
+                                    <div class="sidebar-user">
+                                        <div class="category-content">
+                                            <div class="media">
+                                                <a href="#" class="media-left"><img src="/static/assets/images/image.png"
+                                                                                    class="img-rounded img-sm" alt=""></a>
+                                                <div class="media-body">
+                                                    <span class="media-heading text-semibold"><$ options.title $></span>
+                                                    <div class="text-size-mini text-muted">
+                                                        <i class="icon-lifebuoy text-size-small"></i> &nbsp;~ <a
+                                                                href="http://<$ options.site_url $>"><$ options.site_url $></a>
+                                                    </div>
+                                                </div>
+                                                <div class="media-right media-middle">
+                                                    <ul class="icons-list">
+                                                        <li>
+                                                            <a href="#"><i class="icon-menu7"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    #}
+                                    <!-- Main navigation -->
+                                    <div class="sidebar-category sidebar-category-visible">
+                                        <div class="category-content no-padding">
+
+                                            <ul class="navigation navigation-main navigation-accordion">
+                                                {#<li class=""><a><i class="icon-statistics"></i>统计</a></li>#}
+                                                <li class="navigation-header">内容</li>
+                                                <li>
+                                                    <a href="/admin/posts"><i class="icon-files-empty"></i>
+                                                        <span>内容</span></a>
+
+                                                    {#                                                 <ul class="hidden-ul" style="display: block;">
+                                                                                                         <li class="{% if http.controller == 'posts' %}active{% endif %}">
+                                                                                                             <a
+                                                                                                                     href="/admin/posts">内容列表</a></li>
+
+                                                                                                         <li class="{% if http.url == '/admin/category' %}active{% endif %}">
+                                                                                                             <a href="/admin/category" id="layout2" class="legitRipple">内容分类
+                                                                                                             </a></li>
+
+                                                                                                     </ul>#}
+                                                </li>
+                                                <li class=""><a href="/admin/snippets"><i class="icon-stack4"></i><span>碎片内容</span></a></li>
+                                                <li><a href="/admin/resumes"><i class="icon-magazine"></i> 简历管理</a></li>
+
+                                                {#
+                                                <li class="{% if http.controller == 'pages' %}active{% endif %}"><a
+                                                            href="/admin/contents?type=page">
+                                                        <i class="icon-portfolio"></i>作品</a></li>
+                                                <li><a href="../../../layout_3/LTR/default/index.html" id="layout3"
+                                                       class="legitRipple"><i class="icon-tags2"></i>标签</a></li>
+
+                                                <li class="{% if http.controller == 'pages' %}active{% endif %}"><a
+                                                            href="/admin/contents?type=page"><i
+                                                                class="icon-file-empty"></i>页面</a></li>
+                                                   #}
+
+
+                                                <li class="navigation-header">个性化</li>
+
+                                                <li class="{% if http.controller == 'design' %}active{% endif %}"><a href="/admin/design"><i class="icon-droplet2"></i> 主题</a>
+                                                </li>
+
+                                                <li><a href="/admin/menus"><i class=" icon-three-bars"></i> 菜单</a></li>
+
+                                                <li class="navigation-divider"></li>
+                                                <li class="navigation-header">配置</li>
+                                                {#<li><a href="/user"><i class=" icon-people"></i> 用户</a></li>#}
+                                                {#<li><a href="#"><i class=" icon-puzzle4"></i> 插件</a></li>#}
+                                                {#<li><a href="#"><i class="  icon-earth"></i> 域名</a></li>#}
+                                                <li><a href="/admin/options"><i
+                                                                class="icon-wrench3"></i>
+                                                        系统信息</a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- /main navigation -->
+                                    <!-- Support -->
+                                    {#<div class="sidebar-category no-margin">#}
+                                    {#<div class="category-title">#}
+                                    {#<span>需要帮助?</span>#}
+                                    {#<i class="icon-help text-muted pull-right"></i>#}
+                                    {#</div>#}
+
+                                    {#<div class="category-content">#}
+                                    {#<a href="http://kopyov.ticksy.com" class="btn bg-slate-800 btn-block" target="_blank"><i#}
+                                    {#class="icon-lifebuoy position-left"></i> 采撷blog</a>#}
+                                    {#<a href="http://kopyov.ticksy.com" class="btn bg-slate-800 btn-block" target="_blank"><i#}
+                                    {#class="icon-lifebuoy position-left"></i> 内容号切换</a>#}
+                                    {#</div>#}
+                                    {#</div>#}
+                                    <!-- /support -->
+                                </div>
+                                <div class="tab-pane no-padding" id="forms-tab">
+                                    <div class="category-title alpha-grey ">
+                                    <span><a href="#app-nav" data-toggle="tab">返回<i
+                                                    class="icon-arrow-right13 position-right "></i></a>
+                                    </span>
+                                    </div>
+
+                                    <!-- Sidebar search -->
+                                    <div class="sidebar-category">
+                                        <ul class="navigation navigation-alt navigation-accordion">
+                                            <li><a href="extension_blockui.html"><i class="icon-history"></i>
+
+                                                    <span>全部应用</span> <span class="badge bg-slate-400">8</span></a>
+
+                                            </li>
+                                            <li class="list-group-divider"></li>
+
+                                            {% for app in apps %}
+
+                                                <li class="{% if app.name == controller.app_name %}active {% endif %}">
+                                                    <a href="navbar_single.html">
+                                                        <i class="{% if app.type == 'website' %} icon-earth {% elseif app.type == 'wechat' %} fa fa-wechat {% elseif app.type == 'blog' %}  icon-pencil7 {% endif %} position-left"></i>
+                                                        <span><$ app.title $></span>
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+
+                                            <li class="list-group-divider"></li>
+                                            <li>
+                                                <a>
+                                                    <i class="icon-plus22 position-left "></i>
+                                                    <span>添加新应用</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /sidebar search -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /main sidebar -->
+            {% endblock %}
+            <!-- /main sidebar -->
+
+            <!-- Secondary sidebar -->
+            {% block sidebar_secondary %}{% endblock %}
+            <!-- /secondary sidebar -->
+
+            <!-- Main content -->
+            <div class="content-wrapper ">
+
+                {% block fab_menu %}{% endblock %}
+                {% block page_navbar %} {% endblock %}
+                <!-- Page header -->
+                {% block page_header %}{% endblock %}
+                <!-- /page header -->
+
+                <!-- Content area -->
+                <div class="content">
+                    {% block content %}
+
+                    {% endblock %}
+
+                    <!-- Footer -->
+                    {% block footer %}
+                        <div class="footer text-muted">
+                            &copy; 2017. Power by <a
+                                    href=""
+                                    target="_blank">Picker</a>
+                        </div>
+                    {% endblock %}
+                    <!-- /footer -->
+
+                </div>
+                <!-- /content area -->
+
+            </div>
+            <!-- /main content -->
+
+
+
+            <!-- Opposite sidebar -->
+            {% block opposite_sidebar %}
+            {% endblock %}
+            <!-- /opposite sidebar -->
+
+        </div>
+        <!-- /page content -->
+    </div>
+    <!-- /page container -->
+
+</div>
+
+{% block components %}{% endblock %}
+
+<script type="text/javascript">
+    var lang = <$ 'zh-cn' | language | dump | safe $>;
+</script>
+{#<script type="text/javascript" src="/static/assets/js/fetch.js"></script>#}
+
+{#<script type="text/javascript" src="/static/assets/js/plugins/loaders/pace.min.js"></script>#}
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery.min.js"></script>
+{#<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>#}
+<script type="text/javascript" src="/static/assets/js/core/libraries/bootstrap.min.js"></script>
+{#<!-- /core JS files -->#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>#}
+<!-- Plugin JS files -->
+<script type="text/javascript" src="/static/assets/js/masonry/masonry.pkgd.min.js"></script>
+{#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>#}
+
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/selects/select2.min.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
+<!-- /plugin js files -->
+<script type="text/javascript" src="/static/assets/js/plugins/ui/nicescroll.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/drilldown.js"></script>
+<!-- Theme JS files -->
+<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switchery.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/pages/animations_css3.js"></script>
+<script src="/static/assets/js/vue/vue.js"></script>
+<script>
+    Vue.config.debug = true;
+    Vue.config.devtools = true;
+</script>
+
+<script type="text/javascript" src="/static/assets/js/native.history.js"></script>
+{#<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>#}
+
+<script type="text/javascript" src="/static/assets/js/core/app.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/ripple.min.js"></script>
+<!-- /theme JS files -->
+<script>
+    jQuery(document).ready(function ($) {
+
+        $(document).on("click", ".delete", function (e) {
+
+            e.preventDefault();
+
+            var _this = $(this);
+
+            if (!_this.hasClass("active")) {
+
+                _this.addClass("active");
+
+                var div = $("<div><i class='icon confirm ion-ios-checkmark-outline'></i><i class='icon abort ion-ios-close-empty'></i></div>");
+                var element = $(this).append(div);
+
+                div.addClass("animated zoomIn");
+
+                div.on("click", ".abort", function () {
+                    div.fadeOut(300, function () {
+                        div.remove();
+                        _this.removeClass("active");
+                    });
+                });
+
+                div.on("click", ".confirm", function () {
+
+                    if (_this.hasClass("ajax")) {
+                        $.ajax({
+                            method: "POST",
+                            url: _this.attr("href"),
+                            success: function () {
+                                div.fadeOut(300, function () {
+                                    div.remove();
+                                    _this.removeClass("active");
+                                });
+                                eventHub.$emit("fetch");
+                                $.event.trigger({
+                                    type: "fetch"
+                                });
+                            }
+                        });
+                    } else {
+                        window.location = _this.attr("href");
+                    }
+                });
+
+            }
+
+        });
+        var focus;
+
+        $(window).focus(function () {
+            focus = true;
+        }).blur(function () {
+            focus = false;
+        });
+
+        setInterval("getMessages(focus)", 1000);
+
+//            setTabs();
+
+    });
+
+
+    function getMessages(focus) {
+
+        if (focus && document.hasFocus()) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/ajax/messages",
+                data: {
+                    method: "getMessages"
+                },
+                dataType: "json",
+                success: function (message) {
+                    if (!jQuery.isEmptyObject(message)) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/admin/ajax/messages",
+                            data: {
+                                method: "deleteMessage",
+                                index: message.index
+                            },
+                            success: function () {
+
+                                var element = $(message.html).appendTo("#messages");
+
+                                element.addClass("animated fadeInDown");
+
+                                setTimeout(function () {
+                                    element.removeClass("fadeInDown").addClass("fadeOutUp");
+                                    element.one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function () {
+                                        element.remove();
+                                    });
+                                }, 2200);
+
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+    }
+</script>
+
+{% block script %}{% endblock %}
+
+</body>
+</html>

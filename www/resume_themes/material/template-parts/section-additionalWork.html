@@ -1,0 +1,72 @@
+
+
+<div class="row mt-20">
+    <div class="col-md-12">
+
+        <div class="panel">
+
+            <div class=" panel-body">
+                <h6 class="content-group text-semibold">
+                    <i class="icon-thumbs-up3 position-left"></i> <$ resume.additionalWorkLabel $>
+                </h6>
+                <ul class="list-feed">
+                    {% for work in resume.additionalWork %}
+                        <li>
+                            <div class="feed-time text-muted"><$ work.startDate $> — <$ work.endDate $>
+                            </div>
+                            <a href="<$ work.website $>"><$ work.company $></a> <strong><$ work.position
+                                $></strong>
+
+                            <p><$ work.summary $></p>
+                            {% if work.highlights %}
+                                <ol>
+                                    {% for item in work.highlights %}
+                                        <li><$ item | safe $></li>
+                                    {% endfor %}
+                                </ol>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+
+            {#
+            <div class="panel-footer text-center no-padding">
+
+                <div class="row">
+
+                    <div class="col-xs-3">
+                        <a href="#" class="display-block p-10 text-default" data-popup="tooltip"
+                           data-placement="top" data-container="body" title=""
+                           data-original-title="Facebook"><i
+                                    class="icon-facebook2"></i></a>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <a href="#" class="display-block p-10 text-default" data-popup="tooltip"
+                           data-placement="top" data-container="body" title=""
+                           data-original-title="Twitter"><i
+                                    class="icon-twitter"></i></a>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <a href="#" class="display-block p-10 text-default" data-popup="tooltip"
+                           data-placement="top" data-container="body" title=""
+                           data-original-title="Github"><i
+                                    class="icon-github"></i></a>
+
+                    </div>
+
+                    <div class="col-xs-3">
+                        <a href="#" class="display-block p-10 text-default" data-popup="tooltip"
+                           data-placement="top" data-container="body" title=""
+                           data-original-title="Dribbble"><i
+                                    class="icon-dribbble3"></i></a>
+                    </div>
+                </div>
+            </div>
+            #}
+        </div>
+    </div>
+</div>

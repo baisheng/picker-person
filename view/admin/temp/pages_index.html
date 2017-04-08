@@ -1,0 +1,670 @@
+{% extends "./inc/_base.html" %}
+
+{% block style %}
+    <style>
+        .gu-mirror {
+            position: fixed !important;
+            margin: 0 !important;
+            z-index: 9999 !important;
+            -moz-opacity: 0.8;
+            -khtml-opacity: 0.8;
+            -webkit-opacity: 0.8;
+            opacity: 0.8;
+            -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80);
+            filter: alpha(opacity=80);
+
+            /*position: relative;*/
+            /*padding: 10px 15px;*/
+            padding: 0 15px 0 15px;
+            border: 1px dashed #ccc;
+            background: #fafafa;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 3px 9px rgba(46, 48, 56, 0.1);
+            -moz-box-shadow: 0 3px 9px rgba(46, 48, 56, 0.1);
+            box-shadow: 0 3px 9px rgba(46, 48, 56, 0.1);
+        }
+        .gu-hide {
+            display: none !important;
+        }
+        .gu-unselectable {
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+
+
+        }
+        .gu-transit {
+            -moz-opacity: 0.4;
+            -khtml-opacity: 0.4;
+            -webkit-opacity: 0.4;
+            opacity: 0.4;
+            -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=40);
+            filter: alpha(opacity=40);
+
+        }
+
+        .clear:after {
+            content: "";
+            clear: both;
+            display: block;
+        }
+
+        .box {
+            background: #fff;
+            padding: 30px;
+            position: relative;
+            margin: 0 0 30px 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 4px 9px rgba(46, 48, 56, 0.09);
+            -moz-box-shadow: 0 4px 9px rgba(46, 48, 56, 0.09);
+            box-shadow: 0 4px 9px rgba(46, 48, 56, 0.09);
+        }
+        @media (max-width: 768 * 1px) {
+            .box {
+                padding: 20px;
+            }
+        }
+        .box.action h3 {
+            margin-bottom: 0;
+            padding-bottom: 5px;
+        }
+        .box.action a {
+            color: #858a95;
+            background: #f8f9fb;
+            height: 70px;
+            line-height: 70px;
+            margin-top: 15px;
+            display: block;
+            position: relative;
+            padding-left: 67px;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+        .box.action a:hover {
+            color: #666978;
+        }
+        .box.action a svg {
+            position: absolute;
+            display: block;
+            top: 50%;
+            left: 20px;
+            width: 32px;
+            height: 32px;
+            -webkit-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            -o-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+        }
+        .box.action a svg > * {
+            stroke: #858a95;
+            fill: #858a95;
+        }
+        .box.action a svg .primary {
+            stroke: #3f82d7;
+        }
+        a.delete {
+            z-index: 5;
+            position: relative;
+        }
+
+        a.delete div {
+            width: 76px;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            background: #fefefe;
+            position: absolute;
+            z-index: 5;
+            margin: -20px 0 0 -38px;
+            -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            -moz-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+        }
+
+        a.delete div .confirm,
+        a.delete div .abort {
+            vertical-align: top;
+            line-height: 32px;
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            font-size: 21px !important;
+            top: 4px;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        a.delete div .confirm:before,
+        a.delete div .abort:before {
+            line-height: 32px;
+            display: block;
+        }
+
+        a.delete div .confirm {
+            color: #fff;
+            background: #ef4748;
+            left: 4px;
+        }
+
+        a.delete div .abort {
+            /*color: #858a95;*/
+            /*color: #;*/
+            right: 4px;
+        }
+        #menuList li {
+            cursor: move;
+            list-style: none;
+        }
+        #menuList li:first-child {
+            padding-top: 10px;
+        }
+        #menuList li .entry {
+            position: relative;
+            padding: 10px 15px;
+            background: #fff;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 3px 9px rgba(46, 48, 56, 0.1);
+            -moz-box-shadow: 0 3px 9px rgba(46, 48, 56, 0.1);
+            box-shadow: 0 3px 9px rgba(46, 48, 56, 0.1);
+        }
+        #menuList li .entry .info {
+            float: left;
+        }
+        #menuList li .entry .info span {
+            display: block;
+        }
+        #menuList li .entry .info small {
+            display: block;
+            color: #d0d3d9;
+        }
+        #menuList li .entry .delete {
+            display: block;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            color: #d0d3d9;
+            font-size: 21px;
+            -webkit-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            -o-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+        }
+        #menuList li .entry .delete:hover {
+            color: #ef4748;
+        }
+        #menuList ul {
+            min-height: 10px;
+            padding: 0 0 0 20px;
+            margin: 0;
+        }
+        #menuList > ul {
+            padding-left: 0;
+        }
+        #menuList > ul > li:first-child {
+            padding-top: 0;
+        }
+
+
+        #pageList h3 {
+            font-size: 18px;
+        }
+        #pageList h3.dropActive {
+            color: #3f82d7;
+        }
+        #pageList li {
+            list-style: none;
+        }
+        #pageList li .entry {
+            position: relative;
+            border-top: 1px solid #e5eaf4;
+            padding: 3px 0;
+
+        }
+        #pageList li .entry:hover .setHome i.inactive {
+            display: block;
+        }
+        #pageList li .entry:hover .setHome i.inactive:hover {
+            color: #3f82d7;
+        }
+        #pageList li .entry .info {
+            cursor: move;
+            float: left;
+            padding: 3px 15px 3px 5px;
+        }
+        #pageList li .entry .info.dropActive {
+            color: #fff;
+            background: #3f82d7;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+        #pageList li .entry .info.dropActive small {
+            color: #fff;
+        }
+        #pageList li .entry .info.ui-draggable-dragging {
+            color: #858a95;
+            background: rgba(255, 255, 255, 0.85);
+            -webkit-box-shadow: 0 3px 9px rgba(46, 48, 56, 0.1);
+            -moz-box-shadow: 0 3px 9px rgba(46, 48, 56, 0.1);
+            box-shadow: 0 3px 9px rgba(46, 48, 56, 0.1);
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+        #pageList li .entry .info.ui-draggable-dragging small {
+            color: #d0d3d9;
+        }
+        #pageList li .entry .info span {
+            display: block;
+        }
+        #pageList li .entry .info small {
+            color: #d0d3d9;
+        }
+        #pageList li .entry .setHome {
+            display: block;
+            position: absolute;
+            top: 50%;
+            right: 65px;
+            -webkit-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            -o-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+        }
+        #pageList li .entry .setHome i {
+            color: #3f82d7;
+            font-size: 21px;
+            display: block;
+        }
+        #pageList li .entry .setHome i.inactive {
+            display: none;
+            cursor: pointer;
+            color: #d0d3d9;
+        }
+        #pageList li .entry .delete {
+            display: block;
+            position: absolute;
+            right: 35px;
+            top: 50%;
+            color: #d0d3d9;
+            font-size: 21px;
+            -webkit-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            -o-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+        }
+        #pageList li .entry .delete:hover {
+            color: #ef4748;
+        }
+        #pageList li .entry .edit {
+            display: block;
+            position: absolute;
+            right: 0;
+            font-size: 21px;
+            top: 50%;
+            color: #d0d3d9;
+            -webkit-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            -o-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+        }
+        #pageList li .entry .edit:hover {
+            color: #3f82d7;
+        }
+        #pageList li ul {
+            padding: 0 0 0 20px;
+        }
+        @media (max-width: 992px) {
+            #pageList li ul {
+                padding: 0 0 0 15px;
+            }
+        }
+        @media (max-width: 768px) {
+            #pageList li ul {
+                padding: 0 0 0 10px;
+            }
+        }
+        #pageList ul {
+            margin: 0;
+            padding: 0;
+        }
+        #pageList > ul > li:first-child > .entry {
+            border-top: none;
+        }
+
+    </style>
+    {% endblock %}
+{% block page_header %}
+
+{% endblock %}
+{% block navbar_right %}
+    <li class="dropdown">
+        <a href="/admin/page">
+            <i class="icon-plus2 text-teal"></i>
+            <button type="button" class="btn btn-default"><i class="icon-pencil7"></i> <span class="hidden-xs position-right">添加</span></button>
+            <span class="position-right text-semibold">页面</span>
+        </a>
+        {#<a href="#" class="dropdown-toggle" data-toggle="dropdown">#}
+            {#<i class="icon-plus2 text-teal"></i>#}
+            {#<button type="button" class="btn btn-default"><i class="icon-pencil7"></i> <span class="hidden-xs position-right">添加</span></button>#}
+
+            {#<span class="position-right text-semibold">页面</span>#}
+        {#</a>#}
+        {#<ul class="dropdown-menu dropdown-menu-right">#}
+            {#<li><a href="/admin/posts/article"><i class="icon-pencil7"></i> 网站页面</a></li>#}
+            {#<li><a href="/admin/posts/picture"><i class="icon-file-picture"></i> 移动端页面</a></li>#}
+            {#<li><a href="/admin/posts/file"><i class="icon-files-empty"></i> 上传文件</a></li>#}
+            {#<li><a href="/admin/posts/video"><i class="icon-file-video"></i> 视频</a></li>#}
+            {#<li class="divider"></li>#}
+            {#<li><a href="/admin/posts/goods"><i class="icon-bag"></i> </a></li>#}
+
+            {#<li><a><i class="icon-upload"></i>导入 Markdown</a></li>#}
+        {#</ul>#}
+    </li>
+{% endblock %}
+{% block content %}
+    <div id="pageList" class="panel panel-body box">
+        <ul>
+            <item v-for="model in pageTree" :model="model"></item>
+        </ul>
+        <template v-if="!pageTreeLength">
+            还没有页面内容
+        </template>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        jQuery(document).ready(function ($) {
+            $(document).on("click", ".delete", function (e) {
+
+                e.preventDefault();
+
+                var _this = $(this);
+
+                if (!_this.hasClass("active")) {
+
+                    _this.addClass("active");
+
+                    var div = $("<div><i class='icon confirm ion-ios-checkmark-outline'></i><i class='icon abort ion-ios-close-empty'></i></div>");
+                    var element = $(this).append(div);
+
+                    div.addClass("animated zoomIn");
+
+                    div.on("click", ".abort", function () {
+                        div.fadeOut(300, function () {
+                            div.remove();
+                            _this.removeClass("active");
+                        });
+                    });
+
+                    div.on("click", ".confirm", function () {
+
+                        if (_this.hasClass("ajax")) {
+                            $.ajax({
+                                method: "POST",
+                                url: _this.attr("href"),
+                                success: function () {
+                                    div.fadeOut(300, function () {
+                                        div.remove();
+                                        _this.removeClass("active");
+                                    });
+                                    $.event.trigger({
+                                        type: "fetch"
+                                    });
+                                }
+                            });
+                        } else {
+                            window.location = _this.attr("href");
+                        }
+                    });
+
+                }
+
+            });
+            var focus;
+
+            $(window).focus(function () {
+                focus = true;
+            }).blur(function () {
+                focus = false;
+            });
+
+            setInterval("getMessages(focus)", 1000);
+
+//            setTabs();
+
+        });
+
+
+        function getMessages(focus) {
+
+            if(focus && document.hasFocus()) {
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/ajax/messages",
+                    data: {
+                        method: "getMessages"
+                    },
+                    dataType: "json",
+                    success: function(message) {
+                        if(!jQuery.isEmptyObject(message)) {
+                            $.ajax({
+                                type: "POST",
+                                url: "/admin/ajax/messages",
+                                data: {
+                                    method: "deleteMessage",
+                                    index: message.index
+                                },
+                                success: function() {
+
+                                    var element = $(message.html).appendTo("#messages");
+
+                                    element.addClass("animated fadeInDown");
+
+                                    setTimeout(function() {
+                                        element.removeClass("fadeInDown").addClass("fadeOutUp");
+                                        element.one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function() {
+                                            element.remove();
+                                        });
+                                    }, 2200);
+
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+
+        }
+    </script>
+
+    <script type="text/javascript">
+        Vue.component("item", {
+           template: '<li :data-id="model.id" class="">' +
+                        '<div class="entry clear">' +
+                            '<div class="info " :data-id="model.id">' +
+                                '<span>{{ model.title }}</span>' +
+                                '<small>url 页面地址</small>' +
+                            '</div>' +
+                            '<span v-if="model.home" class="setHome" data-tooltip=""><i class="icon ion-ios-home"></i></span>' +
+                            '<span v-else class="setHome" @click="setHome(model.id)"><i class="inactive icon ion-ios-home-outline"></i></span>' +
+                            '<a class="icon delete ajax ion-ios-trash-outline"></a>' +
+                            '<a class="icon edit ion-edit"></a> ' +
+                        '</div>' +
+                        '<ul v-if="model.children">' +
+                            '<item v-for="model in model.children" :model="model"></item>' +
+                        '</ul>' +
+                    '</li>',
+//            template: "#item-template",
+            props: {
+                model: Object
+            },
+            methods: {
+                setHome: function(id) {
+                    eventHub.$emit("setHome", id);
+                }
+            }
+        });
+        new Vue({
+            el: "#app",
+            data: {
+                headline: "页面管理",
+//                headline: lang["pages"],
+                addPageModal: false,
+                pageName: "",
+                pageParent: 0,
+                pageGrid: 0,
+                pageParentName: "",
+                pageTree: <$ pages.data | dump | safe $>,
+                pageAll: <$ pages | dump | safe $>,
+
+//                pageTree: '.json_encode(PageModel::getAll()).',
+//                pageAll: '.json_encode(PageModel::getAllFromDb()).',
+                searchBoxShow: false,
+                searchBox: ""
+            },
+            mounted: function() {
+                var vue = this;
+                $(document).on("fetch", function() {
+                    vue.fetch();
+                });
+//                vue.fetch();
+
+                eventHub.$on("setHome", this.setHome);
+                eventHub.$on("setSearchbox", this.setParent);
+                vue.setDrag();
+            },
+            methods: {
+                fetch: function() {
+//                    var vue = this;
+//                    $.ajax({
+//                        method: "POST",
+////                        url: "'.url::admin('content', ['index', 'get']).'",
+//                        url: "/admin/pages",
+//                        dataType: "json",
+//                        success: function(data) {
+//                            vue.pageAll = data.all;
+//                            vue.pageTree = data.tree;
+//                            vue.setDrag();
+//                        }
+//                    });
+
+                    //                            vue.setDrag();
+
+                    var vue = this;
+                    var _url = "/admin/posts/list?type=page";
+                    if (this.page != 0 && Number.parseInt(this.page)) {
+                        _url += "?page=" + this.page;
+                    }
+                    $.ajax({
+                        method: "get",
+                        url: _url,
+                        dataType: "json",
+                        success: function (data) {
+                            vue.pageAll = data;
+                            vue.pageTree = data.data;
+                            vue.allpage = data.totalPages;
+//                            vue.pageTree = data.tree;
+                            vue.setDrag();
+//                            delete data.data;
+                            vue.pagedata = data;
+
+//                            vue.reLayout();
+                        }
+                    });
+                },
+                setDrag: function() {
+                    var drake = dragula($("#pageList ul").toArray(), {
+                        mirrorContainer: $("#pageList")[0]
+                    });
+
+                    console.log($("#pageList ul").toArray()[0])
+                    drake.on("drag", function(el, target, source, sibling){
+//                        $(el).find(".info").addClass("ui-draggable-dragging")
+
+                    });
+                    drake.on("dragend", function(el){
+//                        $(el).find(".info").removeClass("ui-draggable-dragging")
+
+                    });
+                    drake.on("drop", function(el, target, source, sibling) {
+//                        console.log(el)
+//                        $(el).find(".info").removeClass("ui-draggable-dragging")
+
+                        $.ajax({
+                            method: "POST",
+//                            url: "'.url::admin('content', ['index', 'move']).'",
+                            data: {
+                                array: getChildren("#pageList")
+                            }
+                        });
+//                        console.log(getChildren("#pageList"))
+                    });
+                },
+                setParent: function(data) {
+                    this.pageParent = data.id;
+                    this.pageParentName = data.name;
+                },
+                addPage: function() {
+                    var vue = this;
+                    $.ajax({
+                        method: "POST",
+//                        url: "'.url::admin('content', ['index', 'add']).'",
+                        data: {
+                            name: vue.pageName,
+                            parent: vue.pageParent,
+                            grid: vue.pageGrid
+                        },
+                        success: function(data) {
+                            vue.fetch();
+                            vue.addPageModal = false;
+                            vue.pageName = "";
+                            vue.pageGrid = 0;
+                            eventHub.$emit("setSearchboxEmpty");
+                        }
+                    });
+                },
+                setHome: function(id) {
+                    var vue = this;
+                    $.ajax({
+                        method: "POST",
+//                        url: "'.url::admin('content', ['index', 'setHome']).'",
+                        data: {
+                            id: id
+                        },
+                        success: function() {
+                            vue.fetch();
+                        }
+                    });
+                }
+            },
+            computed: {
+                pageTreeLength: function() {
+                    return !jQuery.isEmptyObject(this.pageTree);
+                }
+            }
+        });
+    </script>
+{% endblock %}

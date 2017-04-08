@@ -1,0 +1,56 @@
+@media screen and (max-width: 1200px) {
+    #nav-general
+    {
+        display: none;
+    }
+    .section-ext_container_avis
+    {
+        width: 100%;
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+    .section-ext_container_avis .btn-nav.left
+    {
+        left: 10px;
+    }
+    .section-ext_container_avis .btn-nav.right
+    {
+        right: 10px;
+    }
+    .section-ext_container_avis .list-avis
+    {
+        height: 400px;
+    }
+    .section-ext_container_avis .avis .logo
+    {
+        margin-top: 20px;
+    }
+    .section-ext_container_avis .avis .text
+    {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #shape-icosahedron
+    {
+        height: 60vh;
+        -webkit-transition: all 800ms cubic-bezier(0.885, -0.415, 0.415, 0.890);
+        -moz-transition: all 800ms cubic-bezier(0.885, -0.415, 0.415, 0.890);
+        -o-transition: all 800ms cubic-bezier(0.885, -0.415, 0.415, 0.890);
+        transition: all 800ms cubic-bezier(0.885, -0.415, 0.415, 0.890);
+    }
+    .section-home_title h1
+    {
+        font-size: 70vw;
+        line-height: 60vw;
+    }
+    #section-work
+    {
+        margin-top: 0px;
+    }
+    #section-ourvision
+    {
+        padding-bottom: 100px;
+    }
+}

@@ -1,0 +1,75 @@
+@media screen and (max-width: 1200px) {
+
+    .pres-pr
+    {
+        margin-bottom: 100px;
+    }
+    .section-work_content
+    {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+    .pres-pr_container_left
+    {
+        width: 100%;
+        display: block;
+    }
+    .pres-pr_container_left .description
+    {
+        padding-right: 0px;
+    }
+    .pres-pr_container_right
+    {
+        width: 100%;
+        display: block;
+        margin-top: 50px;
+    }
+
+}
+
+@media screen and (max-width: 800px) {
+    .section-work_title h2
+    {
+        font-size: 21vw;
+    }
+    .section-work_content
+    {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+    .pres-pr_container_left .title h2
+    {
+        font-size: 34px;
+    }
+    .pres-pr_container_left .date
+    {
+        margin-bottom: 10px;
+    }
+    .pres-pr_container_left .description
+    {
+        margin-top: 10px;
+    }
+    .pres-pr_container_left .more-details
+    {
+        margin-top: 20px;
+    }
+    #section-ourvision
+    {
+        margin-top: 100px;
+    }
+    .section-ourvision_text p
+    {
+        width: 100%;
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+    .section-ext_container_clt .logo
+    {
+        width: 50%;
+        margin: 0px 0px 10% 0px;
+    }
+    .section-ext_container_clt .logo:nth-child(2) img
+    {
+        width: 110px;
+    }
+}

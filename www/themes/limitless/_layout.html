@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><$ options.title $> - <$ options.description $></title>
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="/themes/limitless/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="/themes/limitless/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="/themes/limitless/assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="/themes/limitless/assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="/themes/limitless/assets/css/colors.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+
+</head>
+
+<body class="navbar-bottom {% block body_style %}{% endblock %}">
+
+{% include "./template-parts/page_header.html" %}
+
+<!-- Page container -->
+<div class="page-container" id="page-container">
+
+    <!-- Page content -->
+    <div class="page-content">
+
+        <!-- Main content -->
+        <div class="content-wrapper" id="content">
+
+            {% block content %}{% endblock %}
+
+
+        </div>
+        <!-- /main content -->
+
+        {% block opposite_sidebar %}{% endblock %}
+    </div>
+    <!-- /page content -->
+</div>
+<!-- /page container -->
+
+{% include "./template-parts/footer.html" %}
+
+<script type="text/javascript" src="/static/assets/js/fetch.js"></script>
+<script src="/static/assets/js/vue/vue.js"></script>
+<script>
+    Vue.config.debug = true;
+    Vue.config.devtools = true;
+</script>
+<!-- Core JS files -->
+<script type="text/javascript" src="/themes/limitless/assets/js/plugins/loaders/pace.min.js"></script>
+<script type="text/javascript" src="/themes/limitless/assets/js/core/libraries/jquery.min.js"></script>
+<script type="text/javascript" src="/themes/limitless/assets/js/core/libraries/bootstrap.min.js"></script>
+<script type="text/javascript" src="/themes/limitless/assets/js/plugins/loaders/blockui.min.js"></script>
+<script type="text/javascript" src="/themes/limitless/assets/js/plugins/ui/nicescroll.min.js"></script>
+<script type="text/javascript" src="/themes/limitless/assets/js/plugins/ui/drilldown.js"></script>
+{#<script type="text/javascript" src="/themes/limitless/assets/js/plugins/ui/fab.min.js"></script>#}
+<!-- /core JS files -->
+<script type="text/javascript" src="/static/assets/js/native.history.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
+<script type="text/javascript" src="/static/assets/js/masonry/masonry.pkgd.min.js"></script>
+{#<script src="//cdn.jsdelivr.net/mojs/latest/mo.min.js"></script>#}
+<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>
+<!-- Theme JS files -->
+{% block script %}
+{% endblock %}
+<script type="text/javascript" src="/themes/limitless/assets/js/core/app.js"></script>
+<!-- /theme JS files -->
+{% block page_script %} {% endblock %}
+<script>
+    $(window).load(function(){ $('[data-plugin="masonry"]').masonry(); });
+
+    var $grid = $('[data-plugin="masonry"]');
+
+    if ($grid !== null) {
+        $(window).load(function () {
+            $grid.masonry();
+        });
+    }
+
+    // ========================================
+    //
+    // Reset Layout masonry
+    //
+    // ========================================
+    function reLayout() {
+        if ($grid !== null) {
+            $grid.masonry('layout');
+
+        }
+    }
+
+    /*        $(document).ready(function () {
+     var $container = $('[data-plugin="masonry"]');
+     $container.imagesLoaded(function(){
+     $container.masonry({
+     itemSelector : '.masonry-item',
+     });
+     });
+
+     $('[data-plugin="masonry"]').masonry({
+     // options
+     itemSelector : '.masonry-item',
+     }).masonry('reload');
+
+     })*/
+</script>
+
+<script>
+    ;(function(window){
+        $(window).load(function(){ $('[data-plugin="masonry"]').masonry(); });
+
+
+        var $grid = $('[data-plugin="masonry"]');
+
+        if ($grid !== null) {
+            $(window).load(function () {
+                $grid.masonry();
+            });
+        }
+    })(window);
+</script>
+
+
+</body>
+</html>

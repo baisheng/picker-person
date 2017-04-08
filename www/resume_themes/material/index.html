@@ -1,0 +1,62 @@
+{% extends "./template-parts/_layout.html" %}
+
+
+{% block content %}
+    {#{% set _section = meta._resume_section %}#}
+
+    <div class="row col-md-8 col-md-offset-2">
+
+        {% if resume.basics %}
+            {% set basics = resume.basics %}
+            {% include "./template-parts/section-basics.html" %}
+        {% endif %}
+
+        {% for section in _section %}
+            {% if section.active == true %}
+                {% include "./template-parts/section-"+section.name+".html" %}
+
+            {% endif %}
+            {#<$ section.name $>#}
+        {% endfor %}
+        {# 工作信息 #}
+        {#{% if resume.work and _section.work == true %}#}
+            {#{% include "./template-parts/section-works.html" %}#}
+        {#{% endif %}#}
+
+
+{#        #}{# 技能信息 #}{#
+        {% if resume.skills and _section.skills == true %}
+            {% include "./template-parts/section-skills.html" %}
+        {% endif %}
+
+        #}{# 教育信息#}{#
+        {% if resume.education and _section.education == true %}
+            {% include "./template-parts/section-education.html" %}
+        {% endif %}
+        #}{# 语言能力 #}{#
+        {% if resume.languages and _section.languages == true %}
+            {% include "./template-parts/section-languages.html" %}
+        {% endif %}
+
+        #}{# 兴趣爱好 #}{#
+        {% if resume.interests and _section.interests == true %}
+            {% include "./template-parts/section-interests.html" %}
+        {% endif %}
+
+        #}{# 项目经验 #}{#
+        {% if resume.additionalWork and _section.additionalWork == true %}
+            {% include "./template-parts/section-additional_work.html" %}
+        {% endif %}
+
+        #}{# 所获奖项 #}{#
+        {% if resume.awards and _section.awards == true %}
+            {% include "./template-parts/section-awards.html" %}
+        {% endif %}
+
+        #}{# 友情推荐#}{#
+        {% if resume.references and _section.references == true %}
+            {% include "./template-parts/section-references.html" %}
+        {% endif %}#}
+    </div>
+
+{% endblock %}

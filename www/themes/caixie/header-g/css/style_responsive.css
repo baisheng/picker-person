@@ -1,0 +1,45 @@
+@media screen and (max-width: 1000px) {
+    #header-general-desktop.scroll
+    {
+        background-color: #FFF;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    #header-general-desktop .logo
+    {
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        -o-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+    #header-general-desktop .beta
+    {
+        display: none;
+    }
+    #header-general-desktop .hire-me
+    {
+        right: 25px;
+    }
+    #header-general-desktop .change-lang
+    {
+        left: 25px;
+        right: initial;
+    }
+}
+
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px)
+and (orientation : portrait) {
+    /* iPhone 6 */
+
+}
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : portrait) {
+    /* iPhone 5 */
+
+}

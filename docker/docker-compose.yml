@@ -1,0 +1,40 @@
+##################################################################
+#
+# docker-compose.yml 需要和 Dockerfile 文件,在同一目录下.
+#
+# 官方参考文档:
+#   - https://docs.docker.com/compose/gettingstarted/
+#   - https://docs.docker.com/compose/rails/
+#
+# 常用命令:  (查看帮助: docker-compose --help)
+#   - 启动:
+#        - docker-compose up      # boot the app
+#        - docker-compose up -d   # 后台运行
+#   - 查看启动进程:
+#        - docker-compose ps
+#   - 其他:
+#        - docker-compose build              # build the image
+#        - docker-compose run web env
+#        - docker-compose stop
+#
+#
+##################################################################
+
+
+# mysql-db:
+mysql_db:
+  image: mysql:5.7
+  volumes:
+    - ~/Docker_share/picker_resume_mengling_db:/var/lib/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=abcd1234
+    - MYSQL_DATABASE=picker_resume
+  ports:
+    - "127.0.0.1:3309:3306"
+  command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
+  expose:
+    - "3306"
+    - "3309"
+
+
+

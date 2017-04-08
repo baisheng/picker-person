@@ -1,0 +1,46 @@
+[
+  {
+    "name": "work",
+    "active": true
+  },
+  {
+    "name": "languages",
+    "active": true
+  },
+  {
+    "name": "additionalWork",
+    "active": true
+  },
+  {
+    "name": "education",
+    "active": true
+  },
+  {
+    "name": "interests",
+    "active": true
+  },
+  {
+    "name": "skills",
+    "active": true
+  },
+  {
+    "name": "profiles",
+    "active": false
+  },
+  {
+    "name": "awards",
+    "active": false
+  },
+  {
+    "name": "references",
+    "active": false
+  },
+  {
+    "name": "publications",
+    "active": false
+  }
+]
+
+
+
+{"resume": {"work": [{"company": "恒圣体育", "endDate": "今", "summary": "主管网站/app两条线\n互联网团队产品负责人，主要负责产品团队建设，ui团队建设，产品0-1落地，产品需求分析，产品原型设计，ui设计指导，ui设计规范制定，产品进度管理，产品运营管理等整体产品生命周期的管理。\n该产品成功获得天使、a轮两轮融资。\n", "website": "https://www.kegoal.cn/", "position": "产品负责人", "startDate": "2015-10-1"}, {"company": "思源集团", "endDate": "2015", "summary": "从2015年3月起，独立带领和支撑思源办事通产品线至今，培养和组建产品团队。为其提供大量的平台建设方案和思路，以及未来发展和盈利模式，并且落实落地。", "website": "http://anbiedu.com", "position": "产品线负责人", "startDate": "2013"}, {"company": "北京安彼教育科技有限公司", "endDate": " 2015-03-10", "summary": "产品部部门负责人，把握产品发展方向，协助ceo制定公司发展战略，产品战略、产品定位、目标用户定位。主导产品方面工作、如产品场景梳理分析、产品调研、用户访谈、竞品分析等产品全生命周期的管理，最后至运营，分析运营数据，提出产品迭代方案。", "website": "", "position": "产品总监", "startDate": "2013-10-08", "highlights": []}, {"company": "中国统一教育网", "endDate": "2013-09-25", "summary": "产品管理部部门负责人，对团队负责、对统一教育网产品生命周期负责，带领产品团队开展互联网产品工作，制定部门工作计划，保障网站平稳运行。产品定位、产品目标用户定位、产品场景梳理、产品项目调研，调研报告、产品策划书、产品提案等撰写工作。与下属产品经理进行沟通，制定工作任务和网站迭代方案。", "website": "http://www.tongyi.com/", "position": "产品部经理", "startDate": "2011-07-08", "highlights": []}, {"company": "辽宁电视台", "endDate": "2011-07-04", "summary": "工作期间作为辽宁电视台移动频道《电视导购》《BUS特工站》等节目的编导进行电视节目策划、撰写节目稿件、跟踪节目后期制作、以及电视节目整体把控等工作。此外还作为策划团队的导演策划过多个专题片，《虎跃十年专题片》《上海世博会辽宁专题片》《新乐遗址专题片》等专题。", "website": "", "position": "编导／导演", "startDate": "2009-07-01", "highlights": []}, {"company": "北京爱博互动科技有限公司", "endDate": "2008-07-02", "summary": "大学刚毕业，初次接触互联网行业，在公司担任产品相关的工作。 主要工作内容为：网站原型设计，网站测试、数据分析、市场调研、网站活动策划，网站SEO、网站炒作推广、网站编辑、网站策划文档、推广文档等方面的工作。与研发和ui等人员协调沟通实现网站功能和产品计划。", "website": "", "position": "产品经理", "startDate": "2006-07-01", "highlights": []}], "awards": [], "basics": {"name": "孟令军", "email": "mling@caixie.ltd", "label": "产品经理", "phone": "123456789", "picture": "http://data.picker.cc/gVGI7d6pDTOadCwYtvPx3tfV.jpg", "summary": "你有想法，我来落地。十年互联网经验，专业产品出身，做事讲方法，讲原则，讲态度，讲团队，讲效率。能提供将产品从零到一全套高效率落地方案。 <br />  \n <br /> \n重视细节，重视体验，懂产品，懂运营，精通sketch，如有需要可直接出ui。 有教育、旅游、o2o、自媒体、im、电商、平台化互联网及移动互联网产品管理经验。 <br />   \n <br /> \n2006年大学毕业，之后一直从事互联网产品的工作。可以说有着一份梦想和执着在里面，再加上本身处女座性格，事事要求完美，每项工作都要求极致。无论是用户体验，还是做人的态度，都对自己和产品要求非常高。", "website": "http://mengling.me", "location": {"city": "北京", "region": "丰台区", "address": "芳星园三区四号楼", "postalCode": "100086", "countryCode": "ZH"}, "profiles": [{"url": "", "network": "twitter", "username": "baisheng"}, {"url": "", "network": "github", "username": "baisheng@gmail.com"}, {"url": "", "network": "facebook", "username": "baisheng"}, {"url": "", "network": "dribbble", "username": "baisheng@gmail.com"}], "highlights": ["如果你不喜欢某个人，要么随他去，要么击垮他，不要只是停留于口头攻击。"]}, "skills": [{"name": "产品与设计", "level": "person", "keywords": ["Axure", "UI/UE", "SKETCH", "PS", "keynote", "mindnode", "page"]}, {"name": "个人技能", "level": "second", "keywords": ["团队管理", "远程工作管理", "专栏写作", "UI 设计"]}, {"name": "产品与设计", "level": "person", "keywords": ["Axure", "UI/UE", "SKETCH", "PS", "keynote", "mindnode", "page"]}, {"name": "个人技能", "level": "second", "keywords": ["团队管理", "远程工作管理", "专栏写作", "UI 设计"]}], "version": "An identifier for the schema verion (currently '1'). If there are future updates to the schema, then ResumeFodder can use this field to recognize outdated files and warn you about it.", "education": [{"gpa": "4.0", "area": "文化传播", "courses": ["DB1101 - Basic SQL", "CS2011 - Java Introduction"], "endDate": "2006-06-01", "startDate": "2002-06-01", "studyType": "学士学位", "institution": "辽宁工业大学"}], "interests": [{"name": "阅读", "keywords": ["文学", "历史", "古典", "哲学"]}, {"name": "音乐", "keywords": ["Country", "Pop", "Vocal", "Soul", "Folk", "Punk", "Instrumental"]}], "languages": [{"level": "upper_intermediate", "language": "English"}], "volunteer": [{"endDate": "2013-01-01", "summary": "Global movement of free coding clubs for young people.", "website": "http://coderdojo.com/", "position": "Teacher", "startDate": "2012-01-01", "highlights": ["Awarded 'Teacher of the Month'"], "organization": "CoderDojo"}], "workLabel": "工作经验", "references": [{"name": "Yolanda.Chang", "position": "采撷科技 CEO", "reference": "专业的学术知识，丰富的实践经验，为我们平台快速推向市场起到了决定性作用！"}, {"name": "张世清", "position": "安彼教育科技有限公司董事长", "reference": "专业的学术知识，丰富的实践经验，为我们平台快速推向市场起到了决定性作用！"}], "publications": [{"isbn": "The ISBN of this publication", "name": "Video compression for 3d media", "summary": "Innovative middle-out compression algorithm that changes the way we store data.", "website": "http://en.wikipedia.org/wiki/Silicon_Valley_(TV_series)", "publisher": "Hooli", "releaseDate": "2014-10-01"}], "additionalWork": [{"company": "中国统一教育网", "endDate": "2013-9-25", "summary": "在线支付、视频学习、答疑、题库、考试、社交、bbs、企业服务、crm、cms", "website": "www.tongyi.com", "position": "产品部经理", "startDate": "2011-7-1", "highlights": []}, {"company": "思源集团", "endDate": "2016-4-8", "summary": "im即时通讯，群聊，个人名片，组织平台，钱包，城市服务，数据统计分析", "website": "http://www.toon.mobi/business.html", "position": "产品总监", "startDate": "2015-3-4", "highlights": []}, {"company": "kegoal球学汇", "endDate": "2017-3-16", "summary": "创建产品团队，ui团队，产品从零到一开始调研、需求分析、抽象、流程设计、原型设计、ui设计、运营规划。\n在线学习，支付系统、社群、考试认证、统计分析、客户关系管理等", "website": "https://www.kegoal.cn/", "position": "产品总负责人", "startDate": "2016-4-17", "highlights": []}], "publicationsLabel": "Overrides the template label for the 'publications' section (e.g. 'Publications (Author)')", "additionalWorkLabel": "项目经验", "additionalPublications": [{"isbn": "", "name": "Publications that you would like to group separately (e.g. editor rather than author, academic publications, etc)", "summary": "", "website": "", "publisher": "All fields under this section are the same as for 'publications'", "releaseDate": ""}], "additionalPublicationsLabel": "Overrides the template label for the 'additionalPublications' section (e.g. 'Publications (Technical Reviewer)')"}}

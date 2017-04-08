@@ -1,0 +1,140 @@
+{
+  "version": "1.0",
+  "basics": {
+    "name": "",
+    "label": "",
+    "picture": "",
+    "email": "",
+    "phone": "",
+    "website": "",
+    "summary": "",
+    "highlights": [
+    ],
+    "location": {
+      "address": "",
+      "postalCode": "",
+      "city": "",
+      "countryCode": "",
+      "region": ""
+    },
+    "profiles": [
+      {
+        "network": "",
+        "username": "",
+        "url": ""
+      }
+
+    ]
+  },
+  "work": [
+    {
+      "company": "",
+      "position": "",
+      "website": "",
+      "startDate": "",
+      "endDate": "",
+      "summary": "",
+      "highlights": [
+
+      ]
+    }
+  ],
+  "additionalWork": [
+    {
+      "company": "",
+      "position": "",
+      "website": "",
+      "startDate": "",
+      "endDate": "",
+      "summary": "",
+      "highlights": [
+      ]
+    }
+
+  ],
+  "workLabel": "",
+  "additionalWorkLabel": "",
+  "volunteer": [
+    {
+      "organization": "",
+      "position": "",
+      "website": "",
+      "startDate": "",
+      "endDate": "",
+      "summary": "",
+      "highlights": [
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "",
+      "area": "",
+      "studyType": "",
+      "startDate": "",
+      "endDate": "",
+      "gpa": "",
+      "courses": [
+      ]
+    }
+  ],
+  "awards": [
+    {
+      "title": "",
+      "date": "",
+      "awarder": "",
+      "summary": ""
+    }
+  ],
+  "publications": [
+    {
+      "name": "",
+      "publisher": "",
+      "releaseDate": "",
+      "website": "",
+      "summary": "",
+      "isbn": ""
+    }
+  ],
+  "additionalPublications": [
+    {
+      "name": "",
+      "publisher": "",
+      "releaseDate": "",
+      "website": "",
+      "summary": "",
+      "isbn": ""
+    }
+  ],
+  "publicationsLabel": "",
+  "additionalPublicationsLabel": "",
+  "skills": [
+    {
+      "name": "",
+      "level": "",
+      "keywords": [
+      ]
+    }
+
+  ],
+  "languages": [
+    {
+      "language": "",
+      "fluency": ""
+    }
+  ],
+  "interests": [
+    {
+      "name": "",
+      "keywords": [
+      ]
+    }
+  ],
+  "references": [
+    {
+      "name": "",
+      "position": "",
+      "reference": ""
+    }
+  ]
+}

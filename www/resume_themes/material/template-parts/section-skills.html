@@ -1,0 +1,39 @@
+
+    <div class="panel panel-body">
+        <h6 class="content-group text-semibold">
+            <i class=" icon-stats-bars3 position-left"></i>擅长技能
+            {#<small class="display-block">我常用的专业性技能</small>#}
+        </h6>
+        <dl>
+            {% for skill in resume.skills %}
+                {% if skill.level == 'pro' %}
+                    <dt><$ skill.name $></dt>
+                    <dd>
+                        {% for keyword in skill.keywords %}
+                            <span class="label border-slate-300 label-striped content-group"><$ keyword $></span>
+                        {% endfor %}
+                    </dd>
+                {% endif %}
+            {% endfor %}
+        </dl>
+
+    </div>
+
+    {% for skill in resume.skills %}
+        {% if skill.level == 'person' %}
+            <div class="panel panel-body">
+
+                <h6 class="content-group text-semibold">
+                    个人技能
+                </h6>
+
+                <ul class="list-inline list-inline-condensed no-margin-bottom">
+                    {% for keyword in skill.keywords %}
+                        <li><span class="label border-brown-300 label-striped"><$ keyword $></span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        {% endif %}
+    {% endfor %}
+

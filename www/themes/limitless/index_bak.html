@@ -1,0 +1,94 @@
+{% extends "./_layout.html" %}
+
+
+{% block content %}
+	<!-- Layout 1 -->
+    {#<h6 class="content-group text-semibold">#}
+    {#Layout #1#}
+    {#<small class="display-block">Panel with transparent footer</small>#}
+    {#</h6>#}
+
+	<div class="row" data-plugin="masonry">
+
+        {% for _ in posts %}
+            {% set display_name = _.author | display_name | truncate(12, true) %}
+
+			<div class="col-md-6 col-xs-12 masonry-item">
+				<div class="panel panel-flat">
+					<div class="panel-heading">
+						<h5 class="panel-title text-semibold">
+							<a href="/article/<$ _.id $>"><$ _.title | truncate(18, true) $></a>
+
+						</h5>
+					</div>
+					<div class="panel-body">
+						<div class="content-group">
+							<$ _.excerpt |safe $>
+						</div>
+
+						<div class="thumb content-group">
+                            {#<img src="/static/assets/images/demo/blog/1.jpg" alt="" class="img-responsive">#}
+							<div class="caption-overflow">
+										<span>
+											<a href="blog_single.html"
+											   class="btn btn-flat border-white text-white btn-rounded btn-icon legitRipple"><i
+														class="icon-arrow-right8"></i></a>
+										</span>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="panel-footer panel-footer-condensed">
+						<div class="heading-elements not-collapsible">
+							<ul class="list-inline list-inline-separate heading-text text-muted">
+								<li><i class="text-teal">@</i> <a href="#"
+																  class="text-muted"><$ display_name $>
+									</a></li>
+								<li>
+									<time datetime="<$ _.update_time $>">
+										<$ _.modified | moment $></time>
+								</li>
+
+                                {#<li><a href="#" class="text-muted"><i#}
+                                {#class="icon-heart6 text-size-base text-pink position-left"></i>#}
+                                {#281</a></li>#}
+							</ul>
+                            {#
+                            <ul class="list-inline list-inline-condensed heading-text pull-right">
+                                <li><a href="/read/<$ _.id $>" class="text-default" ><i class="icon-eye8"></i></a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="text-default dropdown-toggle"
+                                       data-toggle="dropdown"
+                                       aria-expanded="false"><i class="icon-menu7"></i> <span
+                                                class="caret"></span></a>
+                                    <ul class="dropdown-menu dropdown-menu-right ">
+                                        <li><a href="#"><i class="icon-file-download"></i> 内容下载</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#"><i class="icon-link2"></i> 原文</a></li>
+
+                                        <li><a href="#"><i class="icon-file-plus"></i> 修改</a></li>
+                                        <li><a href="#"><i class="icon-cross2 text-danger"></i> 删除</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            #}
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+
+        {% endfor %}
+	</div>
+
+	<!-- Pagination -->
+
+	<div class="text-center content-group-lg pt-20">
+		<$ pagerData | safe $>
+
+	</div>
+
+	<!-- /pagination -->
+{% endblock %}

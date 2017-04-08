@@ -1,0 +1,18 @@
+<div class="panel panel-body">
+    <h6 class="content-group text-semibold">
+        <i class=" icon-sphere position-left"></i>语言能力
+    </h6>
+    <dl>
+        {% set _lang = 'zh-cn' | language %}
+
+        {% for lang in resume.languages %}
+
+            <dt><$ lang.language $></dt>
+            <dd>
+                <$ _lang[lang.level] $>
+
+            </dd>
+        {% endfor %}
+    </dl>
+
+</div>
