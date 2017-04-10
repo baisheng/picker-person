@@ -69,10 +69,10 @@ export default class extends Base {
         let all_terms = await this.allTerms(true);
         let taxonomies = await this.allTaxonomies(true);
 
-        let snippets = await think._.filter(taxonomies, {"taxonomy": taxonomy});
+        let _taxonomy = await think._.filter(taxonomies, {"taxonomy": taxonomy});
 
         let _terms = [];
-        snippets.forEach((item) => {
+        _taxonomy.forEach((item) => {
             _terms.push(think._.filter(all_terms, {id: item.term_id}))
         })
 

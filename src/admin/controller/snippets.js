@@ -21,9 +21,10 @@ export default class extends Base {
 
     async indexAction() {
 
-        let _terms = this.model('terms');
+        let _terms = this.model('terms', {aid: this.aid});
 //
         let snippet_terms = await _terms.findByTaxonomy('snippet');
+
         console.log(JSON.stringify(snippet_terms))
         let _items = [];
         snippet_terms.forEach((item) => {
