@@ -1,0 +1,457 @@
+{#{% extends "./inc/_base.html" %}#}
+{% extends "../_layout.html" %}
+
+
+{% block style %}
+    <link rel="/static/assets/js/plugins/treetable/treetable.css" rel="stylesheet" type="text/css">
+    <style>
+        .form-element {
+            margin-bottom: 16.66666667px;
+        }
+        .form-element label {
+            color: #666978;
+            margin-bottom: 5px;
+            max-width: 100%;
+            display: block;
+        }
+
+        .switch,
+        .switch-inline {
+            overflow: hidden;
+            margin: 0 0 5px 0;
+        }
+        .switch.switch-inline,
+        .switch-inline.switch-inline {
+            margin: 0 10px 0 0;
+            display: inline-block;
+        }
+        .switch div,
+        .switch-inline div {
+            float: left;
+            margin: 0 0 0 10px;
+            line-height: 20px;
+        }
+        .switch label,
+        .switch-inline label {
+            margin-bottom: 0;
+        }
+        .switch input,
+        .switch-inline input {
+            position: absolute;
+            margin-left: -9999px;
+            visibility: hidden;
+        }
+        .switch input + label,
+        .switch-inline input + label {
+            display: block;
+            position: relative;
+            cursor: pointer;
+            outline: 0;
+            float: left;
+            user-select: none;
+            padding: 1px;
+            width: 40px;
+            height: 20px;
+            background: #e5eaf4;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+        .switch input + label:before,
+        .switch-inline input + label:before,
+        .switch input + label:after,
+        .switch-inline input + label:after {
+            display: block;
+            position: absolute;
+            content: "";
+        }
+        .switch input + label:before,
+        .switch-inline input + label:before {
+            top: 1px;
+            left: 1px;
+            bottom: 1px;
+            right: 1px;
+            background: #fff;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+        .switch input + label:after,
+        .switch-inline input + label:after {
+            top: 2px;
+            left: 2px;
+            bottom: 2px;
+            width: 16px;
+            background: #e5eaf4;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+        .switch input:checked + label:after,
+        .switch-inline input:checked + label:after {
+            margin-left: 20px;
+            background: #41da54;
+        }
+        .switch input:disabled + label:after,
+        .switch-inline input:disabled + label:after {
+            cursor: not-allowed;
+        }
+        .switch input:disabled + label:before,
+        .switch-inline input:disabled + label:before {
+            background: #f8f9fb;
+            cursor: not-allowed;
+        }
+
+
+    </style>
+
+    <style>
+
+        .frame-wrapper {
+            position: relative;
+            font-size: 0;
+        }
+
+        .frame-wrapper .frame-border {
+            position: absolute;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.13);*/
+            pointer-events: none;
+        }
+
+        .frame-viewer {
+            width: 100%;
+            height: 400px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .frame-viewer img.preview {
+            width: 100%;
+        }
+
+        .frame-viewer iframe {
+            width: 1280px;
+            height: 800px;
+            border: 0;
+            overflow: hidden;
+            -webkit-transform: scale(0.685);
+            transform: scale(0.685);
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            background-color: white;
+            border: none;
+        }
+
+        .col-md-7 .frame-viewer iframe {
+            -webkit-transform: scale(0.53);
+            transform: scale(0.53);
+        }
+
+        .col-md-6 .frame-viewer iframe {
+            width: 1266px;
+            height: 888px;
+            -webkit-transform: scale(0.45);
+            transform: scale(0.45);
+        }
+
+        img.screenshot {
+            width: 100%;
+            box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2), inset 0 2px 0 0 rgba(255, 255, 255, 0.2);
+        }
+
+        a.site-link {
+            display: block;
+            padding: 14px 10px;
+            text-align: center;
+            /*border: 1px solid rgba(43, 50, 57, 0.15);*/
+            border-top: none;
+            background-color: #FDFDFD;
+            /*border-radius: 0 0 3px 3px;*/
+            text-decoration: none;
+        }
+
+        a.site-link i {
+            margin-right: 10px;
+            position: relative;
+            top: 2px;
+        }
+
+        a.site-link:hover {
+            color: #24588a;
+        }
+
+        a.site-link:hover i.icon {
+            -webkit-filter: brightness(70%);
+            filter: brightness(70%);
+        }
+
+        .col-padding {
+            position: relative;
+            min-height: 1px;
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    </style>
+{% endblock %}
+
+<!-- Main content -->
+
+{#{% block body_style %}sidebar-main-hidden{% endblock %}#}
+
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-md-3" v-for="_ in themes">
+
+            <div class="panel panel-flat" :class=" _.name == current_theme ? 'border-teal-400' : ''">
+                <div class="panel-body">
+                    <div class="thumb content-group">
+                        <img :src="'/themes/' + _.name + '/screenshot.png'" alt="" class="img-reponsive">
+
+                        <div class="caption-overflow">
+										<span>
+											<a href="blog_single.html" class="btn btn-flat border-white text-white btn-rounded btn-icon legitRipple"><i class="icon-arrow-right8"></i></a>
+										</span>
+                        </div>
+                    </div>
+
+                    <h5 class="text-semibold mb-5">
+                        <a href="#" class="text-default">{{ _.name }}</a>
+                    </h5>
+
+                    <ul class="list-inline list-inline-separate text-muted content-group">
+                        <li>@ <a href="#" class="text-muted">{{ _.author }}</a></li>
+                        {#<li>July 20th, 2016</li>#}
+                    </ul>
+
+                </div>
+
+                <div class="panel-footer panel-footer-condensed">
+                    <div class="heading-elements not-collapsible">
+                        <span class="heading-text" v-if="_.name == current_theme">
+                            <span class="status-mark position-left bg-success-400"></span>
+                            <span class="text-success">启用</span>
+                        </span>
+                        <span class="heading-text" v-else>
+                            <span class="status-mark position-left border-grey-400"></span>
+                            {#<span class="text-muted"></span>#}
+                        </span>
+                        {#<ul class="list-inline list-inline-separate heading-text text-muted">#}
+                            {#<li><a href="#" class="text-muted"><i class="icon-heart6 text-size-base text-pink position-left"></i> 29</a></li>#}
+                        {#</ul>#}
+                        {#<form class="heading-form" action="#">#}
+                            {#<div class="form-group">#}
+                                {#<label class="checkbox-inline checkbox-right checkbox-switchery switchery-xs">#}
+                                    {#<input type="checkbox" class="switchery" :checked="activeTheme(_.name)">#}
+                                    {#<span v-if="_.name == current_theme">已启用</span>#}
+                                    {#<span class="text-muted" v-else>未启用</span>#}
+                                {#</label>#}
+                            {#</div>#}
+                        {#</form>#}
+
+
+                        <ul class="list-inline list-inline-condensed heading-text pull-right">
+                            {#<li><a href="#" class="text-default" data-toggle="modal" data-target="#invoice"><i class="icon-eye8"></i></a></li>#}
+                            <li class="dropdown">
+                                <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="#"><i class="icon-eye"></i> 实时演示</a></li>
+                                    <li v-if="_.name != current_theme"><a @click="active(_.name)"><i class="icon-check"></i> 启用</a></li>
+                                    {#<li><a href="#"><i class="icon-check"></i> 详情</a></li>#}
+                                    {#<li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>#}
+                                    {#<li class="divider"></li>#}
+                                    {#<li><a href="#"><i class="icon-file-plus"></i> Edit invoice</a></li>#}
+                                    {#<li><a href="#"><i class="icon-cross2"></i> Remove invoice</a></li>#}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+{% endblock %}
+
+<!-- /main content -->
+
+
+
+
+
+{% block script %}
+    <script type="text/javascript" src="/static/assets/js/plugins/forms/editable/editable.min.js"></script>
+    <script src="/static/assets/js/plugins/treetable/jquery.treetable.js" type="text/javascript"></script>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                current_theme: '<$ options.current_theme $>',
+                themes: []
+            },
+            beforeCreate: function(){
+
+
+            },
+            beforeMount: function(){
+
+
+            },
+            mounted: function(){
+
+
+                var vue = this;
+                vue.fetch();
+
+                eventHub.$on("fetch", function () {
+
+
+                });
+
+
+            },
+            updated: function(){
+                $('.editable').editable({
+                    type: 'text',
+                    url: '/admin/options',
+                    send: 'always'
+
+                });
+
+                Vue.nextTick(function(){
+                    // Switchery toggles
+
+                })
+            },
+            computed: {
+                // a computed getter
+            },
+            methods: {
+                active: function(theme_name){
+                    this.status = 'saving';
+                    var self = this;
+
+                    var postData = {
+                        "name": 'current_theme',
+                        "value": theme_name
+                    }
+
+                    fetch('/admin/options', {
+                        credentials: 'include',
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(postData)
+
+                    }).then(function (response) {
+                        if (response.ok) {
+                            self.status = 'success';
+//                            clearTimeout(timeout);
+
+                            return response.json();
+                        } else {
+//                            notify(data.errmsg, "danger");
+                            var error = new Error(response.statusText)
+                            error.response = response
+                            throw error
+                        }
+                    }).then(function (json) {
+
+                        self.current_theme = theme_name;
+//                        if (json._id != null) {
+//                            self._id = json._id;
+                            // 设置页面路径信息，页面刷新后也可以获得当前编辑的信息
+//                            History.pushState({state: 1}, "State 1", self._id.toString());
+//                        }
+                    })
+                },
+                activeTheme: function (theme_name) {
+                    if(theme_name === this.current_theme) {
+                        return 'checked';
+                    }else {
+                        return false;
+                    }
+                },
+                /*
+                 e     :事件
+                 field :字段，用于告诉服务端要更新哪个字段
+                 user  :列表中某一行数据
+                 */
+                editable: function (e, field, user) {
+                    console.log(field + ":" + user)
+                    var that = this;
+                    that.$editable(e, function (value) {
+                        // 这里做ajax请求
+                        //如果数据没有被修改这个回调方法不会执行
+                    });
+                },
+
+                fetch: function () {
+
+                    var vue = this;
+                    var _url = "/admin/theme/get";
+
+                    fetch(_url, {
+                        credentials: 'include',
+                        method: 'POST',
+//                        mode: 'cors',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+
+                    }).then(function (response) {
+
+                        if (response.ok) {
+
+                            return response.json();
+
+                        } else {
+                            self.status = 'error';
+
+                            var error = new Error(response.statusText)
+                            error.response = response
+                            throw error
+                        }
+                    }).then(function (json) {
+                        vue.themes = json.data;
+
+                        eventHub.$emit('fetch')
+
+                    })
+
+
+                }
+            }
+
+
+        });
+
+    </script>
+
+{% endblock %}

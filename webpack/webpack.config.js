@@ -1,6 +1,6 @@
 const { resolve } = require('path')
 let webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+// const HtmlWebpackPlugin = require('html-webpack-plugin')
 const pkgInfo = require('./package.json')
 const url = require('url')
 const UglifyJsPlugin = require('uglify-js-plugin');
@@ -9,7 +9,7 @@ let path = require('path');
 let glob = require('glob');
 let HappyPack = require('happypack');
 let os = require('os');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const extractCSS = new ExtractTextPlugin('stylesheets/[name]-one.css');
 let happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
 let CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
@@ -42,10 +42,10 @@ module.exports = {
                         'scss': 'vue-style-loader!css-loader!sass-loader',
                         'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax',
                         'less': 'vue-style-loader!css-loader!less-loader',
-                        'css': ExtractTextPlugin.extract({
-                            use: 'css-loader',
-                            fallback: 'vue-style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
-                        })
+                        // 'css': ExtractTextPlugin.extract({
+                        //     use: 'css-loader',
+                        //     fallback: 'vue-style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm3
+                        // })
                         // 'css': ExtractTextPlugin.extract({
                         //     loader: 'css-loader',
                         //     fallbackLoader: 'style-loader'
@@ -98,7 +98,7 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             },
 
-            {
+/*            {
                 test: /\.(scss|css)$/,
                 // include: [
                 //     path.resolve(__dirname, './src/styles'),
@@ -124,7 +124,7 @@ module.exports = {
                         },
                     ],
                 }),
-            },
+            },*/
             // { test: require.resolve("./components/js/jquery-3.1.0.min.js"), use: "expose-loader?$!expose-loader?jQuery" }
             // {
             //     test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)(\?.+)?$/,
@@ -175,7 +175,7 @@ module.exports = {
     },
     // debug: true,
     plugins: [
-        new ExtractTextPlugin("style.css"),
+        // new ExtractTextPlugin("style.css"),
         // extractCSS,
         // new CommonsChunkPlugin('static/js/common.js', getCommonArray()),
         // new webpack.ProvidePlugin({

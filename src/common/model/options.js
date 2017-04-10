@@ -9,17 +9,20 @@ export default class extends Base {
      * options cache key
      * @type {String}
      */
-    cacheKey = '$option' + this.aid;
+    // cacheKey = 'picker_' + this.aid + '_option' + this.aid;
+    cacheKey = '$options';
     /**
      * cache options
      * @type {Object}
      */
     cacheOptions = {
         timeout: 30 * 24 * 3600 * 1000,
-        type: !think.isMaster ? 'file' : 'memory'
+        type: 'file'
+        // type: !think.isMaster ? 'file' : 'memory'
     };
     //
     async getOption(name) {
+
         let options = await this.getOptions(true);
 
         return await think._.find(options, name);
@@ -43,6 +46,10 @@ export default class extends Base {
             let data = await this.select();
 
             let result = {};
+            // for (let option of data){
+            //     r
+            //     console.log(option.key)
+            // }
             data.forEach(item => {
                 result[item.key] = JSON.parse(item.value);
             });
@@ -131,11 +138,14 @@ export default class extends Base {
         // let theme_slug = await this.getOption('stylesheet');
         let options = await this.getOptions(true);
 
-        let theme_slug = options['stylesheet'];
+        // let theme_slug = options['stylesheet'];
+        //TODO: 临时 @baisheng 2017 0904
+        let theme_slug = "caixie";
 
         // console.log(JSON.stringify(theme_slug))
         let mods = options['theme_mods_' + theme_slug];
-        console.log(JSON.stringify(mods));
+
+        // console.log(JSON.stringify(mods));
         if (!think.isEmpty(mods)) {
             return mods;
         }

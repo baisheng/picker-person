@@ -4,12 +4,12 @@
 
         <!-- Title -->
         <!--<div class="category-title h6">-->
-            <!--<span>基本信息</span>-->
-            <!--<a class="btn btn-default btn-block" @click="add()"><i class="icon-plus22 position-left"></i>工作经验</a>-->
+        <!--<span>基本信息</span>-->
+        <!--<a class="btn btn-default btn-block" @click="add()"><i class="icon-plus22 position-left"></i>工作经验</a>-->
 
-            <!--<ul class="icons-list">-->
-            <!--<li><a href="#"><i class="icon-gear"></i></a></li>-->
-            <!--</ul>-->
+        <!--<ul class="icons-list">-->
+        <!--<li><a href="#"><i class="icon-gear"></i></a></li>-->
+        <!--</ul>-->
         <!--</div>-->
         <div class="category-content">
 
@@ -51,12 +51,13 @@
                     </div>
 
                     <div class="media-body">
-                        <form class="upload " method="post" action="/admin/posts/picture"
+                        <form id="upload" class="upload " method="post" action=""
                               enctype="multipart/form-data">
 
                             <div class="button">
-                                <a class="btn bg-primary-400 btn-block">
+                                <a class="btn bg-primary-400 btn-block" @click="open">
                                     <span>上传头像</span>
+
                                     <svg class="load" version="1.1" x="0px" y="0px" width="30px" height="30px"
                                          viewBox="0 0 40 40" enable-background="new 0 0 40 40">
                                         <path opacity="0.8" fill="#fff" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
@@ -82,7 +83,7 @@
                                     <span></span>
                                 </div>
                             </div>
-                            <input class="file" type="file" name="file">
+                            <input class="file" type="file" ref="fileinput" name="file" @change="onFileChange">
                             <input type="hidden" name="path">
                         </form>
                         <a @click="removeAvatar()"
@@ -99,74 +100,141 @@
 
 
 <script>
-    import '../js/form.js'
+    //    import '../js/form.js'
     export default {
         name: 'BasicsForm',
         props: ['resume', 'isImage'],
 
-        mounted: function () {
-            $(document).ready(function () {
-                $(".upload").on("click", ".button a span", function (e) {
-                    e.preventDefault();
-                    var btn = $(this).parent().parent();
-                    btn.next(".file").trigger("click");
-                });
-                $(".upload .file").on("change", function () {
-                    var upload = $(this).parent();
+        methods: {
+            open(e){
+                this.$refs.fileinput.click()
+//                e.preventDefault();
+//                var files = this.$$.fileInput.files;
+//                var data = new FormData();
+                // for single file
+//                data.append('avatar', files[0]);
+                // Or for multiple files you can also do
+                //  _.each(files, function(v, k){
+                //    data.append('avatars['+k+']', v);
+                // });
 
-                    var btn = upload.children(".button");
-                    var loadSVG = btn.children("a").children(".load");
-                    var loadBar = btn.children("div").children("span");
-                    var checkSVG = btn.children("a").children(".check");
-                    btn.children("a").children("span").fadeOut(200, function () {
-                        btn.children("a").animate({
-                            width: 36
-                        }, 100, function () {
-                            loadSVG.fadeIn(300);
-                            btn.animate({
-                                width: '100%'
-                            }, '100%', function () {
-                                btn.children("div").fadeIn(200, function () {
-                                    upload.ajaxSubmit({
-                                        uploadProgress: function (event, position, total, percentComplete) {
-                                            loadBar.width(percentComplete + "%");
-                                        },
-                                        complete: function (data) {
+//                this.$http.post('/avatars/upload', data, function (data, status, request) {
+                //handling
+//                }).error(function (data, status, request) {
+                //handling
+//                });
+            },
+            onFileChange(e){
+                let files = e.target.files || e.dataTransfer.files;
+                if (!files.length)
+                    return;
 
-                                            loadSVG.fadeOut(100, function () {
-                                                checkSVG.fadeIn(100, function () {
-                                                    setTimeout(function () {
+                let vue = this;
+                let data = new FormData();
+//                data.append('action', 'ADD');
+//                data.append('param', 0);
+//                data.append('secondParam', 0);
+                data.append('file', files[0]);
+//                data.append('upload', new Blob(['test payload'], { type: 'text/csv' }));
+
+                let upload = $(".upload");
+
+                let btn = upload.children(".button");
+                let loadSVG = btn.children("a").children(".load");
+                let loadBar = btn.children("div").children("span");
+                let checkSVG = btn.children("a").children(".check");
+                btn.children("a").children("span").fadeOut(200, () => {
+                    btn.children("a").animate({
+                        width: 36
+                    }, 100, () => {
+                        loadSVG.fadeIn(300);
+                        btn.animate({
+                            width: '100%'
+                        }, '100%', function () {
+                            btn.children("div").fadeIn(200, () => {
+
+                                let config = {
+                                    onUploadProgress: function (progressEvent) {
+                                        let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                                        loadBar.width(percentCompleted + "%");
+
+                                    },
+                                };
+                                vue.$http.post('/admin/posts/picture', data, config)
+                                    .then((data) => {
+                                        loadSVG.fadeOut(100, function () {
+                                            checkSVG.fadeIn(100, function () {
+                                                setTimeout(function () {
 //                                                    jQuery.event.trigger("fetch");
 //                                                    jQuery.event.trigger("fetch", data);
-                                                        if (data != null) {
-                                                            eventHub.$emit("fetch-avatar", data.responseJSON.data);
+                                                    if (data !== null) {
+//                                                        console.log(JSON.stringify(data))
+                                                        eventHub.$emit("fetch-avatar", data.data.data);
 
-                                                        }
+                                                    }
 
-                                                        btn.children("div").fadeOut(100, function () {
-                                                            loadBar.width(0);
-                                                            checkSVG.fadeOut(100, function () {
-                                                                btn.children("a").animate({
-                                                                    width: '100%'
-                                                                }, '100%');
-                                                                btn.animate({
-                                                                    width: '100%'
-                                                                }, '100%', function () {
-                                                                    btn.children("a").children("span").fadeIn(100);
-                                                                });
+                                                    btn.children("div").fadeOut(100, function () {
+                                                        loadBar.width(0);
+                                                        checkSVG.fadeOut(100, function () {
+                                                            btn.children("a").animate({
+                                                                width: '100%'
+                                                            }, '100%');
+                                                            btn.animate({
+                                                                width: '100%'
+                                                            }, '100%', function () {
+                                                                btn.children("a").children("span").fadeIn(100);
                                                             });
                                                         });
-                                                    }, 1000);
-                                                });
+                                                    });
+                                                }, 1000);
                                             });
-                                        }
-                                    });
+                                        });
+
+                                    }).catch((err) => {
+                                        console.log(err)
+                                })
+                               /*
+                                upload.ajaxSubmit({
+                                    uploadProgress: function (event, position, total, percentComplete) {
+                                        loadBar.width(percentComplete + "%");
+                                    },
+                                    complete: function (data) {
+
+                                        loadSVG.fadeOut(100, function () {
+                                            checkSVG.fadeIn(100, function () {
+                                                setTimeout(function () {
+//                                                    jQuery.event.trigger("fetch");
+//                                                    jQuery.event.trigger("fetch", data);
+                                                    if (data != null) {
+                                                        eventHub.$emit("fetch-avatar", data.responseJSON.data);
+
+                                                    }
+
+                                                    btn.children("div").fadeOut(100, function () {
+                                                        loadBar.width(0);
+                                                        checkSVG.fadeOut(100, function () {
+                                                            btn.children("a").animate({
+                                                                width: '100%'
+                                                            }, '100%');
+                                                            btn.animate({
+                                                                width: '100%'
+                                                            }, '100%', function () {
+                                                                btn.children("a").children("span").fadeIn(100);
+                                                            });
+                                                        });
+                                                    });
+                                                }, 1000);
+                                            });
+                                        });
+                                    }
                                 });
+                                */
                             });
                         });
                     });
                 });
-            });
+
+            }
 
         }
     }

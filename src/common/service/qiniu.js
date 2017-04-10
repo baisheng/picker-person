@@ -9,21 +9,26 @@ export default class extends think.service.base {
     init() {
         super.init();
     }
+
     // cacheKey = 'picker_option';
 
-    async echo(){
+    async echo() {
         // console.log("Qiniu service ready!");
         return "Qiniu service ready!"
     }
+
     /**
      * 七牛上传
      * @param filePath 要上传文件的本地路径
      * @param key 上传到七牛后保存的文件名
      * @returns {*}
      */
-    async upload(filePath, key, istoken = false) {
-        let $option = await think.cache("$option");
-        let $upload = JSON.parse($option.upload);
+    async upload(filePath, key, aid, istoken = false) {
+
+        let $option = await think.cache("$options" + aid);
+
+        let $upload = $option.upload;
+
         qiniu.conf.ACCESS_KEY = $upload.option['ak'];
         qiniu.conf.SECRET_KEY = $upload.option['sk'];
         let bucket = $upload.option['bucket'];

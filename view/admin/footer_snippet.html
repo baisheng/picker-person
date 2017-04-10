@@ -1,0 +1,35 @@
+<div class="footer" id="snippet-toolbar">
+
+    <div class="dummy-fixed">
+
+        <div class="snippet" :class="isActive ? 'snippet--active': ''">
+            <a id="snippet__button" class="btn bg-primary btn-raised  btn-block snippet__button"
+               @click="active"><!-- Fallback location -->
+                <span class="snippet__text">
+							<span class="snippet__text-inner snippet__initial-text ">
+                               <i class="icon-plus22 position-left"></i>
+
+                                碎片</span>
+							<span class="snippet__text-inner snippet__final-text">
+                                保存
+                                <i class="fa fa-fw fa-save"></i>
+                            </span>
+						</span>
+            </a>
+            <div class="snippet_content panel panel-body alpha-grey" v-if="isActive" v-cloak>
+                <div class="snippet_content-inner">
+                    <div class="snippet__summary">
+                        <div class="editor">
+                                    <textarea id="editor" class="form-control snippet-editor" placeholder="Remember, be nice!" col="30" rows="5">
+				                    </textarea>
+                        </div>
+                    </div>
+                    <button class="snippet__close snippet__cancel" @click="cancel"><i
+                                class="icon fa fa-fw fa-close"></i>
+                        关闭
+                    </button>
+                </div><!-- /snippet_content-inner -->
+            </div><!-- /snippet_content -->
+        </div><!-- /snippet -->
+    </div>
+</div><!-- /container -->

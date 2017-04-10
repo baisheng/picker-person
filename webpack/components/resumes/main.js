@@ -2,10 +2,6 @@
 import axios from 'axios'
 Vue.prototype.$http = axios;
 
-// const $ = require("jquery")
-// const jquery = require("jquery")
-// import Multiselect from 'vue-multiselect'
-// import Switches from '../ui/switches.vue';
 // import Switch from '../ui/switch.vue'
 import VueMarkdown from 'vue-markdown'
 // import { markdownEditor } from 'vue-simplemde'
@@ -21,8 +17,8 @@ import Sections from './sections.vue'
 import SectionsForm from './sections-form.vue'
 
 
-Vue.component('draggable',draggable);
-Vue.component('VueMarkdown',VueMarkdown);
+Vue.component('draggable', draggable);
+Vue.component('VueMarkdown', VueMarkdown);
 // Vue.component('markdownEditor', markdownEditor);
 
 new Vue({
@@ -59,9 +55,9 @@ new Vue({
         title: TITLE,
         type: 'person',
         options: [
-            { name: 'person', title: '个人简历' },
-            { name: 'team', title: '团队简历' },
-            { name: 'about', title: '关于我们' },
+            {name: 'person', title: '个人简历'},
+            {name: 'team', title: '团队简历'},
+            {name: 'about', title: '关于我们'},
         ],
         menus: [],
         sectionMenu: false,
@@ -86,15 +82,16 @@ new Vue({
     mounted: function () {
         this.meta._resume_section = this.section;
 
-        if (this.resume.basics.picture === ""){
-           this.resume.basics.picture = this.imageDefault;
+        if (this.resume.basics.picture === undefined) {
+            this.resume.basics.picture = this.imageDefault;
         }
-        var vue = this;
+
+        let vue = this;
 
         // vue.fetch();
 
 
-        eventHub.$on("new_work", function(){
+        eventHub.$on("new_work", function () {
             vue.form = 'new_work'
 
         })
@@ -108,48 +105,37 @@ new Vue({
 //                    console.log(JSON.stringify(main.$refs.frame))
 
         });
-        // vue.resume.basics.picture = vue.image.guid;
 
         // Vue.nextTick(function(){
         //     vue.resume.basics.picture = vue.image.guid;
         //
         // })
         eventHub.$on('fetch-avatar', function (data) {
-                // console.log(JSON.stringify(data))
+            // console.log(JSON.stringify(data))
             // Vue.nextTick(function(){
-                vue.image = data;
-                vue.resume.basics.picture = vue.image.guid;
-                vue.isImage = true;
+            vue.image = data;
+            vue.resume.basics.picture = vue.image.guid;
+            // console.log(vue.resume.basics.picture);
+            vue.isImage = true;
+            // Vue.nextTick(function(){
+            // vue.save();
+
+            // })
             // })
         })
-        // $(function(){
-        //     $('.sidebar-fixed').on('activate.bs.scrollspy', function () {
-        //         // do something…
-        //         console.log("--------")
-        //     })
-        // })
-        Vue.nextTick(function(){
 
-        })
-        eventHub.$on('section', function(section){
+        eventHub.$on('section', function (section) {
             vue.form = section;
-            // console.log(vue.form);
 
         })
         this.$nextTick(function () {
-
-
-
-            // vue.resume.basics.picture = vue.image.guid;
-
-            // console.log('Main nextTick');
 
             // code that assumes this.$el is in-document
         })
 
     },
-    created: function(){
-    //
+    created: function () {
+        //
 
     },
 
@@ -159,23 +145,17 @@ new Vue({
         //         this.src = '/static/assets/images/demo/users/face1.jpg';
         //     }
         // },
-        removeAvatar: function(){
+        removeAvatar: function () {
             // this.image =
             this.resume.basics.picture = this.imageDefault;
         },
-        showSection: function(){
+        showSection: function () {
             this.sectionMenu = true;
             this.form = 'works';
         },
 
-        cancel: function(from){
-            // console.log("---" + from);
-            // console.log("cancel ===")
-            // if (from === 'work') {
-            //     this.form = 'works';
-            //     this.work = {};
-            // }
-            switch(from){
+        cancel: function (from) {
+            switch (from) {
                 case 'work':
                     this.form = 'works';
                     // this.work = {};
@@ -186,7 +166,7 @@ new Vue({
                     break;
             }
         },
-        basics: function(){
+        basics: function () {
             this.sectionMenu = false;
             this.form = 'basics';
         },
@@ -195,10 +175,10 @@ new Vue({
 //                    this.iframe.loaded = true;
 //                    eventHub.$emit("frame_loaded")
         },
-        autoSave: function(){
+        autoSave: function () {
 
         },
-        save: function(){
+        save: function () {
             console.log("post data ");
             this.status = 'saving';
             this.post();
@@ -207,7 +187,7 @@ new Vue({
         fetch(){
             let vue = this;
             this.$http.get('/admin/api/resume/' + vue.id)
-                .then(function(response) {
+                .then(function (response) {
                     // vue.resume = response.data.data.content_json;
                     let content = JSON.parse(response.data.data.content_json)
                     vue.resume = content.resume;
@@ -232,7 +212,7 @@ new Vue({
                 });
 
         },
-        post: function(){
+        post: function () {
             console.log("POST -----")
             let vue = this;
 
@@ -242,21 +222,19 @@ new Vue({
                 name: this.name,
                 meta: this.meta,
                 // type: this.type,
-                content_json:'{"resume":' + JSON.stringify(vue.resume) + '}'
+                content_json: '{"resume":' + JSON.stringify(vue.resume) + '}'
             }
-            if (vue.id !== 0){
+            if (vue.id !== 0) {
                 console.log(vue.id + "----------")
                 post_data.id = vue.id;
             }
-            // console.log(JSON.stringify(post_data));
-            // /admin/posts/article
             // this.$http.post('/admin/resume', post_data)
             this.$http.post('/admin/posts/resume', post_data)
 
                 .then(function (response) {
                     // console.log(response.data);
                     let data = response.data;
-                    if (data._id != null){
+                    if (data._id != null) {
                         vue.id = data._id;
                         History.pushState({state: 1}, "State 1", vue.id.toString());
                         vue.status = 'success';
@@ -295,13 +273,14 @@ new Vue({
     watch: {
         resume: {
             handler: function (val, oldVal) {
+                console.log(oldVal)
                 this.resume = val;
                 this.save();
             },
             deep: true
         },
         title: {
-            handler: function(val, oldVal) {
+            handler: function (val, oldVal) {
                 this.save();
 
             }
@@ -317,29 +296,6 @@ new Vue({
             // console.log(val)
             this.text = val ? 'Yes' : 'No'
         }
-        // title(newVal){
-        //    if (newVal) {
-               // console.log(newVal)
-               // this.post();
-           // }
-        // }
-/*        work: {
-            handler: function(val, oldVal){
-                if (val.position !== '' && val.startDate !== ''){
-                    this.done = true;
-                }
-            },
-            deep: true
-
-        },
-        education: {
-            handler: function(val, oldVal){
-                if (val.institution !== '' && val.startDate !== ''){
-                    this.done = true;
-                }
-            },
-            deep: true
-        }*/
     },
 });
 

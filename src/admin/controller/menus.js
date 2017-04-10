@@ -13,6 +13,8 @@ export default class extends Base {
         // let menus = await this.model('taxonomy').getNavMenuItems();
         // this.assign('menus', menus);
         let nav_menus = await this.model('taxonomy').getAllMenu();
+
+        // console.log(JSON.stringify(nav_menus))
         this.assign('nav_menus', nav_menus)
         // let path1 = think.getPath("common", "config");
         //     console.log(path1  + "--------")
@@ -20,8 +22,10 @@ export default class extends Base {
         // let _lang = await language();
 
         let mods = await this.model('options').getThemeMods();
+       console.log(JSON.stringify(mods))
+
         // console.log(JSON.parse(mods)['nav_menu_locations'])
-        this.assign('menu_locations', JSON.parse(mods)['nav_menu_locations']);
+        this.assign('menu_locations', mods['nav_menu_locations']);
         // console.log(JSON.stringify());
 
         // console.log(JSON.stringify(nav_menus));

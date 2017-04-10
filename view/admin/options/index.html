@@ -1,0 +1,404 @@
+{#{% extends "./inc/_base.html" %}#}
+{% extends "../_layout.html" %}
+
+{% block script %}
+    <script type="text/javascript" src="/static/assets/js/plugins/forms/editable/editable.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/plugins/extensions/mockjax.min.js"></script>
+    <script src="/static/assets/js/plugins/treetable/jquery.treetable.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        (function() {
+            var VueEditable = {
+                install: function(Vue) {
+                    Vue.prototype.$editable = function(e,callback) {
+                        var target=e.target,value=target.innerText;
+                        target.innerHTML = "<input type='text' value='" + value + "' id='_editable' style='width:100%;box-sizing:border-box;background:transparent;font-size:13px;color:red;text-align:center'>";
+                        var input = document.getElementById('_editable');
+                        input.focus();
+                        var len = input.value.length;
+                        if (document.selection) {
+                            var sel = input.createTextRange();
+                            sel.moveStart('character', len);
+                            sel.collapse();
+                            sel.select();
+                        } else if (typeof input.selectionStart == 'number' && typeof input.selectionEnd == 'number') {
+                            input.selectionStart = input.selectionEnd = len;
+                        }
+
+                        var action = function() {
+                            if (value != this.value && this.value != '') {
+                                target.innerHTML = this.value;
+                                callback(this.value)
+                            } else {
+                                target.innerHTML = value;
+                            }
+                            input.removeEventListener("blur", action, false);
+                        };
+                        input.addEventListener("blur", action, false);
+                    }
+                }
+            }
+
+            if (typeof exports == "object") {
+                module.exports = VueEditable;
+            } else if (typeof define == "function" && define.amd) {
+                define([], function() {
+                    return VueEditable;
+                });
+            } else if (window.Vue) {
+                window.VueEditable = VueEditable;
+                Vue.use(VueEditable);
+            };
+        })();
+
+        $(function() {
+            // Set popup mode as default
+//            $.fn.editable.defaults.mode = 'inline';
+
+//            $("#category").treetable({expandable: true});
+//            jQuery('#category').treetable('expandAll')
+
+            //        $('.select').select2({
+            //            minimumResultsForSearch: Infinity
+            //        });
+
+
+
+//            $('#text-field').on('save', function(e, params) {
+//
+//            });
+//            $('#text-field').on('shown', function(e, editable) {
+//                editable.input.$input.val('overwriting value of input..');
+//            });
+//
+
+
+        });
+    </script>
+
+    <script>
+        new Vue({
+            el: "#data",
+            data: {
+               options: []
+//                options: <$ options_data | dump | safe  $>
+            },
+            beforeCreate: function(){
+//                this.fetch();
+
+
+//                    var vue = this;
+//                    var _url = "/admin/options";
+//
+//                    fetch(_url, {
+//                        credentials: 'include',
+//                        method: 'POST',
+////                        mode: 'cors',
+//                        headers: {
+//                            'Accept': 'application/json',
+//                            'Content-Type': 'application/json'
+//                        }
+//
+//                    }).then(function (response) {
+//
+//                        if (response.ok) {
+//
+//                            return response.json();
+//
+//                        } else {
+//                            self.status = 'error';
+//
+//                            var error = new Error(response.statusText)
+//                            error.response = response
+//                            throw error
+//                        }
+//                    }).then(function (json) {
+////                        console.log(JSON.stringify(json))
+//                        vue.options = json;
+//
+////                        Vue.nextTick(function(){
+////                            $('.editable').editable('enable');
+////
+////                        })
+//
+//                        eventHub.$emit('fetch')
+//
+//                    })
+
+
+
+            },
+            beforeMount: function(){
+
+
+            },
+            mounted: function(){
+
+
+//                var toggleState = document.querySelector('.switchery');
+//                var toggleStateInit = new Switchery(toggleState);
+//                toggleState.onchange = function () {
+//                    if (toggleState.checked) {
+//                        $('.editable').editable('enable');
+//
+//                    }
+//                    else {
+//                        $('.editable').editable('disable');
+//                    }
+//                };
+
+//                $.fn.editable.defaults.send = "always";
+
+                //
+                // Input types
+                //
+
+                // Simulate ajax requests
+//                $.mockjax({
+//                    url: '/admin/post-fields',
+//                    response: function(settings) {
+//                        console.log(settings, this);
+//                    }
+//                });
+
+
+                /*
+                $('.editable').on('save', function(){
+                    var that = this;
+                    setTimeout(function() {
+                        $(that).closest('tr').next().find('.editable').editable('show');
+                    }, 200);
+                })
+                */
+
+                var vue = this;
+                vue.fetch();
+
+                eventHub.$on("fetch", function () {
+
+                    $('.editable').editable('enable');
+
+                    Vue.nextTick(function(){
+                        vue.editable  = $('.editable');
+                        vue.editable.editable('enable');
+
+                    })
+
+                });
+            },
+            updated: function(){
+                $('.editable').editable({
+                    type: 'text',
+                    url: '/admin/options',
+                    send: 'always'
+
+                });
+            },
+            methods: {
+                /*
+                 e     :事件
+                 field :字段，用于告诉服务端要更新哪个字段
+                 user  :列表中某一行数据
+                 */
+                editable: function (e, field, user) {
+                    console.log(field + ":" + user)
+                    var that = this;
+                    that.$editable(e, function (value) {
+                        // 这里做ajax请求
+                        //如果数据没有被修改这个回调方法不会执行
+                    });
+                },
+
+                fetch: function () {
+
+                    var vue = this;
+                    var _url = "/admin/options";
+
+                    fetch(_url, {
+                        credentials: 'include',
+                        method: 'POST',
+//                        mode: 'cors',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+
+                    }).then(function (response) {
+
+                        if (response.ok) {
+
+                            return response.json();
+
+                        } else {
+                            self.status = 'error';
+
+                            var error = new Error(response.statusText)
+                            error.response = response
+                            throw error
+                        }
+                    }).then(function (json) {
+                        vue.options = json;
+
+                        eventHub.$emit('fetch')
+
+                    })
+
+
+                }
+            }
+
+
+            });
+
+    </script>
+
+{% endblock %}
+{% block style %}
+    <link rel="/static/assets/js/plugins/treetable/treetable.css" rel="stylesheet" type="text/css">
+
+    <style>
+
+        .frame-wrapper {
+            position: relative;
+            font-size: 0;
+        }
+
+        .frame-wrapper .frame-border {
+            position: absolute;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.13);*/
+            pointer-events: none;
+        }
+
+        .frame-viewer {
+            width: 100%;
+            height: 400px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .frame-viewer img.preview {
+            width: 100%;
+        }
+
+        .frame-viewer iframe {
+            width: 1280px;
+            height: 800px;
+            border: 0;
+            overflow: hidden;
+            -webkit-transform: scale(0.685);
+            transform: scale(0.685);
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            background-color: white;
+            border: none;
+        }
+
+        .col-md-7 .frame-viewer iframe {
+            -webkit-transform: scale(0.53);
+            transform: scale(0.53);
+        }
+
+        .col-md-6 .frame-viewer iframe {
+            width: 1266px;
+            height: 888px;
+            -webkit-transform: scale(0.45);
+            transform: scale(0.45);
+        }
+
+        img.screenshot {
+            width: 100%;
+            box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2), inset 0 2px 0 0 rgba(255, 255, 255, 0.2);
+        }
+
+        a.site-link {
+            display: block;
+            padding: 14px 10px;
+            text-align: center;
+            /*border: 1px solid rgba(43, 50, 57, 0.15);*/
+            border-top: none;
+            background-color: #FDFDFD;
+            /*border-radius: 0 0 3px 3px;*/
+            text-decoration: none;
+        }
+
+        a.site-link i {
+            margin-right: 10px;
+            position: relative;
+            top: 2px;
+        }
+
+        a.site-link:hover {
+            color: #24588a;
+        }
+
+        a.site-link:hover i.icon {
+            -webkit-filter: brightness(70%);
+            filter: brightness(70%);
+        }
+
+        .col-padding {
+            position: relative;
+            min-height: 1px;
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    </style>
+{% endblock %}
+
+<!-- Main content -->
+
+{#{% block body_style %}sidebar-main-hidden{% endblock %}#}
+
+
+{% block content %}
+    <div class="row" id="">
+        <div class="col-md-12">
+            <div class="panel panel-white">
+
+                <div class="panel-heading">
+                    <h6 class="panel-title">基本信息<a class="heading-elements-toggle"><i
+                                    class="icon-more"></i></a></h6>
+
+{#                    <div class="heading-elements">
+                        <form class="heading-form" action="#">
+                            <div class="form-group">
+                                <label class="checkbox-inline checkbox-switchery checkbox-right switchery-xs">
+                                    <input type="checkbox" class="switchery">
+                                    编辑:
+                                </label>
+                            </div>
+                        </form>
+                    </div>#}
+                </div>
+                <div class="table-responsive" id="data">
+                    <table class="table table-lg">
+                        <tbody>
+                        <tr v-for="option in options">
+                            <td style="width: 120px">{{ option['key'] | lang }}</td>
+                            <td><a href="#" :id="option.key" data-type="text" data-inputclass="form-control" data-pk="1"
+                                   :data-title="option.key | lang"
+                                   class="editable editable-click">{{  option.value }}</a></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+<!-- /main content -->
+
+
+

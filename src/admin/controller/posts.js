@@ -115,6 +115,7 @@ export default class extends Base {
     }
 
     async snippetAction() {
+        let _dao = this.model('posts',{aid: this.aid})
         if (this.isPost()) {
             let data = this.post();
             data.modified = !think.isEmpty(data.modified) ? new Date(data.modified).valueOf() : new Date().getTime();
@@ -170,16 +171,16 @@ export default class extends Base {
 
             } else {
                 data.date = !think.isEmpty(data.date) ? new Date(data.date).valueOf() : new Date().getTime();
-
-                insert_id = await this.dao.add(data);
+                data.author = this.userInfo.id;
+                insert_id = await _dao.add(data);
                 if (insert_id > 0) {
-                    // if (!think.isEmpty(_id)) {
-                    // await this.successMsg('内容更新成功')
-                    //
-                    // } else {
-                    // await this.successMsg('内容保存成功')
+                    if (!think.isEmpty(_id)) {
+                    await this.successMsg('碎片更新成功')
 
-                    // }
+                    } else {
+                    await this.successMsg('碎片保存成功')
+                    //
+                    }
 
                     return this.json({_id: insert_id});
 
@@ -446,6 +447,8 @@ export default class extends Base {
      */
     async resumeAction() {
 
+        let _dao = this.model('posts', {aid: this.aid});
+
         if (this.isPost()) {
             let data = this.post();
 
@@ -503,7 +506,7 @@ export default class extends Base {
             let _id = this.get('id');
             if (!think.isEmpty(_id)) {
                 // let resumeModel = this.model('resumes');
-                let _resume = await this.dao.where({id: _id}).find();
+                let _resume = await _dao.where({id: _id}).find();
 
                 _resume = await this._format(_resume);
 
@@ -518,7 +521,7 @@ export default class extends Base {
                 // }
 
                 // 处理 JSON 字符数据为 Object 数据
-                _resume['content'] = JSON.parse(_resume['content']);
+                _resume['content'] = JSON.parse(_resume['content_json']);
                 _resume['meta']['_resume_section'] = JSON.parse(_resume['meta']['_resume_section']);
 
                 // console.log(JSON.stringify( _resume.meta._resume_section))
@@ -581,6 +584,7 @@ export default class extends Base {
 
     async _post(data) {
 
+        let _dao = this.model('posts', {aid: this.aid})
         let _id = data.id;
         data.author = this.userInfo.user_id;
         // console.log(_id + "-------")
@@ -592,7 +596,7 @@ export default class extends Base {
 
         // Update
         if (!think.isEmpty(_id)) {
-            let rows = await this.dao.update(data);
+            let rows = await _dao.update(data);
             await this._resume_meta(data);
             return this.json({_id: _id});
 
@@ -763,23 +767,28 @@ export default class extends Base {
     }
 
     async pictureAction() {
+        // console.log(this.options.upload)
+        // let $upload = this.options.upload;
+
+        let _dao = this.model('posts', {aid: this.aid});
 
         let file = think.extend({}, this.file('file'));
 
+        // console.log(JSON.stringify(file))
+        // console.log(this.options)
         let filepath = file.path;
         let basename = path.basename(filepath);
 
         let ret = {'status': 1, 'info': '上传成功', 'data': ""}
         let res;
 
-        let $upload = this.option.upload;
 
         //加入七牛接口
-        if ($upload.type === "qiniu") {
+        if (this.options.upload.type === "qiniu") {
 
             let qiniu = think.service("qiniu");
             let instance = new qiniu();
-            let uppic = await instance.upload(filepath, basename);
+            let uppic = await instance.upload(filepath, basename,this.aid);
 
             if (!think.isEmpty(uppic)) {
 
@@ -790,7 +799,7 @@ export default class extends Base {
                     // path: '/upload/picture/' + dateformat(new Date().getTime(), "Y-m-d") + '/' + basename,
                     type: 'attachment',
                     mime_type: file.headers['content-type'],
-                    guid: "http://" + $upload.option.domain + "/" + uppic.key,
+                    guid: "http://" + this.options.upload.option.domain + "/" + uppic.key,
                     create_time: new Date().getTime(),
                     status: 1,
 
@@ -799,11 +808,11 @@ export default class extends Base {
                 const _attachment_metadata = await sharp(file.path).metadata();
                 delete _attachment_metadata.exif;
 
-                let _post_id = await this.dao.add(data);
+                let _post_id = await _dao.add(data);
 
                 if (!think.isEmpty(_post_id)) {
-                    this.dao.addPostMeta(_post_id, "_attachment_metadata", _attachment_metadata);
-                    await this.dao.addPostMeta(_post_id, "_attachment_file", uppic.key);
+                    await _dao.addPostMeta(_post_id, "_attachment_metadata", _attachment_metadata);
+                    await _dao.addPostMeta(_post_id, "_attachment_file", uppic.key);
                 }
 
                 ret['data'] = data;
@@ -844,9 +853,9 @@ export default class extends Base {
                 const _attachment_metadata = await sharp(file.path).metadata();
                 delete _attachment_metadata.exif;
 
-                let _post_id = await this.dao.add(data);
+                let _post_id = await _dao.add(data);
                 this.dao.addPostMeta(_post_id, "_attachment_metadata", _attachment_metadata);
-                await this.dao.addPostMeta(_post_id, "_attachment_file", _path);
+                await _dao.addPostMeta(_post_id, "_attachment_file", _path);
 
 
                 ret['data'] = data;
@@ -1237,7 +1246,8 @@ export default class extends Base {
             case "article":
                 break;
             case "resume":
-                fields.push('content')
+                fields.push('content_json')
+                // fields.push('content')
 
                 break;
             case "snippets":
@@ -1256,14 +1266,23 @@ export default class extends Base {
             item.terms = await _taxonomy.getTermsByObject(item.id);
         }
 
-        // console.log(JSON.stringify(list.data));
+        if (query.type === 'resume') {
+            for (let resume of list.data) {
+                resume.content_json = JSON.parse(resume.content_json)
+                // console.log(JSON.stringify(resume.content_json.work[0].company));
 
+            }
+        }
+
+        // list.data['content_json'] = JSON.parse(list.data['content_json']);
         /**
          * 处理内容为　JSON 对象
          */
         let treeList = await arr_to_tree(list.data, 0);
 
         list.data = treeList;
+
+        // console.log(JSON.stringify(list.data))
 
         return this.json(list);
     }

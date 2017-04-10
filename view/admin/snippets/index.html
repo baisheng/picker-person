@@ -1,7 +1,9 @@
-{% extends "../_inc/_base.html" %}
+{#{% extends "../_inc/_base.html" %}#}
+{% extends "../_layout.html" %}
 
 {% block style %}
     <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
+
 
     <style>
         .post-image {
@@ -174,6 +176,7 @@
         .form-element {
             margin-bottom: 16.66666667px;
         }
+
         .form-element label {
             color: #666978;
             margin-bottom: 5px;
@@ -186,27 +189,32 @@
             overflow: hidden;
             margin: 0 0 5px 0;
         }
+
         .switch.switch-inline,
         .switch-inline.switch-inline {
             margin: 0 10px 0 0;
             display: inline-block;
         }
+
         .switch div,
         .switch-inline div {
             float: left;
             margin: 0 0 0 10px;
             line-height: 20px;
         }
+
         .switch label,
         .switch-inline label {
             margin-bottom: 0;
         }
+
         .switch input,
         .switch-inline input {
             position: absolute;
             margin-left: -9999px;
             visibility: hidden;
         }
+
         .switch input + label,
         .switch-inline input + label {
             display: block;
@@ -227,6 +235,7 @@
             -o-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
         }
+
         .switch input + label:before,
         .switch-inline input + label:before,
         .switch input + label:after,
@@ -235,6 +244,7 @@
             position: absolute;
             content: "";
         }
+
         .switch input + label:before,
         .switch-inline input + label:before {
             top: 1px;
@@ -250,6 +260,7 @@
             -o-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
         }
+
         .switch input + label:after,
         .switch-inline input + label:after {
             top: 2px;
@@ -265,15 +276,18 @@
             -o-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
         }
+
         .switch input:checked + label:after,
         .switch-inline input:checked + label:after {
             margin-left: 20px;
             background: #41da54;
         }
+
         .switch input:disabled + label:after,
         .switch-inline input:disabled + label:after {
             cursor: not-allowed;
         }
+
         .switch input:disabled + label:before,
         .switch-inline input:disabled + label:before {
             background: #f8f9fb;
@@ -290,1266 +304,535 @@
         .slide-fade-enter-active {
             transition: all .3s ease;
         }
+
         .slide-fade-leave-active {
             transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
         }
+
         .slide-fade-enter, .slide-fade-leave-to
-            /* .slide-fade-leave-active for <2.1.8 */ {
+            /* .slide-fade-leave-active for <2.1.8 */
+        {
             transform: translateX(10px);
             opacity: 0;
         }
     </style>
 {% endblock %}
 
-{% block navbar %}
-
-
-        {#<li class="active">#}
-            {#<a href="/admin/snippets"><i class="icon-files-empty position-left"></i> 全部</a>#}
-        {#</li>#}
-        <div class="navbar-btn btn-group ">
-            {#<button type="button" class="btn btn-default "><i class="icon-star-empty3"></i></button>#}
-            <a type="button" class="btn btn-default" href="/admin/snippets"><i class="icon-files-empty position-left"></i> 全部</a>
-
-            <a type="button" class="btn btn-default"  @click="fetch('publish')"><i class="icon-check"></i>
-                <span class="hidden-xs position-right">
-                    {{ 'publish' | lang }}
-
-                </span>
-            </a>
-            <a type="button" class="btn btn-default" @click="fetch('pending')"><i class="icon-eye-plus"></i><span
-                        class="hidden-xs position-right">
-                    {{ 'pending' | lang }}
-                </span></a>
-
-            <a type="button" class="btn btn-default " @click="fetch('drafts')"><i class="icon-box"></i> <span
-                        class="hidden-xs position-right" >
-                    {{ 'draft' | lang }}
-                    </span></a>
-
-            <a type="button" class="btn btn-default "  @click="fetch('trashed')"><i class=" icon-bin2"></i> <span
-                        class="hidden-xs position-right">
-                    {{ 'trash' | lang }}
-
-                </span></a>
-
-        </div>
-    {#<ul class="nav navbar-nav">#}
-{##}
-    {#</ul>#}
-
-{% endblock %}
-
-{% block sidebar_main %}
-
-    <div class="sidebar sidebar-main sidebar-default sidebar-fixed">
-
-        <div class="sidebar-content">
-            <div class="category-title bg-grey-50">
-                <span><a href="/admin"><i class="icon-arrow-left8 position-left"></i>返回</a></span>
-                <div class="heading-elements">
-
-                    <span class="heading-text text-size-small">
-                        <p v-if="status == 'saving'" class="text-teal">正在保存...</p>
-                        <p v-if="status == 'success'" class="text-muted">保存成功</p>
-                        <p v-else-if="status == 'editing'"><a>保存</a></p>
-                        <p v-else-if="status == 'init'" class="text-muted">内容将实时更新</p>
-                    </span>
-                </div>
-
-            </div>
-            <div class="sidebar-category">
-                <div class="category-content">
-
-                    <form action="#">
-                        <div class="has-feedback has-feedback-left form-group">
-                            <input type="search" class="form-control" placeholder="碎片内容查询">
-                            <div class="form-control-feedback">
-                                <i class="icon-search4 text-size-base text-muted"></i>
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <legend class="text-size-mini text-muted no-border no-padding">碎片分类</legend>
-
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="snippet-filter" @click="fetch()">
-                                    全部碎片
-                                </label>
-                            </div>
-
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="snippet-filter" @click="fetch('text')">
-                                    文字
-                                </label>
-                            </div>
-
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="snippet-filter"  @click="fetch('quote')">
-                                    引语
-                                </label>
-                            </div>
-
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="snippet-filter" @click="fetch('code')">
-                                    代码片段
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="snippet-filter" @click="fetch('idea')">
-                                    想法
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="snippet-filter" @click="fetch('feed')">
-                                    事务进程
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="snippet-filter" @click="fetch('comment')">
-                                    会话
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="snippet-filter"  @click="fetch('person')">
-                                    人物
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <legend class="text-size-mini text-muted no-border no-padding">状态</legend>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="snippet-filter-status" @click="fetch('publish')">
-                                    {{ 'publish' | lang }}
-                                    {#公开#}
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="snippet-filter-status" @click="fetch('private')">
-                                    {{ 'private' | lang }}
-                                    {#私有#}
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="snippet-filter-status" @click="fetch('pending')">
-                                    {{ 'pending' | lang }}
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="snippet-filter-status" @click="fetch('draft')">
-                                    {{ 'draft' | lang }}
-                                </label>
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-
-        </div>
-
-
-    </div>
-
-{% endblock %}
 
 {% block content %}
 
-        <div class="row" data-plugin="masonry">
+    <div class="row" data-plugin="masonry">
 
-            <div class=" col-md-6 col-xs-12 masonry-item" v-for="_ in pageAll">
+        <div class=" col-md-6 col-xs-12 masonry-item" v-for="_ in pageAll">
 
-                <div class="panel panel-default">
+            <div class="panel panel-default">
 
-                    <div class="panel-heading">
+                <div class="panel-heading">
                         <span class="panel-title">
-                            <a href="#" class="dropdown-toggle" :class="statusStyle(_)" data-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-quote-left position-left" v-if="_.meta['_snippet_type'] === 'quote'"></i>
+                            <a href="#" class="dropdown-toggle" :class="statusStyle(_)" data-toggle="dropdown"
+                               aria-expanded="false">
+                                <i class="fa fa-quote-left position-left"
+                                   v-if="_.meta['_snippet_type'] === 'quote'"></i>
                             <i class="icon-codepen position-left" v-else-if="_.meta['_snippet_type'] === 'code'"></i>
-                            <i class="fa fa-lightbulb-o position-left" v-else-if="_.meta['_snippet_type'] === 'idea'"></i>
-                            <i class="fa fa-comments-o position-left" v-else-if="_.meta['_snippet_type'] === 'comment'"></i>
+                            <i class="fa fa-lightbulb-o position-left"
+                               v-else-if="_.meta['_snippet_type'] === 'idea'"></i>
+                            <i class="fa fa-comments-o position-left"
+                               v-else-if="_.meta['_snippet_type'] === 'comment'"></i>
                             <i class="fa fa-history position-left" v-else-if="_.meta['_snippet_type'] === 'feed'"></i>
                             <i class="fa fa-smile-o position-left" v-else-if="_.meta['_snippet_type'] === 'person'"></i>
                             <i class="fa fa-file-text-o position-left" v-else></i>
                                 {{ _.status | lang }} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu active">
-                                <li :class="{active: _.status === 'publish'}" ><a @click="changeStatus(_, 'publish')"><span class="status-mark position-left bg-success-400" ></span> {{ 'publish' | lang }}</a></li>
+                                <li :class="{active: _.status === 'publish'}"><a
+                                            @click="changeStatus(_, 'publish')"><span
+                                                class="status-mark position-left bg-success-400"></span> {{ 'publish' | lang }}</a></li>
 
-                                <li :class="{active: _.status === 'private'}"><a  @click="changeStatus(_, 'private')"><span class="status-mark position-left bg-grey-300"></span> {{ 'private' | lang }}</a></li>
-                                <li :class="{active: _.status === 'draft'}" ><a @click="changeStatus(_, 'draft')"><span class="status-mark position-left bg-indigo-400" ></span> {{ 'draft' | lang }}</a></li>
-                                <li :class="{active: _.status === 'pending'}" ><a @click="changeStatus(_, 'pending')"><span class="status-mark position-left bg-info-400" ></span> {{ 'pending' | lang }}</a></li>
+                                <li :class="{active: _.status === 'private'}"><a
+                                            @click="changeStatus(_, 'private')"><span
+                                                class="status-mark position-left bg-grey-300"></span> {{ 'private' | lang }}</a></li>
+                                <li :class="{active: _.status === 'draft'}"><a @click="changeStatus(_, 'draft')"><span
+                                                class="status-mark position-left bg-indigo-400"></span> {{ 'draft' | lang }}</a></li>
+                                <li :class="{active: _.status === 'pending'}"><a
+                                            @click="changeStatus(_, 'pending')"><span
+                                                class="status-mark position-left bg-info-400"></span> {{ 'pending' | lang }}</a></li>
 
                             </ul>
 
                         </span>
-                        <div class="heading-elements panel-nav">
-                            <ul class="list-inline list-inline-separate heading-text">
-                                <li v-if="snippet_id === _.id">
-                                    <a class="" @click="setting(0)"><i class="fa fa-long-arrow-left position-left"></i></a>
-                                </li>
+                    <div class="heading-elements panel-nav">
+                        <ul class="list-inline list-inline-separate heading-text">
+                            <li v-if="snippet_id === _.id">
+                                <a class="" @click="setting(0)"><i class="fa fa-long-arrow-left position-left"></i></a>
+                            </li>
 
-                                <li class="" v-else>
-                                    <a @click="setting(_.id)" aria-expanded="false">
-                                        <i class=" icon-cog5 position-left"></i>
-                                    </a>
-                                </li>
+                            <li class="" v-else>
+                                <a @click="setting(_.id)" aria-expanded="false">
+                                    <i class=" icon-cog5 position-left"></i>
+                                </a>
+                            </li>
 
 
-                            </ul>
-                        </div>
+                        </ul>
                     </div>
+                </div>
 
-                    <div class="panel-tab-content tab-content">
+                <div class="panel-tab-content tab-content">
 
-                        <div class="tab-pane has-padding active animation fade-in" v-if="snippet_id === _.id">
+                    <div class="tab-pane has-padding active animation fade-in" v-if="snippet_id === _.id">
 
-                            <div class="text-center">
-                                <h6 class="text-semibold no-margin">内容转换</h6>
-                                <p class="content-group-sm text-muted">每种内容类型都拥有不同的能力</p>
-                            </div>
-                            <div class="form-group">
-                                {#<p>选择的内容类型: {{ selected }}</p>#}
-                                <select2 :options="options" v-model="selected">
-                                    {#<option disabled value="standard">默认类型</option>#}
-                                </select2>
-                            </div>
-
-                            <div class="form-group" v-if="selected === 'code'">
-                                <p >选择的程序语言: <span class="text-info">{{ snippet_code_lang }}</span></p>
-
-                                <select2 :options="codelang" v-model="snippet_code_lang">
-                                    {#<option disabled value="0">标记语言（默认）</option>#}
-                                </select2>
-                            </div>
-
-                            <div class="content-group" v-else-if="selected === 'status'">
-                                <div class="row row-seamless btn-block-group">
-                                    <div class="col-xs-6">
-                                        <button type="button" class="btn btn-default btn-block btn-float btn-float-lg legitRipple">
-                                            <i class=" icon-twitter text-info-600"></i>
-                                            <span>Twitter</span>
-                                        </button>
-
-                                        <button type="button" class="btn btn-default btn-block btn-float btn-float-lg legitRipple">
-                                            <i class="icon-facebook text-blue-800"></i>
-                                            <span>facebook</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="col-xs-6">
-                                        <button type="button" class="btn btn-default btn-block btn-float btn-float-lg legitRipple">
-                                            <i class="fa fa-weibo text-warning-600"></i>
-                                            <span>微博</span>
-                                        </button>
-
-                                        <button type="button" class="btn btn-default btn-block btn-float btn-float-lg legitRipple">
-                                            <i class="fa fa-wechat text-success-400"></i>
-                                            <span>微信</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="conteng-group" v-else-if="selected === 'quote'">
-                                <div class="panel panel-body bg-info-300" style="background-image: url(http://demo.interface.club/limitless/assets/images/bg.png);">
-                                    <div class="media no-margin">
-                                        <div class="media-left media-middle">
-                                            <i class="icon-quotes-left text-white"></i>
-                                        </div>
-
-                                        <div class="media-body text-right">
-                                            <span class="text-muted">{{ _.content }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-body">
-                                    <div class="media no-margin stack-media-on-mobile">
-                                        <div class="media-left media-middle">
-                                            <i class="icon-quotes-right2 icon-2x text-muted no-edge-top"></i>
-                                        </div>
-
-                                        <div class="media-body">
-                                            {#<h6 class="media-heading text-semibold">Got a question or request?</h6>#}
-                                            <span class="text-muted">{{ _.content }}</span>
-                                        </div>
-
-                                        {#<div class="media-right media-middle">#}
-                                            {#<a href="#" class="btn btn-primary legitRipple">选用</a>#}
-                                        {#</div>#}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="panel panel-white " v-if="selected === 'link'">
-                                <div class="panel-body text-center">
-                                    <div class="content-group mt-5">
-                                        <i class="icon-css3 icon-3x text-warning"></i>
-                                    </div>
-
-                                    <h6 class="text-semibold"><a href="#" class="text-default">Knowledge Base</a></h6>
-
-                                    <p class="mb-15">Inanimately alongside candidly much and jeez conductively hid submissively hatchet</p>
-
-                                    <a href="#">访问链接 →</a>
-                                </div>
-                            </div>
-
-
+                        <div class="text-center">
+                            <h6 class="text-semibold no-margin">内容转换</h6>
+                            <p class="content-group-sm text-muted">每种内容类型都拥有不同的能力</p>
                         </div>
-                        <div class="tab-pane has-padding active"  v-else>
+                        <div class="form-group">
+                            {#<p>选择的内容类型: {{ selected }}</p>#}
+                            <select2 :options="options" v-model="selected">
+                                {#<option disabled value="standard">默认类型</option>#}
+                            </select2>
+                        </div>
 
-                            <blockquote class="no-margin panel panel-body border-left-lg border-left-warning " v-html="_.content" v-if="_.meta['_snippet_type'] === 'quote'"></blockquote>
+                        <div class="form-group" v-if="selected === 'code'">
+                            <p>选择的程序语言: <span class="text-info">{{ snippet_code_lang }}</span></p>
 
-                            <pre class="content-group " :class="'language-' + _.meta['_snippet_code_lang']" v-else-if="typeof(_.meta['_snippet_code']) != 'undefined'">
+                            <select2 :options="codelang" v-model="snippet_code_lang">
+                                {#<option disabled value="0">标记语言（默认）</option>#}
+                            </select2>
+                        </div>
+
+                        <div class="content-group" v-else-if="selected === 'status'">
+                            <div class="row row-seamless btn-block-group">
+                                <div class="col-xs-6">
+                                    <button type="button"
+                                            class="btn btn-default btn-block btn-float btn-float-lg legitRipple">
+                                        <i class=" icon-twitter text-info-600"></i>
+                                        <span>Twitter</span>
+                                    </button>
+
+                                    <button type="button"
+                                            class="btn btn-default btn-block btn-float btn-float-lg legitRipple">
+                                        <i class="icon-facebook text-blue-800"></i>
+                                        <span>facebook</span>
+                                    </button>
+                                </div>
+
+                                <div class="col-xs-6">
+                                    <button type="button"
+                                            class="btn btn-default btn-block btn-float btn-float-lg legitRipple">
+                                        <i class="fa fa-weibo text-warning-600"></i>
+                                        <span>微博</span>
+                                    </button>
+
+                                    <button type="button"
+                                            class="btn btn-default btn-block btn-float btn-float-lg legitRipple">
+                                        <i class="fa fa-wechat text-success-400"></i>
+                                        <span>微信</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="conteng-group" v-else-if="selected === 'quote'">
+                            <div class="panel panel-body bg-info-300"
+                                 style="background-image: url(http://demo.interface.club/limitless/assets/images/bg.png);">
+                                <div class="media no-margin">
+                                    <div class="media-left media-middle">
+                                        <i class="icon-quotes-left text-white"></i>
+                                    </div>
+
+                                    <div class="media-body text-right">
+                                        <span class="text-muted">{{ _.content }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-body">
+                                <div class="media no-margin stack-media-on-mobile">
+                                    <div class="media-left media-middle">
+                                        <i class="icon-quotes-right2 icon-2x text-muted no-edge-top"></i>
+                                    </div>
+
+                                    <div class="media-body">
+                                        {#<h6 class="media-heading text-semibold">Got a question or request?</h6>#}
+                                        <span class="text-muted">{{ _.content }}</span>
+                                    </div>
+
+                                    {#<div class="media-right media-middle">#}
+                                    {#<a href="#" class="btn btn-primary legitRipple">选用</a>#}
+                                    {#</div>#}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-white " v-if="selected === 'link'">
+                            <div class="panel-body text-center">
+                                <div class="content-group mt-5">
+                                    <i class="icon-css3 icon-3x text-warning"></i>
+                                </div>
+
+                                <h6 class="text-semibold"><a href="#" class="text-default">Knowledge Base</a></h6>
+
+                                <p class="mb-15">Inanimately alongside candidly much and jeez conductively hid
+                                    submissively hatchet</p>
+
+                                <a href="#">访问链接 →</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="tab-pane has-padding active" v-else>
+
+                        <blockquote class="no-margin panel panel-body border-left-lg border-left-warning "
+                                    v-html="_.content" v-if="_.meta['_snippet_type'] === 'quote'"></blockquote>
+
+                        <pre class="content-group " :class="'language-' + _.meta['_snippet_code_lang']"
+                             v-else-if="typeof(_.meta['_snippet_code']) != 'undefined'">
                                 <code>{{ _.content }}</code>
                             {#<code>{{ _.content }}</code>#}
                             </pre>
 
-                            {# 链接 #}
-                            <div class="panel-body text-center" v-else-if="typeof(_.meta['_snippet_link']) != 'undefined'">
-                                <div class="content-group mt-5">
-                                    <i class="icon-2x text-warning">{{ _.meta['site_name'] }}</i>
-                                </div>
-
-                                <h6 class="text-semibold"><a href="#" class="text-default">{{ _.meta['title'] }}</a></h6>
-
-                                <p class="mb-15">{{ _.meta['description'] }}</p>
-
-                                <a :href="_.name" target="_blank">访问链接 →</a>
-                            </div>
-                            {# Idea 一段思想#}
-                            <div class="panel panel-body  text-center" style="background-image: url(http://demo.interface.club/limitless/assets/images/bg.png);" v-else-if="_.meta['_snippet_type'] === 'idea'">
-                                {#<div class="content-group mt-5">#}
-                                    {#<i class="icon-brain icon-2x text-teal-400"></i>#}
-                                {#</div>#}
-                                <p class="mt-10 text-primary" v-html="_.content"></p>
+                        {# 链接 #}
+                        <div class="panel-body text-center" v-else-if="typeof(_.meta['_snippet_link']) != 'undefined'">
+                            <div class="content-group mt-5">
+                                <i class="icon-2x text-warning">{{ _.meta['site_name'] }}</i>
                             </div>
 
-                            <div class="" v-else-if="_.meta['_snippet_type'] === 'comment'">
-                                <ul class="media-list chat-list content-group">
-                                    <li class="media reversed">
-                                        <div class="media-body">
-                                            <div class="media-content" v-html="_.content"></div>
-                                            <span class="media-annotation display-block mt-10">{{ _.modified | moment }}</span>
-                                        </div>
+                            <h6 class="text-semibold"><a href="#" class="text-default">{{ _.meta['title'] }}</a></h6>
 
-                                        <div class="media-right">
-                                            <a href="/static/assets/images/demo/images/3.png">
-                                                <img src="/static/assets/images/demo/users/face1.jpg" class="img-circle" alt="">
-                                            </a>
-                                        </div>
-                                    </li>
+                            <p class="mb-15">{{ _.meta['description'] }}</p>
 
+                            <a :href="_.name" target="_blank">访问链接 →</a>
+                        </div>
+                        {# Idea 一段思想#}
+                        <div class="panel panel-body  text-center"
+                             style="background-image: url(http://demo.interface.club/limitless/assets/images/bg.png);"
+                             v-else-if="_.meta['_snippet_type'] === 'idea'">
+                            {#<div class="content-group mt-5">#}
+                            {#<i class="icon-brain icon-2x text-teal-400"></i>#}
+                            {#</div>#}
+                            <p class="mt-10 text-primary" v-html="_.content"></p>
+                        </div>
 
-                                </ul>
-
-                                <textarea name="enter-message" class="form-control content-group" rows="3" cols="1" placeholder="输入你的回复..."></textarea>
-
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <ul class="icons-list icons-list-extended mt-10">
-                                            <li><a href="#" data-popup="tooltip" data-container="body" title="" data-original-title="Send photo"><i class="icon-file-picture"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" data-container="body" title="" data-original-title="Send video"><i class="icon-file-video"></i></a></li>
-                                            <li><a href="#" data-popup="tooltip" data-container="body" title="" data-original-title="Send file"><i class="icon-file-plus"></i></a></li>
-                                        </ul>
+                        <div class="" v-else-if="_.meta['_snippet_type'] === 'comment'">
+                            <ul class="media-list chat-list content-group">
+                                <li class="media reversed">
+                                    <div class="media-body">
+                                        <div class="media-content" v-html="_.content"></div>
+                                        <span class="media-annotation display-block mt-10">{{ _.modified | moment }}</span>
                                     </div>
 
-                                    <div class="col-xs-6 text-right">
-                                        <button type="button" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-circle-right2"></i></b> 发送</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {# 进程 #}
-                            <div class="" v-else-if="_.meta['_snippet_type'] === 'feed'">
-                                <ul class="list-feed">
-                                    <li class="border-pink-400">
-                                        <div class="text-muted text-size-small mb-5">{{ _.date | moment }}</div>
-                                        开始
-                                        {#User <a href="#">Christopher Wallace</a> is awaiting for staff reply#}
-                                    </li>
-                                    <li class="border-pink-400">
-                                        <div class="text-muted text-size-small mb-5">{{ _.modified | moment }}</div>
-                                        <a href="#">{{ _.author }}</a> {{ _.content }}
-                                    </li>
-
-
-{##}
-                                    {#<li class="border-warning-400">#}
-                                        {#<div class="text-muted text-size-small mb-5">12 minutes ago</div>#}
-                                        {#Ticket <strong>#43683</strong> has been closed by <a href="#">Victoria Wilson</a>#}
-                                    {#</li>#}
-{##}
-                                    {#<li class="border-warning-400">#}
-                                        {#<div class="text-muted text-size-small mb-5">12 minutes ago</div>#}
-                                        {#All sellers have received payouts for December!#}
-                                    {#</li>#}
-                                </ul>
-                                <textarea name="enter-message" class="form-control content-group mt-10" rows="1" cols="1" placeholder="新进程..."></textarea>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <ul class="icons-list icons-list-extended mt-10">
-                                            {#<li><a href="#"><i class="icon-mic2"></i></a></li>#}
-                                            {#<li><a href="#"><i class="icon-file-picture"></i></a></li>#}
-                                            <li><a href="#"><i class="icon-file-plus"></i></a></li>
-                                        </ul>
-                                    </div>
-
-                                    <div class="col-xs-6 text-right">
-                                        <a type="button" class="btn btn-link">补充</a>
-                                        <a type="button" class="btn btn-default">结束</a>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            {# 人物 #}
-                            <div class="" v-else-if="_.meta['_snippet_type'] === 'person'">
-                                <div class="media">
-                                    <div class="media-left">
+                                    <div class="media-right">
                                         <a href="/static/assets/images/demo/images/3.png">
-                                            <img src="/static/assets/images/demo/users/face1.jpg" class="img-circle img-lg" alt="">
+                                            <img src="/static/assets/images/demo/users/face1.jpg" class="img-circle"
+                                                 alt="">
                                         </a>
                                     </div>
+                                </li>
 
-                                    <div class="media-body">
-                                        <h6 class="media-heading">{{ _.title }}</h6>
-                                        <span class="text-muted">{{ _.content }}</span>
-                                    </div>
 
-                                    <div class="media-right media-middle">
-                                        <ul class="icons-list">
-                                            <li class="dropdown">
-                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                                    <i class="icon-menu7"></i>
-                                                </a>
+                            </ul>
 
-                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li><a href="#"><i class="icon-comment-discussion pull-right"></i> Start chat</a></li>
-                                                    <li><a href="#"><i class="icon-phone2 pull-right"></i> Make a call</a></li>
-                                                    <li><a href="#"><i class="icon-mail5 pull-right"></i> Send mail</a></li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#"><i class="icon-statistics pull-right"></i> 转换</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
+                            <textarea name="enter-message" class="form-control content-group" rows="3" cols="1"
+                                      placeholder="输入你的回复..."></textarea>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <ul class="icons-list icons-list-extended mt-10">
+                                        <li><a href="#" data-popup="tooltip" data-container="body" title=""
+                                               data-original-title="Send photo"><i class="icon-file-picture"></i></a>
+                                        </li>
+                                        <li><a href="#" data-popup="tooltip" data-container="body" title=""
+                                               data-original-title="Send video"><i class="icon-file-video"></i></a></li>
+                                        <li><a href="#" data-popup="tooltip" data-container="body" title=""
+                                               data-original-title="Send file"><i class="icon-file-plus"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-xs-6 text-right">
+                                    <button type="button" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i
+                                                    class="icon-circle-right2"></i></b> 发送
+                                    </button>
                                 </div>
                             </div>
-                            {# 默认 文字 #}
-                            <div class="content-group" v-else>{{ _.content }}</div>
                         </div>
 
+                        {# 进程 #}
+                        <div class="" v-else-if="_.meta['_snippet_type'] === 'feed'">
+                            <ul class="list-feed">
+                                <li class="border-pink-400">
+                                    <div class="text-muted text-size-small mb-5">{{ _.date | moment }}</div>
+                                    开始
+                                    {#User <a href="#">Christopher Wallace</a> is awaiting for staff reply#}
+                                </li>
+                                <li class="border-pink-400">
+                                    <div class="text-muted text-size-small mb-5">{{ _.modified | moment }}</div>
+                                    <a href="#">{{ _.author }}</a> {{ _.content }}
+                                </li>
 
 
-                        {#<div class="tab-pane has-padding" id="'panel-tab4">#}
-                            {#This is the fourth panel tab content#}
-                        {#</div>#}
+                                {##}
+                                {#<li class="border-warning-400">#}
+                                {#<div class="text-muted text-size-small mb-5">12 minutes ago</div>#}
+                                {#Ticket <strong>#43683</strong> has been closed by <a href="#">Victoria Wilson</a>#}
+                                {#</li>#}
+                                {##}
+                                {#<li class="border-warning-400">#}
+                                {#<div class="text-muted text-size-small mb-5">12 minutes ago</div>#}
+                                {#All sellers have received payouts for December!#}
+                                {#</li>#}
+                            </ul>
+                            <textarea name="enter-message" class="form-control content-group mt-10" rows="1" cols="1"
+                                      placeholder="新进程..."></textarea>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <ul class="icons-list icons-list-extended mt-10">
+                                        {#<li><a href="#"><i class="icon-mic2"></i></a></li>#}
+                                        {#<li><a href="#"><i class="icon-file-picture"></i></a></li>#}
+                                        <li><a href="#"><i class="icon-file-plus"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-xs-6 text-right">
+                                    <a type="button" class="btn btn-link">补充</a>
+                                    <a type="button" class="btn btn-default">结束</a>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        {# 人物 #}
+                        <div class="" v-else-if="_.meta['_snippet_type'] === 'person'">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="/static/assets/images/demo/images/3.png">
+                                        <img src="/static/assets/images/demo/users/face1.jpg" class="img-circle img-lg"
+                                             alt="">
+                                    </a>
+                                </div>
+
+                                <div class="media-body">
+                                    <h6 class="media-heading">{{ _.title }}</h6>
+                                    <span class="text-muted">{{ _.content }}</span>
+                                </div>
+
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list">
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                               aria-expanded="true">
+                                                <i class="icon-menu7"></i>
+                                            </a>
+
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="#"><i class="icon-comment-discussion pull-right"></i> Start
+                                                        chat</a></li>
+                                                <li><a href="#"><i class="icon-phone2 pull-right"></i> Make a call</a>
+                                                </li>
+                                                <li><a href="#"><i class="icon-mail5 pull-right"></i> Send mail</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#"><i class="icon-statistics pull-right"></i> 转换</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {# 默认 文字 #}
+                        <div class="content-group" v-else>{{ _.content }}</div>
                     </div>
 
 
-
-                    <div class="panel-footer text-center no-padding" v-if="snippet_id === _.id">
-                        <div class="row">
-                            <div class="col-xs-4">
-                                <a @click="save(_)" class="display-block p-10 text-muted">
-                                    <i class="icon-spinner2 spinner position-left text-primary" v-if="status === 'saving'"></i>
-                                    <i class="icon-check position-left text-success" v-else-if="status === 'success'"></i>
-                                    <i class=" icon-exclamation position-left text-danger" v-else-if="status === 'error'"></i>
-                                    <i class="icon-spinner2 position-left text-muted" v-else></i>
-                                    保存
-                                </a>
-                            </div>
-
-
-
-                            <div class="col-xs-4">
-                                <a href="#" class="display-block p-10 text-muted" data-popup="tooltip" data-placement="top"
-                                   data-container="body" title="" data-original-title="下在成 MD 文件"><i
-                                            class="icon-pencil position-left"></i>编辑</a>
-                            </div>
-
-
-
-                            <div class="col-xs-4">
-                                {#<a href="#" class="display-block p-10 text-muted ajax delete" ><i class=" icon-trash position-left"></i> 回收站</a>#}
-
-                                {#<a :href="'/admin/posts/'+ _.id+'/delete'"#}
-                                <a :href="'/admin/posts/delete?ids=' + _.id"
-                                   class="display-block p-10 text-muted ajax delete"><i
-                                            class=" icon-trash position-left"></i> 回收站</a>
-                            </div>
-
-                        </div>
-                    </div>
+                    {#<div class="tab-pane has-padding" id="'panel-tab4">#}
+                    {#This is the fourth panel tab content#}
+                    {#</div>#}
                 </div>
 
+
+                <div class="panel-footer text-center no-padding" v-if="snippet_id === _.id">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <a @click="save(_)" class="display-block p-10 text-muted">
+                                <i class="icon-spinner2 spinner position-left text-primary"
+                                   v-if="status === 'saving'"></i>
+                                <i class="icon-check position-left text-success" v-else-if="status === 'success'"></i>
+                                <i class=" icon-exclamation position-left text-danger"
+                                   v-else-if="status === 'error'"></i>
+                                <i class="icon-spinner2 position-left text-muted" v-else></i>
+                                保存
+                            </a>
+                        </div>
+
+
+                        <div class="col-xs-4">
+                            <a href="#" class="display-block p-10 text-muted" data-popup="tooltip" data-placement="top"
+                               data-container="body" title="" data-original-title="下在成 MD 文件"><i
+                                        class="icon-pencil position-left"></i>编辑</a>
+                        </div>
+
+
+                        <div class="col-xs-4">
+                            {#<a href="#" class="display-block p-10 text-muted ajax delete" ><i class=" icon-trash position-left"></i> 回收站</a>#}
+
+                            {#<a :href="'/admin/posts/'+ _.id+'/delete'"#}
+                            <a :href="'/admin/posts/delete?ids=' + _.id"
+                               class="display-block p-10 text-muted ajax delete"><i
+                                        class=" icon-trash position-left"></i> 回收站</a>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
         </div>
 
-        <div class="row">
-            <div class="text-center content-group-lg pt-20">
-                <page :allpage="allpage" :page="page" v-on:increment="incrementTotal"></page>
-            </div>
+    </div>
+
+    <div class="row">
+        <div class="text-center content-group-lg pt-20">
+            {#<page :allpage="allpage" :page="page" v-on:increment="incrementTotal"></page>#}
         </div>
+    </div>
+
 
 {% endblock %}
 
-
-{% block components %}
-
+{% block footer %}
 
     {% endblock %}
+    {% block body_style %}sidebar-opposite-visible{% endblock %}
+
+{% block opposite_sidebar %}
+    <div class="sidebar sidebar-opposite sidebar-default" id="resume-section">
+        <div class="sidebar-fixed affix-top">
+            <div class="sidebar-content">
+
+                {#
+                                <!-- Support -->
+                                <div class="sidebar-category no-margin">
+                                    <div class="category-title">
+                                        <span>Changelog</span>
+                                        <i class="icon-menu7 pull-right"></i>
+                                    </div>
+
+                                    <div class="category-content">
+                                        <a href="http://kopyov.ticksy.com" class="btn bg-danger-400 btn-block legitRipple" target="_blank"><i class="icon-lifebuoy position-left"></i> Item support</a>
+                                    </div>
+                                </div>
+                                <!-- /support -->
+                #}
+                <div class="sidebar-category">
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="has-feedback has-feedback-left form-group">
+                                <input type="search" class="form-control" placeholder="碎片内容查询">
+                                <div class="form-control-feedback">
+                                    <i class="icon-search4 text-size-base text-muted"></i>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <legend class="text-size-mini text-muted no-border no-padding">碎片分类</legend>
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="snippet-filter" @click="fetch()">
+                                        全部碎片
+                                    </label>
+                                </div>
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="snippet-filter" @click="fetch('text')">
+                                        文字
+                                    </label>
+                                </div>
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="snippet-filter" @click="fetch('quote')">
+                                        引语
+                                    </label>
+                                </div>
+
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="snippet-filter" @click="fetch('code')">
+                                        代码片段
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="snippet-filter" @click="fetch('idea')">
+                                        想法
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="snippet-filter" @click="fetch('feed')">
+                                        事务进程
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="snippet-filter" @click="fetch('comment')">
+                                        会话
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="snippet-filter" @click="fetch('person')">
+                                        人物
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <legend class="text-size-mini text-muted no-border no-padding">状态</legend>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="snippet-filter-status" @click="fetch('publish')">
+                                        {{ 'publish' | lang }}
+                                        {#公开#}
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="snippet-filter-status" @click="fetch('private')">
+                                        {{ 'private' | lang }}
+                                        {#私有#}
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="snippet-filter-status" @click="fetch('pending')">
+                                        {{ 'pending' | lang }}
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="snippet-filter-status" @click="fetch('draft')">
+                                        {{ 'draft' | lang }}
+                                    </label>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
 {% block script %}
-    <script type="text/javascript" src="/static/assets/js/core/libraries/jasny_bootstrap.min.js"></script>
-    {#<script type="text/javascript" src="/static/assets/js/pages/mail_list.js"></script>#}
+    <script type="text/javascript" src="/static/assets/js/masonry/masonry.pkgd.min.js"></script>
 
-    {#<script type="text/javascript" src="/static/assets/js/vue/select2/vue-select.js"></script>#}
-    <script>
-//                $(document).on("click", ".switch", function(e) {
+    <script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>
 
-//                    var _this = $(this);
-//                    var _active = 1;
-//
-//                    if(_this.hasClass("small")) {
-//                        _active = 0;
-//                    }
-//
-//                    console.log(_active)
-//
-//                    $.ajax({
-//                        method: "POST",
-//                        url: "/admin/posts/snippet",
-//                        data: {
-//                            method: "setMenuSmall",
-//                            active: _active
-//                        },
-//                        success: function() {
-//
-//                            _this.toggleClass("small");
-//                            $("#left").toggleClass("small");
-//                            $("#head").toggleClass("small");
-//                            $("main").toggleClass("small");
-//
-//                            if(!_this.hasClass("small")) {
-//                                $("#left .drop ul").slideDown(300);
-//                            } else {
-//                                $("#left .drop ul").hide();
-//                            }
-//
-//                            setTimeout(function() {
-//                                window.dispatchEvent(new Event('resize'));
-//                            }, 300);
-//
-//                        }
-//                    });
+    <script type="text/javascript" src="/static/components/snippet/main.js"></script>
 
-//                });
 
-
-    </script>
-
-    <script>
-//        Vue.component('v-select', VueSelect.VueSelect);
-
-        Vue.component("pageButton", {
-            delimiters: ['${', '}'],
-            template: '<template><p class="navbar-text">共 <span class="text-semibold">${pagedata.totalPages} </span> 页 <span class="text-semibold">${pagedata.count} 条记录</span></p>' +
-            '<div class="btn-group navbar-left navbar-btn">' +
-            '<button type="button" class="btn btn-default btn-icon " :class="disabled: pagedata.currentPage == 1"><i class="icon-arrow-left12"></i></button>' +
-            '<button type="button" class="btn btn-default btn-icon"><i class="icon-arrow-right13"></i></button> ' +
-            '</div></template>',
-            data: function(){
-                return {
-                    current: this.page || 1
-                }
-            },
-            props: [
-//                "count",
-//                "totalpage",
-//                "page",
-                "pagedata"
-            ],
-            computed: {
-                pageIndex: function(){
-                    var num = 5;
-                    var pageIndex = []
-                },
-                pages: function () {
-                    var pag = [];
-                    if (this.current < this.showItem) { //如果当前的激活的项 小于要显示的条数
-                        //总页数和要显示的条数那个大就显示多少条
-                        var i = Math.min(this.showItem, this.allpage);
-                        while (i) {
-                            pag.unshift(i--);
-                        }
-                    } else { //当前页数大于显示页数了
-                        var middle = this.current - Math.floor(this.showItem / 2),//从哪里开始
-                            i = this.showItem;
-                        if (middle > (this.allpage - this.showItem)) {
-                            middle = (this.allpage - this.showItem) + 1
-                        }
-                        while (i--) {
-                            pag.push(middle++);
-                        }
-                    }
-                    return pag
-                }
-            }
-        });
-
-        Vue.component("page", {
-            delimiters: ['${', '}'],
-//            template:"#page",
-            template: '<ul class="pagination pagination-flat pagination-xs" > <li v-show="current != 1" @click="current-- && goto(current)" ><a href="#">上一页</a></li> <li v-for="index in pages" @click="goto(index)" :class="{\'active\':current == index}" :key="index"> <a href="javascript:;" >${index}</a> </li> <li v-show="allpage != current && allpage != 0 " @click="current++ && goto(current++)"><a href="#" >下一页</a></li> </ul>',
-            data: function () {
-                return {
-                    current: this.page || 1,
-                    showItem: 5,
-                }
-            },
-            props: [
-                "allpage",
-                "page"
-            ],
-            computed: {
-                pages: function () {
-                    var pag = [];
-                    if (this.current < this.showItem) { //如果当前的激活的项 小于要显示的条数
-                        //总页数和要显示的条数那个大就显示多少条
-                        var i = Math.min(this.showItem, this.allpage);
-                        while (i) {
-                            pag.unshift(i--);
-                        }
-                    } else { //当前页数大于显示页数了
-                        var middle = this.current - Math.floor(this.showItem / 2),//从哪里开始
-                            i = this.showItem;
-                        if (middle > (this.allpage - this.showItem)) {
-                            middle = (this.allpage - this.showItem) + 1
-                        }
-                        while (i--) {
-                            pag.push(middle++);
-                        }
-                    }
-                    return pag
-                }
-            },
-            methods: {
-                goto: function (index) {
-
-                    if (index == this.current) return;
-                    this.current = index;
-//                    $.event.trigger({
-//                        type: "message"
-//                    });
-                    this.$emit('increment', index)
-                    //这里可以发送ajax请求
-                }
-            }
-        })
-        //只能输入正整数过滤器
-        Vue.filter('onlyNumeric', {
-            // model -> view
-            // 在更新 `<input>` 元素之前格式化值
-            read: function (val) {
-                return val;
-            },
-            // view -> model
-            // 在写回数据之前格式化值
-            write: function (val, oldVal) {
-                var number = +val.replace(/[^\d]/g, '')
-                return isNaN(number) ? 1 : parseFloat(number.toFixed(2))
-            }
-        })
-
-        Vue.filter('text', function(val){
-            return val.replace(/<[^>]+>/g,"");//去掉所有的html标记
-
-        });
-
-        Vue.filter('trim', function(val){
-            var result;
-//            result = val.replace(/(^\s+)|(\s+$)/g,"");
-//            if(is_global.toLowerCase()=="g")
-//            {
-            result = val.replace(/\s/g,"");
-//            }
-            return result;
-
-        })
-
-        //数组删除某项功能
-        Array.prototype.remove = function (dx) {
-            if (isNaN(dx) || dx > this.length) {
-                return false;
-            }
-            for (var i = 0, n = 0; i < this.length; i++) {
-                if (this[i] != this[dx]) {
-                    this[n++] = this[i]
-                }
-            }
-            this.length -= 1
-        }
-
-
-
-        new Vue({
-//            delimiters: ['${', '}'],
-            el: "#app",
-            data: {
-                {#userInfo: '{{ userInfo | dump}}',#}
-//                headline: lang["pages"],
-                addPageModal: false,
-                pageName: "",
-                pageParent: 0,
-                pageGrid: 0,
-                pageParentName: "",
-                pageAll: '',
-                searchBoxShow: false,
-                searchBox: "",
-                allpage: 0,
-                total: 1,
-                page: 0,
-                current: this.page || 1,
-                pagedata:{},
-                snippet_code_lang: 'markup',
-                meta: {
-//                    _snippet_image: '',
-//                    _snippet_audio: '',
-//                    _snippet_quote: '',
-//                    _snippet_link: '',
-//                    _snippet_chat: '',
-//                    _snippet_text: '',
-//                    _snippet_status: '',
-//                    _snippet_feed: '',
-//                    _snippet_note: '',
-//                    _snippet_person: '',
-//                    _snippet_idea: '',
-//                    _snippet_code:'markup',
-                },
-                meta_type: '',
-                post_meta: {},
-                checked: [],
-                status: 'pending',
-                selected: 0,
-                options: {
-                    data: <$ snippet_terms | safe $>,
-                    icon: true,
-                    placeholder: '选择内容类型'
-
-                },
-                codelang: {
-                    data: [
-                        {id: 'markup', text: 'markup'},
-                        {id: 'css', text: 'css'},
-                        {id: 'javascript', text: 'javascript'},
-                        {id: 'java', text: 'java'},
-                        {id: 'php', text: 'php'},
-                        {id: 'scss', text: 'scss'},
-                        {id: 'c', text: 'c'},
-                        {id: 'python', text: 'python'},
-                        {id: 'sql', text: 'sql'},
-                        {id: 'swift', text: 'swift'}
-                    ],
-                    icon: false
-                },
-                snippet_id: 0,
-                snippet: '',
-                snippet_type: 'text',
-                query_type: '',
-                isSave: false,
-                isActive: true,
-                status: false
-            },
-            watch: {
-                checked: function() {
-                    var vue = this;
-//                    console.log(vue.checked)
-//                    $.ajax({
-//                        method: "POST",
-//                        url: "'.url::admin('user', ['groups', 'edit']).'",
-//                        data: {
-//                            id: vue.groupID,
-//                            perms: vue.checked
-//                        }
-//                    });
-                },
-//                status: function() {
-//                    if(this.showBlocks) {
-//                        this.isEdit = false;
-//                        this.setDragBlocks();
-//                        $(".blocks").addClass("move");
-//                    } else {
-//                        this.drakeBlocks.destroy();
-//                        $(".blocks").removeClass("move");
-//                    }
-//                },
-                selected: function(val){
-                    var vue = this;
-
-                    Vue.nextTick(function () {
-                        // 渲染 select2 样式
-//                        vue.renderSelect2();
-
-                        vue.render();
-                        Prism.highlightAll();
-                        // DOM updated
-                        var $grid = $('[data-plugin="masonry"]');
-                        $grid.masonry();
-                        $grid.masonry('reloadItems')
-                        $grid.masonry('layout');
-                    })
-                    this.meta = {};
-
-                    switch(val){
-                        case 'quote':
-                            this.meta['_snippet_quote'] = "";
-                            this.meta['_snippet_quote_style'] = "style_quote";
-                            break;
-                        case 'link':
-                            this.meta_type = 'link';
-                            this.meta['_snippet_link'] = "";
-                            break;
-                        case 'chat':
-                            this.meta['_snippet_chat'] = "";
-                            break;
-                        case 'note':
-                            this.meta['_snippet_note'] = "";
-                            break;
-                        case 'vcard':
-                            this.meta['_snippet_vcard'] = "";
-                            break;
-                        case 'idea':
-                            this.meta['_snippet_idea'] = "";
-                            break;
-                        case 'status':
-                            this.meta['_snippet_status'] = "";
-//                            this.meta['_snippet_status_weibo'] = ""
-                            break;
-                        case 'code':
-                            this.meta_type = 'code';
-                            this.meta['_snippet_code'] = "";
-                            this.snippet_code_lang = 'markup';
-//                            this.meta['_snippet_code_lang'] = 'markup';
-                            this.meta['_snippet_code_lang'] = this.snippet_code_lang;
-
-                            break;
-                        default:
-                            this.meta['_snippet_standard'] = "";
-//                            break;
-                    }
-                },
-                snippet_code_lang: function(val, oldVal){
-
-//                    console.log(val + "_-------------")
-//                    this.snippet_code_lang = val;
-                    this.meta['_snippet_code_lang'] = val;
-
-                },
-                meta: {
-                    handler: function (val, oldVal) {
-                        console.log(JSON.stringify(val))
-
-/*                        switch(val)
-                        {
-                            case val['_snippet_code']:
-                                console.log(1)
-                                break;
-                            case val['_snippet_quote']:
-                                console.log(val)
-                                break;
-                            default:
-                                console.log(val);
-//                                n 与 case 1 和 case 2 不同时执行的代码
-                        }*/
-
-//                       if (val['_snippet_code'] != null && val['_snippet_code'] != undefined){
-//                           val._snippet_code_lang = val;
-//                           val._snippet_code = '';
-//                           this.post_meta._snippet_code = val['_snippet_code'];
-//                           this.post_meta._snippet_code_lang = val['_snippet_code'];
-//                       }
-
-
-                    },
-                    deep: true
-
-                },
-//                snippet_id: function(){
-//                    var vue = this;
-//                    console.log(vue.snippet_id)
-//                },
-                snippet_type: function(){
-//                    console.log(this.snippet_id + ":" +this.snippet_type)
-                }
-            },
-            mounted: function () {
-
-                var vue = this;
-                this.page = vue.urlParam("page");
-
-                $(document).on("fetch", function () {
-                    vue.fetch();
-                });
-                $(document).on("message", function () {
-                    vue.message();
-                });
-                vue.fetch();
-
-//                $(document).on("click", "[data-toggle='tab']", function(e){
-//                    $('#panel-tab2-292').tab('show');
-//                    vue.reLayout()
-
-//                })
-//                $(window).load(function(){ $('[data-plugin="masonry"]').masonry(); });
-
-                // Reverse last 3 dropdowns orientation
-                $('.content > .row').slice(-1).find('.dropdown, .btn-group').addClass('dropup');
-
-
-                // Multiple switchery toggles
-                if (Array.prototype.forEach) {
-                    var elems = Array.prototype.slice.call(document.querySelectorAll('.switch-mode'));
-
-                    elems.forEach(function (html) {
-                        var switchery = new Switchery(html);
-                    });
-                }
-                else {
-                    var elems = document.querySelectorAll('.switch-mode');
-
-                    for (var i = 0; i < elems.length; i++) {
-                        var switchery = new Switchery(elems[i]);
-                    }
-                }
-
-
-
-                // Bootstrap switches
-//                $(".switch").bootstrapSwitch();
-
-//                eventHub.$on("setHome", this.setHome);
-//                eventHub.$on("setSearchbox", this.setParent);
-//                vue.setDrag();
-
-                vue.render();
-
-                eventHub.$on("snippet_id", function (id) {
-
-                    vue.snippet_id = id;
-                    vue.reLayout();
-
-    //                console.log(id + "=======")
-    //                vue.headline = data.headline;
-    //                    vue.showSearch = data.showSearch;
-                });
-
-                eventHub.$on("new_snippet", function(){
-                    vue.fetch();
-                });
-
-
-            },
-
-            methods: {
-                changeStatus: function(_snippet,status){
-                    _snippet.status = status;
-//                    console.log(item.status + ":" + status);
-//                    console.log(status + "--------")
-//                    status = 'private'
-//                   return item.status = item.status === 'publish' ? true : false;
-
-                    this.post(_snippet);
-                },
-
-                setting: function(id){
-                    eventHub.$emit('snippet_id', id)
-                },
-                render:function(){
-                    // Custom code
-                    // ------------------------------
-
-                    // Highlight row when checkbox is checked
-                    $('.table-inbox').find('tr > td:first-child').find('input[type=checkbox]').on('change', function() {
-                        if($(this).is(':checked')) {
-                            $(this).parents('tr').addClass('warning');
-                        }
-                        else {
-                            $(this).parents('tr').removeClass('warning');
-                        }
-                    });
-
-                    // Grab first letter and insert to the icon
-                    $(".table-inbox tr").each(function (i) {
-
-                        // Title
-                        var $title = $(this).find('.letter-icon-title'),
-                            letter = $title.eq(0).text().charAt(0).toUpperCase();
-
-                        // Icon
-                        var $icon = $(this).find('.letter-icon');
-                        $icon.eq(0).text(letter);
-                    });
-
-
-                    // Plugins
-                    // ------------------------------
-
-                    // Default initialization
-                    $(".styled, .multiselect-container input").uniform({
-                        radioClass: 'choice'
-                    });
-
-                    // Initialize Row link plugin
-                    $('tbody.rowlink').rowlink();
-                },
-                incrementTotal: function (id) {
-                    this.total += 1
-                    History.pushState({state: id}, "State", '?page=' + id.toString());
-                    this.page = id;
-                    this.fetch();
-
-                },
-                pageTo: function (index) {
-//                    console.log(index);
-                    if (index < 1) {
-                        this.current = 1;
-                        return;
-                    }
-                    if (index > this.pagedata.totalPages){
-                        this.current = this.pagedata.totalPages;
-                        return;
-                    }
-//                    if (index == this.current) return;
-                    this.current = index;
-                    this.page = index;
-//                    if (num < 1 || num >= this.pagedata.totalPages) return;
-//                    console.log(index);
-
-//                    this.total += 1
-                    History.pushState({state: index}, "State", '?page=' + index.toString());
-//                    this.page = num;
-                    this.fetch();
-
-                },
-                save: function(_snippet){
-
-                    this.post(_snippet);
-                },
-                post: function (_snippet) {
-
-                    var self = this;
-                    self.status = 'saving';
-
-                    var postData = {
-                        "id": _snippet.id,
-                        "status": _snippet.status,
-//                        "title": this.title,
-//                        "name": this.name,
-//                        "date": this.date,
-//                        "content": this.content,
-                        "content": _snippet.content,
-                        "meta_type":this.meta_type,
-//                        "meta_type":'link',
-                        "meta": this.meta
-                    }
-
-                    fetch('/admin/posts/snippet', {
-                        credentials: 'include',
-                        method: 'POST',
-//                        mode: 'cors',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(postData)
-
-                    }).then(function (response) {
-
-                        if (response.ok) {
-
-                            return response.json();
-
-                        } else {
-                            self.status = 'error';
-
-                            var error = new Error(response.statusText)
-                            error.response = response
-                            throw error
-                        }
-                    }).then(function (json) {
-                        fetch('/admin/posts/snippet?id='+json._id, {
-                            credentials: 'include',
-                            method: 'GET',
-//                        mode: 'cors',
-                            headers: {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json'
-                            },
-//                            body: JSON.stringify(postData)
-
-                        }).then(function (response) {
-
-                            if (response.ok) {
-                                // 触发 eventHub set snippet_id = 0, reset 为了恢复现在的操作的状态
-//                                setTimeout(function() {
-//                                    self.status = 'success';
-//
-//                                }, 2200);
-                                return response.json();
-
-                            } else {
-                                self.status = 'error';
-
-                                var error = new Error(response.statusText)
-                                error.response = response
-                                throw error
-                            }
-                        }).then(function (json) {
-//                            console.log(JSON.stringify(json))
-                            _snippet.meta = json.meta;
-                            // 触发 eventHub set snippet_id = 0, reset 为了恢复现在的操作的状态
-//                            for(var item in self.post_meta){
-//                                console.log(self.meta[item])
-//                                self.meta[item] = '';
-                                self.selected = '';
-
-//                            }
-//                            _snippet = json;
-//                            setTimeout(function() {
-                                self.status = 'success';
-                                self.setting(0);
-
-//                            }, 2200);
-//                            self.setting(0);
-
-
-//                        console.log(json._id + "--------")
-
-//                    if (json.snippet_id != null) {
-//                        self.snippet_id = json.snippet_id;
-//                        // 设置页面路径信息，页面刷新后也可以获得当前编辑的信息
-//                        History.pushState({state: 1}, "State 1", self.snippet_id.toString());
-//                    }
-                        })
-
-
-//                        console.log(json._id + "--------")
-
-//                    if (json.snippet_id != null) {
-//                        self.snippet_id = json.snippet_id;
-//                        // 设置页面路径信息，页面刷新后也可以获得当前编辑的信息
-//                        History.pushState({state: 1}, "State 1", self.snippet_id.toString());
-//                    }
-                    })
-                },
-
-                fetch: function (meta_type) {
-
-                    var vue = this;
-                    var _url = "/admin/snippets/list";
-
-                    if (meta_type !== null && meta_type !== undefined) {
-                        _url += "?meta_type=" + meta_type + "&";
-
-                        History.pushState({state: meta_type}, "State", "?meta_type=" + meta_type);
-
-                    }
-
-                    if (this.page != 0 && Number.parseInt(this.page)) {
-                        _url += "?page=" + this.page;
-                    }
-
-                    $.ajax({
-                        method: "GET",
-                        url: _url,
-                        dataType: "json",
-                        success: function (data) {
-                            vue.pageAll = data.data;
-                            vue.allpage = data.totalPages;
-//                            vue.pageTree = data.tree;
-//                            vue.setDrag();
-//                            delete data.data;
-                            vue.pagedata = data;
-
-                            vue.reLayout();
-                        }
-                    });
-
-
-                },
-
-                renderSelect2: function(){
-                    function iconFormat(icon) {
-                        var originalOption = icon.element;
-                        if (!icon.id) { return icon.text; }
-                        var $icon = "<i class='icon-" + $(icon.element).data('icon') + "'></i>" + icon.text;
-
-                        return $icon;
-                    }
-                    // Initialize with options
-                    $(".select-icons").select2({
-                        templateResult: iconFormat,
-                        minimumResultsForSearch: Infinity,
-                        templateSelection: iconFormat,
-                        escapeMarkup: function(m) { return m; }
-                    });
-
-                },
-                reLayout: function () {
-
-                    var vue = this;
-
-                    Vue.nextTick(function () {
-                        // 渲染 select2 样式
-//                        vue.renderSelect2();
-
-                        vue.render();
-                        Prism.highlightAll();
-                        // DOM updated
-                        var $grid = $('[data-plugin="masonry"]');
-                        $grid.masonry();
-                        $grid.masonry('reloadItems')
-                        $grid.masonry('layout');
-                    })
-                },
-                urlParam: function (name) {
-                    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-                    var r = window.location.search.substr(1).match(reg);
-                    // decodeURIComponent()
-                    if (r != null)return decodeURI(r[2]);
-                    return null;
-                },
-                statusStyle:function(item){
-                    if (item.status === 'publish'){ return "text-success-400"}
-                    if (item.status === 'private'){ return "text-grey-400"}
-                    if (item.status === 'draft'){ return "text-indigo-400"}
-                    if (item.status === 'pending'){ return "text-info-600"}
-                }
-
-            },
-            computed: {
-                pageTreeLength: function () {
-                    return !jQuery.isEmptyObject(this.pageTree);
-                },
-
-            }
-        });
-    </script>
 {% endblock %}

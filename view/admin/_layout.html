@@ -22,6 +22,255 @@
             display: none;
         }
     </style>
+
+    <style>
+        .dummy-fixed {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            padding: 15px;
+            width: 100%;
+            height: calc(3em + 30px);
+            /*background: #E2E0D3;*/
+            text-align: center;
+            z-index: 1090;
+        }
+
+        .editor textarea {
+            border: none;
+            resize: none;
+            outline: none;
+            font-size: 14px;
+            font-family: 'Monaco', courier, monospace;
+            display: inline-block;
+            box-sizing: border-box;
+            height: 42vh !important;;
+            max-height: 350px; /* optional, but recommended */
+            min-height: 350px;
+            overflow-x: hidden; /* for Firefox (issue #5) */
+        }
+
+        .snippet__icon {
+            position: absolute;
+            top: 1.5em;
+            left: 1.5em;
+            fill: #4e4e4f;
+        }
+
+        .snippet {
+            position: absolute;
+            left: 50%;
+            margin: 0 auto;
+            margin-left: -4.5em;
+            width: 9em;
+            height: 3em;
+            font-weight: 400;
+            font-family: 'Maven Pro', sans-serif;
+            -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+            -webkit-transition: -webkit-transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .snippet--active {
+            /* center on screen (padding of parent, half of summary height, half of viewport height) */
+            -webkit-transform: translate3d(0, 15px, 0) translate3d(0, 30vh, 0) translate3d(0, -50vh, 0);
+            transform: translate3d(0, 15px, 0) translate3d(0, 30vh, 0) translate3d(0, -50vh, 0);
+        }
+
+        a.snippet__button {
+            position: relative;
+            z-index: 10;
+            /*display: block;*/
+            /*margin: 0 auto;*/
+            height: 100%;
+            /*border-radius: 10px;*/
+            /*color: #fff;*/
+            /*line-height: 3em;*/
+            -webkit-transition: background-color 0.6s cubic-bezier(0.7, 0, 0.3, 1), -webkit-transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: background-color 0.6s cubic-bezier(0.7, 0, 0.3, 1), transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        a.snippet__button:hover,
+        a.snippet__button:focus {
+            outline: none;
+            color: #fff;
+        }
+
+        .snippet--active a.snippet__button {
+            background-color: #3f3d3d;
+            -webkit-transform: perspective(1000px) translate3d(0, -2.5em, 0);
+            transform: perspective(1000px) translate3d(0, -2.5em, 0);
+        }
+
+        .snippet__text-inner {
+            font-weight: bold;
+        }
+
+        .snippet__final-text,
+        .snippet__initial-text {
+            -webkit-transition: opacity 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: opacity 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .snippet--active .snippet__initial-text {
+            opacity: 0
+        }
+
+        .snippet__final-text {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+        }
+
+        .snippet--active .snippet__final-text {
+            opacity: 1;
+        }
+
+        .snippet_content,
+        .snippet_content::before {
+            position: absolute;
+            bottom: 0%;
+            left: 50%;
+            -webkit-transform: translate3d(-50%, 0%, 0);
+            transform: translate3d(-50%, 0%, 0);
+        }
+
+        .snippet_content {
+            overflow: hidden;
+            min-width: 320px;
+            max-width: 700px;
+            width: 95vw;
+            height: 60vh;
+            text-align: right;
+            pointer-events: none;
+            /*box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);*/
+            box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
+
+        }
+
+        .snippet--active .snippet_content {
+            pointer-events: auto;
+
+        }
+
+        .snippet_content::before {
+            content: '';
+            z-index: 0;
+            width: 9em;
+            height: 3em;
+            border-radius: 10px;
+            /*background: #fafafa;*/
+            /*background: #4e4e4f;*/
+            -webkit-transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .snippet--active .snippet_content::before {
+            width: 100%;
+            height: 100%;
+            -webkit-transition-delay: 0s;
+            transition-delay: 0s;
+        }
+
+        .snippet_content-inner {
+            position: relative;
+            padding: 3em 4em;
+        }
+
+        .snippet__close {
+            position: absolute;
+            top: 1.5em;
+            right: 1.5em;
+            overflow: hidden;
+            width: 20px;
+            height: 20px;
+            border: none;
+            background: transparent;
+            color: transparent;
+            text-indent: 100%;
+            opacity: 0;
+            backface-visibility: hidden;
+        }
+
+        .snippet__close:focus {
+            outline: none;
+        }
+
+        .snippet--active .snippet__close {
+            opacity: 1;
+            -webkit-transition: opacity 0.8s cubic-bezier(0.7, 0, 0.3, 1) 0.015s;
+            transition: opacity 0.8s cubic-bezier(0.7, 0, 0.3, 1) 0.015s;
+        }
+
+        .snippet__close .icon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #444;
+            text-indent: 0;
+        }
+
+        .snippet__close:hover .icon {
+            /*color: #e48895;*/
+            color: #c82e00;
+
+        }
+
+        .snippet__summary {
+            margin: 0.5em 0 0.75em;
+            width: 100%;
+            color: #f5f5f5;
+            text-align: center;
+            font-size: 1.15em;
+            line-height: 1.5;
+            -webkit-transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .snippet__action {
+            padding: 0;
+            border: none;
+            background: none;
+        }
+
+        .snippet__action:focus {
+            outline: none;
+        }
+
+        .snippet__action .icon {
+            color: #c82e00;
+        }
+
+        @media screen and (max-width: 26em) {
+            .snippet--active {
+                -webkit-transform: translate3d(0, 15px, 0);
+                transform: translate3d(0, 15px, 0);
+            }
+
+            .snippet_content::before {
+                border-radius: 0
+            }
+
+            .snippet__summary {
+                margin-top: 2em
+            }
+
+            .snippet_content-inner {
+                padding: 1em 1.75em
+            }
+
+            .snippet_content {
+                width: 100vw;
+                height: 100vh;
+            }
+
+        }
+    </style>
+
     <style>
         a.delete {
             z-index: 5;
@@ -125,7 +374,7 @@
             top: 65px;
             left: 50%;
             z-index: 110;
-            margin-left: 125px;
+            /*margin-left: 125px;*/
             -webkit-transform: translate(-50%, 0);
             -moz-transform: translate(-50%, 0);
             -o-transform: translate(-50%, 0);
@@ -195,9 +444,45 @@
     {% block style %}{% endblock %}
 
 </head>
-<body data-spy="scroll" data-target="#resume-section" data-offset="70" class=" {% block body_style %}{% endblock %}">
+<body data-spy="scroll" data-target="#resume-section" data-offset="70" class="navbar-bottom sidebar-opposite-visible  {% block body_style %}{% endblock %}">
 {#<body data-spy="scroll" data-target=".sidebar-fixed" class=" {% block body_style %}{% endblock %}">#}
 
+<div class="dummy-fixed" id="snippet-bar">
+    <div class="snippet" :class="isOpen ? 'snippet--active': ''">
+        <a id="snippet__button" class="btn bg-primary btn-icon btn-raised  snippet__button"
+           @click="openOrSave" :class="!isActive ? 'disabled': ''"><!-- Fallback location -->
+            <span class="snippet__text">
+                <span class="snippet__text-inner snippet__initial-text ">
+                    <i class="icon-versions"></i>
+                </span>
+                <span class="snippet__text-inner snippet__final-text">
+                    <i class="icon-sync spinner" v-if="status == 'saving'" ></i>
+                    {#<i class="icon-check text-success" v-else-if="status == 'success'" ></i>#}
+                    {#<i class="icon-warning22 text-danger" v-else-if="status == 'error'" ></i>#}
+                    <i class=" icon-floppy-disk" v-else></i>
+
+                </span>
+            </span>
+        </a>
+        <div class="snippet_content panel panel-body alpha-grey" v-if="isOpen" v-cloak>
+            <div class="snippet_content-inner">
+                <div class="snippet__summary">
+                    <div class="editor">
+                        <textarea class="form-control snippet-editor"
+                                  placeholder="Remember, be nice!"
+                                  rows="5"
+                                  v-model="content"
+                                  @keyup.ctrl.enter="openOrSave"> </textarea>
+                    </div>
+                </div>
+                <button class="snippet__close snippet__cancel" @click="cancel"><i
+                            class="icon fa fa-fw fa-close"></i>
+                    关闭
+                </button>
+            </div><!-- /snippet_content-inner -->
+        </div><!-- /snippet_content -->
+    </div><!-- /snippet -->
+</div>
 {#<body class="navbar-top  sidebar-opposite-visible ">#}
 <div id="app">
 
@@ -205,9 +490,10 @@
     {#<div class="navbar-fixed-top">#}
 
         <!-- Main navbar -->
-        <div class="navbar navbar-inverse bg-primary header-highlight ">
-            <div class="navbar-header navbar-inverse bg-primary">
-                <a class="navbar-brand" href="/admin"><img src="/static/assets/images/logo_light.png" alt=""></a>
+        {#<div class="navbar navbar-default no-shadow alpha-grey navbar-fixed-bottom">#}
+            <div class="navbar navbar-default">
+            <div class="navbar-header ">
+                <a class="navbar-brand" href="/admin"><img src="/static/assets/images/logo_dark.png" alt=""></a>
                 <ul class="nav navbar-nav">
                     {#<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-magazine position-left"></i></a></li>#}
                     <li class="disabled"><a data-toggle="collapse" data-target="#navbar-mobile"><i class=" icon-feed position-left"></i>发现</a></li>
@@ -221,13 +507,15 @@
                 {% block main_nav %}
 
                 {% endblock %}
-                <ul class="nav navbar-nav navbar-right">
+              <ul class="nav navbar-nav navbar-right">
+                  {#
                     {% block right_nav %}
                         <li class="active"><a class="list-group-item"><i class="icon-magazine"></i>我的简历</a></li>
                         <li><a href="/admin/resumes/themes" class="list-group-item"><i class="icon-bucket "></i>简历主题</a>
                         <li class="disabled"><a href="/admin/resumes/template" class="list-group-item"><i class=" icon-profile"></i>简历内容模板</a></li>
                     <li><a class="" href="/admin/posts/resume"><i class="icon-plus22 position-left"></i>新简历</a></li>
                     {% endblock %}
+                    #}
 
                     <li class="dropdown dropdown-user">
                         <a class="dropdown-toggle" data-toggle="dropdown">
@@ -238,8 +526,6 @@
 
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li class=""><a href="/admin/account"><i class="icon-user-plus"></i> 个人信息</a></li>
-                            {#<li><a href="#"><i class="icon-coins"></i> My balance</a></li>#}
-                            {#<li><a href="#"><span class="badge badge-warning pull-right">58</span> <i class="icon-comment-discussion"></i> Messages</a></li>#}
                             <li class="divider"></li>
                             <li class="disabled"><a href="#"><i class="icon-cog5"></i> 账户设置</a></li>
                             <li><a href="/admin/logout"><i class="icon-switch2"></i> 登出</a></li>
@@ -273,70 +559,43 @@
 
                                 <div class="tab-pane no-padding active" id="app-nav">
                                     {#
-                                    <div class="category-title bg-grey-50">
-                                        <span><a href="#forms-tab" data-toggle="tab"><i
-                                                        class="icon-arrow-left12 position-left"></i>切换应用</a></span>
-                                    </div>
+                                    <div class="sidebar-category">
+                                        <div class="category-title">
+                                            <span>操作</span>
+                                            <ul class="icons-list">
+                                                <li><a href="#" data-action="collapse"></a></li>
+                                            </ul>
+                                        </div>
 
-                                    <div class="sidebar-user">
                                         <div class="category-content">
-                                            <div class="media">
-                                                <a href="#" class="media-left"><img src="/static/assets/images/image.png"
-                                                                                    class="img-rounded img-sm" alt=""></a>
-                                                <div class="media-body">
-                                                    <span class="media-heading text-semibold"><$ options.title $></span>
-                                                    <div class="text-size-mini text-muted">
-                                                        <i class="icon-lifebuoy text-size-small"></i> &nbsp;~ <a
-                                                                href="http://<$ options.site_url $>"><$ options.site_url $></a>
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <button class="btn btn-default btn-block btn-float btn-float-lg legitRipple" type="button"><i class="icon-versions"></i> <span>碎片</span></button>
+                                                    <button class="btn btn-default btn-block btn-float btn-float-lg legitRipple" type="button"><i class="icon-mail-read"></i> <span>应用</span></button>
                                                 </div>
-                                                <div class="media-right media-middle">
-                                                    <ul class="icons-list">
-                                                        <li>
-                                                            <a href="#"><i class="icon-menu7"></i></a>
-                                                        </li>
-                                                    </ul>
+
+                                                <div class="col-xs-6">
+                                                    <button class="btn btn-default btn-block btn-float btn-float-lg legitRipple" type="button"><i class="icon-stats-bars"></i> <span>统计</span></button>
+                                                    <button class="btn btn-default btn-block btn-float btn-float-lg legitRipple" type="button"><i class="icon-cog"></i> <span>系统</span></button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     #}
-                                    <!-- Main navigation -->
                                     <div class="sidebar-category sidebar-category-visible">
                                         <div class="category-content no-padding">
 
                                             <ul class="navigation navigation-main navigation-accordion">
-                                                {#<li class=""><a><i class="icon-statistics"></i>统计</a></li>#}
+                                                <li class="{% if http.controller == 'snippets' %}active{% endif %}"><a href="/admin/snippets"><i class="icon-stack4"></i>碎片</a></li>
+
                                                 <li class="navigation-header">内容</li>
-                                                <li>
+                                                <li class="{% if http.controller == 'posts' %}active{% endif %}">
                                                     <a href="/admin/posts"><i class="icon-files-empty"></i>
-                                                        <span>内容</span></a>
+                                                        内容</a>
 
-                                                    {#                                                 <ul class="hidden-ul" style="display: block;">
-                                                                                                         <li class="{% if http.controller == 'posts' %}active{% endif %}">
-                                                                                                             <a
-                                                                                                                     href="/admin/posts">内容列表</a></li>
-
-                                                                                                         <li class="{% if http.url == '/admin/category' %}active{% endif %}">
-                                                                                                             <a href="/admin/category" id="layout2" class="legitRipple">内容分类
-                                                                                                             </a></li>
-
-                                                                                                     </ul>#}
                                                 </li>
-                                                <li class=""><a href="/admin/snippets"><i class="icon-stack4"></i><span>碎片内容</span></a></li>
-                                                <li><a href="/admin/resumes"><i class="icon-magazine"></i> 简历管理</a></li>
+                                                <li class="{% if http.controller == 'resumes' %}active{% endif %}"><a href="/admin/resumes"><i class="icon-magazine"></i> 简历</a></li>
 
-                                                {#
-                                                <li class="{% if http.controller == 'pages' %}active{% endif %}"><a
-                                                            href="/admin/contents?type=page">
-                                                        <i class="icon-portfolio"></i>作品</a></li>
-                                                <li><a href="../../../layout_3/LTR/default/index.html" id="layout3"
-                                                       class="legitRipple"><i class="icon-tags2"></i>标签</a></li>
-
-                                                <li class="{% if http.controller == 'pages' %}active{% endif %}"><a
-                                                            href="/admin/contents?type=page"><i
-                                                                class="icon-file-empty"></i>页面</a></li>
-                                                   #}
 
 
                                                 <li class="navigation-header">个性化</li>
@@ -344,37 +603,18 @@
                                                 <li class="{% if http.controller == 'design' %}active{% endif %}"><a href="/admin/design"><i class="icon-droplet2"></i> 主题</a>
                                                 </li>
 
-                                                <li><a href="/admin/menus"><i class=" icon-three-bars"></i> 菜单</a></li>
+                                                <li class="{% if http.controller == 'menus' %}active{% endif %}"><a href="/admin/menus"><i class=" icon-three-bars"></i> 菜单</a></li>
 
                                                 <li class="navigation-divider"></li>
                                                 <li class="navigation-header">配置</li>
-                                                {#<li><a href="/user"><i class=" icon-people"></i> 用户</a></li>#}
-                                                {#<li><a href="#"><i class=" icon-puzzle4"></i> 插件</a></li>#}
-                                                {#<li><a href="#"><i class="  icon-earth"></i> 域名</a></li>#}
-                                                <li><a href="/admin/options"><i
+                                                <li class="{% if http.controller == 'options' %}active{% endif %}"><a href="/admin/options"><i
                                                                 class="icon-wrench3"></i>
-                                                        系统信息</a>
+                                                        系统</a>
                                                 </li>
 
                                             </ul>
                                         </div>
                                     </div>
-                                    <!-- /main navigation -->
-                                    <!-- Support -->
-                                    {#<div class="sidebar-category no-margin">#}
-                                    {#<div class="category-title">#}
-                                    {#<span>需要帮助?</span>#}
-                                    {#<i class="icon-help text-muted pull-right"></i>#}
-                                    {#</div>#}
-
-                                    {#<div class="category-content">#}
-                                    {#<a href="http://kopyov.ticksy.com" class="btn bg-slate-800 btn-block" target="_blank"><i#}
-                                    {#class="icon-lifebuoy position-left"></i> 采撷blog</a>#}
-                                    {#<a href="http://kopyov.ticksy.com" class="btn bg-slate-800 btn-block" target="_blank"><i#}
-                                    {#class="icon-lifebuoy position-left"></i> 内容号切换</a>#}
-                                    {#</div>#}
-                                    {#</div>#}
-                                    <!-- /support -->
                                 </div>
                                 <div class="tab-pane no-padding" id="forms-tab">
                                     <div class="category-title alpha-grey ">
@@ -419,6 +659,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- /main sidebar -->
             {% endblock %}
             <!-- /main sidebar -->
@@ -442,15 +683,6 @@
 
                     {% endblock %}
 
-                    <!-- Footer -->
-                    {% block footer %}
-                        <div class="footer text-muted">
-                            &copy; 2017. Power by <a
-                                    href=""
-                                    target="_blank">Picker</a>
-                        </div>
-                    {% endblock %}
-                    <!-- /footer -->
 
                 </div>
                 <!-- /content area -->
@@ -462,6 +694,8 @@
 
             <!-- Opposite sidebar -->
             {% block opposite_sidebar %}
+
+
             {% endblock %}
             <!-- /opposite sidebar -->
 
@@ -470,7 +704,11 @@
     </div>
     <!-- /page container -->
 
+
 </div>
+
+
+
 
 {% block components %}{% endblock %}
 
@@ -502,6 +740,12 @@
 <!-- Theme JS files -->
 <script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switchery.min.js"></script>
 <script type="text/javascript" src="/static/assets/js/pages/animations_css3.js"></script>
+
+
+<script type="text/javascript" src="/static/assets/js/plugins/ui/headroom/headroom.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/headroom/headroom_jquery.min.js"></script>
+
+
 <script src="/static/assets/js/vue/vue.js"></script>
 <script>
     Vue.config.debug = true;
@@ -509,13 +753,37 @@
 </script>
 
 <script type="text/javascript" src="/static/assets/js/native.history.js"></script>
-{#<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>#}
+<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>
 
 <script type="text/javascript" src="/static/assets/js/core/app.min.js"></script>
 <script type="text/javascript" src="/static/assets/js/plugins/ui/ripple.min.js"></script>
+<script type="text/javascript"
+        src="/static/assets/js/plugins/textarea-autosize/dist/jquery.textarea_autosize.min.js"></script>
+
+<script type="text/javascript">
+    $('textarea.snippet-editor').textareaAutoSize();
+</script>
+<script type="text/javascript" src="/static/components/snippet/snippet-bar.js"></script>
+
 <!-- /theme JS files -->
 <script>
     jQuery(document).ready(function ($) {
+        // Bottom navbar
+        function headroomBottom() {
+            $(".navbar-fixed-bottom").headroom({
+                classes : {
+                    pinned : "headroom-bottom-pinned",
+                    unpinned : "headroom-bottom-unpinned"
+                },
+                offset: $('.navbar').outerHeight(),
+                onPin : function() {
+                    $('.navbar .dropdown-menu').parent().removeClass('open');
+                }
+            });
+        }
+
+//        $('.page-container').addClass('pb-20');
+//        headroomBottom();
 
         $(document).on("click", ".delete", function (e) {
 

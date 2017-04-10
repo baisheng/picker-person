@@ -219,70 +219,9 @@
 
 {% endblock %}
 
-{% block sidebar_main %}
-    <div class="sidebar sidebar-main sidebar-default sidebar-separate">
-        <div class="sidebar-content">
+{#{% block sidebar_main %}#}
 
-            <!-- Actions -->
-            <div class="sidebar-category">
-
-
-                <div class="category-content">
-                    <a href="/admin/post" class="btn btn-primary border-primary btn-block legitRipple">添加文章</a>
-                </div>
-            </div>
-            <!-- /actions -->
-
-
-            <!-- Sub navigation -->
-            <div class="sidebar-category">
-                {#<div class="category-title">#}
-                    {#<span>Navigation</span>#}
-                    {#<ul class="icons-list">#}
-                        {#<li><a href="#" data-action="collapse"></a></li>#}
-                    {#</ul>#}
-                {#</div>#}
-
-                <div class="category-content no-padding">
-                    <ul class="navigation navigation-alt navigation-accordion no-padding-bottom">
-                        {#<li class="navigation-header">内容管理</li>#}
-                        <li class="active"><a href="#" class="legitRipple"><i class="icon-drawer-in"></i> 全部文章 <span
-                                        class="badge badge-success">32</span></a></li>
-                        <li><a href="#" class="legitRipple"><i class="icon-drawer3"></i> 草稿</a></li>
-                        <li><a href="#" class="legitRipple"><i class="icon-drawer-out"></i> 已发布</a></li>
-                        <li><a href="#" class="legitRipple"><i class="icon-stars"></i> 标星</a></li>
-                        <li class="navigation-divider"></li>
-                        <li><a href="#" class="legitRipple"><i class="icon-bin"></i> 回收站</a></li>
-                    </ul>
-                </div>
-            </div>
-            <!-- /sub navigation -->
-            {#
-            <div class="sidebar-category">
-                <div class="category-title">
-                    <span>分类与标签</span>
-                    <ul class="icons-list">
-                        <li><a href="#" data-action="collapse"></a></li>
-                    </ul>
-                </div>
-
-                <div class="category-content no-padding">
-                    <ul class="navigation navigation-alt navigation-accordion no-padding-bottom">
-                        <li class="navigation-header">内容分类</li>
-
-                        <li v-for="cate in category"><a :href="cate.id">{{ cate.name }}</a></li>
-
-                        <li class="navigation-header">内容标签</li>
-
-                        <li v-for="tag in post_tag"><a :href="tag.id" class="legitRipple"><span class="status-mark border-primary position-left"></span>{{ tag.name }}</a></li>
-                    </ul>
-                </div>
-            </div>
-            #}
-        </div>
-    </div>
-
-{% endblock %}
+{#{% endblock %}#}
 
 {% block content %}
     <div id="messages"></div>
@@ -436,8 +375,71 @@
     {#{% include "../admin/components/data-table.html" %}#}
 {% endblock %}
 
+{% block opposite_sidebar %}
+    <div class="sidebar sidebar-opposite sidebar-default sidebar-separate">
+        <div class="sidebar-content">
 
-{% block script %}
+            <!-- Actions -->
+            <div class="sidebar-category">
+
+
+                <div class="category-content">
+                    <a href="/admin/post" class="btn btn-primary border-primary btn-block legitRipple">添加文章</a>
+                </div>
+            </div>
+            <!-- /actions -->
+
+
+            <!-- Sub navigation -->
+            <div class="sidebar-category">
+                {#<div class="category-title">#}
+                {#<span>Navigation</span>#}
+                {#<ul class="icons-list">#}
+                {#<li><a href="#" data-action="collapse"></a></li>#}
+                {#</ul>#}
+                {#</div>#}
+
+                <div class="category-content no-padding">
+                    <ul class="navigation navigation-alt navigation-accordion no-padding-bottom">
+                        {#<li class="navigation-header">内容管理</li>#}
+                        <li class="active"><a href="#" class="legitRipple"><i class="icon-drawer-in"></i> 全部文章 <span
+                                        class="badge badge-success">32</span></a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-drawer3"></i> 草稿</a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-drawer-out"></i> 已发布</a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-stars"></i> 标星</a></li>
+                        <li class="navigation-divider"></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-bin"></i> 回收站</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /sub navigation -->
+            {#
+            <div class="sidebar-category">
+                <div class="category-title">
+                    <span>分类与标签</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content no-padding">
+                    <ul class="navigation navigation-alt navigation-accordion no-padding-bottom">
+                        <li class="navigation-header">内容分类</li>
+
+                        <li v-for="cate in category"><a :href="cate.id">{{ cate.name }}</a></li>
+
+                        <li class="navigation-header">内容标签</li>
+
+                        <li v-for="tag in post_tag"><a :href="tag.id" class="legitRipple"><span class="status-mark border-primary position-left"></span>{{ tag.name }}</a></li>
+                    </ul>
+                </div>
+            </div>
+            #}
+        </div>
+    </div>
+
+    {% endblock %}
+    {% block script %}
 
     <script>
         //只能输入正整数过滤器
