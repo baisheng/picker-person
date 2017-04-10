@@ -134,7 +134,7 @@ export default class extends Base {
                 // 4 如果不存在 插入键:值
                 // let snippet_data = await this.dao.where({id: _id}).find();
 
-                let rows = await this.dao.where({id: _id}).update(data);
+                let rows = await _dao.where({id: _id}).update(data);
 
                 if (rows > 0) {
                     insert_id = data.id;
@@ -200,7 +200,7 @@ export default class extends Base {
             let id = this.get('id');
             if (!think.isEmpty(id)) {
 
-                let snippet = await this.dao.get(id);
+                let snippet = await _dao.get(id);
 
                 // console.log(JSON.stringify(snippet))
                 return this.json(snippet)

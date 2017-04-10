@@ -39,18 +39,7 @@ new Vue({
         meta_type: '',
         selected: 0,
         options: {
-            data: [
-                {id: 'markup', text: 'markup'},
-                {id: 'css', text: 'css'},
-                {id: 'javascript', text: 'javascript'},
-                {id: 'java', text: 'java'},
-                {id: 'php', text: 'php'},
-                {id: 'scss', text: 'scss'},
-                {id: 'c', text: 'c'},
-                {id: 'python', text: 'python'},
-                {id: 'sql', text: 'sql'},
-                {id: 'swift', text: 'swift'}
-            ],
+            data: TERMS,
             icon: true,
             placeholder: '选择内容类型'
 
@@ -133,18 +122,18 @@ new Vue({
         setting: function (id) {
             eventHub.$emit('snippet_id', id)
         },
-        changeStatus: function(_snippet,status){
+        changeStatus: function (_snippet, status) {
             _snippet.status = status;
 
             this.post(_snippet);
         },
-        active: function(){
+        active: function () {
             this.isActive = true;
         },
         cancel(){
             this.isActive = false;
         },
-        save: function(_snippet){
+        save: function (_snippet) {
 
             this.post(_snippet);
         },
@@ -157,7 +146,7 @@ new Vue({
                 "id": _snippet.id,
                 "status": _snippet.status,
                 "content": _snippet.content,
-                "meta_type":this.meta_type,
+                "meta_type": this.meta_type,
                 "meta": this.meta
             }
 
@@ -185,7 +174,7 @@ new Vue({
                     throw error
                 }
             }).then(function (json) {
-                fetch('/admin/posts/snippet?id='+json._id, {
+                fetch('/admin/posts/snippet?id=' + json._id, {
                     credentials: 'include',
                     method: 'GET',
                     headers: {
@@ -327,9 +316,9 @@ new Vue({
             //
             // }
 
-            // if (this.page != 0 && Number.parseInt(this.page)) {
-            //     _url += "?page=" + this.page;
-            // }
+            if (this.page != 0 && Number.parseInt(this.page)) {
+                _url += "?page=" + this.page;
+            }
 
             $.ajax({
                 method: "GET",
@@ -476,7 +465,68 @@ new Vue({
                 });
             }
 
-        }
+        },
+        selected: function (val) {
+            var vue = this;
+
+            Vue.nextTick(function () {
+                // 渲染 select2 样式
+//                        vue.renderSelect2();
+
+                vue.render();
+                Prism.highlightAll();
+                // DOM updated
+                let $grid = $('[data-plugin="masonry"]');
+                $grid.masonry();
+                $grid.masonry('reloadItems')
+                $grid.masonry('layout');
+            })
+            this.meta = {};
+
+            switch (val) {
+                case 'quote':
+                    this.meta['_snippet_quote'] = "";
+                    this.meta['_snippet_quote_style'] = "style_quote";
+                    break;
+                case 'link':
+                    this.meta_type = 'link';
+                    this.meta['_snippet_link'] = "";
+                    break;
+                case 'chat':
+                    this.meta['_snippet_chat'] = "";
+                    break;
+                case 'note':
+                    this.meta['_snippet_note'] = "";
+                    break;
+                case 'vcard':
+                    this.meta['_snippet_vcard'] = "";
+                    break;
+                case 'idea':
+                    this.meta['_snippet_idea'] = "";
+                    break;
+                case 'status':
+                    this.meta['_snippet_status'] = "";
+//                            this.meta['_snippet_status_weibo'] = ""
+                    break;
+                case 'code':
+                    this.meta_type = 'code';
+                    this.meta['_snippet_code'] = "";
+                    this.snippet_code_lang = 'markup';
+//                            this.meta['_snippet_code_lang'] = 'markup';
+                    this.meta['_snippet_code_lang'] = this.snippet_code_lang;
+
+                    break;
+                default:
+                    this.meta['_snippet_standard'] = "";
+//                            break;
+            }
+        },
+        snippet_code_lang: function(val, oldVal){
+
+//                    console.log(val + "_-------------")
+            this.meta['_snippet_code_lang'] = val;
+
+        },
     },
     computed: {
         selectAll: {

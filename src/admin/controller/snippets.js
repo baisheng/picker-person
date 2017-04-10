@@ -21,10 +21,10 @@ export default class extends Base {
 
     async indexAction() {
 
-/*        let _terms = this.model('terms');
-
+        let _terms = this.model('terms');
+//
         let snippet_terms = await _terms.findByTaxonomy('snippet');
-
+        console.log(JSON.stringify(snippet_terms))
         let _items = [];
         snippet_terms.forEach((item) => {
             let _item = {};
@@ -41,7 +41,8 @@ export default class extends Base {
         });
 
         // console.log(JSON.stringify(_items))
-        this.assign("snippet_terms", JSON.stringify(_items));*/
+        this.assign("snippet_terms", JSON.stringify(_items));
+        /**/
 
         return this.display();
     }
@@ -96,55 +97,6 @@ export default class extends Base {
     //     else
     //         return ( isset( $strings[$slug] ) ) ? $strings[$slug] : '';
     // }
-
-    //上传图片
-    async uploadpicAction() {
-        let file = think.extend({}, this.file('file'));
-        /**/
-        let filepath = file.path;
-        let basename = path.basename(filepath);
-        let ret = {'status': 1, 'info': '上传成功', 'data': ""}
-        let res;
-        //加入七牛接口
-        if (this.setup.IS_QINIU == 1) {
-            let qiniu = think.service("qiniu");
-            let instance = new qiniu();
-            let uppic = await instance.uploadpic(filepath, basename);
-            if (!think.isEmpty(uppic)) {
-                let data = {
-                    create_time: new Date().getTime(),
-                    status: 1,
-                    type: 2,
-                    sha1: uppic.hash,
-                    path: uppic.key
-
-                };
-                res = await this.model("picture").data(data).add();
-            }
-        } else {
-            let uploadPath = think.RESOURCE_PATH + '/upload/picture/' + dateformat("Y-m-d", new Date().getTime());
-            think.mkdir(uploadPath);
-            if (think.isFile(filepath)) {
-                fs.renameSync(filepath, uploadPath + '/' + basename);
-            } else {
-                console.log("文件不存在！")
-            }
-            file.path = uploadPath + '/' + basename;
-            if (think.isFile(file.path)) {
-                let data = {
-                    path: '/upload/picture/' + dateformat("Y-m-d", new Date().getTime()) + '/' + basename,
-                    create_time: new Date().getTime(),
-                    status: 1,
-
-                }
-                res = await this.model("picture").data(data).add();
-            } else {
-                console.log('not exist')
-            }
-        }
-
-        this.json(res);
-    }
 
 
     /**
