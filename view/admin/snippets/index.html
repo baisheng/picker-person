@@ -318,17 +318,51 @@
     </style>
 {% endblock %}
 
+{% block main_nav %}
+
+
+    {#<li class="active">#}
+    {#<a href="/admin/snippets"><i class="icon-files-empty position-left"></i> 全部</a>#}
+    {#</li>#}
+    <div class="navbar-btn btn-group ">
+        {#<button type="button" class="btn btn-default "><i class="icon-star-empty3"></i></button>#}
+        <a type="button" class="btn btn-default" href="/admin/snippets"><i class="icon-files-empty position-left"></i> 全部</a>
+
+        <a type="button" class="btn btn-default"  @click="fetch('publish')"><i class="icon-check"></i>
+            <span class="hidden-xs position-right">
+                    {{ 'publish' | lang }}
+
+                </span>
+        </a>
+        <a type="button" class="btn btn-default" @click="fetch('pending')"><i class="icon-eye-plus"></i><span
+                    class="hidden-xs position-right">
+                    {{ 'pending' | lang }}
+                </span></a>
+
+        <a type="button" class="btn btn-default " @click="fetch('drafts')"><i class="icon-box"></i> <span
+                    class="hidden-xs position-right" >
+                    {{ 'draft' | lang }}
+                    </span></a>
+
+        <a type="button" class="btn btn-default "  @click="fetch('trashed')"><i class=" icon-bin2"></i> <span
+                    class="hidden-xs position-right">
+                    {{ 'trash' | lang }}
+
+                </span></a>
+
+    </div>
+    {#<ul class="nav navbar-nav">#}
+    {##}
+    {#</ul>#}
+
+{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="text-center content-group-lg pt-20">
-            <page :allpage="allpage" :page="page" v-on:increment="incrementTotal"></page>
-        </div>
-    </div>
 
-    <div class="row" data-plugin="masonry" v-cloak>
 
-        <div class=" col-md-6 col-xs-12 masonry-item" v-for="_ in pageAll">
+    <div class="row mr-20" data-plugin="masonry" v-cloak>
+
+        <div class=" col-lg-4 col-md-6 col-xs-12 masonry-item" v-for="_ in pageAll">
 
             <div class="panel panel-default">
 
@@ -693,7 +727,11 @@
 
     </div>
 
-
+    <div class="row">
+        <div class="text-center content-group-lg pt-20">
+            <page :allpage="allpage" :page="page" v-on:increment="incrementTotal"></page>
+        </div>
+    </div>
 
 {% endblock %}
 
@@ -702,132 +740,6 @@
 {% endblock %}
     {% block body_style %}sidebar-opposite-visible{% endblock %}
 
-{% block opposite_sidebar %}
-    <div class="sidebar sidebar-opposite sidebar-default" id="resume-section">
-        <div class="sidebar-fixed affix-top">
-            <div class="sidebar-content">
-
-                {#
-                                <!-- Support -->
-                                <div class="sidebar-category no-margin">
-                                    <div class="category-title">
-                                        <span>Changelog</span>
-                                        <i class="icon-menu7 pull-right"></i>
-                                    </div>
-
-                                    <div class="category-content">
-                                        <a href="http://kopyov.ticksy.com" class="btn bg-danger-400 btn-block legitRipple" target="_blank"><i class="icon-lifebuoy position-left"></i> Item support</a>
-                                    </div>
-                                </div>
-                                <!-- /support -->
-                #}
-                <div class="sidebar-category">
-                    <div class="category-content">
-                        <form action="#">
-                            <div class="has-feedback has-feedback-left form-group">
-                                <input type="search" class="form-control" placeholder="碎片内容查询">
-                                <div class="form-control-feedback">
-                                    <i class="icon-search4 text-size-base text-muted"></i>
-                                </div>
-
-                            </div>
-                            <div class="form-group">
-                                <legend class="text-size-mini text-muted no-border no-padding">碎片分类</legend>
-
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="snippet-filter" @click="fetch()">
-                                        全部碎片
-                                    </label>
-                                </div>
-
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="snippet-filter" @click="fetch('text')">
-                                        文字
-                                    </label>
-                                </div>
-
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="snippet-filter" @click="fetch('quote')">
-                                        引语
-                                    </label>
-                                </div>
-
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="snippet-filter" @click="fetch('code')">
-                                        代码片段
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="snippet-filter" @click="fetch('idea')">
-                                        想法
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="snippet-filter" @click="fetch('feed')">
-                                        事务进程
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="snippet-filter" @click="fetch('comment')">
-                                        会话
-                                    </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="snippet-filter" @click="fetch('person')">
-                                        人物
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <legend class="text-size-mini text-muted no-border no-padding">状态</legend>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="snippet-filter-status" @click="fetch('publish')">
-                                        {{ 'publish' | lang }}
-                                        {#公开#}
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="snippet-filter-status" @click="fetch('private')">
-                                        {{ 'private' | lang }}
-                                        {#私有#}
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="snippet-filter-status" @click="fetch('pending')">
-                                        {{ 'pending' | lang }}
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="snippet-filter-status" @click="fetch('draft')">
-                                        {{ 'draft' | lang }}
-                                    </label>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
-
-
-{% endblock %}
 
 
 {% block script %}

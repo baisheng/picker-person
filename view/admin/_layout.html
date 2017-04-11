@@ -9,10 +9,17 @@
     <link href="/static/assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
     <link href="/static/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
 
+    {#
     <link href="/static/assets/layout4/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/static/assets/layout4/css/core.min.css" rel="stylesheet" type="text/css">
     <link href="/static/assets/layout4/css/components.min.css" rel="stylesheet" type="text/css">
     <link href="/static/assets/layout4/css/colors.min.css" rel="stylesheet" type="text/css">
+      #}
+
+    <link href="/static/assets/layout2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/layout2/css/core.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/layout2/css/components.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/layout2/css/colors.min.css" rel="stylesheet" type="text/css">
 
 
     <link href="/static/assets/css/extras/animate.min.css" rel="stylesheet" type="text/css">
@@ -444,7 +451,7 @@
     {% block style %}{% endblock %}
 
 </head>
-<body data-spy="scroll" data-target="#resume-section" data-offset="70" class="navbar-bottom sidebar-opposite-visible  {% block body_style %}{% endblock %}">
+<body data-spy="scroll" data-target="#resume-section" data-offset="70" class="navbar-top sidebar-opposite-visible  {% block body_style %}{% endblock %}">
 {#<body data-spy="scroll" data-target=".sidebar-fixed" class=" {% block body_style %}{% endblock %}">#}
 
 <div class="dummy-fixed" id="snippet-bar">
@@ -491,12 +498,12 @@
 
         <!-- Main navbar -->
         {#<div class="navbar navbar-default no-shadow alpha-grey navbar-fixed-bottom">#}
-            <div class="navbar navbar-default">
+            <div class="navbar navbar-default navbar-fixed-top">
             <div class="navbar-header ">
                 <a class="navbar-brand" href="/admin"><img src="/static/assets/images/logo_dark.png" alt=""></a>
                 <ul class="nav navbar-nav">
                     {#<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-magazine position-left"></i></a></li>#}
-                    <li class="disabled"><a data-toggle="collapse" data-target="#navbar-mobile"><i class=" icon-feed position-left"></i>发现</a></li>
+                    {#<li class="disabled"><a data-toggle="collapse" data-target="#navbar-mobile"><i class=" icon-feed position-left"></i>发现</a></li>#}
 
                 </ul>
             </div>
@@ -551,112 +558,42 @@
             <!-- Main sidebar -->
             {% block sidebar_main %}
                 <!-- Main sidebar -->
-                <div class="sidebar sidebar-main sidebar-default sidebar-fixed">
+                <div class="sidebar sidebar-main sidebar-fixed">
                     <div class="sidebar-content">
+                        <div class="sidebar-category sidebar-category-visible">
+                            <div class="category-content no-padding">
 
-                        <div class="tabbable sortable ui-sortable">
-                            <div class="tab-content">
+                                <ul class="navigation navigation-main navigation-accordion">
+                                    <li class="{% if http.controller == 'snippets' %}active {% endif %}"><a class="{% if http.controller == 'snippets' %} text-primary-800 {% endif %}" href="/admin/snippets"><i class="icon-stack4"></i>碎片</a></li>
 
-                                <div class="tab-pane no-padding active" id="app-nav">
-                                    {#
-                                    <div class="sidebar-category">
-                                        <div class="category-title">
-                                            <span>操作</span>
-                                            <ul class="icons-list">
-                                                <li><a href="#" data-action="collapse"></a></li>
-                                            </ul>
-                                        </div>
+                                    {#<li class="navigation-header">内容</li>#}
+                                    <li class="{% if http.controller == 'posts' %}active{% endif %}">
+                                        <a href="/admin/posts"><i class="icon-files-empty"></i>
+                                            内容</a>
 
-                                        <div class="category-content">
-                                            <div class="row">
-                                                <div class="col-xs-6">
-                                                    <button class="btn btn-default btn-block btn-float btn-float-lg legitRipple" type="button"><i class="icon-versions"></i> <span>碎片</span></button>
-                                                    <button class="btn btn-default btn-block btn-float btn-float-lg legitRipple" type="button"><i class="icon-mail-read"></i> <span>应用</span></button>
-                                                </div>
-
-                                                <div class="col-xs-6">
-                                                    <button class="btn btn-default btn-block btn-float btn-float-lg legitRipple" type="button"><i class="icon-stats-bars"></i> <span>统计</span></button>
-                                                    <button class="btn btn-default btn-block btn-float btn-float-lg legitRipple" type="button"><i class="icon-cog"></i> <span>系统</span></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    #}
-                                    <div class="sidebar-category sidebar-category-visible">
-                                        <div class="category-content no-padding">
-
-                                            <ul class="navigation navigation-main navigation-accordion">
-                                                <li class="{% if http.controller == 'snippets' %}active{% endif %}"><a href="/admin/snippets"><i class="icon-stack4"></i>碎片</a></li>
-
-                                                <li class="navigation-header">内容</li>
-                                                <li class="{% if http.controller == 'posts' %}active{% endif %}">
-                                                    <a href="/admin/posts"><i class="icon-files-empty"></i>
-                                                        内容</a>
-
-                                                </li>
-                                                <li class="{% if http.controller == 'resumes' %}active{% endif %}"><a href="/admin/resumes"><i class="icon-magazine"></i> 简历</a></li>
+                                    </li>
+                                    <li class="{% if http.controller == 'resumes' %}active{% endif %}"><a href="/admin/resumes"><i class="icon-magazine"></i> 简历</a></li>
 
 
 
-                                                <li class="navigation-header">个性化</li>
+                                    {#<li class="navigation-header">个性化</li>#}
 
-                                                <li class="{% if http.controller == 'design' %}active{% endif %}"><a href="/admin/design"><i class="icon-droplet2"></i> 主题</a>
-                                                </li>
+                                    <li class="{% if http.controller == 'design' %}active{% endif %}"><a href="/admin/design"><i class="icon-droplet2"></i> 主题</a>
+                                    </li>
 
-                                                <li class="{% if http.controller == 'menus' %}active{% endif %}"><a href="/admin/menus"><i class=" icon-three-bars"></i> 菜单</a></li>
+                                    <li class="{% if http.controller == 'menus' %}active{% endif %}"><a href="/admin/menus"><i class=" icon-three-bars"></i> 菜单</a></li>
 
-                                                <li class="navigation-divider"></li>
-                                                <li class="navigation-header">配置</li>
-                                                <li class="{% if http.controller == 'options' %}active{% endif %}"><a href="/admin/options"><i
-                                                                class="icon-wrench3"></i>
-                                                        系统</a>
-                                                </li>
+                                    <li class="navigation-divider"></li>
+                                    {#<li class="navigation-header">配置</li>#}
+                                    <li class="{% if http.controller == 'options' %}active{% endif %}"><a href="/admin/options"><i
+                                                    class="icon-wrench3"></i>
+                                            系统</a>
+                                    </li>
 
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane no-padding" id="forms-tab">
-                                    <div class="category-title alpha-grey ">
-                                    <span><a href="#app-nav" data-toggle="tab">返回<i
-                                                    class="icon-arrow-right13 position-right "></i></a>
-                                    </span>
-                                    </div>
-
-                                    <!-- Sidebar search -->
-                                    <div class="sidebar-category">
-                                        <ul class="navigation navigation-alt navigation-accordion">
-                                            <li><a href="extension_blockui.html"><i class="icon-history"></i>
-
-                                                    <span>全部应用</span> <span class="badge bg-slate-400">8</span></a>
-
-                                            </li>
-                                            <li class="list-group-divider"></li>
-
-                                            {% for app in apps %}
-
-                                                <li class="{% if app.name == controller.app_name %}active {% endif %}">
-                                                    <a href="navbar_single.html">
-                                                        <i class="{% if app.type == 'website' %} icon-earth {% elseif app.type == 'wechat' %} fa fa-wechat {% elseif app.type == 'blog' %}  icon-pencil7 {% endif %} position-left"></i>
-                                                        <span><$ app.title $></span>
-                                                    </a>
-                                                </li>
-                                            {% endfor %}
-
-                                            <li class="list-group-divider"></li>
-                                            <li>
-                                                <a>
-                                                    <i class="icon-plus22 position-left "></i>
-                                                    <span>添加新应用</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <!-- /sidebar search -->
-
-                                </div>
+                                </ul>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
