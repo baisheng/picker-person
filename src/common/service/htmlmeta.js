@@ -145,7 +145,7 @@ export default class extends think.service.base {
             } else {
                 // Something happened in setting up the request that triggered an Error
                 console.log('Error', error.message);
-                callback(new Error('Bad Request' + error.message));
+                // callback(new Error('Bad Request' + error.message));
 
             }
             console.log(error.config);
