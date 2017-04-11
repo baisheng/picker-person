@@ -708,6 +708,8 @@ export default class extends Base {
         // let type = this.get('type');
         // let ID = this.get('id');
 
+        let _dao = this.model('posts',{ aid: this.aid });
+
         if (this.isPost()) {
             let data = this.post();
             data.type = 'nav_menu_item';
@@ -723,7 +725,7 @@ export default class extends Base {
                 delete data.date;
                 data.modified = !think.isEmpty(data.modified) ? new Date(data.modified).valueOf() : new Date().getTime();
 
-                let rows = await this.dao.update(data);
+                let rows = await _dao.update(data);
 
                 if (rows > 0 && data.meta !== undefined) {
                     let _menu_metas = await this.model('postmeta').where({post_id: data.id}).select();
@@ -742,7 +744,7 @@ export default class extends Base {
             } else {
                 data.date = new Date().getTime();
 
-                let insertId = await this.dao.add(data);
+                let insertId = await _dao.add(data);
                 let _taxonomy = this.model('taxonomy');
 
                 await _taxonomy.relationships(insertId, data.term_taxonomy_id);

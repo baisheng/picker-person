@@ -424,19 +424,25 @@ export default class extends Base {
 
     async getAllMenu() {
         let all_terms = await this.allTerms(true);
+
         let taxonomies = await this.allTaxonomies(true);
+
+
         let nav_menus = think._.filter(taxonomies, {taxonomy: 'nav_menu'});
+
 
         let _terms = [];
         nav_menus.forEach((item) => {
             _terms.push(think._.filter(all_terms, {id: item.term_id}))
         })
+
         return think._.flattenDeep(_terms);
 
     }
 
     async getNavMenuItems(menu_id) {
 
+        console.log(menu_id + "xxxxxx")
         let _taxonomy = this.model('taxonomy');
 
         let item_ids = await _taxonomy.getObjectsInTerm(menu_id, 'nav_menu');

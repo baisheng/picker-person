@@ -35,7 +35,7 @@ global.menus = function () {
 
         let data = think.isEmpty(args.data) ? "main_menu" : args.data;
         let theme_mods = await think.model('options', think.config("db")).getThemeMods();
-        theme_mods = JSON.parse(theme_mods);
+        // theme_mods = JSON.parse(theme_mods);
 
         let menu_id = theme_mods['nav_menu_locations'][data];
 

@@ -4,176 +4,129 @@ import Base from './base.js';
 
 export default class extends Base {
 
-    init(http){
-        super.init(http);
-        let theme = "material";
-        // "/resume_themes/material"
-
-        this.RESUME_THEME_VIEW_PATH = `${think.ROOT_PATH}${think.sep}www${think.sep}resume_themes${think.sep}${theme}${think.sep}`;
-    }
     /**
      * index action
      * @return {Promise} []
      */
-    async _indexAction() {
-        let default_index = this.options.default_index;
+    async indexAction() {
+        //auto render template file index_index.html
 
-        let resumeModel = this.model('posts');
+        // 首页显示产品推荐
+        let posts = this.model('posts');
+        // let top5 = await posts.limit(5).where({"type":"portfolio"}).select();
+        // let portfolios = await posts.top(5, {"type": "portfolio"});
 
-        if (!think.isEmpty(default_index)){
-            let data = await resumeModel.where({id: default_index}).find();
-            // 处理 meta 信息
-            data = await this._format(data);
+        // console.log(JSON.stringify(portfolios));
+        // this.assign("list", portfolios);
 
+        let _terms = this.model('terms');
 
-            if (!think.isEmpty(data)) {
+        let categorys = await _terms.findByTaxonomy('category');
 
-                let jsonResume = JSON.parse(data.content_json).resume;
-                this.assign('resume', jsonResume);
+        // console.log(JSON.stringify(categorys))
+        // 从分类中获取到分类下面的内容
+        let term_slug = "blog";
+        let _term = await think._.find(categorys, {slug: term_slug});
 
-                // console.log(JSON.stringify(data.meta))
-                this.assign('_section', JSON.parse(data.meta._resume_section));
-            }
-
+        let page = 1;
+        if (!think.isEmpty(this.get('page'))){
+            page = this.get('page');
         }
-        return this.display(this.RESUME_THEME_VIEW_PATH + 'index' + '.html');
 
-    }
+        if (!think.isEmpty(_term)){
+            // console.log(page + "----")
+            let post_id_page = await _terms.getObjectsInTerm(_term.id, 'category', page);
 
-    async _format(post){
-        if (post.metas.length > 0) {
-            post.meta = {};
+            let Pages = think.adapter("pages", "page"); //加载名为 dot 的 Template Adapter
+            let pages = new Pages(this.http); //实例化 Adapter
+            let pager_data = pages.pages(post_id_page);
+            this.assign('pagerData', pager_data); //分页展示使用
 
-            for (let meta of post.metas) {
+            if (post_id_page.ids.length > 0){
+                let posts = await this.model('posts').list(post_id_page.ids);
 
-                // console.log(meta.meta_key + ":" + meta.meta_value);
-                post.meta[meta.meta_key] = meta.meta_value;
+                this.assign("posts", posts);
             }
         }
-        delete post.metas;
-
-        return post;
+        // this.action = ""
+        return this.displayView('index');
     }
 
-    async testAction(){
+    async routeAction() {
+        let term = this.get('term');
+        // 默认查询的是　category 分类方法下的分类
+        let categorys = await this.model('taxonomy').getTerms('category');
 
-        let id = this.get('id');
-        // module.exports = think.model({
-        //     tablePrefix: '', //直接通过属性来设置表前缀和表名
-        //     tableName: 'picker_22_posts,',
-        //     init: function(){
-        //         this.super('init', arguments);
-        //     }
-        // })
+        // console.log(JSON.stringify(categorys))
+        // 过滤要访问的类别
+        let _term = await think._.filter(categorys, {slug: term});
 
-        // let resume = think.model({
-        //     tablePrefix: 'picker_22_', //直接通过属性来设置表前缀和表名
-        //     tableName: 'posts',
-        //     init: function(){
-        //         this.super('init', arguments);
-        //     }
-        // })
-        // let resumeModel = this.model('22_posts');
-        // let data = await resumeModel.where({id: 1}).find();
+        if (_term.length > 0) {
+            let postIds = await this.model('taxonomy').getObjectsInTerm(_term[0]['term_id'], 'category');
 
-        let data = await this.model('posts',{uid:id}).getList(id);
-        return this.json(data);
+            if (postIds.length > 0) {
+                let posts = await this.model('posts').list(postIds);
+                this.assign("posts", posts);
+            }
+        }
+        let posts = this.model('posts');
 
+        let archives = await posts.getPostArchive();
+        // console.log(JSON.stringify(archives));
+        this.assign("list", archives);
+        // term_meta 处理　分类的模板页, 默认分类展示页与类别相同
+        // return this.displayView('timeline');
+        // return this.displayView('portfolio');
+        return this.displayView('blog');
     }
 
+    async articleAction(){
+        // let term = this.get('term');
+        // 默认查询的是　category 分类方法下的分类
+        let categorys = await this.model('taxonomy').getTerms('category');
+
+        console.log(JSON.stringify(categorys) + "---------");
+
+        // console.log(JSON.stringify(categorys))
+        // 过滤要访问的类别
+        /*        let _term = await think._.filter(categorys, {slug: term});
+
+         if (_term.length > 0) {
+         let postIds = await this.model('taxonomy').getObjectsInTerm(_term[0]['term_id'], 'category');
+
+         if (postIds.length > 0) {
+         let posts = await this.model('posts').list(postIds);
+         this.assign("posts", posts);
+         }
+         }
+         let posts = this.model('posts');
+
+         let archives = await posts.getPostArchive();
+         // console.log(JSON.stringify(archives));
+         this.assign("list", archives);*/
+        // term_meta 处理　分类的模板页, 默认分类展示页与类别相同
+        // return this.displayView('timeline');
+        // return this.displayView('portfolio');
+        return this.displayView('blog');
+    }
+
+
+    async blogAction(){
+
+    }
+    // async picture()
 
     /**
-     * install
-     * @return {[type]} [description]
+     * 临时
+     * @returns {Promise.<void>}
      */
-    async newAction(){
-
-        let errors = this.assign('errors');
-        if(!think.isEmpty(errors)){
-            this.assign('message', errors[Object.keys(errors)[0]]);
-            return this.display();
+    async caseAction(){
+        let name = this.get('name');
+        console.log("------" + name)
+        if (!think.isEmpty(name)) {
+            // let theme = 'slides';
+            // this.THEME_VIEW_PATH = `${think.ROOT_PATH}${think.sep}www${think.sep}themes${think.sep}${theme}${think.sep}`;
+            return this.display(this.THEME_VIEW_PATH + '/slides/' + name + '.html');
         }
-    let data = {};
-        data.db_host = "127.0.0.1";
-        data.db_port = "3308"
-        data.db_name = 'picker_resume';
-        data.db_account = 'root';
-        data.db_password = 'abcd1234';
-        data.db_table_prefix = 'picker_1_'
-        // let data = this.post();
-        let dbInfo = {
-            host: data.db_host,
-            port: data.db_port,
-            database: data.db_name,
-            user: data.db_account,
-            password: data.db_password,
-            prefix: data.db_table_prefix
-        }
-        data.username = "root";
-        data.password = "abcd1234";
-
-        let account = {
-            username: data.username,
-            password: data.password
-        }
-        let InstallService = this.service('init');
-
-        let instance = new InstallService(dbInfo, account, this.ip());
-        let message = 'success';
-        await instance.run().catch(err => {
-            message = err;
-        });
-
-
-        return this.json(message);
-
-        // this.assign('message', message);
-        // this.assign('data', data);
-        // this.display();
-    }
-
-    /**
-     * install
-     * @return {[type]} [description]
-     */
-    async installAction(){
-        if(this.isGet()){
-            if(firekylin.isInstalled){
-                return this.redirect('/');
-            }
-            return this.display();
-        }
-        if(firekylin.isInstalled){
-            return this.fail('SYSTERM_INSTALLED');
-        }
-
-        let errors = this.assign('errors');
-        if(!think.isEmpty(errors)){
-            this.assign('message', errors[Object.keys(errors)[0]]);
-            return this.display();
-        }
-
-        let data = this.post();
-        let dbInfo = {
-            host: data.db_host,
-            port: data.db_port,
-            database: data.db_name,
-            user: data.db_account,
-            password: data.db_password,
-            prefix: data.db_table_prefix
-        }
-        let account = {
-            username: data.username,
-            password: data.password
-        }
-        let InstallService = this.service('install');
-        let instance = new InstallService(dbInfo, account, this.ip());
-        let message = 'success';
-        await instance.run().catch(err => {
-            message = err;
-        });
-        this.assign('message', message);
-        this.assign('data', data);
-        this.display();
     }
 }

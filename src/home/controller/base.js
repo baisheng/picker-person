@@ -50,7 +50,7 @@ export default class extends think.controller.base {
 
             // console.log(JSON.stringify(this.options.current_theme));
             // let theem = this.options.
-        let theme = this.options.current_theme;
+        let theme = this.options.site.current_theme;
         // let theme = 'self';
         this.THEME_VIEW_PATH = `${think.ROOT_PATH}${think.sep}www${think.sep}themes${think.sep}${theme}${think.sep}`;
     }

@@ -12,7 +12,7 @@ export default class extends Base {
     async indexAction(){
         // let menus = await this.model('taxonomy').getNavMenuItems();
         // this.assign('menus', menus);
-        let nav_menus = await this.model('taxonomy').getAllMenu();
+        let nav_menus = await this.model('taxonomy',{aid:this.aid}).getAllMenu();
 
         // console.log(JSON.stringify(nav_menus))
         this.assign('nav_menus', nav_menus)
@@ -22,7 +22,7 @@ export default class extends Base {
         // let _lang = await language();
 
         let mods = await this.model('options').getThemeMods();
-       console.log(JSON.stringify(mods))
+       console.log(JSON.stringify(mods) + "xxxxx")
 
         // console.log(JSON.parse(mods)['nav_menu_locations'])
         this.assign('menu_locations', mods['nav_menu_locations']);
