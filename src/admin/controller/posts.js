@@ -5,6 +5,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import sharp from 'sharp';
 import htmlMetadata from 'html-metadata';
+import axios from 'axios';
+import cheerio from 'cheerio'
 
 export default class extends Base {
     /**
@@ -75,9 +77,9 @@ export default class extends Base {
 
         switch (data.meta_type) {
             case 'link':
-                console.log(2)
+                // console.log(2)
                 await htmlMetadata('http://www.jianshu.com/p/e942832ed6ce', (err, metadata) => {
-                    console.log(1)
+                    // console.log(1)
                     if (err) {
                         console.error('[testCallbackBased]: Scraper html-metadata failed! ', err);
                     }
@@ -115,7 +117,7 @@ export default class extends Base {
     }
 
     async snippetAction() {
-        let _dao = this.model('posts',{aid: this.aid})
+        let _dao = this.model('posts', {aid: this.aid})
         if (this.isPost()) {
             let data = this.post();
             data.modified = !think.isEmpty(data.modified) ? new Date(data.modified).valueOf() : new Date().getTime();
@@ -144,7 +146,43 @@ export default class extends Base {
 
                         switch (data.meta_type) {
                             case 'link':
-                                await this._snippet_link_meta(data);
+
+                                let MetaService = this.service('htmlmeta');
+                                let uri = data.content;
+                                let _postmeta = this.model('postmeta', {aid: this.aid})
+
+
+                                if (isURL(data.content)) {
+                                    let _snippet_metas = await _postmeta.where({post_id: data.id}).select();
+                                    // console.log(JSON.stringify(_snippet_metas));
+                                    let instance = new MetaService(uri);
+                                    let meta_res = await instance.fetch();
+
+                                    // console.log(meta_res);
+                                    if (!think.isEmpty(meta_res)) {
+
+                                        let result = await _postmeta.thenAdd({
+                                            post_id: data.id,
+                                            meta_key: "_snippet_link",
+                                            meta_value: JSON.stringify(meta_res)
+
+                                        }, {post_id: data.id, meta_key: "_snippet_link"});
+
+                                        if (result.type === "exist") {
+
+                                            await _postmeta.where({
+                                                post_id: data.id,
+                                                meta_key: "_snippet_link"
+
+                                            }).update({meta_value: JSON.stringify(meta_res)});
+
+
+                                        }
+                                        return this.json({"_id": data.id});
+                                    }
+
+                                }
+                                // await this._snippet_link_meta(data);
                                 break;
                             case 'code':
                                 await this._snippet_code_meta(data);
@@ -175,11 +213,11 @@ export default class extends Base {
                 insert_id = await _dao.add(data);
                 if (insert_id > 0) {
                     if (!think.isEmpty(_id)) {
-                    await this.successMsg('碎片更新成功')
+                        await this.successMsg('碎片更新成功')
 
                     } else {
-                    await this.successMsg('碎片保存成功')
-                    //
+                        await this.successMsg('碎片保存成功')
+                        //
                     }
 
                     return this.json({_id: insert_id});
@@ -202,6 +240,10 @@ export default class extends Base {
 
                 let snippet = await _dao.get(id);
 
+                // console.log(JSON.stringify(snippet))
+                if (snippet.meta['_snippet_link']) {
+                    snippet.meta['_snippet_link'] = JSON.parse(snippet.meta['_snippet_link']);
+                }
                 // console.log(JSON.stringify(snippet))
                 return this.json(snippet)
             }
@@ -259,7 +301,8 @@ export default class extends Base {
 
     async _snippet_link_meta(data) {
 
-        let _snippet_metas = await this.model('postmeta').where({post_id: data.id}).select();
+        let _dao = this.model('postmeta', {aid: this.aid})
+        let _snippet_metas = await _dao.where({post_id: data.id}).select();
         let _meta_data = data.meta;
 
         if (isURL(data.content)) {
@@ -300,7 +343,7 @@ export default class extends Base {
                         // Update meta
                         _meta_item['meta_value'] = _new_meta[key];
 
-                        let rows = await this.model('postmeta').where({
+                        let rows = await _dao.where({
                             post_id: data.id,
                             meta_key: key
                         }).update(_meta_item);
@@ -314,7 +357,7 @@ export default class extends Base {
 
                     } else {
                         // Insert meta
-                        let rows = await this.model('postmeta').add({
+                        let rows = await _dao.add({
                             post_id: data.id,
                             meta_key: key,
                             meta_value: _new_meta[key]
@@ -788,7 +831,7 @@ export default class extends Base {
 
             let qiniu = think.service("qiniu");
             let instance = new qiniu();
-            let uppic = await instance.upload(filepath, basename,this.aid);
+            let uppic = await instance.upload(filepath, basename, this.aid);
 
             if (!think.isEmpty(uppic)) {
 
@@ -1271,6 +1314,12 @@ export default class extends Base {
                 resume.content_json = JSON.parse(resume.content_json)
                 // console.log(JSON.stringify(resume.content_json.work[0].company));
 
+            }
+        }
+
+        if (query.type === 'snippets'){
+            for (let snippt of list.data){
+                console.log(JSON.stringify(snippt))
             }
         }
 

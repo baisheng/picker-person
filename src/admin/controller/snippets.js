@@ -48,7 +48,7 @@ export default class extends Base {
         return this.display();
     }
 
-    formatStrings(){
+    formatStrings() {
         // 81	图像	snippet-format-image	0
         // 82	音频	snippet-format-audio	0
         // 83	引语	snippet-format-quote	0
@@ -225,7 +225,7 @@ export default class extends Base {
         // page article portfolio
         let meta_type = this.get('meta_type');
 
-        let list =  await this.dao.snippets(this.get('page'), meta_type);
+        let list = await this.dao.snippets(this.get('page'), meta_type);
 
 
         let _taxonomy = this.model('taxonomy');
@@ -240,6 +240,14 @@ export default class extends Base {
         // this.assign('pagerData', page); //分页展示使用
         let treeList = await arr_to_tree(list.data, 0);
 
+        for (let snippet of list.data) {
+           if (!think.isEmpty(snippet.meta) && snippet.meta['_snippet_link']) {
+               // console.log(JSON.stringify(snippet.meta))
+
+               snippet.meta['_snippet_link'] = JSON.parse(snippet.meta['_snippet_link']);
+           }
+        }
+
         list.data = treeList;
         // console.log(JSON.stringify(list));
 
@@ -252,7 +260,7 @@ export default class extends Base {
         return this.display();
     }
 
-    async getAction(){
+    async getAction() {
         if (this.isGet()) {
             let id = this.get('id');
             if (!think.isEmpty(id)) {

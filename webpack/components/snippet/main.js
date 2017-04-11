@@ -196,6 +196,7 @@ new Vue({
                     }
                 }).then(function (json) {
                     _snippet.meta = json.meta;
+                    // console.log(json.meta)
                     self.selected = '';
 
                     self.status = 'success';
@@ -316,7 +317,7 @@ new Vue({
             //
             // }
 
-            if (this.page != 0 && Number.parseInt(this.page)) {
+            if (this.page !== 0 && Number.parseInt(this.page)) {
                 _url += "?page=" + this.page;
             }
 
@@ -379,7 +380,7 @@ new Vue({
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
             // decodeURIComponent()
-            if (r != null)return decodeURI(r[2]);
+            if (r !== null)return decodeURI(r[2]);
             return null;
         },
         statusStyle: function (item) {
@@ -406,7 +407,7 @@ new Vue({
             // else {
             //     _url += type;
             // }
-            if (this.page != 0 && Number.parseInt(this.page)) {
+            if (this.page !== 0 && Number.parseInt(this.page)) {
                 _url += "?page=" + this.page;
             }
 
@@ -532,7 +533,7 @@ new Vue({
         selectAll: {
             get: function () {
 
-                return this.pageAll ? this.checked.length == this.pageAll.length : false;
+                return this.pageAll ? this.checked.length === this.pageAll.length : false;
             },
             set: function (value) {
                 var checked = [];

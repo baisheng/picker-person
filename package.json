@@ -39,6 +39,7 @@
     "wechat-api": "^1.32.0"
   },
   "devDependencies": {
+    "axios": "^0.16.1",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.20.0",
     "babel-plugin-transform-runtime": "^6.15.0",

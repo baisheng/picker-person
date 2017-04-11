@@ -470,16 +470,16 @@
 
                         <div class="panel panel-white " v-if="selected === 'link'">
                             <div class="panel-body text-center">
-                                <div class="content-group mt-5">
-                                    <i class="icon-css3 icon-3x text-warning"></i>
-                                </div>
+                                {#<div class="content-group mt-5">#}
+                                    {#<i class="icon-css3 icon-3x text-warning"></i>#}
+                                {#</div>#}
 
-                                <h6 class="text-semibold"><a href="#" class="text-default">Knowledge Base</a></h6>
+                                {#<h6 class="text-semibold"><a href="#" class="text-default">Knowledge Base</a></h6>#}
 
-                                <p class="mb-15">Inanimately alongside candidly much and jeez conductively hid
-                                    submissively hatchet</p>
+                                {#<p class="mb-15">Inanimately alongside candidly much and jeez conductively hid#}
+                                    {#submissively hatchet</p>#}
 
-                                <a href="#">访问链接 →</a>
+                                {#<a href="#">访问链接 →</a>#}
                             </div>
                         </div>
 
@@ -499,14 +499,15 @@
                         {# 链接 #}
                         <div class="panel-body text-center" v-else-if="typeof(_.meta['_snippet_link']) != 'undefined'">
                             <div class="content-group mt-5">
-                                <i class="icon-2x text-warning">{{ _.meta['site_name'] }}</i>
+                                {#{{ _.meta['_snippet_link']['og:url']}}#}
+                                <h5 class="text-warning">{{ _.meta['_snippet_link']['og:site_name'] }}</h5>
                             </div>
 
-                            <h6 class="text-semibold"><a href="#" class="text-default">{{ _.meta['title'] }}</a></h6>
+                            <h6 class="text-semibold"><a href="#" class="text-default">{{ _.meta['_snippet_link']['title'] }}</a></h6>
 
-                            <p class="mb-15">{{ _.meta['description'] }}</p>
+                            <p class="mb-15">{{ _.meta['_snippet_link']['og:description'] }}</p>
 
-                            <a :href="_.name" target="_blank">访问链接 →</a>
+                            <a :href="_.content" target="_blank">访问链接 →</a>
                         </div>
                         {# Idea 一段思想#}
                         <div class="panel panel-body  text-center"
