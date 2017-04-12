@@ -2,6 +2,8 @@
  * Created by Arterli on 2016/1/24.
  */
 export default [
+    [/^article\/(\d+)$/, "article/index?id=:1"],
+
     // [/^about$/, 'post/page?pathname=about'],
     // [/^archives$/, 'post/archive'],
     // [/^cate\/(.+)$/, 'post/list?cate=:1'],

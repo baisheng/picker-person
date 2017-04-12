@@ -1,548 +1,130 @@
 {% extends "./_layout.html" %}
 
 {% block main %}
-
-    <section class="text-center">
+    <section class="space--sm">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12">
-                    <h6 class="type--uppercase">服务展现</h6>
-                    <div class="typed-headline">
-                        <span class="h1 inline-block">采撷</span>
-                        <span class="h1 inline-block typed-text typed-text--cursor color--primary"
-                              data-typed-strings="在线教育平台, 网校, 内训系统,内容管理系统（CMS）,UI/UE 设计服务, 产品规划服务, 产品研发服务"></span>
-                    </div>
-                    <p class="lead">
-                        我们是一个热爱生活，提倡自由工作，探索生活的组织
-                    </p>
-                    <a class="btn btn--primary type--uppercase inner-link" href="#demos">
-                                <span class="btn__text">
-                                    浏览产品
-                                </span>
-                    </a>
-                </div>
-            </div>
-            <!--end of row-->
-        </div>
-        <!--end of container-->
-    </section>
-
-    <a id="demos"></a>
-    <section class="text-center cta cta-4 space--xxs border--bottom imagebg"
-             data-gradient-bg='#4876BD,#5448BD,#8F48BD,#BD48B1'>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    {#<span class="label label--inline">Hot!</span>#}
-                    {#<span>Over 280 interface blocks, 140 demo pages and Variant Page Builder.#}
-                                {#<a href="#">Purchase Stack</a> for $17 USD.</span>#}
-                    <ul class="list-inline list-inline--images">
-                        <li>
-                            <img alt="Image" src="/themes/default/img/partner-1.png" />
-                        </li>
-                        <li>
-                            <img alt="Image" src="/themes/default/img/partner-5.png" />
-                        </li>
-                        <li>
-                            <img alt="Image" src="/themes/default/img/partner-7.png" />
-                        </li>
-                        <li>
-                            <img alt="Image" src="/themes/default/img/partner-4.png" />
-                        </li>
-                        <li>
-                            <img alt="Image" src="/themes/default/img/partner-6.png" />
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!--end of row-->
-        </div>
-        <!--end of container-->
-    </section>
-    <section class="bg--dark space--sm">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 text-center">
-                    <div class="masonry masonry-demos">
+                <div class="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+                    <div class="masonry masonry-blog-list">
                         <div class="masonry-filter-container text-center">
-                            <span>产品展示:</span>
+                            <span>Category:</span>
                             <div class="masonry-filter-holder">
-                                <div class="masonry__filters" data-filter-all-text="全部类别"></div>
+                                <div class="masonry__filters" data-filter-all-text="All Categories"></div>
                             </div>
                         </div>
+                        <hr>
                         <div class="masonry__container">
-                            <div class="masonry__item col-md-4 col-sm-6"></div>
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
-                                <a href="home-landing-1.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Landing 1" src="/theme/default/img/demos/landing-1.jpg"/>
+                            {% for _ in posts %}
+                                {% set display_name = _.author | display_name | truncate(12, true) %}
+
+                                <article class="masonry__item" data-masonry-filter="Web Design">
+                                    <div class="article__title text-center">
+                                        <a href="/article/<$ _.id $>">
+                                            <h2><$ _.title | truncate(18, true) $></h2>
+                                        </a>
+
+                                        <span> <$ _.modified | moment $></span>
+                                        <span>
+                                                <a href="#">Web Design</a>
+                                            </span>
                                     </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Landing 1</h5>
-                                    <span>Landing Page</span>
+                                    <!--end article title-->
+                                    <div class="article__body">
+                                        <a href="#">
+                                            <img alt="Image" src="img/blog-1.jpg"/>
+                                        </a>
+                                        <p>
+                                            <$ _.excerpt $>
+                                        </p>
+                                        <a href="#">Continue reading &raquo;</a>
+                                    </div>
+                                </article>
+                                <!--end item-->
+                            {% endfor %}
+
+                            <article class="masonry__item" data-masonry-filter="Announcements">
+                                <div class="article__title text-center">
+                                    <a href="#">
+                                        <h2>Introducing Stack for enterprise</h2>
+                                    </a>
+                                    <span>May 1st 2016 in </span>
+                                    <span>
+                                                <a href="#">Announcements</a>
+                                            </span>
                                 </div>
-                            </div>
+                                <!--end article title-->
+                                <div class="article__body">
+                                    <p>
+                                        Co-working SpaceTeam fund big data prototype prototype long shadow latte big
+                                        data. Innovate affordances personas user centered design paradigm user centered
+                                        design innovate quantitative vs. qualitative pivot thought leader viral paradigm
+                                        cortado affordances.
+                                    </p>
+                                    <a href="#">Continue reading &raquo;</a>
+                                </div>
+                            </article>
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
-                                <a href="home-landing-2.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Landing 2" src="/theme/default/img/demos/landing-2.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Landing 2</h5>
-                                    <span>Landing Page</span>
+                            <article class="masonry__item" data-masonry-filter="Education">
+                                <div class="article__title text-center">
+                                    <a href="#">
+                                        <h2>Exciting updates to Stack.Ed</h2>
+                                    </a>
+                                    <span>May 1st 2016 in </span>
+                                    <span>
+                                                <a href="#">Education</a>
+                                            </span>
                                 </div>
-                            </div>
+                                <!--end article title-->
+                                <div class="article__body">
+                                    <a href="#">
+                                        <img alt="Image" src="img/blog-single-2.jpg"/>
+                                    </a>
+                                    <p>
+                                        Innovate affordances personas user centered design paradigm user centered design
+                                        innovate quantitative vs. qualitative pivot thought leader viral paradigm
+                                        cortado affordances.
+                                    </p>
+                                    <a href="#">Continue reading &raquo;</a>
+                                </div>
+                            </article>
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
-                                <a href="home-landing-3.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Landing 3" src="/theme/default/img/demos/landing-3.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Landing 3</h5>
-                                    <span>Landing Page</span>
+                            <article class="masonry__item" data-masonry-filter="Web Design">
+                                <div class="article__title text-center">
+                                    <a href="#">
+                                        <h2>Building a site for your business</h2>
+                                    </a>
+                                    <span>April 10th 2016 in </span>
+                                    <span>
+                                                <a href="#">Web Design</a>
+                                            </span>
                                 </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
-                                <a href="home-landing-4.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Landing 4" src="/theme/default/img/demos/landing-4.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Landing 4</h5>
-                                    <span>Landing Page</span>
+                                <!--end article title-->
+                                <div class="article__body">
+                                    <a href="#">
+                                        <img alt="Image" src="img/inner-5.jpg"/>
+                                    </a>
+                                    <p>
+                                        Co-working SpaceTeam fund big data prototype prototype long shadow latte big
+                                        data. Innovate affordances personas user centered design paradigm user centered
+                                        design innovate quantitative vs. qualitative pivot thought leader viral paradigm
+                                        cortado affordances.
+                                    </p>
+                                    <a href="#">Continue reading &raquo;</a>
                                 </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
-                                <a href="home-landing-5.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Landing 5" src="/theme/default/img/demos/landing-5.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Landing 5</h5>
-                                    <span>Landing Page</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
-                                <a href="home-landing-6.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Landing 6" src="/theme/default/img/demos/landing-6.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Landing 6</h5>
-                                    <span>Landing Page</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
-                                <a href="home-landing-7.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Landing 7" src="/theme/default/img/demos/landing-7.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Landing 7</h5>
-                                    <span>Landing Page</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
-                                <a href="home-landing-8.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Landing 8" src="/theme/default/img/demos/landing-8.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Landing 8</h5>
-                                    <span>Landing Page</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
-                                <a href="home-landing-9.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Landing 9" src="/theme/default/img/demos/landing-9.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Landing 9</h5>
-                                    <span>Landing Page</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
-                                <a href="home-software-1.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Software 1" src="/theme/default/img/demos/software-1.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Software 1</h5>
-                                    <span>Landing Page</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
-                                <a href="home-software-2.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Software 2" src="/theme/default/img/demos/software-2.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Software 2</h5>
-                                    <span>Landing Page</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
-                                <a href="home-software-3.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Software 3" src="/theme/default/img/demos/software-3.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Software 3</h5>
-                                    <span>Landing Page</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-construction.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Construction" src="/theme/default/img/demos/construction.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Construction</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-coworking.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Coworking" src="/theme/default/img/demos/coworking.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Coworking</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-drone-photography.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Drone Photography"
-                                             src="/theme/default/img/demos/drone-photography.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Drone Photography</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-education.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Education" src="/theme/default/img/demos/education.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Education</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-event.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Event" src="/theme/default/img/demos/event.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Event</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-fitness.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Fitness" src="/theme/default/img/demos/fitness.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Fitness</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-health-insurance.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Insurance" src="/theme/default/img/demos/insurance.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Insurance</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-knowledge-base.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Knowledge Base" src="/theme/default/img/demos/knowledge-base.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Knowledge Base</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-musician.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Musician" src="/theme/default/img/demos/musician.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Musician</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-nonprofit.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Nonprofit" src="/theme/default/img/demos/nonprofit.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Nonprofit</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-restaurant.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Restaurant" src="/theme/default/img/demos/restaurant.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Restaurant</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-recruitment.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Recruitment" src="/theme/default/img/demos/recruitment.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Recruitment</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-tourism.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Tourism" src="/theme/default/img/demos/tourism.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Tourism</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-wedding.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Wedding" src="/theme/default/img/demos/wedding.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Wedding</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-agency-1.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Agency" src="/theme/default/img/demos/agency.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Agency</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-agency-2.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Agency 2" src="/theme/default/img/demos/agency-2.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Agency 2</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-personal-1.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Personal 1" src="/theme/default/img/demos/personal-1.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Personal 1</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-photography.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Photography" src="/theme/default/img/demos/photography.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Photography</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-photography-2.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Photography 2" src="/theme/default/img/demos/photography-2.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Photography 2</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-studio-1.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Studio 1" src="/theme/default/img/demos/studio-1.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Studio 1</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-studio-2.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Studio 2" src="/theme/default/img/demos/studio-2.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Studio 2</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-video.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Video" src="/theme/default/img/demos/video.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Video</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Blog">
-                                <a href="home-magazine.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Magazine" src="/theme/default/img/demos/magazine.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Magazine</h5>
-                                    <span>Blog</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Blog">
-                                <a href="blog-articles-magazine.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Magazine" src="/theme/default/img/demos/magazine-2.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Magazine 2</h5>
-                                    <span>Blog</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Coming Soon">
-                                <a href="home-coming-soon-1.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Coming Soon 1" src="/theme/default/img/demos/coming-soon-1.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Coming Soon 1</h5>
-                                    <span>Coming Soon</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Coming Soon">
-                                <a href="home-coming-soon-2.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Coming Soon 2" src="/theme/default/img/demos/coming-soon-2.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Coming Soon 2</h5>
-                                    <span>Coming Soon</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Coming Soon">
-                                <a href="home-coming-soon-3.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Coming Soon 3" src="/theme/default/img/demos/coming-soon-3.jpg"/>
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Coming Soon 3</h5>
-                                    <span>Coming Soon</span>
-                                </div>
-                            </div>
+                            </article>
                             <!--end item-->
                         </div>
                         <!--end of masonry container-->
+                        <div class="pagination">
+                            <$ pagerData | safe $>
+
+                            {#<div class="col-xs-6">#}
+                            {#<a class="type--fine-print" href="#">&laquo; Older Posts</a>#}
+                            {#</div>#}
+                            {#<div class="col-xs-6 text-right">#}
+                            {#<a class="type--fine-print" href="#">Newer Posts &raquo;</a>#}
+                            {#</div>#}
+                        </div>
                     </div>
                     <!--end masonry-->
                 </div>
@@ -551,152 +133,5 @@
         </div>
         <!--end of container-->
     </section>
-    <section class="text-center bg--secondary">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                    <h2>Why you'll love Stack</h2>
-                    <p class="lead">
-                        Whether you’re building a welcome mat for your SaaS or a clean, corporate portfolio, Stack has
-                        your design and functionality needs covered.
-                    </p>
-                </div>
-            </div>
-            <!--end of row-->
-        </div>
-        <!--end of container-->
-    </section>
-    <section class="bg--secondary">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="feature feature-2 boxed boxed--border">
-                        <i class="icon icon-Wizard color--primary"></i>
-                        <div class="feature__body">
-                            <h5>140+ Styled Pages</h5>
-                            <p>
-                                Jump start your project with Stack's diverse array of beautiful pre-built templates
-                            </p>
-                        </div>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-2 boxed boxed--border">
-                        <i class="icon icon-Clock-Back color--primary"></i>
-                        <div class="feature__body">
-                            <h5>Time Saving Components</h5>
-                            <p>
-                                Save time with over 280 carefully styled components designed to showcase your content
-                            </p>
-                        </div>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-2 boxed boxed--border">
-                        <i class="icon icon-Duplicate-Window color--primary"></i>
-                        <div class="feature__body">
-                            <h5>Visual Page Building</h5>
-                            <p>
-                                Construct mockups or production-ready pages in-browser with Variant Page Builder
-                            </p>
-                        </div>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-2 boxed boxed--border">
-                        <i class="icon icon-Coding color--primary"></i>
-                        <div class="feature__body">
-                            <h5>Clever Markup</h5>
-                            <p>
-                                With fully documented elements pages that help you customize Stack to your needs
-                            </p>
-                        </div>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-2 boxed boxed--border">
-                        <i class="icon icon-Laptop-Phone color--primary"></i>
-                        <div class="feature__body">
-                            <h5>Responsive Design</h5>
-                            <p>
-                                Stack scales intuitively for all devices. Delighting your users no matter the screen
-                            </p>
-                        </div>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-2 boxed boxed--border">
-                        <i class="icon icon-Life-Jacket color--primary"></i>
-                        <div class="feature__body">
-                            <h5>Personal Support</h5>
-                            <p>
-                                Six months of included, premium support with a dedicated support forum
-                            </p>
-                        </div>
-                    </div>
-                    <!--end feature-->
-                </div>
-            </div>
-            <!--end of row-->
-        </div>
-        <!--end of container-->
-    </section>
-    <section class="switchable feature-large bg--secondary">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-xs-12">
-                    <div class="video-cover border--round box-shadow-wide">
-                        <div class="background-image-holder">
-                            <img alt="image" src="/theme/default/img/inner-6.jpg"/>
-                        </div>
-                        <div class="video-play-icon"></div>
-                        <iframe src="https://www.youtube.com/embed/6p45ooZOOPo?autoplay=1"
-                                allowfullscreen="allowfullscreen"></iframe>
-                    </div>
-                    <!--end video cover-->
-                </div>
-                <div class="col-sm-6 col-md-5">
-                    <div class="switchable__text">
-                        <h2>Build your site in-browser with modular interface blocks</h2>
-                        <p class="lead">
-                            The included Variant Page Builder allows you to quickly assemble and customize pages in the
-                            comfort of your browser. Variant outputs pure HTML &mdash; No junk styles or classes.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <!--end of row-->
-        </div>
-        <!--end of container-->
-    </section>
-    <section class="space--xs imagebg" data-gradient-bg="#4876BD,#5448BD,#8F48BD,#BD48B1">
-        <div class="container">
-            <div class="row">
-                <div class="cta cta--horizontal text-center-xs">
-                    <div class="col-sm-4">
-                        <h4>Build your site now</h4>
-                    </div>
-                    <div class="col-sm-5">
-                        <p class="lead">
-                            Themeforest's most popular HTML page builder
-                        </p>
-                    </div>
-                    <div class="col-sm-3 text-right text-center-xs">
-                        <a class="btn btn--primary type--uppercase" href="#purhcase-template">
-                                    <span class="btn__text">
-                                        Purchase Stack
-                                    </span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!--end of row-->
-        </div>
-        <!--end of container-->
-    </section>
+
 {% endblock %}

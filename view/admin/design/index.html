@@ -8,6 +8,7 @@
         .form-element {
             margin-bottom: 16.66666667px;
         }
+
         .form-element label {
             color: #666978;
             margin-bottom: 5px;
@@ -20,27 +21,32 @@
             overflow: hidden;
             margin: 0 0 5px 0;
         }
+
         .switch.switch-inline,
         .switch-inline.switch-inline {
             margin: 0 10px 0 0;
             display: inline-block;
         }
+
         .switch div,
         .switch-inline div {
             float: left;
             margin: 0 0 0 10px;
             line-height: 20px;
         }
+
         .switch label,
         .switch-inline label {
             margin-bottom: 0;
         }
+
         .switch input,
         .switch-inline input {
             position: absolute;
             margin-left: -9999px;
             visibility: hidden;
         }
+
         .switch input + label,
         .switch-inline input + label {
             display: block;
@@ -61,6 +67,7 @@
             -o-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
         }
+
         .switch input + label:before,
         .switch-inline input + label:before,
         .switch input + label:after,
@@ -69,6 +76,7 @@
             position: absolute;
             content: "";
         }
+
         .switch input + label:before,
         .switch-inline input + label:before {
             top: 1px;
@@ -84,6 +92,7 @@
             -o-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
         }
+
         .switch input + label:after,
         .switch-inline input + label:after {
             top: 2px;
@@ -99,15 +108,18 @@
             -o-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
         }
+
         .switch input:checked + label:after,
         .switch-inline input:checked + label:after {
             margin-left: 20px;
             background: #41da54;
         }
+
         .switch input:disabled + label:after,
         .switch-inline input:disabled + label:after {
             cursor: not-allowed;
         }
+
         .switch input:disabled + label:before,
         .switch-inline input:disabled + label:before {
             background: #f8f9fb;
@@ -221,14 +233,17 @@
 
         <div class="col-md-3" v-for="_ in themes">
 
-            <div class="panel panel-default" :class=" _.name == current_theme ? 'panel-bordered border-success-300' : ''">
+            <div class="panel panel-default"
+                 :class=" _.name == current_theme ? 'panel-bordered border-success-300' : ''">
                 <div class="panel-body">
                     <div class="thumb content-group">
                         <img :src="'/themes/' + _.name + '/screenshot.png'" alt="" class="img-reponsive">
 
                         <div class="caption-overflow">
 										<span>
-											<a href="blog_single.html" class="btn btn-flat border-white text-white btn-rounded btn-icon legitRipple"><i class="icon-arrow-right8"></i></a>
+											<a href="blog_single.html"
+                                               class="btn btn-flat border-white text-white btn-rounded btn-icon legitRipple"><i
+                                                        class="icon-arrow-right8"></i></a>
 										</span>
                         </div>
                     </div>
@@ -255,25 +270,27 @@
                             {#<span class="text-muted"></span>#}
                         </span>
                         {#<ul class="list-inline list-inline-separate heading-text text-muted">#}
-                            {#<li><a href="#" class="text-muted"><i class="icon-heart6 text-size-base text-pink position-left"></i> 29</a></li>#}
+                        {#<li><a href="#" class="text-muted"><i class="icon-heart6 text-size-base text-pink position-left"></i> 29</a></li>#}
                         {#</ul>#}
                         {#<form class="heading-form" action="#">#}
-                            {#<div class="form-group">#}
-                                {#<label class="checkbox-inline checkbox-right checkbox-switchery switchery-xs">#}
-                                    {#<input type="checkbox" class="switchery" :checked="activeTheme(_.name)">#}
-                                    {#<span v-if="_.name == current_theme">已启用</span>#}
-                                    {#<span class="text-muted" v-else>未启用</span>#}
-                                {#</label>#}
-                            {#</div>#}
+                        {#<div class="form-group">#}
+                        {#<label class="checkbox-inline checkbox-right checkbox-switchery switchery-xs">#}
+                        {#<input type="checkbox" class="switchery" :checked="activeTheme(_.name)">#}
+                        {#<span v-if="_.name == current_theme">已启用</span>#}
+                        {#<span class="text-muted" v-else>未启用</span>#}
+                        {#</label>#}
+                        {#</div>#}
                         {#</form>#}
 
                         <ul class="list-inline list-inline-condensed heading-text pull-right">
                             {#<li><a href="#" class="text-default" data-toggle="modal" data-target="#invoice"><i class="icon-eye8"></i></a></li>#}
                             <li class="dropdown">
-                                <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i> </a>
+                                <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i
+                                            class="icon-menu7"></i> </a>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a href="#"><i class="icon-eye"></i> 实时演示</a></li>
-                                    <li v-if="_.name != current_theme"><a @click="active(_.name)"><i class="icon-check"></i> 启用</a></li>
+                                    <li v-if="_.name != current_theme"><a @click="active(_.name)"><i
+                                                    class="icon-check"></i> 启用</a></li>
                                     {#<li><a href="#"><i class="icon-check"></i> 详情</a></li>#}
                                     {#<li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>#}
                                     {#<li class="divider"></li>#}
@@ -287,7 +304,6 @@
             </div>
 
 
-
         </div>
 
 
@@ -295,8 +311,6 @@
 {% endblock %}
 
 <!-- /main content -->
-
-
 
 
 {% block script %}
@@ -309,16 +323,7 @@
                 current_theme: '<$ options.site.current_theme $>',
                 themes: []
             },
-            beforeCreate: function(){
-
-
-            },
-            beforeMount: function(){
-
-
-            },
-            mounted: function(){
-
+            mounted: function () {
 
                 var vue = this;
                 vue.fetch();
@@ -330,7 +335,7 @@
 
 
             },
-            updated: function(){
+            updated: function () {
                 $('.editable').editable({
                     type: 'text',
                     url: '/admin/options',
@@ -338,7 +343,7 @@
 
                 });
 
-                Vue.nextTick(function(){
+                Vue.nextTick(function () {
                     // Switchery toggles
 
                 })
@@ -347,13 +352,15 @@
                 // a computed getter
             },
             methods: {
-                active: function(theme_name){
+                active: function (theme_name) {
                     this.status = 'saving';
                     var self = this;
 
                     var postData = {
-                        "name": 'current_theme',
-                        "value": theme_name
+                        "name": "site",
+                        "value": {"key": "current_theme", "value": theme_name}
+//                        "option": "site",
+//                        "value": {current_theme: theme_name},
                     }
 
                     fetch('/admin/options', {
@@ -382,15 +389,15 @@
                         self.current_theme = theme_name;
 //                        if (json._id != null) {
 //                            self._id = json._id;
-                            // 设置页面路径信息，页面刷新后也可以获得当前编辑的信息
+                        // 设置页面路径信息，页面刷新后也可以获得当前编辑的信息
 //                            History.pushState({state: 1}, "State 1", self._id.toString());
 //                        }
                     })
                 },
                 activeTheme: function (theme_name) {
-                    if(theme_name === this.current_theme) {
+                    if (theme_name === this.current_theme) {
                         return 'checked';
-                    }else {
+                    } else {
                         return false;
                     }
                 },

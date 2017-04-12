@@ -25,6 +25,7 @@ new Vue({
         snippet_type: 'text',
         query_type: '',
         isSave: false,
+        isOpenSubject: false
     },
     mounted: function () {
 
@@ -47,17 +48,20 @@ new Vue({
     },
 
     methods: {
-        test(){
-            console.log("----")
-        },
-        openOrSave: function () {
-            this.isOpen = true;
-            if (this.isOpen === true && this.isActive === true){
+        openOrSave: function (type) {
+            if (type === 'subject'){
+                this.isOpenSubject = true;
+            }else {
+                this.isOpen = true;
+            }
+
+            if (this.isOpen === true && this.isActive === true) {
                 this._post();
                 // console.log('save is ok!')
             }
         },
         cancel(){
+            this.isOpenSubject = false;
             this.isOpen = false;
         },
         // save: function (_snippet) {

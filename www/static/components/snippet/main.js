@@ -817,6 +817,7 @@ new Vue({
                     }
                 }).then(function (json) {
                     _snippet.meta = json.meta;
+                    // console.log(json.meta)
                     self.selected = '';
 
                     self.status = 'success';
@@ -931,7 +932,7 @@ new Vue({
             //
             // }
 
-            if (this.page != 0 && (0, _parseInt2.default)(this.page)) {
+            if (this.page !== 0 && (0, _parseInt2.default)(this.page)) {
                 _url += "?page=" + this.page;
             }
 
@@ -993,7 +994,7 @@ new Vue({
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
         // decodeURIComponent()
-        if (r != null) return decodeURI(r[2]);
+        if (r !== null) return decodeURI(r[2]);
         return null;
     }), (0, _defineProperty3.default)(_methods, 'statusStyle', function statusStyle(item) {
         if (item.status === 'publish') {
@@ -1018,7 +1019,7 @@ new Vue({
         // else {
         //     _url += type;
         // }
-        if (this.page != 0 && (0, _parseInt2.default)(this.page)) {
+        if (this.page !== 0 && (0, _parseInt2.default)(this.page)) {
             _url += "?page=" + this.page;
         }
 
@@ -1134,7 +1135,7 @@ new Vue({
         selectAll: {
             get: function get() {
 
-                return this.pageAll ? this.checked.length == this.pageAll.length : false;
+                return this.pageAll ? this.checked.length === this.pageAll.length : false;
             },
             set: function set(value) {
                 var checked = [];

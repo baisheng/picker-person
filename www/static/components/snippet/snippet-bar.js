@@ -635,7 +635,8 @@ new Vue({
         snippet: '',
         snippet_type: 'text',
         query_type: '',
-        isSave: false
+        isSave: false,
+        isOpenSubject: false
     },
     mounted: function mounted() {
 
@@ -657,18 +658,20 @@ new Vue({
     },
 
     methods: {
-        test: function test() {
-            console.log("----");
-        },
+        openOrSave: function openOrSave(type) {
+            if (type === 'subject') {
+                this.isOpenSubject = true;
+            } else {
+                this.isOpen = true;
+            }
 
-        openOrSave: function openOrSave() {
-            this.isOpen = true;
             if (this.isOpen === true && this.isActive === true) {
                 this._post();
                 // console.log('save is ok!')
             }
         },
         cancel: function cancel() {
+            this.isOpenSubject = false;
             this.isOpen = false;
         },
 

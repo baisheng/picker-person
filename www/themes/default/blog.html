@@ -1,0 +1,137 @@
+{% extends "./_layout.html" %}
+
+{% block main %}
+    <section class="space--sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+                    <div class="masonry masonry-blog-list">
+                        <div class="masonry-filter-container text-center">
+                            <span>Category:</span>
+                            <div class="masonry-filter-holder">
+                                <div class="masonry__filters" data-filter-all-text="All Categories"></div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="masonry__container">
+                            {% for _ in posts %}
+                                {% set display_name = _.author | display_name | truncate(12, true) %}
+
+                                <article class="masonry__item" data-masonry-filter="Web Design">
+                                    <div class="article__title text-center">
+                                        <a href="/article/<$ _.id $>">
+                                            <h2><$ _.title | truncate(18, true) $></h2>
+                                        </a>
+
+                                        <span> <$ _.modified | moment $></span>
+                                        <span>
+                                                <a href="#">Web Design</a>
+                                            </span>
+                                    </div>
+                                    <!--end article title-->
+                                    <div class="article__body">
+                                        <a href="#">
+                                            <img alt="Image" src="img/blog-1.jpg"/>
+                                        </a>
+                                        <p>
+                                            <$ _.excerpt |safe $>
+                                        </p>
+                                        <a href="#">Continue reading &raquo;</a>
+                                    </div>
+                                </article>
+                                <!--end item-->
+                            {% endfor %}
+
+                            <article class="masonry__item" data-masonry-filter="Announcements">
+                                <div class="article__title text-center">
+                                    <a href="#">
+                                        <h2>Introducing Stack for enterprise</h2>
+                                    </a>
+                                    <span>May 1st 2016 in </span>
+                                    <span>
+                                                <a href="#">Announcements</a>
+                                            </span>
+                                </div>
+                                <!--end article title-->
+                                <div class="article__body">
+                                    <p>
+                                        Co-working SpaceTeam fund big data prototype prototype long shadow latte big
+                                        data. Innovate affordances personas user centered design paradigm user centered
+                                        design innovate quantitative vs. qualitative pivot thought leader viral paradigm
+                                        cortado affordances.
+                                    </p>
+                                    <a href="#">Continue reading &raquo;</a>
+                                </div>
+                            </article>
+                            <!--end item-->
+                            <article class="masonry__item" data-masonry-filter="Education">
+                                <div class="article__title text-center">
+                                    <a href="#">
+                                        <h2>Exciting updates to Stack.Ed</h2>
+                                    </a>
+                                    <span>May 1st 2016 in </span>
+                                    <span>
+                                                <a href="#">Education</a>
+                                            </span>
+                                </div>
+                                <!--end article title-->
+                                <div class="article__body">
+                                    <a href="#">
+                                        <img alt="Image" src="img/blog-single-2.jpg"/>
+                                    </a>
+                                    <p>
+                                        Innovate affordances personas user centered design paradigm user centered design
+                                        innovate quantitative vs. qualitative pivot thought leader viral paradigm
+                                        cortado affordances.
+                                    </p>
+                                    <a href="#">Continue reading &raquo;</a>
+                                </div>
+                            </article>
+                            <!--end item-->
+                            <article class="masonry__item" data-masonry-filter="Web Design">
+                                <div class="article__title text-center">
+                                    <a href="#">
+                                        <h2>Building a site for your business</h2>
+                                    </a>
+                                    <span>April 10th 2016 in </span>
+                                    <span>
+                                                <a href="#">Web Design</a>
+                                            </span>
+                                </div>
+                                <!--end article title-->
+                                <div class="article__body">
+                                    <a href="#">
+                                        <img alt="Image" src="img/inner-5.jpg"/>
+                                    </a>
+                                    <p>
+                                        Co-working SpaceTeam fund big data prototype prototype long shadow latte big
+                                        data. Innovate affordances personas user centered design paradigm user centered
+                                        design innovate quantitative vs. qualitative pivot thought leader viral paradigm
+                                        cortado affordances.
+                                    </p>
+                                    <a href="#">Continue reading &raquo;</a>
+                                </div>
+                            </article>
+                            <!--end item-->
+                        </div>
+                        <!--end of masonry container-->
+                        <div class="pagination">
+                            <$ pagerData | safe $>
+
+                            {#<div class="col-xs-6">#}
+                                {#<a class="type--fine-print" href="#">&laquo; Older Posts</a>#}
+                            {#</div>#}
+                            {#<div class="col-xs-6 text-right">#}
+                                {#<a class="type--fine-print" href="#">Newer Posts &raquo;</a>#}
+                            {#</div>#}
+                        </div>
+                    </div>
+                    <!--end masonry-->
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+
+{% endblock %}

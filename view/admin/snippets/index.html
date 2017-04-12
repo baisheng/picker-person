@@ -1,6 +1,10 @@
 {#{% extends "../_inc/_base.html" %}#}
 {% extends "../_layout.html" %}
+{##}
+{#{% block body_style %} navbar-top {% endblock %}#}
+    {#{% block body_style %}sidebar-opposite-visible{% endblock %}#}
 
+{#{% block navbar_style %} navbar-fixed-top {% endblock %}#}
 {% block style %}
     <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
 
@@ -738,7 +742,6 @@
 {% block footer %}
 
 {% endblock %}
-    {% block body_style %}sidebar-opposite-visible{% endblock %}
 
 
 

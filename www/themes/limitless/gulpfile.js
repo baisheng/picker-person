@@ -63,6 +63,21 @@ gulp.task('less_starters', function() {
         .pipe(gulp.dest('starters/assets/css'));      // destination path for minified CSS
 });
 
+// Compile less files of starter kit
+gulp.task('less_material', function() {
+    return gulp
+        .src('assets/less_material/_main_starters/*.less')     // locate /less/ folder root to grab 4 main files
+        .pipe(less())                                 // compile
+        .pipe(gulp.dest('assets/material_css'))       // destination path for normal CSS
+        .pipe(minifyCss({                             // minify CSS
+            keepSpecialComments: 0                    // remove all comments
+        }))
+        .pipe(rename({                                // rename file
+            suffix: ".min"                            // add *.min suffix
+        }))
+        .pipe(gulp.dest('assets/material_css'));      // destination path for minified CSS
+});
+
 
 // Concatenate & minify JS (uncomment if you want to use)
 /*gulp.task('concatenate', function() {
@@ -105,7 +120,8 @@ gulp.task('watch', function() {
 gulp.task('default', [                                // list of default tasks
     'lint',                                           // lint
     'less_full',                                      // full version less compile
-    'less_starters',                                  // starter kit less compile
+    // 'less_starters',                                  // starter kit less compile
+    'less_material',                                  // starter kit less compile
     //'concatenate',                                  // uncomment if in use
     'minify_core',                                    // compress app.js
     'watch'                                           // watch for changes

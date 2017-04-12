@@ -15,8 +15,10 @@ export default class extends Base {
      * @return {Promise} []
      */
     async indexAction() {
-        let type = this.get('type');
+        // let type = this.get('type');
         let ID = this.get('id');
+
+        console.log(ID + "xxxxx")
         // if (!think.isEmpty(type)) {
         if (!think.isEmpty(ID)) {
             let article = await this.dao.find(ID);

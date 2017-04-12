@@ -57,7 +57,7 @@ export default class extends Base {
         }, this.cacheOptions);
 
         //comment type
-        if (ret) {
+/*        if (ret) {
             if (ret.comment && think.isString(ret.comment)) {
                 ret.comment = JSON.parse(ret.comment);
             }
@@ -77,7 +77,7 @@ export default class extends Base {
             if (!ret.push_sites) {
                 ret.push_sites = {};
             }
-        }
+        }*/
 
         return ret;
     }
@@ -94,6 +94,8 @@ export default class extends Base {
         let data = think.isObject(key) ? think.extend({}, key) : {[key]: value};
         let cacheData = await think.cache(this.cacheKey, undefined, this.cacheOptions);
 
+        // console.log(JSON.stringify(cacheData))
+        // update picker_resume.picker_options set value = json_set(value,'$.current_theme', 'limitless') where `key` = 'site';
         if (think.isEmpty(cacheData)) {
             cacheData = await this.getOptions();
         }
@@ -103,6 +105,12 @@ export default class extends Base {
                 changedData[key] = data[key];
             }
         }
+
+        console.log(JSON.stringify(changedData) + "-----")
+        let json_sql = `update picker_resume.picker_options set value = json_set(value,'$.${value.key}', '${value.value}') where \`key\` = '${key}'`;
+
+        console.log(json_sql)
+        // console.log(JSON.stringify(changedData))
         //data is not changed
         if (think.isEmpty(changedData)) {
             return;
@@ -114,14 +122,18 @@ export default class extends Base {
             let value = changedData[key];
             let exist = await this.where({key: key}).count('key');
             let p;
-            if (exist) {
-                p = this.where({key: key}).update({value: value});
-            } else {
-                p = this.add({key, value});
-            }
+            this.execute(json_sql);
+            // let json_sql = `update picker_resume.picker_options set value = json_set(value,'$.${key}', '${value}') where \`key\` = \`${key}\``;
+            // if (exist) {
+                // this.execute(update picker_resume.picker_options set value = json_set(value,'$.current_theme', 'limitless') where `key` = 'site';)
+                // p = this.where({key: key}).update({value: value});
+            // } else {
+            //     p = this.add({key, value});
+            // }
             promises.push(p);
         }
         await Promise.all(promises);
+        // console.log(JSON.stringify(p1) +"======")
 
         let ret = await this.getOptions(true);
 

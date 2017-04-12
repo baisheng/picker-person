@@ -2,43 +2,6 @@
 
 {% block style %}
 	<style>
-		/**! 31. Switchable Sections **/
-		.switchable {
-			position: relative;
-		}
-		.switchable div[class*='col-']:first-child {
-			float: left;
-			right: auto;
-		}
-		.switchable div[class*='col-']:first-child:not([class*='pull']):not([class*='push']) {
-			left: 0;
-		}
-		.switchable div[class*='col-']:last-child {
-			float: right;
-			left: auto;
-		}
-		.switchable div[class*='col-']:last-child:not([class*='pull']):not([class*='push']) {
-			right: 0;
-		}
-		.switchable.switchable--switch div[class*='col-']:first-child {
-			float: right;
-			right: 0;
-			left: auto;
-		}
-		.switchable.switchable--switch div[class*='col-']:first-child:not([class*='pull']):not([class*='push']) {
-			left: auto;
-		}
-		.switchable.switchable--switch div[class*='col-']:last-child {
-			float: left;
-			left: 0;
-			right: auto;
-		}
-		.switchable .switchable__text {
-			margin-top: 3.71428571em;
-		}
-		.switchable > div[class*='col-'] {
-			padding: 0;
-		}
 		/**! 27. Image Blocks **/
 		.imageblock {
 			position: relative;
@@ -137,23 +100,15 @@
 	</style>
 {% endblock %}
 {% block content %}
-
-	<div class="row">
-		<div class="col-md-6"></div>
-		<div class="col-md-6"></div>
-	</div>
-	<!-- Layout 1 -->
-    {#<h6 class="content-group text-semibold">#}
-    {#Layout #1#}
-    {#<small class="display-block">Panel with transparent footer</small>#}
-    {#</h6>#}
-
-	<div class="row" data-plugin="masonry">
-
+{#<div id="posts">#}
+	{#<vue-markdown>i am a ~~tast~~ **test**.</vue-markdown>#}
+{##}
+{#</div>#}
+	<div class="row" data-plugin="masonry" id="posts">
         {% for _ in posts %}
-            {% set display_name = _.author | display_name | truncate(12, true) %}
+            {#{% set display_name = _.author | display_name | truncate(12, true) %}#}
 
-			<div class="col-md-6 col-xs-12 masonry-item">
+			<div class="col-lg-6 col-md-6 col-xs-12 masonry-item">
 				<div class="panel panel-flat">
 					<div class="panel-heading">
 						<h5 class="panel-title text-semibold">
@@ -163,7 +118,9 @@
 					</div>
 					<div class="panel-body">
 						<div class="content-group">
-							<$ _.excerpt |safe $>
+							{#<vue-markdown>#}
+								<$ _.excerpt | safe $>
+							{#</vue-markdown>#}
 						</div>
 
 						<div class="thumb content-group">
@@ -178,41 +135,16 @@
 						</div>
 
 					</div>
-
 					<div class="panel-footer panel-footer-condensed">
 						<div class="heading-elements not-collapsible">
 							<ul class="list-inline list-inline-separate heading-text text-muted">
-								<li><i class="text-teal">@</i> <a href="#"
-																  class="text-muted"><$ display_name $>
-									</a></li>
-								<li>
-									<time datetime="<$ _.update_time $>">
-										<$ _.modified | moment $></time>
-								</li>
-
-                                {#<li><a href="#" class="text-muted"><i#}
-                                {#class="icon-heart6 text-size-base text-pink position-left"></i>#}
-                                {#281</a></li>#}
+								{#<li>By <a href="#" class="text-muted"><$ display_name $></a></li>#}
+								<li><$ _.modified | moment $></li>
+								{#<li><a href="#" class="text-muted">12 comments</a></li>#}
+								{#<li><a href="#" class="text-muted"><i class="icon-heart6 text-size-base text-pink position-left"></i> 281</a></li>#}
 							</ul>
-                            {#
-                            <ul class="list-inline list-inline-condensed heading-text pull-right">
-                                <li><a href="/read/<$ _.id $>" class="text-default" ><i class="icon-eye8"></i></a></li>
-                                <li class="dropdown">
-                                    <a href="#" class="text-default dropdown-toggle"
-                                       data-toggle="dropdown"
-                                       aria-expanded="false"><i class="icon-menu7"></i> <span
-                                                class="caret"></span></a>
-                                    <ul class="dropdown-menu dropdown-menu-right ">
-                                        <li><a href="#"><i class="icon-file-download"></i> 内容下载</a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#"><i class="icon-link2"></i> 原文</a></li>
 
-                                        <li><a href="#"><i class="icon-file-plus"></i> 修改</a></li>
-                                        <li><a href="#"><i class="icon-cross2 text-danger"></i> 删除</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            #}
+							<a href="/article/<$ _.id $>" class="heading-text pull-right">全文<i class="icon-arrow-right14 position-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -231,4 +163,93 @@
 	</div>
 
 	<!-- /pagination -->
+{% endblock %}
+
+{% block body_style %} sidebar-opposite-visible {% endblock %}
+
+{#
+{% block opposite_sidebar %}
+
+	<div class="sidebar sidebar-opposite sidebar-default sidebar-separate">
+		<div class="sidebar-content">
+
+			<!-- Categories -->
+			<div class="sidebar-category">
+				<div class="category-title">
+					<span>文章分类</span>
+					<ul class="icons-list">
+						<li><a href="#" data-action="collapse"></a></li>
+					</ul>
+				</div>
+
+				<div class="category-content no-padding">
+					<ul class="navigation">
+						<li>
+							<a href="#" class="legitRipple">
+								<span class="text-muted text-size-small text-regular pull-right">12</span>
+								<i class="icon-wordpress"></i>
+								Wordpress
+							</a>
+						</li>
+
+						<li>
+							<a href="#" class="legitRipple">
+								<span class="text-muted text-size-small text-regular pull-right">26</span>
+								<i class="icon-film2"></i>
+								Video
+							</a>
+						</li>
+
+						<li>
+							<a href="#" class="legitRipple">
+								<span class="text-muted text-size-small text-regular pull-right">83</span>
+								<i class="icon-images2"></i>
+								Images
+							</a>
+						</li>
+
+						<li>
+							<a href="#" class="legitRipple">
+								<span class="text-muted text-size-small text-regular pull-right">43</span>
+								<i class="icon-certificate"></i>
+								Articles
+							</a>
+						</li>
+
+						<li>
+							<a href="#" class="legitRipple">
+								<span class="text-muted text-size-small text-regular pull-right">72</span>
+								<i class="icon-camera"></i>
+								Photography
+							</a>
+						</li>
+
+						<li>
+							<a href="#" class="legitRipple">
+								<span class="text-muted text-size-small text-regular pull-right">97</span>
+								<i class="icon-bookmark"></i>
+								Books
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- /categories -->
+
+
+		</div>
+	</div>
+{% endblock %}
+
+#}
+
+{% block script %}
+{#
+<script>
+    Vue.use(VueMarkdown);
+    var vm = new Vue({
+        el: "#posts"
+    });
+</script>
+#}
 {% endblock %}

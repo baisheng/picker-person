@@ -7,12 +7,12 @@
     <title><$ options.title $> - <$ options.description $></title>
 
     <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-    <link href="/themes/limitless/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-    <link href="/themes/limitless/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="/themes/limitless/assets/css/core.css" rel="stylesheet" type="text/css">
-    <link href="/themes/limitless/assets/css/components.css" rel="stylesheet" type="text/css">
-    <link href="/themes/limitless/assets/css/colors.css" rel="stylesheet" type="text/css">
+    {#<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">#}
+    <link href="/themes/limitless/assets/material_css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="/themes/limitless/assets/material_css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/themes/limitless/assets/material_css/core.min.css" rel="stylesheet" type="text/css">
+    <link href="/themes/limitless/assets/material_css/components.min.css" rel="stylesheet" type="text/css">
+    <link href="/themes/limitless/assets/material_css/colors.min.css" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
 
 </head>
@@ -50,6 +50,7 @@
     Vue.config.debug = true;
     Vue.config.devtools = true;
 </script>
+
 <!-- Core JS files -->
 <script type="text/javascript" src="/themes/limitless/assets/js/plugins/loaders/pace.min.js"></script>
 <script type="text/javascript" src="/themes/limitless/assets/js/core/libraries/jquery.min.js"></script>
@@ -66,6 +67,8 @@
 <script type="text/javascript" src="/static/assets/js/masonry/masonry.pkgd.min.js"></script>
 {#<script src="//cdn.jsdelivr.net/mojs/latest/mo.min.js"></script>#}
 <script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>
+
+{#<script type="text/javascript" src="/themes/limitless/assets/js/vue-markdown.js"></script>#}
 <!-- Theme JS files -->
 {% block script %}
 {% endblock %}

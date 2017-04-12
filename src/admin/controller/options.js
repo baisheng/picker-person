@@ -11,6 +11,8 @@ export default class extends Base {
 
         if (this.isPost()) {
             let data = this.post();
+            console.log(JSON.stringify(data))
+
             let _options = this.model('options', {aid: this.aid});
 
             if (!think.isEmpty(data.name)) {

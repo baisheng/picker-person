@@ -39,7 +39,7 @@
             width: 100%;
             height: calc(3em + 30px);
             /*background: #E2E0D3;*/
-            text-align: center;
+            /*text-align: center;*/
             z-index: 1090;
         }
 
@@ -152,7 +152,7 @@
             max-width: 700px;
             width: 95vw;
             height: 60vh;
-            text-align: right;
+            /*text-align: right;*/
             pointer-events: none;
             /*box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);*/
             box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
@@ -231,7 +231,7 @@
             margin: 0.5em 0 0.75em;
             width: 100%;
             color: #f5f5f5;
-            text-align: center;
+            /*text-align: center;*/
             font-size: 1.15em;
             line-height: 1.5;
             -webkit-transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
@@ -451,11 +451,16 @@
     {% block style %}{% endblock %}
 
 </head>
-<body data-spy="scroll" data-target="#resume-section" data-offset="70" class="navbar-top sidebar-opposite-visible  {% block body_style %}{% endblock %}">
+{% if http.controller == 'snippets' %}
+    {% set body_navbar = 'navbar-top' %}
+{% endif %}
+
+<body data-spy="scroll" data-target="#resume-section" data-offset="70" class="{% block body_style %}{% endblock %} <$ body_navbar $>">
 {#<body data-spy="scroll" data-target=".sidebar-fixed" class=" {% block body_style %}{% endblock %}">#}
 
 <div class="dummy-fixed" id="snippet-bar">
-    <div class="snippet" :class="isOpen ? 'snippet--active': ''">
+
+    <div class="snippet" :class="isOpen || isOpenSubject ? 'snippet--active': ''">
         <a id="snippet__button" class="btn bg-primary btn-icon btn-raised  snippet__button"
            @click="openOrSave" :class="!isActive ? 'disabled': ''"><!-- Fallback location -->
             <span class="snippet__text">
@@ -471,7 +476,73 @@
                 </span>
             </span>
         </a>
-        <div class="snippet_content panel panel-body alpha-grey" v-if="isOpen" v-cloak>
+        <a @click="openOrSave('subject')" class="btn bg-teal-400 btn-icon btn-raised  snippet__button"
+           :class="!isActive ? 'disabled': ''"><!-- Fallback location -->
+            <span class="snippet__text">
+                <span class="snippet__text-inner snippet__initial-text ">
+                    <i class=" icon-ampersand"></i>
+                </span>
+                <span class="snippet__text-inner snippet__final-text">
+                    <i class="icon-sync spinner" v-if="status == 'saving'" ></i>
+                    <i class="icon-check text-success" v-else-if="status == 'success'" ></i>
+                    <i class="icon-warning22 text-danger" v-else-if="status == 'error'" ></i>
+                    <i class="  icon-ampersand" v-else></i>
+{##}
+                </span>
+            </span>
+        </a>
+        <div class="snippet_content panel panel-body alpha-grey" v-if="isOpenSubject" v-cloak>
+            <div class="snippet_content-inner">
+                <div class="snippet__summary">
+
+                    <form action="#">
+
+
+                            <div class="panel panel-body">
+                                <div class="form-group">
+                                    <label>主题名:</label>
+                                    <input type="text" class="form-control" placeholder="这是一个主题名称">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="display-block">主题类别:</label>
+
+                                    <label class="radio-inline">
+                                        <input type="radio" class="styled" name="gender" checked="checked">
+                                        文章
+                                    </label>
+
+                                    <label class="radio-inline">
+                                        <input type="radio" class="styled" name="gender" checked="checked">
+                                        商品
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" class="styled" name="gender" checked="checked">
+                                        作品
+                                    </label>
+                                </div>
+
+                        </div>
+                    </form>
+                    {#<div class="form-group">#}
+                        {#<input type="text">#}
+                    {#</div>#}
+                    {#<div class="editor">#}
+                        {#<textarea class="form-control snippet-editor"#}
+                                  {#placeholder="Remember, be nice!"#}
+                                  {#rows="5"#}
+                                  {#v-model="content"#}
+                                  {#@keyup.ctrl.enter="openOrSave"> </textarea>#}
+                    {#</div>#}
+                </div>
+                <button class="snippet__close snippet__cancel" @click="cancel"><i
+                            class="icon fa fa-fw fa-close"></i>
+                    关闭
+                </button>
+            </div><!-- /snippet_content-inner -->
+        </div><!-- /snippet_content -->
+        <div class="snippet_content panel panel-body alpha-grey" v-else-if="isOpen" v-cloak>
             <div class="snippet_content-inner">
                 <div class="snippet__summary">
                     <div class="editor">
@@ -498,7 +569,7 @@
 
         <!-- Main navbar -->
         {#<div class="navbar navbar-default no-shadow alpha-grey navbar-fixed-bottom">#}
-            <div class="navbar navbar-default navbar-fixed-top">
+            <div class="navbar navbar-default {% if http.controller == 'snippets' %}navbar-fixed-top{% endif %}">
             <div class="navbar-header ">
                 <a class="navbar-brand" href="/admin"><img src="/static/assets/images/logo_dark.png" alt=""></a>
                 <ul class="nav navbar-nav">
@@ -570,6 +641,12 @@
                                     <li class="{% if http.controller == 'posts' %}active{% endif %}">
                                         <a href="/admin/posts"><i class="icon-files-empty"></i>
                                             内容</a>
+
+                                    </li>
+
+                                    <li class="{% if http.controller == 'posts' %}active{% endif %}">
+                                        <a href="/admin/pages"><i class=" icon-file-empty2"></i>
+                                            页面</a>
 
                                     </li>
                                     <li class="{% if http.controller == 'resumes' %}active{% endif %}"><a href="/admin/resumes"><i class="icon-magazine"></i> 简历</a></li>

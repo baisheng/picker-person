@@ -3,10 +3,11 @@
 <div class="page-header page-header-inverse">
 
     <!-- Main navbar -->
-    <div class="navbar navbar-inverse navbar-transparent">
+    <div class="navbar navbar-inverse">
+        {#<div class="navbar navbar-inverse navbar-transparent">#}
         <div class="navbar-header">
             <a class="navbar-brand" href="/">
-                DEADLINE_ {#<img src="/themes/limitless/assets/images/logo_light.png" alt="">#}
+                _ DEADLINE {#<img src="/themes/limitless/assets/images/logo_light.png" alt="">#}
             </a>
 
             <ul class="nav navbar-nav pull-right visible-xs-block">
@@ -15,11 +16,11 @@
         </div>
 
         <div class="navbar-collapse collapse" id="navbar-mobile">
-            <p class="navbar-text"><span class="label bg-success-400">Picker</span></p>
+            {#<p class="navbar-text"><span class="label bg-success-400">Picker</span></p>#}
             <ul class="nav navbar-nav">
                 {% for item in main_menu %}
                     <li class="{% if http.url == item.path %}active{% endif %}">
-                        <a href="<$ item.path | safe $>"><span><$ item.title $></span></a>
+                        <a href="/<$ item.path | safe $>"><span><$ item.title $></span></a>
                     </li>
                 {% endfor %}
             </ul>
