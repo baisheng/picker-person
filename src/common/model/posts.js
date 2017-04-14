@@ -379,7 +379,7 @@ export default class extends Base {
 
         let posts = await this.where(query).field(_fields.join(",")).order('date DESC').page(page_index, 10).countSelect();
 
-        posts.data = await this._formatMeta(posts.data);
+        posts.data = await this._format_snippet_meta(posts.data);
 
         return posts;
     }
@@ -408,13 +408,97 @@ export default class extends Base {
         }
     }
 
+    async findPostSnippets(post_id){
+        let query = {};
+        // if (!think.isEmpty(_query)) {
+        //     query = _query;
+        //
+        // } else {
+            query.status = ['NOT IN', 'trash'];
+        // }
+        query.type = "snippet";
+        query.parent = post_id;
+
+        let _fields = [];
+        _fields.push('id');
+        // _fields.push('author');
+        // _fields.push('status');
+        // _fields.push('type');
+        _fields.push('title');
+        // _fields.push('name');
+        _fields.push('content');
+        // fields.push('excerpt');
+        // _fields.push('date');
+        // _fields.push('modified');
+        _fields.push('parent');
+
+        let _meta = this.model('postmeta');
+
+        // if (!think.isEmpty(_meta_type)) {
+
+            // let type_posts = await _meta.where({
+            //     "meta_key": '_snippet_type',
+            //     'meta_value': _meta_type
+            //
+            // }).field('post_id').page(page_index, 10).countSelect();
+
+            // if (!think.isEmpty(type_posts.data) && type_posts.data.length > 0) {
+            //
+            //     let ids = [];
+            //     for (let obj of type_posts.data) {
+            //         ids.push(obj.post_id);
+            //     }
+            //     delete type_posts.data;
+            //     post_ids.ids = ids;
+                // query.id = ['IN', ids];
+                //
+                // type_posts.data = await this.where(query).field(_fields.join(",")).order('date DESC').select();
+                //
+                // type_posts.data = await this._formatMeta(type_posts.data);
+            // }
+            //
+            // return type_posts;
+
+        // }
+
+        let posts = await this.where(query).field(_fields.join(",")).order('date DESC').select();
+
+        posts = await this._formatMeta(posts);
+
+        for (let snippet of posts) {
+            if (!think.isEmpty(snippet.meta) && snippet.meta['_snippet_link']) {
+
+                snippet.meta['_snippet_link'] = JSON.parse(snippet.meta['_snippet_link']);
+            }
+        }
+
+        return posts;
+    }
+
     /**
      * 处理 metas
      *
      * @param post
      * @returns {Promise.<*>}
      */
-    async _formatMeta(posts) {
+    async _format_snippet_meta(posts) {
+        let _items = [];
+
+        for (let post of posts) {
+            post.meta = {};
+            if (post.metas.length > 0) {
+                for (let meta of post.metas) {
+                    // console.log(meta.meta_key + ":" + meta.meta_value);
+                    post.meta[meta.meta_key] = JSON.parse(meta.meta_value);
+                }
+            }
+            delete post.metas;
+            _items.push(post);
+        }
+        return _items;
+    }
+
+    async _format_Meta(posts) {
         let _items = [];
 
         for (let post of posts) {
@@ -434,6 +518,22 @@ export default class extends Base {
     async top(size, where = {}) {
         let posts = await this.limit(size).where(where).select();
         return await this._formatMeta(posts);
+    }
+
+    async getSnippet(id){
+        let post = await this.where({id: id}).find();
+
+        // let _items = [];
+
+        post.meta = {};
+        if (post.metas.length > 0) {
+            for (let meta of post.metas) {
+                // console.log(meta.meta_key + ":" + meta.meta_value);
+                post.meta[meta.meta_key] = JSON.parse(meta.meta_value);
+            }
+        }
+        delete post.metas;
+        return post;
     }
 
     async get(id) {

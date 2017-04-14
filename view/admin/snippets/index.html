@@ -376,7 +376,7 @@
                                aria-expanded="false">
                                 <i class="fa fa-quote-left position-left"
                                    v-if="_.meta['_snippet_type'] === 'quote'"></i>
-                            <i class="icon-codepen position-left" v-else-if="_.meta['_snippet_type'] === 'code'"></i>
+                            <i class="icon-codepen position-left" v-else-if="_.meta['_snippet_code']"></i>
                             <i class="fa fa-lightbulb-o position-left"
                                v-else-if="_.meta['_snippet_type'] === 'idea'"></i>
                             <i class="fa fa-comments-o position-left"
@@ -436,7 +436,7 @@
                         </div>
 
                         <div class="form-group" v-if="selected === 'code'">
-                            <p>选择的程序语言: <span class="text-info">{{ snippet_code_lang }}</span></p>
+                            <p>选择的程序语言: <span class="text-primary">{{ snippet_code_lang }}</span></p>
 
                             <select2 :options="codelang" v-model="snippet_code_lang">
                                 {#<option disabled value="0">标记语言（默认）</option>#}
@@ -528,11 +528,12 @@
                         <blockquote class="no-margin panel panel-body border-left-lg border-left-warning "
                                     v-html="_.content" v-if="_.meta['_snippet_type'] === 'quote'"></blockquote>
 
-                        <pre class="content-group " :class="'language-' + _.meta['_snippet_code_lang']"
-                             v-else-if="typeof(_.meta['_snippet_code']) != 'undefined'">
+                        {# 代码 #}
+                        <pre class="content-group " :class="'language-' + _.meta['_snippet_code']['lang']"
+                             v-else-if="_.meta['_snippet_code']">
                                 <code>{{ _.content }}</code>
                             {#<code>{{ _.content }}</code>#}
-                            </pre>
+                            </pre>a
 
                         {# 链接 #}
                         <div class="panel-body text-center" v-else-if="typeof(_.meta['_snippet_link']) != 'undefined'">

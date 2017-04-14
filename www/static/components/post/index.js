@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "../static";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 386);
+/******/ 	return __webpack_require__(__webpack_require__.s = 389);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -389,9 +389,9 @@ if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
 /***/ (function(module, exports, __webpack_require__) {
 
 var global    = __webpack_require__(1)
-  , core      = __webpack_require__(3)
+  , core      = __webpack_require__(6)
   , ctx       = __webpack_require__(26)
-  , hide      = __webpack_require__(4)
+  , hide      = __webpack_require__(3)
   , PROTOTYPE = 'prototype';
 
 var $export = function(type, name, source){
@@ -550,7 +550,7 @@ module.exports = function(it){
 var classof   = __webpack_require__(167)
   , ITERATOR  = __webpack_require__(9)('iterator')
   , Iterators = __webpack_require__(23);
-module.exports = __webpack_require__(3).getIteratorMethod = function(it){
+module.exports = __webpack_require__(6).getIteratorMethod = function(it){
   if(it != undefined)return it[ITERATOR]
     || it['@@iterator']
     || Iterators[classof(it)];
@@ -563,7 +563,7 @@ module.exports = __webpack_require__(3).getIteratorMethod = function(it){
 
 var anObject = __webpack_require__(8)
   , get      = __webpack_require__(174);
-module.exports = __webpack_require__(3).getIterator = function(it){
+module.exports = __webpack_require__(6).getIterator = function(it){
   var iterFn = get(it);
   if(typeof iterFn != 'function')throw TypeError(it + ' is not iterable!');
   return anObject(iterFn.call(it));
@@ -574,7 +574,7 @@ module.exports = __webpack_require__(3).getIterator = function(it){
 /***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(5)
+var isObject = __webpack_require__(4)
   , document = __webpack_require__(1).document
   // in old IE typeof document.createElement is 'object'
   , is = isObject(document) && isObject(document.createElement);
@@ -585,20 +585,60 @@ module.exports = function(it){
 /***/ }),
 
 /***/ 19:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(5);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function(it, S){
-  if(!isObject(it))return it;
-  var fn, val;
-  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
-  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
-  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
-  throw TypeError("Can't convert object to primitive value");
-};
+// this module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  scopeId,
+  cssModules
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  // inject cssModules
+  if (cssModules) {
+    var computed = Object.create(options.computed || null)
+    Object.keys(cssModules).forEach(function (key) {
+      var module = cssModules[key]
+      computed[key] = function () { return module }
+    })
+    options.computed = computed
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
 
 /***/ }),
 
@@ -609,6 +649,24 @@ module.exports = function(it, S){
 module.exports = !__webpack_require__(7)(function(){
   return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
 });
+
+/***/ }),
+
+/***/ 20:
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = __webpack_require__(4);
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function(it, S){
+  if(!isObject(it))return it;
+  var fn, val;
+  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
+  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+  throw TypeError("Can't convert object to primitive value");
+};
 
 /***/ }),
 
@@ -626,13 +684,18 @@ var _axios = __webpack_require__(57);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _summernote = __webpack_require__(353);
+var _editable = __webpack_require__(353);
+
+var _editable2 = _interopRequireDefault(_editable);
+
+var _summernote = __webpack_require__(355);
 
 var _summernote2 = _interopRequireDefault(_summernote);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 Vue.prototype.$http = _axios2.default;
+
 
 new Vue({
     el: "#app",
@@ -674,7 +737,8 @@ new Vue({
     },
     updated: function updated() {},
     components: {
-        Summernote: _summernote2.default
+        Summernote: _summernote2.default,
+        Editable: _editable2.default
         // Datepicker,
     },
     methods: {
@@ -875,64 +939,6 @@ new Vue({
 
 /***/ }),
 
-/***/ 21:
-/***/ (function(module, exports) {
-
-// this module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  scopeId,
-  cssModules
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  // inject cssModules
-  if (cssModules) {
-    var computed = Object.create(options.computed || null)
-    Object.keys(cssModules).forEach(function (key) {
-      var module = cssModules[key]
-      computed[key] = function () { return module }
-    })
-    options.computed = computed
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-
 /***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -949,7 +955,36 @@ module.exports = {};
 
 /***/ }),
 
-/***/ 231:
+/***/ 230:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+//
+//
+//
+//
+//
+
+exports.default = {
+    props: ['value'],
+    data: function data() {
+        return { innerText: this.value };
+    },
+
+    methods: {
+        changeText: function changeText() {
+            this.innerText = this.$el.innerHTML;
+            this.$emit('input', this.innerText);
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 232:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1256,10 +1291,16 @@ module.exports = function(key){
 /***/ }),
 
 /***/ 3:
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-var core = module.exports = {version: '2.4.0'};
-if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+var dP         = __webpack_require__(5)
+  , createDesc = __webpack_require__(14);
+module.exports = __webpack_require__(2) ? function(object, key, value){
+  return dP.f(object, key, createDesc(1, value));
+} : function(object, key, value){
+  object[key] = value;
+  return object;
+};
 
 /***/ }),
 
@@ -1276,7 +1317,7 @@ module.exports = (
 /***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(6).f
+var def = __webpack_require__(5).f
   , has = __webpack_require__(11)
   , TAG = __webpack_require__(9)('toStringTag');
 
@@ -1500,11 +1541,46 @@ module.exports = function xhrAdapter(config) {
 /***/ 353:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(21)(
+var Component = __webpack_require__(19)(
   /* script */
-  __webpack_require__(231),
+  __webpack_require__(230),
   /* template */
-  __webpack_require__(368),
+  __webpack_require__(356),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/bison/__task/19_Caixie/__workspace/picker-resume/webpack/components/ui/editable.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] editable.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-06e097f6", Component.options)
+  } else {
+    hotAPI.reload("data-v-06e097f6", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 355:
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(19)(
+  /* script */
+  __webpack_require__(232),
+  /* template */
+  __webpack_require__(371),
   /* scopeId */
   null,
   /* cssModules */
@@ -1529,6 +1605,32 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
+
+/***/ }),
+
+/***/ 356:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    attrs: {
+      "contenteditable": "true"
+    },
+    domProps: {
+      "innerHTML": _vm._s(_vm.innerText)
+    },
+    on: {
+      "input": _vm.changeText
+    }
+  })
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-06e097f6", module.exports)
+  }
+}
 
 /***/ }),
 
@@ -1559,13 +1661,27 @@ module.exports = Cancel;
 
 /***/ }),
 
-/***/ 368:
+/***/ 37:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+
+/***/ 371:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('textarea', {
+  return _c('div', {
     staticClass: "form-control",
     attrs: {
+      "contenteditable": "true",
       "name": _vm.name
     }
   }, [_vm._v("1")])
@@ -1577,19 +1693,6 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-7b05acb3", module.exports)
   }
 }
-
-/***/ }),
-
-/***/ 37:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function isCancel(value) {
-  return !!(value && value.__CANCEL__);
-};
-
 
 /***/ }),
 
@@ -1618,7 +1721,7 @@ module.exports = function createError(message, config, code, response) {
 
 /***/ }),
 
-/***/ 386:
+/***/ 389:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(202);
@@ -1646,15 +1749,10 @@ module.exports = function bind(fn, thisArg) {
 /***/ }),
 
 /***/ 4:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var dP         = __webpack_require__(6)
-  , createDesc = __webpack_require__(14);
-module.exports = __webpack_require__(2) ? function(object, key, value){
-  return dP.f(object, key, createDesc(1, value));
-} : function(object, key, value){
-  object[key] = value;
-  return object;
+module.exports = function(it){
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
 };
 
 /***/ }),
@@ -1667,7 +1765,7 @@ module.exports = __webpack_require__(2) ? function(object, key, value){
 var LIBRARY        = __webpack_require__(44)
   , $export        = __webpack_require__(10)
   , redefine       = __webpack_require__(49)
-  , hide           = __webpack_require__(4)
+  , hide           = __webpack_require__(3)
   , has            = __webpack_require__(11)
   , Iterators      = __webpack_require__(23)
   , $iterCreate    = __webpack_require__(79)
@@ -2015,15 +2113,28 @@ module.exports = Object.create || function create(O, Properties){
 /***/ 49:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(4);
+module.exports = __webpack_require__(3);
 
 /***/ }),
 
 /***/ 5:
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = function(it){
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
+var anObject       = __webpack_require__(8)
+  , IE8_DOM_DEFINE = __webpack_require__(22)
+  , toPrimitive    = __webpack_require__(20)
+  , dP             = Object.defineProperty;
+
+exports.f = __webpack_require__(2) ? Object.defineProperty : function defineProperty(O, P, Attributes){
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if(IE8_DOM_DEFINE)try {
+    return dP(O, P, Attributes);
+  } catch(e){ /* empty */ }
+  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
+  if('value' in Attributes)O[P] = Attributes.value;
+  return O;
 };
 
 /***/ }),
@@ -2191,24 +2302,10 @@ module.exports = CancelToken;
 /***/ }),
 
 /***/ 6:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var anObject       = __webpack_require__(8)
-  , IE8_DOM_DEFINE = __webpack_require__(22)
-  , toPrimitive    = __webpack_require__(19)
-  , dP             = Object.defineProperty;
-
-exports.f = __webpack_require__(2) ? Object.defineProperty : function defineProperty(O, P, Attributes){
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if(IE8_DOM_DEFINE)try {
-    return dP(O, P, Attributes);
-  } catch(e){ /* empty */ }
-  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
-  if('value' in Attributes)O[P] = Attributes.value;
-  return O;
-};
+var core = module.exports = {version: '2.4.0'};
+if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 
 /***/ }),
 
@@ -3015,7 +3112,7 @@ var create         = __webpack_require__(48)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(4)(IteratorPrototype, __webpack_require__(9)('iterator'), function(){ return this; });
+__webpack_require__(3)(IteratorPrototype, __webpack_require__(9)('iterator'), function(){ return this; });
 
 module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -3027,7 +3124,7 @@ module.exports = function(Constructor, NAME, next){
 /***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(5);
+var isObject = __webpack_require__(4);
 module.exports = function(it){
   if(!isObject(it))throw TypeError(it + ' is not an object!');
   return it;
@@ -3047,7 +3144,7 @@ module.exports = function(done, value){
 /***/ 81:
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP       = __webpack_require__(6)
+var dP       = __webpack_require__(5)
   , anObject = __webpack_require__(8)
   , getKeys  = __webpack_require__(34);
 
@@ -3181,7 +3278,7 @@ __webpack_require__(40)(String, 'String', function(iterated){
 
 __webpack_require__(86);
 var global        = __webpack_require__(1)
-  , hide          = __webpack_require__(4)
+  , hide          = __webpack_require__(3)
   , Iterators     = __webpack_require__(23)
   , TO_STRING_TAG = __webpack_require__(9)('toStringTag');
 

@@ -4,21 +4,39 @@
   "description": "采撷科技 CMS 默认模板",
   "main": "index.js",
   "scripts": {
+    "dev": "webpack --progress --colors --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "baisheng",
   "license": "ISC",
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "css-loader": "^0.28.0",
+    "extract-text-webpack-plugin": "^2.1.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-jshint": "^1.12.0",
     "gulp-less": "^3.0.3",
     "gulp-minify-css": "^1.2.1",
     "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^1.4.2"
+    "gulp-uglify": "^1.4.2",
+    "uglify": "^0.1.5",
+    "uglify-js-plugin": "0.0.6",
+    "vue-loader": "^11.3.4",
+    "vue-style-loader": "^3.0.0",
+    "vue-template-compiler": "^2.2.6",
+    "webpack": "^2.3.3"
   },
   "dependencies": {
-    "gulp-clean-css": "^3.0.3"
+    "axios": "^0.16.1",
+    "embed-js": "^4.2.2",
+    "gulp-clean-css": "^3.0.3",
+    "marked": "^0.3.6",
+    "vue": "^2.2.6",
+    "vue-infinite-loading": "^2.0.4",
+    "vue-infinite-scroll": "^2.0.1",
+    "vue-masonry": "^0.10.1"
   }
 }
-

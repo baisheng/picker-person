@@ -462,7 +462,7 @@
 
     <div class="snippet" :class="isOpen || isOpenSubject ? 'snippet--active': ''">
         <a id="snippet__button" class="btn bg-primary btn-icon btn-raised  snippet__button"
-           @click="openOrSave" :class="!isActive ? 'disabled': ''"><!-- Fallback location -->
+           @click="openOrSave" :class="!isActive ? 'disabled': ''" v-if="!isOpenSubject"><!-- Fallback location -->
             <span class="snippet__text">
                 <span class="snippet__text-inner snippet__initial-text ">
                     <i class="icon-versions"></i>
@@ -484,9 +484,9 @@
                 </span>
                 <span class="snippet__text-inner snippet__final-text">
                     <i class="icon-sync spinner" v-if="status == 'saving'" ></i>
-                    <i class="icon-check text-success" v-else-if="status == 'success'" ></i>
-                    <i class="icon-warning22 text-danger" v-else-if="status == 'error'" ></i>
-                    <i class="  icon-ampersand" v-else></i>
+                    {#<i class="icon-check text-success" v-else-if="status == 'success'" ></i>#}
+                    {#<i class="icon-warning22 text-danger" v-else-if="status == 'error'" ></i>#}
+                    <i class="  icon-floppy-disk" v-else></i>
 {##}
                 </span>
             </span>
@@ -499,6 +499,10 @@
 
 
                             <div class="panel panel-body">
+                                <div class="text-center">
+                                    <h6 class="no-margin text-semibold">新建主题</h6>
+                                    <p class="content-group-sm text-muted">主题可连接碎片或生产独立内容</p>
+                                </div>
                                 <div class="form-group">
                                     <label>主题名:</label>
                                     <input type="text" class="form-control" placeholder="这是一个主题名称">
@@ -509,18 +513,31 @@
                                     <label class="display-block">主题类别:</label>
 
                                     <label class="radio-inline">
-                                        <input type="radio" class="styled" name="gender" checked="checked">
+                                        <input type="radio" class="styled" name="gender" value="article">
                                         文章
                                     </label>
 
-                                    <label class="radio-inline">
-                                        <input type="radio" class="styled" name="gender" checked="checked">
-                                        商品
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" class="styled" name="gender" checked="checked">
-                                        作品
-                                    </label>
+                                    {#<label class="radio-inline">#}
+                                        {#<input type="radio" class="styled" name="gender">#}
+                                        {#下载#}
+                                    {#</label>#}
+                                    {#<label class="radio-inline">#}
+                                        {#<input type="radio" class="styled" name="gender">#}
+                                        {#商品#}
+                                    {#</label>#}
+                                    {#<label class="radio-inline">#}
+                                        {#<input type="radio" class="styled" name="gender">#}
+                                        {#图片#}
+                                    {#</label>#}
+{##}
+                                    {#<label class="radio-inline">#}
+                                        {#<input type="radio" class="styled" name="gender">#}
+                                        {#视频#}
+                                    {#</label>#}
+                                    {#<label class="radio-inline">#}
+                                        {#<input type="radio" class="styled" name="gender">#}
+                                        {#综合型#}
+                                    {#</label>#}
                                 </div>
 
                         </div>

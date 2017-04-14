@@ -34,7 +34,7 @@
                                             <img alt="Image" src="img/blog-1.jpg"/>
                                         </a>
                                         <p>
-                                            <$ _.excerpt |safe $>
+                                            <$ _.excerpt $>
                                         </p>
                                         <a href="#">Continue reading &raquo;</a>
                                     </div>
@@ -119,10 +119,10 @@
                             <$ pagerData | safe $>
 
                             {#<div class="col-xs-6">#}
-                                {#<a class="type--fine-print" href="#">&laquo; Older Posts</a>#}
+                            {#<a class="type--fine-print" href="#">&laquo; Older Posts</a>#}
                             {#</div>#}
                             {#<div class="col-xs-6 text-right">#}
-                                {#<a class="type--fine-print" href="#">Newer Posts &raquo;</a>#}
+                            {#<a class="type--fine-print" href="#">Newer Posts &raquo;</a>#}
                             {#</div>#}
                         </div>
                     </div>

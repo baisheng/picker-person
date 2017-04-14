@@ -1,5 +1,5 @@
 <template>
-    <textarea class='form-control' :name='name'>1</textarea>
+    <div contenteditable="true" class='form-control' :name='name'>1</div>
 </template>
 
 

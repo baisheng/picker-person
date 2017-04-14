@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<!-- saved from url=(0095)http://substance.io/lens/#mode=write;contextId=bib-items,bibItemId=10.1016/j.celrep.2012.09.011 -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Lens - Regulation of food intake by mechanosensory ion channels in enteric neurons</title>
+
+    <link href="/static/assets/css/writer.css" rel="stylesheet" type="text/css">
+    {#<link href="./Lens - Regulation of food intake by mechanosensory ion channels in enteric neurons_files/app.css"#}
+          {#rel="stylesheet" type="text/css">#}
+    <!-- App -->
+
+    <script>
+        var Scrollbar = (function (Component$$1) {
+            function Scrollbar () {
+                Component$$1.apply(this, arguments);
+            }
+
+            if ( Component$$1 ) Scrollbar.__proto__ = Component$$1;
+            Scrollbar.prototype = Object.create( Component$$1 && Component$$1.prototype );
+            Scrollbar.prototype.constructor = Scrollbar;
+
+            Scrollbar.prototype.didMount = function didMount () {
+                // do a full rerender when window gets resized
+                DefaultDOMElement.getBrowserWindow().on('resize', this.onResize, this);
+                // update the scroll handler on scroll
+                this.props.scrollPane.on('scroll', this.onScroll, this);
+                // TODO: why is this necessary here?
+                setTimeout(function() {
+                    this.updatePositions();
+                }.bind(this));
+            };
+
+            Scrollbar.prototype.dispose = function dispose () {
+                DefaultDOMElement.getBrowserWindow().off(this);
+                this.props.scrollPane.off(this);
+            };
+
+            Scrollbar.prototype.didUpdate = function didUpdate () {
+                this.updatePositions();
+            };
+
+            Scrollbar.prototype.render = function render ($$) {
+                var el = $$('div')
+                    .addClass('sc-scrollbar')
+                    .on('mousedown', this.onMouseDown);
+
+                if (this.props.highlights) {
+                    var highlightEls = [];
+
+                    forEach(this.props.highlights, function(highlights, scope) {
+                        forEach(highlights, function(h) {
+                            highlightEls.push(
+                                $$('div').ref(h).addClass('se-highlight sm-'+scope)
+                            );
+                        });
+                    });
+
+                    el.append(
+                        $$('div').ref('highlights')
+                            .addClass('se-highlights')
+                            .append(highlightEls)
+                    );
+                }
+                el.append($$('div').ref('thumb').addClass('se-thumb'));
+                return el
+            };
+
+            Scrollbar.prototype.updatePositions = function updatePositions () {
+                var scrollPane = this.props.scrollPane;
+                var scrollableEl = scrollPane.getScrollableElement();
+                var contentHeight = scrollPane.getContentHeight();
+                var scrollPaneHeight = scrollPane.getHeight();
+                var scrollTop = scrollPane.getScrollPosition();
+                var contentEl = scrollPane.getContentElement();
+
+                // Needed for scrollbar interaction
+                this.factor = (contentHeight / scrollPaneHeight);
+
+                if (this.factor <= 1) {
+                    this.el.addClass('sm-hide-thumb');
+                } else {
+                    this.el.removeClass('sm-hide-thumb');
+                }
+
+                this.refs.thumb.css({
+                    top: scrollTop / this.factor,
+                    height: scrollPaneHeight / this.factor
+                });
+
+                // If we have highlights, update them as well
+                if (this.props.highlights) {
+                    // Compute highlights
+                    forEach(this.props.highlights,function(highlights) {
+                        forEach(highlights, function(nodeId) {
+                            var nodeEl = scrollableEl.find('*[data-id="'+nodeId+'"]');
+
+                            if (!nodeEl) { return }
+
+                            // Compute bounding rect relative to scroll pane content element
+                            var rect = getRelativeBoundingRect(nodeEl.getNativeElement(), contentEl.getNativeElement());
+                            var top = rect.top / this.factor;
+                            var height = rect.height / this.factor;
+
+                            // Use specified minHeight for highlights
+                            if (height < Scrollbar.overlayMinHeight) {
+                                height = Scrollbar.overlayMinHeight;
+                            }
+
+                            var highlightEl = this.refs[nodeId];
+                            if (highlightEl) {
+                                this.refs[nodeId].css({
+                                    top: top,
+                                    height: height
+                                });
+                            } else {
+                                console.warn('no ref found for highlight', nodeId);
+                            }
+                        }.bind(this));
+                    }.bind(this));
+                }
+            };
+
+            Scrollbar.prototype.getScrollableElement = function getScrollableElement () {
+                return this.props.scrollPane.getScrollableElement()
+            };
+
+            Scrollbar.prototype.onResize = function onResize () {
+                this.rerender();
+            };
+
+            Scrollbar.prototype.onScroll = function onScroll () {
+                this.updatePositions();
+            };
+
+            Scrollbar.prototype.onMouseDown = function onMouseDown (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                this._mouseDown = true;
+
+                // temporarily, we bind to events on window level
+                // because could leave the this element's area while dragging
+                var _window = DefaultDOMElement.getBrowserWindow();
+                _window.on('mousemove', this.onMouseMove, this);
+                _window.on('mouseup', this.onMouseUp, this);
+
+                var scrollBarOffset = this.el.getOffset().top;
+                var y = e.pageY - scrollBarOffset;
+                var thumbEl = this.refs.thumb.el;
+                if (e.target !== thumbEl.getNativeElement()) {
+                    // Jump to mousedown position
+                    this.offset = thumbEl.height / 2;
+                    this.onMouseMove(e);
+                } else {
+                    this.offset = y - thumbEl.getPosition().top;
+                }
+            };
+
+            // Handle Mouse Up
+            Scrollbar.prototype.onMouseUp = function onMouseUp () {
+                this._mouseDown = false;
+                var _window = DefaultDOMElement.getBrowserWindow();
+                _window.off('mousemove', this.onMouseMove, this);
+                _window.off('mouseup', this.onMouseUp, this);
+            };
+
+            Scrollbar.prototype.onMouseMove = function onMouseMove (e) {
+                if (this._mouseDown) {
+                    var scrollPane = this.props.scrollPane;
+                    var scrollableEl = scrollPane.getScrollableElement();
+                    var scrollBarOffset = this.el.getOffset().top;
+                    var y = e.pageY - scrollBarOffset;
+
+                    // find offset to visible-area.top
+                    var scroll = (y-this.offset)*this.factor;
+                    scrollableEl.setProperty('scrollTop', scroll);
+                }
+            };
+
+            return Scrollbar;
+        }(Component));
+
+        Scrollbar.overlayMinHeight = 2;
+
+        var ScrollbarPackage = {
+            name: 'scrollbar',
+            configure: function(config) {
+                config.addComponent('scrollbar', Scrollbar);
+            }
+        };
+    </script>
+</head>
+<body>
+<div id="container">
+    <div class="app">
+        <div class="menu">
+            <button class="active">Write</button>
+            <button>Read</button>
+        </div>
+        <div class="context">
+            <div class="sc-lens sc-lens-writer sc-controller">
+                <div class="sc-split-pane sm-horizontal">
+                    <div class="se-pane sm-auto-fill sc-split-pane sm-vertical">
+                        <div class="se-main-section se-pane sm-sized" style="width: 60%;">
+                            <div class="sc-split-pane sm-horizontal">
+                                <div class="se-pane sm-sized sc-toolbar">
+                                    <div>
+                                        <div class="se-toolbar-group">
+                                            <div class="sc-switch-text-type sm-disabled">
+                                                <button class="se-toggle" href="#">Title</button>
+                                                <div class="se-options"></div>
+                                            </div>
+                                        </div>
+                                        <div class="se-toolbar-group">
+                                            <div class="se-tool sm-disabled" title="Undo">
+                                                <button><i class="fa fa-undo"></i></button>
+                                            </div>
+                                            <div class="se-tool sm-disabled" title="Redo">
+                                                <button><i class="fa fa-repeat"></i></button>
+                                            </div>
+                                            <div class="se-tool sm-disabled" title="Save">
+                                                <button><i class="fa fa-save"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="se-toolbar-dropdown">
+                                            <button class="se-toggle"><i class="fa fa-image"></i></button>
+                                            <div class="se-options">
+                                                <div class="option se-tool sm-disabled" title="insertFigure">
+                                                    <button>Insert</button>
+                                                </div>
+                                                <div class="se-tool sm-disabled" title="Figure Citation">
+                                                    <button>Cite</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="se-toolbar-dropdown">
+                                            <button class="se-toggle"><i class="fa fa-book"></i></button>
+                                            <div class="se-options">
+                                                <div class="se-tool sm-disabled" title="Bibliographic Citation">
+                                                    <button>Cite</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="se-toolbar-group">
+                                            <div class="sc-embed-tool se-tool sm-disabled">
+                                                <button class="button" title="Embed"><i class="fa fa-file-code-o"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="float-right se-toolbar-group">
+                                            <div class="se-tool sm-disabled" title="Strong">
+                                                <button><i class="fa fa-bold"></i></button>
+                                            </div>
+                                            <div class="se-tool sm-disabled" title="Emphasis">
+                                                <button><i class="fa fa-italic"></i></button>
+                                            </div>
+                                            <div class="sc-link-tool se-tool sm-disabled" title="Link">
+                                                <button><i class="fa fa-link"></i></button>
+                                            </div>
+                                            <div class="se-tool sm-disabled" title="Subscript">
+                                                <button><i class="fa fa-subscript"></i></button>
+                                            </div>
+                                            <div class="se-tool sm-disabled" title="Superscript">
+                                                <button><i class="fa fa-superscript"></i></button>
+                                            </div>
+                                            <div class="se-tool sm-disabled" title="Code">
+                                                <button><i class="fa fa-code"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="se-pane sm-auto-fill sc-scroll-pane sm-substance-scrollbar sm-scrollbar-position-left">
+                                    <div class="sc-scrollbar" id="content-scrollbar">
+                                        <div class="se-highlights">
+                                            <div class="se-highlight sm-bib-item"
+                                                 style="top: 32.808px; height: 2px;"></div>
+                                            <div class="se-highlight sm-bib-item"
+                                                 style="top: 211.12px; height: 2px;"></div>
+                                        </div>
+                                        <div class="se-thumb" style="top: 0.044881px; height: 14.0477px;"></div>
+                                    </div>
+                                    <div class="se-scanline"></div>
+                                    <div class="se-scrollable">
+                                        <div class="se-content">
+                                            <div class="document-cover">
+                                                <div class="title surface sc-text-property-editor" spellcheck="false"
+                                                     contenteditable="true">
+                                                    <div class="sc-text-property" data-path="article-meta.title"
+                                                         spellcheck="false" style="white-space: pre-wrap;">Regulation of
+                                                        food intake by mechanosensory ion channels in en<span
+                                                                class="se-cursor"></span>teric neurons<br></div>
+                                                </div>
+                                                <div class="abstract">
+                                                    <div class="abstract surface sc-text-property-editor"
+                                                         spellcheck="false" contenteditable="true">
+                                                        <div class="sc-text-property" data-path="article-meta.abstract"
+                                                             spellcheck="false" style="white-space: pre-wrap;">
+                                                            Regulation of <span class="sc-emphasis"
+                                                                                data-id="f97eb8212422c0f85978c6169518aafb">food intake</span>
+                                                            is fundamental to energy homeostasis in animals. The
+                                                            contribution of non-nutritive and metabolic signals in
+                                                            regulating feeding is unclear. Here we show that enteric
+                                                            neurons play a major role in regulating feeding through
+                                                            specialized mechanosensory ion channels in Drosophila.
+                                                            Modulating activities of a specific subset of enteric
+                                                            neurons, the posterior enteric neurons (PENs), results in
+                                                            sixfold changes in food intake. Deficiency of the
+                                                            mechanosensory ion channel PPK1 gene or RNAi knockdown of
+                                                            its expression in the PENS result in a similar increase in
+                                                            food intake, which can be rescued by expression of wild-type
+                                                            PPK1 in the same neurons. Finally, pharmacological
+                                                            inhibition of the mechanosensory ion channel phenocopies the
+                                                            result of genetic interrogation. Together, our study
+                                                            provides the first molecular genetic evidence that
+                                                            mechanosensory ion channels in the enteric neurons are
+                                                            involved in regulating feeding, offering an enticing
+                                                            alternative to current therapeutic strategy for weight
+                                                            control.<br></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="document-content">
+                                                <div class="surface sc-container-editor container-node main"
+                                                     spellcheck="false" data-id="main" contenteditable="true">
+                                                    <div class="sc-heading sm-level-1"
+                                                         data-id="2e8078a0a07a6381e1d8c2b23e494f71"><span
+                                                                class="sc-text-property"
+                                                                data-path="2e8078a0a07a6381e1d8c2b23e494f71.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Introduction<br></span>
+                                                    </div>
+                                                    <div class="sc-paragraph"
+                                                         data-id="fc2fef3091ee430fba9af80745bd179e"><span
+                                                                class="sc-text-property"
+                                                                data-path="fc2fef3091ee430fba9af80745bd179e.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Historically, the sensation of fullness has been documented as far back as Homer's  Odyssey. Pioneering work by Cannon and Washburn revealed a correlation between stomach expansion and satiety in humans (Cannon and Washburn, 1911), which was later confirmed in rodents (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_a6da926ec7f4f4df975164f9e9ce413b">[1]</span>). Recently, several groups have shown that feeding-related neurons are sensitive to satiety state but not nutrients in  Drosophila (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_cf288234a38ea4cd9c3d04337049584e">[2]</span>). These studies argue that non-metabolic inputs such as mechanic tension could regulate feeding.<br></span>
+                                                    </div>
+                                                    <div class="sc-heading sm-level-1"
+                                                         data-id="de51c2c7566b7b4c28268c8a5a11b793"><span
+                                                                class="sc-text-property"
+                                                                data-path="de51c2c7566b7b4c28268c8a5a11b793.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Results and discussion<br></span>
+                                                    </div>
+                                                    <div class="sc-paragraph"
+                                                         data-id="0ec0db52d8fbfccdd024a1200a2df63d"><span
+                                                                class="sc-text-property"
+                                                                data-path="0ec0db52d8fbfccdd024a1200a2df63d.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Recent studies in  Drosophila have identified neuronal regulation of food intake and nutrient sensing in the central nervous system (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_3750b9a5b28c3540caa4ecf7145775b0">[2]</span>). However, the potential contribution of the enteric neurons in the gastrointestinal tract has not been explored. To investigate this, we utilized four previously characterized  Gal4 lines that are expressed in enteric neurons in the different parts of the  Drosophila digestive system (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_229854d535f7b41032be1acd6e474636">Figure 1</span>A,B). While the  GMR48A05-Gal4 neurons project to the proventriculus and the anterior midgut, the  GMR51F12-Gal4 neurons project to the anterior midgut and the crop (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_2e1934ba693efba6881400b38863c8f7">Figure 1</span>A,B) (<span
+                                                                    class="sc-citation sm-bib-item-citation sm-highlighted"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_c5f467ccfecc19a8162c3e7b77d92076">[3]</span>). In contrast, both  HGN1-Gal4 and  Ilp7-Gal4 neurons project to two posterior regions in the gut: (1) the hindgut pylorus and the connecting posterior midgut and anterior hindgut, and (2) the rectum pylorus and the rectum (referred to as the posterior enteric neurons or the PENs,<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_710162c8c130cf4eb98a1b6144d6e41a">Figure 1</span>A,B) (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_e9c7f91090248c64a6b466a50e987a3b">[4]</span>).<br></span>
+                                                    </div>
+                                                    <div class="sc-figure"
+                                                         data-id="image-figure_48587b64ef85aa7abc0076e734e387ce">
+                                                        <div class="se-label" contenteditable="false">Figure 1</div>
+                                                        <div class="se-title sc-text-property"
+                                                             data-path="image-figure_48587b64ef85aa7abc0076e734e387ce.title"
+                                                             spellcheck="false" style="white-space: pre-wrap;">
+                                                            Modulating activities of Drosophila PENs causes metabolic
+                                                            defects<br></div>
+                                                        <div class="se-figure-content" contenteditable="false"><img
+                                                                    class="sc-image"
+                                                                    data-id="b4792f06a8350b17f18ecbf405857d3c"
+                                                                    contenteditable="false"
+                                                                    src="./Lens - Regulation of food intake by mechanosensory ion channels in enteric neurons_files/elife04402f001.jpg">
+                                                        </div>
+                                                        <div class="se-description">
+                                                            <div class="se-caption sc-text-property"
+                                                                 data-path="image-figure_48587b64ef85aa7abc0076e734e387ce.caption"
+                                                                 spellcheck="false" style="white-space: pre-wrap;">
+                                                                (A)Enteric neural projections of Gal4 lines tested (red,
+                                                                phalloidin; green, UAS-mCD8::GFP) and their diagram(B).
+                                                                GMR51F12-Gal4 neurons project to the foregut, anterior
+                                                                midgut and crop. GMR48A05-Gal4 neurons project to the
+                                                                proventriculus and anterior midgut. Both HGN1-Gal4 and
+                                                                Ilp7-Gal4 drive expression in the neurons projecting to
+                                                                the posterior midgut, hindgut pylorus, anterior hindgut,
+                                                                rectal pylorus and the rectum. Pr, Proventriculus; C,
+                                                                Crop; Py, Pylorus; RP, Rectal Pylorus; R, Rectum; VNC,
+                                                                Ventral Nerve Cord. The effects of activating(C)or
+                                                                inactivating(D)enteric neurons on hemolymph glucose
+                                                                (GMR51F12-Gal4, GMR48A05-Gal4, Ilp7-Gal4, or HGN1-Gal4;
+                                                                UAS-TRPA1 or UAS-shiTS1) (n = 6–10 replicates of 10
+                                                                flies).(E)The effect of silencing the PENs in starvation
+                                                                conditions (Ilp7-Gal4 or HGN1-Gal4; UAS-shiTS1) (n = 6–9
+                                                                replicates of 10 flies). * = p &lt; 0.05, compared to
+                                                                corresponding UAS and Gal4 control. Significances
+                                                                indicated are based on ANOVA and Tukey post-hoc test.
+                                                                Data represent the average ± s.e.m. of the results
+                                                                obtained.<br></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="sc-paragraph"
+                                                         data-id="427a0ef7573721da707f0c3dc77d8f58"><span
+                                                                class="sc-text-property"
+                                                                data-path="427a0ef7573721da707f0c3dc77d8f58.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">We first used these  Gal4 lines to activate specific enteric neurons by expressing the temperature-sensitive ion channel, TRPA1, and measured the effects on hemolymph glucose levels (UAS-TRPA1 [<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_f48beecc485eda07ad77c81b24de59ad">[5]</span>]). Activation of the  Ilp7-Gal4 neurons significantly decreases glucose levels in comparison to the  Ilp7-Gal4 and  UAS-TRPA1 controls (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_ef867bf8ba214a7a68bd6edf54bef65f">Figure 1</span>C). Since  Ilp7-Gal4 is also expressed in the CNS and in neurons projecting to the reproductive organs (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_145773556eac5e31ca1709d696d91f55">[6]</span>), we did similar experiment using  HGN1-Gal4, which expresses in the PENSs, but not in the other  Ilp7-Gal4 neurons (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_6f0df4ab624a585aa3ed097a26bc5499">[4]</span>), and obtained similar results on glucose levels (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_1010328fada71896649b6a890f8ee985">Figure 1</span>C). We next examined enteric neurons projecting to other regions of the digestive system using  GMR48A05-Gal4 and  GMR51F12-Gal4 and did not observe any obvious effect (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_a47013e3bdcd79b43ae41993e2ec2cff">Figure 1</span>C). We then assayed the effects of silencing these neurons by expressing the temperature-sensitive Dynamin,  ShiTS1 (UAS-ShiTS1 [<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_752ce14f6da5741ba830fea6d1f13624">[7]</span>]). Silencing of the PENs using both  Ilp7-Gal4 and  HGN1-Gal4 increased glucose levels in comparison to the controls, while no effect was observed by silencing the  GMR48A05-Gal4 and  GMR51F12-Gal4 neurons (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_c372ce2f7ebf8531d129837c170f321b">Figure 1</span>D). Together, the data indicate that activities of the PENs are integral in the regulation of hemolymph glucose levels.<br></span>
+                                                    </div>
+                                                    <div class="sc-paragraph"
+                                                         data-id="6f74a8a172573b6573aed01370afa49b"><span
+                                                                class="sc-text-property"
+                                                                data-path="6f74a8a172573b6573aed01370afa49b.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">The change of glucose levels could result from differences in food intake. Previous work by Miguel-Aliaga and colleagues revealed that silencing  Ilp7-Gal4 neurons increases defecation (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_578ba2e3257a8019616e4586a1f1bea3">[4]</span>), which could be the result of increased feeding. We therefore examined the hypothesis that the activities of the PENs regulate food intake. Consistent with the hypothesis, we silenced the PENs in the absence of food and found that this abolished the gains in glucose levels (Figure 1E). We next investigated this directly using the capillary feeding assay (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_5a3016590328779c2a91c253679bda54">[8]</span>). Silencing the PENs dramatically increased food intake (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_8f02b33657dfb45ab13f5a7c1dbf3907">Figure 2</span>A), which is consistent with the gains in glucose levels seen earlier. Conversely, activating these neurons caused dramatic decreases in feeding (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_24c9d5f97395268700b9cb9138cc918b">Figure 2</span>B). Together, manipulation of the activities of the PENs results in an overall six-fold change in feeding in comparison to the controls. This change is significantly larger than alterations by modulation of neuropeptide F signaling (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_3578f71046840191540305425f4b4409">[9]</span>). These data indicate that the activities of the PENs play a prominent role in feeding.<br></span>
+                                                    </div>
+                                                    <div class="sc-figure"
+                                                         data-id="image-figure_3bbfc523e06f0e7bde371945ba74c066">
+                                                        <div class="se-label" contenteditable="false">Figure 2</div>
+                                                        <div class="se-title sc-text-property"
+                                                             data-path="image-figure_3bbfc523e06f0e7bde371945ba74c066.title"
+                                                             spellcheck="false" style="white-space: pre-wrap;">PPK1
+                                                            functions in Drosophila PENs to regulate feeding.<br></div>
+                                                        <div class="se-figure-content" contenteditable="false"><img
+                                                                    class="sc-image"
+                                                                    data-id="8a429f244838a40be88120021fabb8f7"
+                                                                    contenteditable="false"
+                                                                    src="./Lens - Regulation of food intake by mechanosensory ion channels in enteric neurons_files/elife04402f002.jpg">
+                                                        </div>
+                                                        <div class="se-description">
+                                                            <div class="se-caption sc-text-property"
+                                                                 data-path="image-figure_3bbfc523e06f0e7bde371945ba74c066.caption"
+                                                                 spellcheck="false" style="white-space: pre-wrap;">
+                                                                (A–B)Results of capillary feeding assays by either
+                                                                inactivating (A, Ilp7-Gal4 or HGN1-Gal4; UAS-shiTS1) or
+                                                                activating (B, Ilp7-Gal4 or HGN1-Gal4; UAS-TRPA1) the
+                                                                PENs (n = 4–8 replicates).(C)Outside and inside views of
+                                                                the hindgut (red, phalloidin, muscle) with posterior
+                                                                enteric neuron projections (green, 22C10).(D)PPK1
+                                                                expresses in the PENs projecting to the hindgut pylorus
+                                                                (left) and rectum (right)
+                                                                (PPK1-Gal4;UAS-mCD8::GFP).(E)The effect of PPK1
+                                                                knock-down on food intake (Ilp7-Gal4 or HGN1-Gal4,
+                                                                UAS-PPK1-RNAi#1 or UAS-PPK1-RNAi#2) (n = 3–8
+                                                                replicates). (F) Food intake results for PPK1 deficiency
+                                                                (dfb88h49/dfA400) and rescued animals (dfb88h49/dfA400;
+                                                                Ilp7-Gal4, UAS-PPK1) (n = 4–7 replicates).(G)Food intake
+                                                                results when PPK1 is inhibited using benzamil in
+                                                                wild-type or Ilp7 &gt; PPK1 RNAi #1 flies (n = 8–10
+                                                                replicates). * = p &lt; 0.05, compared to corresponding
+                                                                UAS and Gal4 control or indicated controls.
+                                                                Significances indicated are based on ANOVA and Tukey
+                                                                post-hoc test. Data represent the average ± s.e.m. of
+                                                                the results obtained.<br></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="sc-paragraph"
+                                                         data-id="7640c2b98ce3245a3ee91a5223a3bbd5"><span
+                                                                class="sc-text-property"
+                                                                data-path="7640c2b98ce3245a3ee91a5223a3bbd5.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">As described above, experiments in mammals indicated that mechanic tension in the gastrointestinal tract could be a satiety signal (Cannon and Washburn, 1911;<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_42231cf95db723ddad3957e76499128a">[1]</span>). To determine whether the role of the PENs in feeding is related to mechanosensing activity, we first examined the projections of these neurons and found that they tightly wrap around the muscle layer rather than projecting into the lumen of the gut (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_27036f546c52e6a241dc5104d3b880cf">Figure 2</span>C). This anatomy favors an involvement of mechanosensory activity rather than in detecting nutritional signals in gastrointestinal tract.<br></span>
+                                                    </div>
+                                                    <div class="sc-paragraph"
+                                                         data-id="cad4e2ef98bb2f0dbc952508bc3adc0e"><span
+                                                                class="sc-text-property"
+                                                                data-path="cad4e2ef98bb2f0dbc952508bc3adc0e.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Previous studies in  Caenorhabditis elegans,  Drosophila, and mice have shown that members of the Degenerin/Epithelial Sodium Channels (DEG/ENaCs) function as a conserved family of mechanosensory ion channels (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_40dadec4ad3b4a2ccfbe2f8f16ac7e63">[10]</span>). Mutants of the  C. elegans DEG/ENaC  Mec-4 and its  Drosophila homolog,  PPK1, are touch-insensitive and the affected neurons fail to generate action potentials in response to mechanic tension (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_f9ffa367165498e24505b11270b96970">[10]</span>). This raised the possibility that  PPK1 could be involved in regulating feeding in the PENs. We thus examined  PPK1 expression using  PPK1-Gal4 driving mCD8::GFP and confirmed its presence in the PENs (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_7d218669a2b7ad2d7fefb71f95d2ef03">Figure 2</span>D). To test whether the function of  PPK1 in the PENs is involved in the regulation of feeding, we first assayed the effect of RNAi knockdown of  PPK1 expression (Ilp7-Gal4 or HGN1-Gal4//UAS-PPK1-RNAi). Knockdown of  PPK1 in the PENs, but not knockdown of  PPK29, a related family member (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_6a593a9c607b2661302710d75ce82b2e">[11]</span>), dramatically increased feeding (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_88f62730fcacc1e6ededdb25893b2d89">Figure 2</span>E), phenocopying the effects of silencing these neurons. Next, we examined the effect of  PPK1 deficiency on feeding and found that  PPK1 deficient flies have incrhttp://dx.doi.org/10.1016/S0960-9822(03)00596-7eased food intake (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_36fbca9de1321b4827942b67b1f7b688">Figure 2</span>F). This feeding defect is rescued by expressing a  PPK1 transgene in the PENs (Ilp7-Gal4, UAS- PPK1 (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_6fbb793d65722e3be48cc863b36e9bda">[12]</span>),<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_d97abf30f0cceceadf7a3b4891f45ba9">Figure 2</span>F). Finally, pharmacological inhibitor of DEG/ENaCs, benzamil, has been used to antagonize PPK1 in Drosophila and homologs in mice (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_cf776775188006200e807adfe5ebd1ca">[13]</span>). We therefore investigated the effect of benzamil on feeding and found it increased food consumption when supplemented in fly food, but not in flies where  PPK1 is knocked down (<span
+                                                                    class="sc-citation sm-image-figure-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="image-figure_citation_86a2afd5f99bae1b135b7b70c3518aab">Figure 2</span>G). Together, these data indicate that the mechanosensory ion channel, PPK1, plays a critical role in the PENs for regulating feeding.<br></span>
+                                                    </div>
+                                                    <div class="sc-paragraph"
+                                                         data-id="0fdab0a558a6258cf606d595fa2235c4"><span
+                                                                class="sc-text-property"
+                                                                data-path="0fdab0a558a6258cf606d595fa2235c4.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">The identification of the involvement of the DEG/ENaC mechanosensory ion channels in enteric neurons for regulating feeding lays the groundwork for investigating mechanisms underlying the phenomenon of fullness sensation. Pharmacological interventions on appetite stimulation and suppression are important for many diseases including obesity, cancer, and AIDS. Currently, all three FDA-approved weight-loss drugs have significant side-effects that target either the hypothalamus or fat absorption (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_95a7d54c5fa99876fdf3b7541b2e04fc">[14]</span>). Enteric DEG/ENaCs provide an attractive alternative for drug development due to their druggability, pharmacological accessibility, and fewer side-effect complications than the central nervous system. Overall, our findings indicate an important role of the DEG/ENaC mechanosensory ion channels in the enteric nervous system in food intake and suggest an exciting therapeutic alternative for fighting obesity.<br></span>
+                                                    </div>
+                                                    <div class="sc-heading sm-level-1"
+                                                         data-id="ab2bb0b1f45c345ea558a2c981d1d5b8"><span
+                                                                class="sc-text-property"
+                                                                data-path="ab2bb0b1f45c345ea558a2c981d1d5b8.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Materials and methods<br></span>
+                                                    </div>
+                                                    <div class="sc-heading sm-level-2"
+                                                         data-id="f6aff21fab01ede1a83278ba0dc05888"><span
+                                                                class="sc-text-property"
+                                                                data-path="f6aff21fab01ede1a83278ba0dc05888.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Fly stocks<br></span>
+                                                    </div>
+                                                    <div class="sc-paragraph"
+                                                         data-id="687638a04586701897bac96e5f4468a4"><span
+                                                                class="sc-text-property"
+                                                                data-path="687638a04586701897bac96e5f4468a4.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Flies were reared at 25°C on standard cornmeal-molasses medium, unless indicated otherwise. The following stocks were used in this study:  GMR51F12-Gal4 (<span
+                                                                    class="sc-citation sm-bib-item-citation sm-highlighted"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_1108c4c777592b848a3750317d6c714e">[3]</span>) (Bloomington Stock Center),  GMR48A05-Gal4 (Jenett et al., 2012) (Bloomington Stock Center),  Ilp7-Gal4 and  HGN1-Gal4 were gifts from Dr Irene Miguel-Aliaga (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_f8c7816e2c725f8e6232183b657ed918">[4]</span>),  UAS-ShiTS1 was a gift from Toshihiro Kitamoto (Kitamoto, 2013),  UAS-TRPA1 (Bloomington Stock Center), 1XUAS-cd8::GFP ([<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_eba47e625fdd640806bd1d5f3a9b38e0">[15]</span>], Bloomington Stock Center),  PPK1-Gal4 ([<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_8eb622b07d9d713621f4bd6e0df738dc">[16]</span>], Bloomington Stock Center),  UAS-PPK1 was a gift from Wayne Johnson (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_b031dbca8562538e3a3530c38747bf8f">[12]</span>),  UAS-PPK1 RNAi #1 (Bloomington Stock Center),  UAS-PPK1 RNAi #2 (Vienna Drosophila RNAi Center, 108683), UAS-PPK29 RNAi (Bloomington Stock Center),  b88h49df (Bloomington Stock Center),  A400df (Bloomington Stock Center) and  yw flies.<br></span>
+                                                    </div>
+                                                    <div class="sc-heading sm-level-2"
+                                                         data-id="f1e7c4553c5c784f55bd99d8925974a3"><span
+                                                                class="sc-text-property"
+                                                                data-path="f1e7c4553c5c784f55bd99d8925974a3.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Hemolymph glycemia measurements<br></span>
+                                                    </div>
+                                                    <div class="sc-paragraph"
+                                                         data-id="e125216f020a1e953aad32788309c50c"><span
+                                                                class="sc-text-property"
+                                                                data-path="e125216f020a1e953aad32788309c50c.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Crosses were performed at 18°C. 2-day old male flies of the indicated genotypes were incubated at 29°C in groups of ten for 24 hr and starved for 5 hr. Hemolymph was then collected as described (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_605aa85b44c390b002b950e4c81cdc8d">[17]</span>) and subjected to a glucose assay (Glucose Hexokinase Liquid Stable Reagent, Thermo Scientific, Waltham, Massachusetts, USA).<br></span>
+                                                    </div>
+                                                    <div class="sc-heading sm-level-2"
+                                                         data-id="e970791bef4c539f376ed9316b623d8c"><span
+                                                                class="sc-text-property"
+                                                                data-path="e970791bef4c539f376ed9316b623d8c.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Capillary feeding assays<br></span>
+                                                    </div>
+                                                    <div class="sc-paragraph"
+                                                         data-id="0e73b72d003c2a195f876add8d959128"><span
+                                                                class="sc-text-property"
+                                                                data-path="0e73b72d003c2a195f876add8d959128.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Flies were raised at 18°C. Capillary feeding assays were performed as described (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_f718dc9e21517bfc9054684103ca6ff5">[8]</span>) on 2-day old males in groups of four at 29°C for 24 hr. The diet was a 5% yeast extract and 5% sucrose solution. For the benzamil experiment, male  yw flies were provided food with 100 mM sucrose supplemented with either 10 mM benzamil or DMSO. The concentration was chosen based upon previous work (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_49837cfe0e595094c9823a9e54c2c23b">[13]</span>). Green food coloring (1:100, McCormick, Sparks, Maryland, USA) was added to the food to track consumption.<br></span>
+                                                    </div>
+                                                    <div class="sc-heading sm-level-2"
+                                                         data-id="c9dd0022019af3c6cb6b1126800a5855"><span
+                                                                class="sc-text-property"
+                                                                data-path="c9dd0022019af3c6cb6b1126800a5855.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Drosophila  immunohistochemistry<br></span>
+                                                    </div>
+                                                    <div class="sc-paragraph"
+                                                         data-id="ae29aa222997e4e39b83d469165f12f4"><span
+                                                                class="sc-text-property"
+                                                                data-path="ae29aa222997e4e39b83d469165f12f4.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Drosophila guts were dissected and fixed as previously described (<span
+                                                                    class="sc-citation sm-bib-item-citation"
+                                                                    data-inline="1" contenteditable="false"
+                                                                    data-id="bib_item_citation_f93604d6b97fa8ab2582911812e066e8">[4]</span>). The following antibodies and fluorescent markers were used: rabbit Anti-GFP antibody (ab290; 1:1000; Abcam, Cambridge, UK). Alexa Fluor 488 Goat Anti-Rabbit IgG (H + L) (A11034; 1:800; Life Technologies, Gaithersburg, MD, USA), mAb22C10 (Developmental Studies Hybridoma Bank, University of Iowa), and Alexa Fluor 633 phalloidin (A22284; 1:250; Life Technologies). For the three-dimensional model of the posterior enteric neuron region, a z-stack series of confocal images were taken from a gut sample immunostained with mAb22C10 and Alexa Fluor 633 phalloidin and then converted into a model using Imaris. All images were acquired using a Zeiss LSM510 and analyzed using Imaris (Bitplane, Zurich, Switzerland).<br></span>
+                                                    </div>
+                                                    <div class="sc-heading sm-level-2"
+                                                         data-id="770736e3b4fa73980782b1a311e7f21f"><span
+                                                                class="sc-text-property"
+                                                                data-path="770736e3b4fa73980782b1a311e7f21f.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">Statistics analyses<br></span>
+                                                    </div>
+                                                    <div class="sc-paragraph"
+                                                         data-id="c189d1cbbae1fb89658c830d877a947e"><span
+                                                                class="sc-text-property"
+                                                                data-path="c189d1cbbae1fb89658c830d877a947e.content"
+                                                                spellcheck="false" style="white-space: pre-wrap;">All data, presented as average ± s.e.m. or average ± s.d., were analyzed with GraphPad Prism 6. Unless indicated otherwise, unpaired Student's  t test was used to determine differences between groups in each panel. For the rescue experiment, the results were compared by ANOVA followed by Tukey post hoc test. Data for each experiment met the assumption of the statistical tests. The sample size, as indicated in the figure legends, was chosen based on similar experiments reported previously, and was large enough to eliminate the variance between the groups before testing. No samples or animals were excluded from statistical analysis. All studies had been repeated for more than three times. The experimental groups were allocated randomly, and no blinding was done during allocation.<br></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="bibliography-component bib-items">
+                                                <div class="content-node heading level-1">References</div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[1]</div>
+                                                    <div class="text csl-right-inline">Hargrave SL, Kinzig KP (2012)
+                                                        Repeated gastric distension alters food intake and
+                                                        neuroendocrine profiles in rats. Physiology &amp;amp; Behavior
+                                                        105: 975–981. Available:
+                                                        http://dx.doi.org/10.1016/j.physbeh.2011.11.006.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[2]</div>
+                                                    <div class="text csl-right-inline">Marella S, Mann K, Scott K (2012)
+                                                        Dopaminergic Modulation of Sucrose Acceptance Behavior in
+                                                        Drosophila. Neuron 73: 941–950. Available:
+                                                        http://dx.doi.org/10.1016/j.neuron.2011.12.032.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[3]</div>
+                                                    <div class="text csl-right-inline">Jenett A, Rubin GM, Ngo T-TB,
+                                                        Shepherd D, Murphy C, et al. (2012) A GAL4-Driver Line Resource
+                                                        for Drosophila Neurobiology. Cell Reports 2: 991–1001.
+                                                        Available: http://dx.doi.org/10.1016/j.celrep.2012.09.011.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[4]</div>
+                                                    <div class="text csl-right-inline">Cognigni P, Bailey AP,
+                                                        Miguel-Aliaga I (2011) Enteric Neurons and Systemic Signals
+                                                        Couple Nutritional and Reproductive Status with Intestinal
+                                                        Homeostasis. Cell Metabolism 13: 92–104. Available:
+                                                        http://dx.doi.org/10.1016/j.cmet.2010.12.010.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[5]</div>
+                                                    <div class="text csl-right-inline">Hamada FN, Rosenzweig M, Kang K,
+                                                        Pulver SR, Ghezzi A, et al. (2008) An internal thermal sensor
+                                                        controlling temperature preference in Drosophila. Nature 454:
+                                                        217–220. Available: http://dx.doi.org/10.1038/nature07001.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[6]</div>
+                                                    <div class="text csl-right-inline">Yang C -h., Belawat P, Hafen E,
+                                                        Jan LY, Jan Y-N (2008) Drosophila Egg-Laying Site Selection as a
+                                                        System to Study Simple Decision-Making Processes. Science 319:
+                                                        1679–1683. Available: http://dx.doi.org/10.1126/science.1151842.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[7]</div>
+                                                    <div class="text csl-right-inline">Kitamoto T (2001) Conditional
+                                                        modification of behavior inDrosophila by targeted expression of
+                                                        a temperature-sensitiveshibire allele in defined neurons.
+                                                        Journal of Neurobiology 47: 81–92. Available:
+                                                        http://dx.doi.org/10.1002/neu.1018.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[8]</div>
+                                                    <div class="text csl-right-inline">Ja WW, Carvalho GB, Mak EM, de la
+                                                        Rosa NN, Fang AY, et al. (2007) Prandiology of Drosophila and
+                                                        the CAFE assay. Proceedings of the National Academy of Sciences
+                                                        104: 8253–8256. Available:
+                                                        http://dx.doi.org/10.1073/pnas.0702726104.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[9]</div>
+                                                    <div class="text csl-right-inline">Hong S-H, Lee K-S, Kwak S-J, Kim
+                                                        A-K, Bai H, et al. (2012) Minibrain/Dyrk1a Regulates Food Intake
+                                                        through the Sir2-FOXO-sNPF/NPY Pathway in Drosophila and
+                                                        Mammals. PLoS Genetics 8: e1002857. Available:
+                                                        http://dx.doi.org/10.1371/journal.pgen.1002857.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[10]</div>
+                                                    <div class="text csl-right-inline">O’Hagan R, Chalfie M, Goodman MB
+                                                        (2004) The MEC-4 DEG/ENaC channel of Caenorhabditis elegans
+                                                        touch receptor neurons transduces mechanical signals. Nature
+                                                        Neuroscience 8: 43–50. Available:
+                                                        http://dx.doi.org/10.1038/nn1362.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[11]</div>
+                                                    <div class="text csl-right-inline">Thistle R, Cameron P, Ghorayshi
+                                                        A, Dennison L, Scott K (2012) Contact Chemoreceptors Mediate
+                                                        Male-Male Repulsion and Male-Female Attraction during Drosophila
+                                                        Courtship. Cell 149: 1140–1151. Available:
+                                                        http://dx.doi.org/10.1016/j.cell.2012.03.045.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[12]</div>
+                                                    <div class="text csl-right-inline">Ainsley JA, Kim MJ, Wegman LJ,
+                                                        Pettus JM, Johnson WA (2008) Sensory mechanisms controlling the
+                                                        timing of larval developmental and behavioral transitions
+                                                        require the Drosophila DEG/ENaC subunit, Pickpocket1.
+                                                        Developmental Biology 322: 46–55. Available:
+                                                        http://dx.doi.org/10.1016/j.ydbio.2008.07.003.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[13]</div>
+                                                    <div class="text csl-right-inline">Liu L, Johnson WA, Welsh MJ
+                                                        (2003) Drosophila DEG/ENaC pickpocket genes are expressed in the
+                                                        tracheal system, where they may be involved in liquid clearance.
+                                                        Proceedings of the National Academy of Sciences 100: 2128–2133.
+                                                        Available: http://dx.doi.org/10.1073/pnas.252785099.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[14]</div>
+                                                    <div class="text csl-right-inline">Manning S, Pucci A, Finer N
+                                                        (2014) Pharmacotherapy for obesity: novel agents and paradigms.
+                                                        Therapeutic Advances in Chronic Disease 5: 135–148. Available:
+                                                        http://dx.doi.org/10.1177/2040622314522848.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[15]</div>
+                                                    <div class="text csl-right-inline">Pfeiffer BD, Ngo T-TB, Hibbard
+                                                        KL, Murphy C, Jenett A, et al. (2010) Refinement of Tools for
+                                                        Targeted Gene Expression in Drosophila. Genetics 186: 735–755.
+                                                        Available: http://dx.doi.org/10.1534/genetics.110.119917.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[16]</div>
+                                                    <div class="text csl-right-inline">Ainsley JA, Pettus JM, Bosenko D,
+                                                        Gerstein CE, Zinkevich N, et al. (2003) Enhanced Locomotion
+                                                        Caused by Loss of the Drosophila DEG/ENaC Protein Pickpocket1.
+                                                        Current Biology 13: 1557–1563. Available:
+                                                        http://dx.doi.org/10.1016/s0960-9822(03)00596-7.
+                                                    </div>
+                                                </div>
+                                                <div class="bib-item clearfix">
+                                                    <div class="label csl-left-margin">[17]</div>
+                                                    <div class="text csl-right-inline">Haselton A, Sharmin E, Schrader
+                                                        J, Sah M, Poon P, et al. (2010) Partial ablation of adult
+                                                        Drosophilainsulin-producing neurons modulates glucose
+                                                        homeostasis and extends life span without insulin resistance.
+                                                        Cell Cycle 9: 3135–3143. Available:
+                                                        http://dx.doi.org/10.4161/cc.9.15.12458.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="se-context-section se-pane sm-auto-fill">
+                            <div class="sc-tabbed-pane">
+                                <div class="se-tabs"><a class="se-tab" href="http://substance.io/lens/#"
+                                                        data-id="toc"><span class="label">Contents</span></a><a
+                                            class="se-tab sm-active" href="http://substance.io/lens/#"
+                                            data-id="bib-items"><span class="label">References</span></a></div>
+                                <div class="se-tab-content">
+                                    <div class="sc-bib-items-panel">
+                                        <div class="sc-scroll-pane">
+                                            <div class="se-scrollable">
+                                                <div class="se-content">
+                                                    <div class="se-bib-items">
+                                                        <div class="se-bibliography-summary"><p>Your bibliography has
+                                                                <strong>22 references</strong> in total.</p>
+                                                            <p><a href="http://substance.io/lens/#">Add references</a>
+                                                            </p></div>
+                                                        <div class="sc-bib-item"
+                                                             data-id="10.1016/j.physbeh.2011.11.006">
+                                                            <div class="se-label">[1]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Hargrave SL, Kinzig KP (2012) Repeated
+                                                                gastric distension alters food intake and neuroendocrine
+                                                                profiles in rats. Physiology &amp;amp; Behavior 105:
+                                                                975–981. Available:
+                                                                http://dx.doi.org/10.1016/j.physbeh.2011.11.006.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1016/j.neuron.2011.12.032">
+                                                            <div class="se-label">[2]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Marella S, Mann K, Scott K (2012)
+                                                                Dopaminergic Modulation of Sucrose Acceptance Behavior
+                                                                in Drosophila. Neuron 73: 941–950. Available:
+                                                                http://dx.doi.org/10.1016/j.neuron.2011.12.032.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item se-highlighted"
+                                                             data-id="10.1016/j.celrep.2012.09.011">
+                                                            <div class="se-label">[3]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Jenett A, Rubin GM, Ngo T-TB, Shepherd
+                                                                D, Murphy C, et al. (2012) A GAL4-Driver Line Resource
+                                                                for Drosophila Neurobiology. Cell Reports 2: 991–1001.
+                                                                Available:
+                                                                http://dx.doi.org/10.1016/j.celrep.2012.09.011.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1016/j.cmet.2010.12.010">
+                                                            <div class="se-label">[4]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Cognigni P, Bailey AP, Miguel-Aliaga I
+                                                                (2011) Enteric Neurons and Systemic Signals Couple
+                                                                Nutritional and Reproductive Status with Intestinal
+                                                                Homeostasis. Cell Metabolism 13: 92–104. Available:
+                                                                http://dx.doi.org/10.1016/j.cmet.2010.12.010.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1038/nature07001">
+                                                            <div class="se-label">[5]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Hamada FN, Rosenzweig M, Kang K, Pulver
+                                                                SR, Ghezzi A, et al. (2008) An internal thermal sensor
+                                                                controlling temperature preference in Drosophila. Nature
+                                                                454: 217–220. Available:
+                                                                http://dx.doi.org/10.1038/nature07001.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1126/science.1151842">
+                                                            <div class="se-label">[6]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Yang C -h., Belawat P, Hafen E, Jan LY,
+                                                                Jan Y-N (2008) Drosophila Egg-Laying Site Selection as a
+                                                                System to Study Simple Decision-Making Processes.
+                                                                Science 319: 1679–1683. Available:
+                                                                http://dx.doi.org/10.1126/science.1151842.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1002/neu.1018">
+                                                            <div class="se-label">[7]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Kitamoto T (2001) Conditional
+                                                                modification of behavior inDrosophila by targeted
+                                                                expression of a temperature-sensitiveshibire allele in
+                                                                defined neurons. Journal of Neurobiology 47: 81–92.
+                                                                Available: http://dx.doi.org/10.1002/neu.1018.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1073/pnas.0702726104">
+                                                            <div class="se-label">[8]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Ja WW, Carvalho GB, Mak EM, de la Rosa
+                                                                NN, Fang AY, et al. (2007) Prandiology of Drosophila and
+                                                                the CAFE assay. Proceedings of the National Academy of
+                                                                Sciences 104: 8253–8256. Available:
+                                                                http://dx.doi.org/10.1073/pnas.0702726104.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1371/journal.pgen.1002857">
+                                                            <div class="se-label">[9]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Hong S-H, Lee K-S, Kwak S-J, Kim A-K,
+                                                                Bai H, et al. (2012) Minibrain/Dyrk1a Regulates Food
+                                                                Intake through the Sir2-FOXO-sNPF/NPY Pathway in
+                                                                Drosophila and Mammals. PLoS Genetics 8: e1002857.
+                                                                Available:
+                                                                http://dx.doi.org/10.1371/journal.pgen.1002857.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1038/nn1362">
+                                                            <div class="se-label">[10]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">O’Hagan R, Chalfie M, Goodman MB (2004)
+                                                                The MEC-4 DEG/ENaC channel of Caenorhabditis elegans
+                                                                touch receptor neurons transduces mechanical signals.
+                                                                Nature Neuroscience 8: 43–50. Available:
+                                                                http://dx.doi.org/10.1038/nn1362.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1016/j.cell.2012.03.045">
+                                                            <div class="se-label">[11]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Thistle R, Cameron P, Ghorayshi A,
+                                                                Dennison L, Scott K (2012) Contact Chemoreceptors
+                                                                Mediate Male-Male Repulsion and Male-Female Attraction
+                                                                during Drosophila Courtship. Cell 149: 1140–1151.
+                                                                Available: http://dx.doi.org/10.1016/j.cell.2012.03.045.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1016/j.ydbio.2008.07.003">
+                                                            <div class="se-label">[12]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Ainsley JA, Kim MJ, Wegman LJ, Pettus
+                                                                JM, Johnson WA (2008) Sensory mechanisms controlling the
+                                                                timing of larval developmental and behavioral
+                                                                transitions require the Drosophila DEG/ENaC subunit,
+                                                                Pickpocket1. Developmental Biology 322: 46–55.
+                                                                Available:
+                                                                http://dx.doi.org/10.1016/j.ydbio.2008.07.003.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1073/pnas.252785099">
+                                                            <div class="se-label">[13]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Liu L, Johnson WA, Welsh MJ (2003)
+                                                                Drosophila DEG/ENaC pickpocket genes are expressed in
+                                                                the tracheal system, where they may be involved in
+                                                                liquid clearance. Proceedings of the National Academy of
+                                                                Sciences 100: 2128–2133. Available:
+                                                                http://dx.doi.org/10.1073/pnas.252785099.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1177/2040622314522848">
+                                                            <div class="se-label">[14]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Manning S, Pucci A, Finer N (2014)
+                                                                Pharmacotherapy for obesity: novel agents and paradigms.
+                                                                Therapeutic Advances in Chronic Disease 5: 135–148.
+                                                                Available: http://dx.doi.org/10.1177/2040622314522848.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1534/genetics.110.119917">
+                                                            <div class="se-label">[15]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Pfeiffer BD, Ngo T-TB, Hibbard KL,
+                                                                Murphy C, Jenett A, et al. (2010) Refinement of Tools
+                                                                for Targeted Gene Expression in Drosophila. Genetics
+                                                                186: 735–755. Available:
+                                                                http://dx.doi.org/10.1534/genetics.110.119917.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item"
+                                                             data-id="10.1016/s0960-9822(03)00596-7">
+                                                            <div class="se-label">[16]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Ainsley JA, Pettus JM, Bosenko D,
+                                                                Gerstein CE, Zinkevich N, et al. (2003) Enhanced
+                                                                Locomotion Caused by Loss of the Drosophila DEG/ENaC
+                                                                Protein Pickpocket1. Current Biology 13: 1557–1563.
+                                                                Available:
+                                                                http://dx.doi.org/10.1016/s0960-9822(03)00596-7.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.4161/cc.9.15.12458">
+                                                            <div class="se-label">[17]</div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Haselton A, Sharmin E, Schrader J, Sah
+                                                                M, Poon P, et al. (2010) Partial ablation of adult
+                                                                Drosophilainsulin-producing neurons modulates glucose
+                                                                homeostasis and extends life span without insulin
+                                                                resistance. Cell Cycle 9: 3135–3143. Available:
+                                                                http://dx.doi.org/10.4161/cc.9.15.12458.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1038/nn.3372">
+                                                            <div class="se-label"></div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Dus M, Ai M, Suh GSB (2013)
+                                                                Taste-independent nutrient selection is mediated by a
+                                                                brain-specific Na+/solute co-transporter in Drosophila.
+                                                                Nature Neuroscience 16: 526–528. Available:
+                                                                http://dx.doi.org/10.1038/nn.3372.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1016/j.cub.2007.11.029">
+                                                            <div class="se-label"></div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Hwang RY, Zhong L, Xu Y, Johnson T,
+                                                                Zhang F, et al. (2007) Nociceptive Neurons Protect
+                                                                Drosophila Larvae from Parasitoid Wasps. Current Biology
+                                                                17: 2105–2116. Available:
+                                                                http://dx.doi.org/10.1016/j.cub.2007.11.029.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1016/j.pain.2007.03.019">
+                                                            <div class="se-label"></div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Page AJ, Brierley SM, Martin CM, Hughes
+                                                                PA, Blackshaw AL (2007) Acid sensing ion channels 2 and
+                                                                3 are required for inhibition of visceral nociceptors by
+                                                                benzamil. Pain 133: 150–160. Available:
+                                                                http://dx.doi.org/10.1016/j.pain.2007.03.019.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1016/j.neuron.2014.05.006">
+                                                            <div class="se-label"></div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Pool A-H, Kvello P, Mann K, Cheung SK,
+                                                                Gordon MD, et al. (2014) Four GABAergic Interneurons
+                                                                Impose Feeding Restraint in Drosophila. Neuron 83:
+                                                                164–177. Available:
+                                                                http://dx.doi.org/10.1016/j.neuron.2014.05.006.
+                                                            </div>
+                                                        </div>
+                                                        <div class="sc-bib-item" data-id="10.1016/j.cub.2009.12.057">
+                                                            <div class="se-label"></div>
+                                                            <button class="se-focus-toggle"><i class="fa fa-eye"></i>
+                                                                Focus
+                                                            </button>
+                                                            <div class="se-text">Zhong L, Hwang RY, Tracey WD (2010)
+                                                                Pickpocket Is a DEG/ENaC Protein Required for Mechanical
+                                                                Nociception in Drosophila Larvae. Current Biology 20:
+                                                                429–434. Available:
+                                                                http://dx.doi.org/10.1016/j.cub.2009.12.057.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="se-pane sm-sized status-bar-component fill-light">
+                        <div class="document-status">Regulation of food intake by mechanosensory ion channels in enteric
+                            neurons
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div contenteditable="true" style="position: fixed; opacity: 0; bottom: -1000px; width: 0px;"></div>
+</body>
+</html>

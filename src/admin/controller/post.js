@@ -32,6 +32,15 @@ export default class extends Base {
 
                 post.terms = await _taxonomy.getTermsByObject(post.id);
 
+                // let snippets = await _dao.where({type: 'snippet', parent: ID}).select();
+                let snippets = await _dao.findPostSnippets(ID);
+
+                // console.log(JSON.stringify(snippets))
+                // 处理 json 对象
+
+                post.snippets = snippets;
+                // console.log(JSON.stringify(snippets))
+                // console.log(JSON.stringify(snippets) + "xxxxxxxxx")
                 // console.log(JSON.stringify(post.terms))
                 this.assign("post", post);
 

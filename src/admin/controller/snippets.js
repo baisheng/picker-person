@@ -25,7 +25,7 @@ export default class extends Base {
 //
         let snippet_terms = await _terms.findByTaxonomy('snippet');
 
-        console.log(JSON.stringify(snippet_terms))
+        // console.log(JSON.stringify(snippet_terms))
         let _items = [];
         snippet_terms.forEach((item) => {
             let _item = {};
@@ -240,13 +240,13 @@ export default class extends Base {
         // this.assign('pagerData', page); //分页展示使用
         let treeList = await arr_to_tree(list.data, 0);
 
-        for (let snippet of list.data) {
-           if (!think.isEmpty(snippet.meta) && snippet.meta['_snippet_link']) {
+        // for (let snippet of list.data) {
+        //    if (!think.isEmpty(snippet.meta) && snippet.meta['_snippet_link'] !== undefined) {
                // console.log(JSON.stringify(snippet.meta))
 
-               snippet.meta['_snippet_link'] = JSON.parse(snippet.meta['_snippet_link']);
-           }
-        }
+               // snippet.meta['_snippet_link'] = snippet.meta['_snippet_link'];
+           // }
+        // }
 
         list.data = treeList;
         // console.log(JSON.stringify(list));

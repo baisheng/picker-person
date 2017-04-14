@@ -35,7 +35,7 @@ gulp.task('lint', function() {
 // Compile less files of a full version
 gulp.task('less_full', function() {
     return gulp
-        .src('assets/less/_main_full/*.less')         // locate /less/ folder root to grab 4 main files
+        .src('./less/theme.less')         // locate /less/ folder root to grab 4 main files
         .pipe(less())                                 // compile
         .pipe(gulp.dest('assets/css'))                // destination path for normal CSS
         .pipe(minifyCss({                             // minify CSS
@@ -47,21 +47,6 @@ gulp.task('less_full', function() {
         .pipe(gulp.dest('assets/css'));               // destination path for minified CSS
 });
 
-
-// Compile less files of starter kit
-gulp.task('less_starters', function() {
-    return gulp
-        .src('assets/less/_main_starters/*.less')     // locate /less/ folder root to grab 4 main files
-        .pipe(less())                                 // compile
-        .pipe(gulp.dest('starters/assets/css'))       // destination path for normal CSS
-        .pipe(minifyCss({                             // minify CSS
-            keepSpecialComments: 0                    // remove all comments
-        }))
-        .pipe(rename({                                // rename file
-            suffix: ".min"                            // add *.min suffix
-        }))
-        .pipe(gulp.dest('starters/assets/css'));      // destination path for minified CSS
-});
 
 
 // Concatenate & minify JS (uncomment if you want to use)
@@ -92,21 +77,21 @@ gulp.task('minify_core', function() {
 
 // Watch files for changes
 gulp.task('watch', function() {
-    gulp.watch('assets/js/core/app.js', [             // listen for changes in app.js file and automatically compress
-        'lint',                                       // lint
-        //'concatenate',                              // concatenate & minify JS files (uncomment if in use)
-        'minify_core'                                 // compress app.js
-    ]); 
-    gulp.watch('assets/less/**/*.less', ['less_full', 'less_starters']);    // listen for changes in all LESS files and automatically re-compile
+    // gulp.watch('assets/js/core/app.js', [             // listen for changes in app.js file and automatically compress
+    //     'lint',                                       // lint
+    //     'concatenate',                              // concatenate & minify JS files (uncomment if in use)
+        // 'minify_core'                                 // compress app.js
+    // ]);
+    gulp.watch('./less/**/*.less', ['less_full']);    // listen for changes in all LESS files and automatically re-compile
 });
 
 
 // Default task
 gulp.task('default', [                                // list of default tasks
-    'lint',                                           // lint
+    // 'lint',                                           // lint
     'less_full',                                      // full version less compile
-    'less_starters',                                  // starter kit less compile
+    // 'less_starters',                                  // starter kit less compile
     //'concatenate',                                  // uncomment if in use
-    'minify_core',                                    // compress app.js
+    // 'minify_core',                                    // compress app.js
     'watch'                                           // watch for changes
 ]);

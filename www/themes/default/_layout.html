@@ -3,11 +3,53 @@
 
 {% include "./template-parts/_head.html" %}
 
+{% block style %}{% endblock %}
 <body class=" " data-smooth-scroll-offset='64'>
 <a id="start"></a>
-{% include "./template-parts/navbar.html" %}
-<div class="main-container">
+{#{% include "./template-parts/navbar.html" %}#}
+<a id="start"></a>
+
+{% block navbar %}
+    <div class="nav-container ">
+        <nav class="bar bar-4 bar--transparent bar--absolute" data-fixed-at="200">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1 col-md-offset-0 col-sm-2 col-sm-offset-0 col-xs-4 col-xs-offset-4">
+                        <div class="bar__module">
+                            <a href="index.html">
+                                <span class="logo">DEADLINE</span>
+                                {#<img class="logo logo-dark" alt="logo" src="img/logo-dark.png" />#}
+                                {#<img class="logo logo-light" alt="logo" src="img/logo-light.png" />#}
+                            </a>
+                        </div>
+                        <!--end module-->
+                    </div>
+                    <div class="col-md-4 col-md-offset-0 col-sm-5 col-sm-offset-0 col-xs-8 col-xs-offset-2">
+                        <div class="bar__module">
+                            <a class="btn btn--sm bg-facebook type--uppercase" href="#">
+                                    <span class="btn__text">
+                                        联系我
+                                    </span>
+                            </a>
+                            <a class="btn btn--sm btn--primary-2 type--uppercase" href="#">
+                                    <span class="btn__text">
+                                        我的作品
+                                    </span>
+                            </a>
+                        </div>
+                        <!--end module-->
+                    </div>
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </nav>
+        <!--end bar-->
+    </div>
+{% endblock %}
+<div class="main-container" id="main">
     {% block main %}{% endblock %}
+    {% block bottom %}{% endblock %}
 
 
     <div class="modal-container">
@@ -63,7 +105,12 @@
 <a class="back-to-top inner-link" href="#start" data-scroll-class="100vh:active">
     <i class="stack-interface stack-up-open-big"></i>
 </a>
+<script type="text/javascript" src="/static/assets/js/fetch.js"></script>
+<script src="/static/assets/js/vue/vue.js"></script>
+
 <script src="/themes/default/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>
+
 <script src="/themes/default/js/flickity.min.js"></script>
 <script src="/themes/default/js/easypiechart.min.js"></script>
 <script src="/themes/default/js/parallax.js"></script>

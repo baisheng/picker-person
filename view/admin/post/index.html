@@ -12,24 +12,26 @@
     <!-- Second navbar -->
     <div class="navbar navbar-default alpha-grey" id="navbar-second" v-cloak>
         <ul class="nav navbar-nav no-border visible-xs-block ">
-            <li ><a class=" collapsed pull-left" href="/admin/posts"><i class="icon-arrow-left7"></i></a></li>
+            <li><a class=" collapsed pull-left" href="/admin/posts"><i class="icon-arrow-left7"></i></a></li>
 
-            <li><a class=" collapsed pull-right" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-circle-down2"></i></a></li>
+            <li><a class=" collapsed pull-right" data-toggle="collapse" data-target="#navbar-second-toggle"><i
+                            class="icon-circle-down2"></i></a></li>
         </ul>
 
-        <div class="navbar-collapse collapse" id="navbar-second-toggle" >
+        <div class="navbar-collapse collapse" id="navbar-second-toggle">
             <ul class="nav navbar-nav ">
-                <li class="visible-lg-block"><a href="/admin/posts"><i class="text-primary icon-arrow-left7"></i></a></li>
+                <li class="visible-lg-block"><a href="/admin/posts"><i class="text-primary icon-arrow-left7"></i></a>
+                </li>
                 <li class="disabled" style="width: 120px;">
                     {#<a><i class="text-primary-400 icon-sync spinner position-left"></i>内容自动保存</a>#}
                     <a v-if="status == 'saving'" class="text-teal" v-cloak>
-                        <i class="icon-sync spinner position-left" ></i>
+                        <i class="icon-sync spinner position-left"></i>
                         保存中
                     </a>
-                    <a v-else-if="status == 'success'" class="text-muted"  v-cloak>
+                    <a v-else-if="status == 'success'" class="text-muted" v-cloak>
                         已保存
                     </a>
-                    <a v-else-if="status == 'editing'"  v-cloak>修改中</a>
+                    <a v-else-if="status == 'editing'" v-cloak>修改中</a>
                     <a v-else-if="status == 'init'" class="text-muted">内容自动保存</a>
                 </li>
 
@@ -37,11 +39,12 @@
 
             <ul class="nav navbar-nav navbar-right">
                 {#<a class="sidebar-control sidebar-opposite-toggle hidden-xs">#}
-                    {#<i class="icon-indent-decrease2"></i>#}
+                {#<i class="icon-indent-decrease2"></i>#}
                 {#</a>#}
                 <li class="disabled"><a class=""><i class="icon-eye position-left"></i> 预览</a></li>
-                <li class=""><a class="sidebar-control sidebar-opposite-toggle hidden-xs"><i class="icon-cog position-left"></i>  文章设置</a></li>
-                <li class="disabled"><a ><i class=" icon-paperplane position-left"></i> 发布</a></li>
+                <li class=""><a class="sidebar-control sidebar-opposite-toggle hidden-xs"><i
+                                class="icon-cog position-left"></i> 文章设置</a></li>
+                <li class="disabled"><a><i class=" icon-paperplane position-left"></i> 发布</a></li>
             </ul>
         </div>
     </div>
@@ -51,116 +54,107 @@
 {% block sidebar_main %}{% endblock %}
 
 {% block content %}
+    {#{{ post.snippets }}#}
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-                {#{{editorModel}}#}
-                {#<vue-editor :model="editorModel" v-on:modelchange="modelChangeEvent"> </vue-editor>#}
-                <!-- Single mail -->
-                <div class="panel panel-white">
+            {#{{editorModel}}#}
+            {#<vue-editor :model="editorModel" v-on:modelchange="modelChangeEvent"> </vue-editor>#}
+            <!-- Single mail -->
+            <div class="panel panel-white">
 
-                    <div class="profile-cover" v-show="is_cover">
-                        <div id="cover" class="profile-cover-img"
-                             style="background-image: url('/static/assets/images/demo/blog/2.jpg')"></div>
-                        <div class="media">
-                            {#<div class="media-left">#}
-                            {#<a href="#" class="profile-thumb">#}
-                            {#<img src="/static/assets/images/placeholder.jpg" class="img-circle" alt="">#}
-                            {#</a>#}
-                            {#</div>#}
+                <div class="profile-cover" v-show="is_cover">
+                    <div id="cover" class="profile-cover-img"
+                         style="background-image: url('/static/assets/images/demo/blog/2.jpg')"></div>
+                    <div class="media">
+                        {#<div class="media-left">#}
+                        {#<a href="#" class="profile-thumb">#}
+                        {#<img src="/static/assets/images/placeholder.jpg" class="img-circle" alt="">#}
+                        {#</a>#}
+                        {#</div>#}
 
-                            <div class="media-body">
-                                <h1>
-                                    ${ title }
-                                    {#<small class="display-block">UX/UI designer</small>#}
-                                </h1>
-                            </div>
+                        <div class="media-body">
+                            <h1>
+                                ${ title }
+                                {#<small class="display-block">UX/UI designer</small>#}
+                            </h1>
+                        </div>
 
-                            <div class="media-right media-middle">
-                                <ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
-                                    {#<li><a href="#" class="btn btn-default"><i#}
-                                    {#class="icon-file-picture position-left"></i> 换图</a></li>#}
-                                    {#<button type="button" class="btn btn-primary btn-icon btn-rounded"><i class="icon-menu7"></i></button>#}
-                                    <li>
-                                        <a href="#" class="btn btn-icon btn-xs btn-primary   btn-rounded"><i
-                                                    class=" icon-cross"></i></a></li>
-                                </ul>
-                            </div>
+                        <div class="media-right media-middle">
+                            <ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
+                                {#<li><a href="#" class="btn btn-default"><i#}
+                                {#class="icon-file-picture position-left"></i> 换图</a></li>#}
+                                {#<button type="button" class="btn btn-primary btn-icon btn-rounded"><i class="icon-menu7"></i></button>#}
+                                <li>
+                                    <a href="#" class="btn btn-icon btn-xs btn-primary   btn-rounded"><i
+                                                class=" icon-cross"></i></a></li>
+                            </ul>
                         </div>
                     </div>
-
-                    <input type="hidden" name="cover" id="cover"/>
-                    <!-- Mail details -->
-
-                    <div class="table-responsive mail-details-write">
-                        <table class="table">
-                            <tbody>
-
-                            <tr>
-                                <td class="p-5 no-border" colspan="2">
-                                    <input type="text" class="form-control text-semibold" placeholder="无标题" name="title"
-                                           v-model="post.title">
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /mail details -->
-
-
-                    <!-- Mail container -->
-                    <div class="mail-container-write">
-                        {#<div class="summernote" placeholder="书写是一种乐趣，也是一种生活。">#}
-                            {#{{ doc.content | safe }}#}
-                        {#</div>#}
-                        <summernote :model="post" v-on:modelchange="modelChangeEvent"></summernote>
-                        {#{{editorModel}}#}
-
-                    </div>
-                    <!-- /mail container -->
-
-                    {#
-                    <!-- Attachments -->
-                    <div class="mail-attachments-container">
-                        <h6 class="mail-attachments-heading">2 附件</h6>
-
-                        <ul class="mail-attachments">
-                            <li>
-                                                        <span class="mail-attachments-preview">
-                                                            <i class="icon-file-pdf icon-2x"></i>
-                                                        </span>
-
-                                <div class="mail-attachments-content">
-                                    <span class="text-semibold">new_december_offers.pdf</span>
-
-                                    <ul class="list-inline list-inline-condensed no-margin">
-                                        <li class="text-muted">174 KB</li>
-                                        <li><a href="#">查看</a></li>
-                                        <li><a href="#">删除</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-
-                            <li>
-                                                        <span class="mail-attachments-preview">
-                                                            <i class="icon-file-pdf icon-2x"></i>
-                                                        </span>
-
-                                <div class="mail-attachments-content">
-                                    <span class="text-semibold">assignment_letter.pdf</span>
-
-                                    <ul class="list-inline list-inline-condensed no-margin">
-                                        <li class="text-muted">736 KB</li>
-                                        <li><a href="#">查看</a></li>
-                                        <li><a href="#">删除</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- /attachments -->
-                    #}
                 </div>
-                <!-- /single mail -->
+
+                <input type="hidden" name="cover" id="cover"/>
+                <!-- Mail details -->
+
+                <div class="table-responsive mail-details-write">
+                    <table class="table">
+                        <tbody>
+
+                        <tr>
+                            <td class="p-5 no-border" colspan="2">
+                                <input type="text" class="form-control text-semibold" placeholder="无标题" name="title"
+                                       v-model="post.title">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /mail details -->
+
+
+                <!-- Mail container -->
+                <div class="mail-container-write">
+                    {#<div class="summernote" placeholder="书写是一种乐趣，也是一种生活。">#}
+                    {#{{ doc.content | safe }}#}
+                    {#</div>#}
+                    <summernote :model="post" v-on:modelchange="modelChangeEvent"></summernote>
+                    {#{{editorModel}}#}
+                        {#<div id="snippet.id" class="m-20" v-for="snippet, index in post.snippets">#}
+                            {#{{ snippet.content }}#}
+                            {#<editable v-model="post.snippets[index].content"></editable>#}
+
+                        {#</div>#}
+
+                </div>
+                <!-- /mail container -->
+
+                <!-- Attachments -->
+                {#<div class="mail-attachments-container">#}
+                    {#<h6 class="mail-attachments-heading">{{ post.snippets.length }} 碎片</h6>#}
+
+                    {#<ul class="mail-attachments">#}
+                        {#<li v-for="_,index in post.snippets">#}
+                            {#<span class="mail-attachments-preview">#}
+                                {#<i class="" :class="typeof(_.meta['_snippet_link']) != 'undefined' ? 'icon-link' : 'icon-file-empty'"></i>#}
+                            {#</span>#}
+
+                            {#<div class="mail-attachments-content">#}
+                                {#<span class="text-semibold" v-if="typeof(_.meta['_snippet_link']) != 'undefined'">{{ _.meta['_snippet_link']['title'] }}</span>#}
+                                {#<span class="text-semibold" v-model="_[index]" v-html="_.content"></span>#}
+                                {#<editable v-model="post.snippets[index].content" v-html="_.content"></editable>#}
+
+                                {#<ul class="list-inline list-inline-condensed no-margin">#}
+                                    {#<li class="text-muted">174 KB</li>#}
+                                    {#<li><a href="#">查看</a></li>#}
+                                    {#<li><a href="#">删除</a></li>#}
+                                {#</ul>#}
+                            {#</div>#}
+                        {#</li>#}
+
+                    {#</ul>#}
+                {#</div>#}
+                <!-- /attachments -->
+            </div>
+            <!-- /single mail -->
             {#</form>#}
         </div>
     </div>
@@ -178,7 +172,8 @@
                 <span>文章设置</span>
 
                 <ul class="icons-list">
-                    <li><a class="sidebar-control sidebar-opposite-toggle hidden-xs"><i class=" icon-cross2"></i></a></li>
+                    <li><a class="sidebar-control sidebar-opposite-toggle hidden-xs"><i class=" icon-cross2"></i></a>
+                    </li>
 
                 </ul>
             </div>
@@ -207,7 +202,8 @@
                             #}
                             <div class="checkbox checkbox-switchery checkbox-right switchery-xs ">
                                 <label class="display-block">
-                                    <input type="checkbox" v-bind:true-value="'pending'" v-bind:false-value="''" class="switchery switchery-primary" v-model="post.status" >
+                                    <input type="checkbox" v-bind:true-value="'pending'" v-bind:false-value="''"
+                                           class="switchery switchery-primary" v-model="post.status">
                                     待审核
 
                                 </label>
@@ -264,7 +260,8 @@
 
                         <div class="checkbox" v-for="cate in category">
                             <label>
-                                <input type="checkbox" :id="cate.id" v-bind:value="cate" v-model="post.terms" @click="check(cate)">
+                                <input type="checkbox" :id="cate.id" v-bind:value="cate" v-model="post.terms"
+                                       @click="check(cate)">
                                 {{ cate.name }}
                             </label>
                         </div>
@@ -331,14 +328,14 @@
                     </ul>
                 </div>
                 <form action="#" class="category-content" style="display: none;">
-{#                    <div class="form-group">
-                        <label>别名:</label>
-                        <input type="text" class="form-control" placeholder="">
-                    </div>#}
+                    {#                    <div class="form-group">
+                                            <label>别名:</label>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>#}
                     <div class="form-group">
                         <div class="checkbox checkbox-switchery checkbox-right switchery-xs ">
                             <label class="display-block">
-                                <input type="checkbox"  class="switchery switchery-primary" v-model="autoExcerpt" >
+                                <input type="checkbox" class="switchery switchery-primary" v-model="autoExcerpt">
                                 自动摘要
 
                             </label>
@@ -346,7 +343,8 @@
                     </div>
                     <div class="form-group" v-if="!autoExcerpt">
                         <label>摘要:</label>
-                        <textarea rows="3" cols="3" class="form-control" placeholder="编写摘要..." v-html="post.excerpt"></textarea>
+                        <textarea rows="3" cols="3" class="form-control" placeholder="编写摘要..."
+                                  v-html="post.excerpt"></textarea>
                     </div>
 
                     {#
@@ -383,63 +381,64 @@
     <script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>
 
     <script>
-//        var currentLocation = document.location.pathname + decodeURIComponent(document.location.search);
+        //        var currentLocation = document.location.pathname + decodeURIComponent(document.location.search);
 
-//        console.log(currentLocation)
-//        if (currentLocation == url) {
-//            console.log("Refresh");
-//            $(window).trigger('statechange');
-//        } else {
-//            History.pushState(null, title, url);
-//        }
-//        var supports_pushState = 'pushState' in history;
-//        var last_state;
-//        function handle( state, type ) {
-//            if ( state !== last_state ) {
-//                last_state = state;
-//
-//                console.log('state: ' + state + ' (' + type + ')')
-//                // application code here
-////                $('#log').append( 'state: ' + state + ' (' + type + ')<br>');
-//            }
-//        };
-//
-//        $(window)
-//            .bind( 'popstate', function(e){
-//                location.search.replace( /^\?/, '' )
-//                handle( location.search.replace( /^\?/, '' ), e.type );
-//            })
-//            .bind( 'hashchange', function(e){
-////                location.hash.replace( /^#/, '' )
-//                handle( location.hash.replace( /^#/, '' ), e.type );
-//            })
-//            .trigger( supports_pushState ? 'popstate' : 'hashchange' );
-
-
-//        TITLE = '<$ post.title | safe $>';
+        //        console.log(currentLocation)
+        //        if (currentLocation == url) {
+        //            console.log("Refresh");
+        //            $(window).trigger('statechange');
+        //        } else {
+        //            History.pushState(null, title, url);
+        //        }
+        //        var supports_pushState = 'pushState' in history;
+        //        var last_state;
+        //        function handle( state, type ) {
+        //            if ( state !== last_state ) {
+        //                last_state = state;
+        //
+        //                console.log('state: ' + state + ' (' + type + ')')
+        //                // application code here
+        ////                $('#log').append( 'state: ' + state + ' (' + type + ')<br>');
+        //            }
+        //        };
+        //
+        //        $(window)
+        //            .bind( 'popstate', function(e){
+        //                location.search.replace( /^\?/, '' )
+        //                handle( location.search.replace( /^\?/, '' ), e.type );
+        //            })
+        //            .bind( 'hashchange', function(e){
+        ////                location.hash.replace( /^#/, '' )
+        //                handle( location.hash.replace( /^#/, '' ), e.type );
+        //            })
+        //            .trigger( supports_pushState ? 'popstate' : 'hashchange' );
 
 
+        //        TITLE = '<$ post.title | safe $>';
+
+        // @formatter:off
         POST = <$ post | dump | safe $>;
+        // @formatter:on
     </script>
 
     <script type="text/javascript" src="/static/components/post/index.js"></script>
     <script type="text/javascript">
 
-        $(function(){
+        $(function () {
             // Switchery
             // ------------------------------
 
             // Initialize multiple switches
             if (Array.prototype.forEach) {
                 var elems = Array.prototype.slice.call(document.querySelectorAll('.switchery'));
-                elems.forEach(function(html) {
-                    var switchery = new Switchery(html, { color: '#2196F3' });
+                elems.forEach(function (html) {
+                    var switchery = new Switchery(html, {color: '#2196F3'});
                 });
             }
             else {
                 var elems = document.querySelectorAll('.switchery');
                 for (var i = 0; i < elems.length; i++) {
-                    var switchery = new Switchery(elems[i], { color: '#2196F3' });
+                    var switchery = new Switchery(elems[i], {color: '#2196F3'});
                 }
             }
 
@@ -448,19 +447,19 @@
 
         // Style checkboxes
 
-//        function nowTime() {
-//            var time = new Date();
-//             程序计时的月从0开始取值后+1
-//            var m = time.getMonth() + 1;
-//            var t = time.getFullYear() + "-" + m + "-"
-//                + time.getDate() + " " + time.getHours() + ":"
-//                + time.getMinutes() + ":" + time.getSeconds();
-//            return t;
-//        }
+        //        function nowTime() {
+        //            var time = new Date();
+        //             程序计时的月从0开始取值后+1
+        //            var m = time.getMonth() + 1;
+        //            var t = time.getFullYear() + "-" + m + "-"
+        //                + time.getDate() + " " + time.getHours() + ":"
+        //                + time.getMinutes() + ":" + time.getSeconds();
+        //            return t;
+        //        }
         // Default initialization
-//                $(".styled, .multiselect-container input").uniform({
-//                    radioClass: 'choice'
-//                });
+        //                $(".styled, .multiselect-container input").uniform({
+        //                    radioClass: 'choice'
+        //                });
 
     </script>
 

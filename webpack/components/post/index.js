@@ -1,6 +1,6 @@
 import axios from 'axios'
 Vue.prototype.$http = axios;
-
+import Editable from '../ui/editable.vue';
 import Summernote from '../ui/summernote.vue'
 
 new Vue({
@@ -52,7 +52,8 @@ new Vue({
 
     },
     components: {
-        Summernote
+        Summernote,
+        Editable
         // Datepicker,
     },
     methods: {

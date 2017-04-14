@@ -1,0 +1,107 @@
+{% extends "./_layout.html" %}
+
+{% block navbar %}
+<div class="nav-container ">
+    <div class="bar bar--sm visible-xs">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-3 col-sm-2">
+                    <a href="index.html">
+                        <span class="logo"> _DEADLINE</span>
+                        {#<img class="logo logo-dark" alt="logo" src="img/logo-dark.png" />#}
+                        {#<img class="logo logo-light" alt="logo" src="img/logo-light.png" />#}
+                    </a>
+                </div>
+                <div class="col-xs-9 col-sm-10 text-right">
+                    <a href="#" class="hamburger-toggle" data-toggle-class="#menu1;hidden-xs">
+                        <i class="icon icon--sm stack-interface stack-menu"></i>
+                    </a>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </div>
+    <!--end bar-->
+    <nav id="menu1" class="bar bar--sm bar-1 hidden-xs hiddem-sm bar--absolute bar--transparent">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1 col-sm-2 hidden-xs">
+                    <div class="bar__module">
+                        <a href="index.html">
+                            <span class="logo"> _DEADLINE</span>
+                            {#<img class="logo logo-dark" alt="logo" src="img/logo-dark.png" />#}
+                            {#<img class="logo logo-light" alt="logo" src="img/logo-light.png" />#}
+                        </a>
+                    </div>
+                    <!--end module-->
+                </div>
+                <div class="col-md-11 col-sm-12 text-right text-left-xs text-left-sm">
+                    <div class="bar__module">
+                        <ul class="menu-horizontal text-left">
+                            <li><a href="/">首页</a></li>
+                            <li><a href="/product">作品</a></li>
+                            <li><a href="/blog">Blog</a></li>
+                            <li><a href="/snippets">碎片</a></li>
+                            <li><a href="/resume">简历</a></li>
+                        </ul>
+                    </div>
+                    <!--end module-->
+                    <div class="bar__module">
+                        <a class="btn btn--sm type--uppercase" href="#">
+                                    <span class="btn__text">
+                                        尝试 Picker
+                                    </span>
+                        </a>
+                        {#<a class="btn btn--sm btn--primary type--uppercase" href="#">#}
+                                    {#<span class="btn__text">#}
+                                        {#登录#}
+                                    {#</span>#}
+                        {#</a>#}
+                    </div>
+                    <!--end module-->
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </nav>
+    <!--end bar-->
+</div>
+{% endblock %}
+
+
+
+{% block main %}
+    <section class="text-center height-80 imagebg" data-overlay="4">
+        <div class="background-image-holder">
+            <img alt="background" src="/themes/default/img/landing-21.jpg" />
+        </div>
+        <div class="container pos-vertical-center">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="typed-headline">
+                        <span class="h1 inline-block">I'm Brain &mdash; </span>
+                        <span class="h1 inline-block typed-text typed-text--cursor color--primary"
+                              data-typed-strings="全栈程序员,互联网产品经理,设计师, 反脆弱生活践行者"></span>
+                    </div>
+                    <p class="lead">
+                        10 年互联网从业经验，连续创业者
+                        <br class="hidden-xs hidden-sm " /> 不要因为路途遥远就忘记了为什么出发
+                    </p>
+                    <a class="btn btn--primary type--uppercase" href="#">
+                                <span class="btn__text">
+                                    联系我
+                                </span>
+                    </a>
+                    <span class="block type--fine-print">or
+                                <a href="index.html">看我的作品</a>
+                            </span>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+
+{% endblock %}

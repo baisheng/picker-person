@@ -150,6 +150,7 @@ new Vue({
                 "meta": this.meta
             }
 
+            // console.log(JSON.stringify(postData))
             fetch('/admin/posts/snippet', {
                 credentials: 'include',
                 method: 'POST',
@@ -511,10 +512,10 @@ new Vue({
                     break;
                 case 'code':
                     this.meta_type = 'code';
-                    this.meta['_snippet_code'] = "";
+                    // this.meta['_snippet_code'] = "";
                     this.snippet_code_lang = 'markup';
 //                            this.meta['_snippet_code_lang'] = 'markup';
-                    this.meta['_snippet_code_lang'] = this.snippet_code_lang;
+                    this.meta['lang'] = this.snippet_code_lang;
 
                     break;
                 default:
@@ -524,8 +525,7 @@ new Vue({
         },
         snippet_code_lang: function(val, oldVal){
 
-//                    console.log(val + "_-------------")
-            this.meta['_snippet_code_lang'] = val;
+            this.meta['lang'] = val;
 
         },
     },

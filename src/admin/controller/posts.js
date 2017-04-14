@@ -147,45 +147,10 @@ export default class extends Base {
                         switch (data.meta_type) {
                             case 'link':
 
-                                let MetaService = this.service('htmlmeta');
-                                let uri = data.content;
-                                let _postmeta = this.model('postmeta', {aid: this.aid})
-
-
-                                if (isURL(data.content)) {
-                                    let _snippet_metas = await _postmeta.where({post_id: data.id}).select();
-                                    // console.log(JSON.stringify(_snippet_metas));
-                                    let instance = new MetaService(uri);
-                                    let meta_res = await instance.fetch();
-
-                                    // console.log(meta_res);
-                                    if (!think.isEmpty(meta_res)) {
-
-                                        let result = await _postmeta.thenAdd({
-                                            post_id: data.id,
-                                            meta_key: "_snippet_link",
-                                            meta_value: JSON.stringify(meta_res)
-
-                                        }, {post_id: data.id, meta_key: "_snippet_link"});
-
-                                        if (result.type === "exist") {
-
-                                            await _postmeta.where({
-                                                post_id: data.id,
-                                                meta_key: "_snippet_link"
-
-                                            }).update({meta_value: JSON.stringify(meta_res)});
-
-
-                                        }
-                                        return this.json({"_id": data.id});
-                                    }
-
-                                }
-                                // await this._snippet_link_meta(data);
+                                await this._snippet_url(data);
                                 break;
                             case 'code':
-                                await this._snippet_code_meta(data);
+                                await this._snippet_code(data);
                                 break;
                             case 'quote':
                                 break;
@@ -238,155 +203,86 @@ export default class extends Base {
             let id = this.get('id');
             if (!think.isEmpty(id)) {
 
-                let snippet = await _dao.get(id);
+                let snippet = await _dao.getSnippet(id);
 
-                // console.log(JSON.stringify(snippet))
-                if (snippet.meta['_snippet_link']) {
-                    snippet.meta['_snippet_link'] = JSON.parse(snippet.meta['_snippet_link']);
-                }
-                // console.log(JSON.stringify(snippet))
                 return this.json(snippet)
             }
         }
     }
 
-    async _snippet_code_meta(data) {
-        let _snippet_metas = await this.model('postmeta').where({post_id: data.id}).select();
-        let _meta_data = data.meta;
+    async _snippet_url(data) {
+        let MetaService = this.service('htmlmeta');
+        let uri = data.content;
+        let _postmeta = this.model('postmeta', {aid: this.aid})
 
-        if (!think.isEmpty(_snippet_metas)) {
-            for (let key of Object.keys(_meta_data)) {
-
-                let _meta_item = think._.find(_snippet_metas, {meta_key: key});
-
-                // if meta 存在
-                if (!think.isEmpty(_meta_item)) {
-
-                    // console.log(JSON.stringify(find_meta) + "*****");
-                    // Update meta
-                    _meta_item['meta_value'] = _meta_data[key];
-
-                    // console.log(JSON.stringify(find_meta) + "======")
-
-                    let rows = await this.model('postmeta').where({
-                        post_id: data.id,
-                        meta_key: key
-                    }).update(_meta_item);
-
-                    if (rows > 0) {
-                        // await this.infoMsg('信息更新成功')
-
-                    } else {
-                        await this.infoMsg('未能更新信息!')
-
-                    }
-
-                } else {
-                    // Insert meta
-                    let insert = await this.model('postmeta').add({
-                        post_id: data.id,
-                        meta_key: key,
-                        meta_value: _meta_data[key]
-                    });
-
-                    if (insert > 0) {
-                        // await this.infoMsg('信息保存成功')
-                    }
-                }
-            }
-        }
-
-
-    }
-
-    async _snippet_link_meta(data) {
-
-        let _dao = this.model('postmeta', {aid: this.aid})
-        let _snippet_metas = await _dao.where({post_id: data.id}).select();
-        let _meta_data = data.meta;
 
         if (isURL(data.content)) {
+            // let _snippet_metas = await _postmeta.where({post_id: data.id}).select();
+            // console.log(JSON.stringify(_snippet_metas));
+            let instance = new MetaService(uri);
+            let meta_res = await instance.fetch();
 
-            let _new_meta = await htmlMetadata(data.content, (err, metadata) => {
-                console.log(2)
+            // console.log(meta_res);
+            if (!think.isEmpty(meta_res)) {
 
-                if (err) {
-                    console.error('[testCallbackBased]: Scraper html-metadata failed! ', err);
-                }
-                else {
-                    // console.log('[testCallbackBased]: html-metadata returned: ', metadata);
+                let result = await _postmeta.thenAdd({
+                    post_id: data.id,
+                    meta_key: "_snippet_link",
+                    meta_value: JSON.stringify(meta_res)
 
-                }
+                }, {post_id: data.id, meta_key: "_snippet_link"});
 
-            }).then((metadata) => {
-                if (metadata.openGraph !== undefined && !think.isEmpty(metadata.openGraph)) {
-                    _meta_data['_snippet_link'] = "og";
-                    let _meta_assign = think._.assign(_meta_data, metadata.openGraph);
-                    return _meta_assign;
-                } else {
+                if (result.type === "exist") {
 
-                    let _meta_assign = think._.assign(_meta_data, metadata.general);
-                    return _meta_assign;
-                }
+                    await _postmeta.where({
+                        post_id: data.id,
+                        meta_key: "_snippet_link"
 
-            });
+                    }).update({meta_value: JSON.stringify(meta_res)});
 
-            if (_new_meta) {
-                for (let key of Object.keys(_new_meta)) {
-
-                    let _meta_item = think._.find(_snippet_metas, {meta_key: key});
-
-                    // if meta 存在
-                    if (!think.isEmpty(_meta_item)) {
-
-                        // console.log(JSON.stringify(find_meta) + "*****");
-                        // Update meta
-                        _meta_item['meta_value'] = _new_meta[key];
-
-                        let rows = await _dao.where({
-                            post_id: data.id,
-                            meta_key: key
-                        }).update(_meta_item);
-                        // if (rows > 0) {
-                        //     await this.infoMsg('信息更新成功')
-                        //
-                        // } else {
-                        //     await this.infoMsg('未能更新信息!')
-                        //
-                        // }
-
-                    } else {
-                        // Insert meta
-                        let rows = await _dao.add({
-                            post_id: data.id,
-                            meta_key: key,
-                            meta_value: _new_meta[key]
-                        });
-
-                        // if (rows > 0) {
-
-                        // await this.infoMsg('信息保存成功')
-
-                        // return this.json({_id: data.id});
-                        // }
-                    }
 
                 }
-
-                return this.json({_id: data.id});
-
+                return this.json({"_id": data.id});
             }
 
-            return this.json({_id: data.id});
-
         }
-        else {
-            // console.log('未能找到链接地址，或者链接地址格式不正确！')
-        }
-
-        return this.json({_id: data.id});
-
     }
+
+    async _snippet_code(data) {
+        let _postmeta = this.model('postmeta', {aid: this.aid});
+        let _snippet_metas = await _postmeta.where({post_id: data.id}).select();
+
+        if (!think.isEmpty(_snippet_metas)) {
+            for (let old_meta of _snippet_metas) {
+                if (old_meta['meta_key'] !== '_snippet_code') {
+                    let rows = await _postmeta.where({meta_id: old_meta.meta_id}).delete();
+                    // console.log(rows);
+                }
+                // if (old_meta.key !== "_snippet_code") {
+                //     _postmeta.delete(old_meta)
+                // }
+            }
+        }
+
+        let result = await _postmeta.thenAdd({
+            post_id: data.id,
+            meta_key: "_snippet_code",
+            meta_value: JSON.stringify(data.meta)
+
+        }, {post_id: data.id, meta_key: "_snippet_code"});
+
+        if (result.type === "exist") {
+
+            await _postmeta.where({
+                post_id: data.id,
+                meta_key: "_snippet_code"
+
+            }).update({meta_value: JSON.stringify(data.meta)});
+
+        }
+        return this.json({"_id": data.id});
+    }
+
 
     /**
      * 添加内容
@@ -708,7 +604,7 @@ export default class extends Base {
         // let type = this.get('type');
         // let ID = this.get('id');
 
-        let _dao = this.model('posts',{ aid: this.aid });
+        let _dao = this.model('posts', {aid: this.aid});
 
         if (this.isPost()) {
             let data = this.post();
@@ -1319,8 +1215,8 @@ export default class extends Base {
             }
         }
 
-        if (query.type === 'snippets'){
-            for (let snippt of list.data){
+        if (query.type === 'snippets') {
+            for (let snippt of list.data) {
                 console.log(JSON.stringify(snippt))
             }
         }

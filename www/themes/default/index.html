@@ -1,137 +1,255 @@
 {% extends "./_layout.html" %}
 
-{% block main %}
-    <section class="space--sm">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-                    <div class="masonry masonry-blog-list">
-                        <div class="masonry-filter-container text-center">
-                            <span>Category:</span>
-                            <div class="masonry-filter-holder">
-                                <div class="masonry__filters" data-filter-all-text="All Categories"></div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="masonry__container">
-                            {% for _ in posts %}
-                                {% set display_name = _.author | display_name | truncate(12, true) %}
+{% block style %}
 
-                                <article class="masonry__item" data-masonry-filter="Web Design">
-                                    <div class="article__title text-center">
-                                        <a href="/article/<$ _.id $>">
-                                            <h2><$ _.title | truncate(18, true) $></h2>
-                                        </a>
-
-                                        <span> <$ _.modified | moment $></span>
-                                        <span>
-                                                <a href="#">Web Design</a>
-                                            </span>
-                                    </div>
-                                    <!--end article title-->
-                                    <div class="article__body">
-                                        <a href="#">
-                                            <img alt="Image" src="img/blog-1.jpg"/>
-                                        </a>
-                                        <p>
-                                            <$ _.excerpt $>
-                                        </p>
-                                        <a href="#">Continue reading &raquo;</a>
-                                    </div>
-                                </article>
-                                <!--end item-->
-                            {% endfor %}
-
-                            <article class="masonry__item" data-masonry-filter="Announcements">
-                                <div class="article__title text-center">
-                                    <a href="#">
-                                        <h2>Introducing Stack for enterprise</h2>
-                                    </a>
-                                    <span>May 1st 2016 in </span>
-                                    <span>
-                                                <a href="#">Announcements</a>
-                                            </span>
-                                </div>
-                                <!--end article title-->
-                                <div class="article__body">
-                                    <p>
-                                        Co-working SpaceTeam fund big data prototype prototype long shadow latte big
-                                        data. Innovate affordances personas user centered design paradigm user centered
-                                        design innovate quantitative vs. qualitative pivot thought leader viral paradigm
-                                        cortado affordances.
-                                    </p>
-                                    <a href="#">Continue reading &raquo;</a>
-                                </div>
-                            </article>
-                            <!--end item-->
-                            <article class="masonry__item" data-masonry-filter="Education">
-                                <div class="article__title text-center">
-                                    <a href="#">
-                                        <h2>Exciting updates to Stack.Ed</h2>
-                                    </a>
-                                    <span>May 1st 2016 in </span>
-                                    <span>
-                                                <a href="#">Education</a>
-                                            </span>
-                                </div>
-                                <!--end article title-->
-                                <div class="article__body">
-                                    <a href="#">
-                                        <img alt="Image" src="img/blog-single-2.jpg"/>
-                                    </a>
-                                    <p>
-                                        Innovate affordances personas user centered design paradigm user centered design
-                                        innovate quantitative vs. qualitative pivot thought leader viral paradigm
-                                        cortado affordances.
-                                    </p>
-                                    <a href="#">Continue reading &raquo;</a>
-                                </div>
-                            </article>
-                            <!--end item-->
-                            <article class="masonry__item" data-masonry-filter="Web Design">
-                                <div class="article__title text-center">
-                                    <a href="#">
-                                        <h2>Building a site for your business</h2>
-                                    </a>
-                                    <span>April 10th 2016 in </span>
-                                    <span>
-                                                <a href="#">Web Design</a>
-                                            </span>
-                                </div>
-                                <!--end article title-->
-                                <div class="article__body">
-                                    <a href="#">
-                                        <img alt="Image" src="img/inner-5.jpg"/>
-                                    </a>
-                                    <p>
-                                        Co-working SpaceTeam fund big data prototype prototype long shadow latte big
-                                        data. Innovate affordances personas user centered design paradigm user centered
-                                        design innovate quantitative vs. qualitative pivot thought leader viral paradigm
-                                        cortado affordances.
-                                    </p>
-                                    <a href="#">Continue reading &raquo;</a>
-                                </div>
-                            </article>
-                            <!--end item-->
-                        </div>
-                        <!--end of masonry container-->
-                        <div class="pagination">
-                            <$ pagerData | safe $>
-
-                            {#<div class="col-xs-6">#}
-                            {#<a class="type--fine-print" href="#">&laquo; Older Posts</a>#}
-                            {#</div>#}
-                            {#<div class="col-xs-6 text-right">#}
-                            {#<a class="type--fine-print" href="#">Newer Posts &raquo;</a>#}
-                            {#</div>#}
-                        </div>
+    <style>
+        .unloaded {
+            min-height: 200px;
+        // set a minimum default height for image containers
+        // this prevents too many images from appearing in the viewport
+        // thus causing lazy load to load too many images at once
+        // we will use the lazyload .load() callback to remove this fixed
+        }
+    </style>
+{% endblock %}
+{% block navbar %}
+    <div class="nav-container ">
+        <div class="bar bar--sm visible-xs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-3 col-sm-2">
+                        <a href="index.html">
+                            <img class="logo logo-dark" alt="logo" src="img/logo-dark.png" />
+                            <img class="logo logo-light" alt="logo" src="img/logo-light.png" />
+                        </a>
                     </div>
-                    <!--end masonry-->
+                    <div class="col-xs-9 col-sm-10 text-right">
+                        <a href="#" class="hamburger-toggle" data-toggle-class="#menu2;hidden-xs hidden-sm">
+                            <i class="icon icon--sm stack-interface stack-menu"></i>
+                        </a>
+                    </div>
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </div>
+        <!--end bar-->
+        <nav id="menu2" class="bar bar-2 hidden-xs bar--transparent bar--absolute" data-scroll-class='90vh:pos-fixed'>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 text-center text-left-sm hidden-xs col-md-push-5">
+                        <div class="bar__module">
+                            <a href="index.html">
+                                <span class="logo">_DEADLINE</span>
+                                {#<img class="logo logo-dark" alt="logo" src="img/logo-dark.png" />#}
+                                {#<img class="logo logo-light" alt="logo" src="img/logo-light.png" />#}
+                            </a>
+                        </div>
+                        <!--end module-->
+                    </div>
+                    <div class="col-md-5 col-md-pull-2">
+                        <div class="bar__module">
+                            <ul class="menu-horizontal text-left">
+                                <li class="">
+                                    <a class="" href="/">首页</a>
+                                </li>
+                                <li>
+                                    <a href="/works">作品</a>
+                                </li>
+                                <li>
+                                    <a href="/blog">Blog</a>
+                                </li>
+                                <li>
+                                    <a href="/snippets">碎片</a>
+                                </li>
+                                <li>
+                                    <a href="/resume">简历</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--end module-->
+                    </div>
+                    <div class="col-md-5 text-right text-left-xs text-left-sm">
+                        <div class="bar__module">
+                            <a class="btn btn--sm type--uppercase" href="http://picker.cc">
+                                    <span class="btn__text">
+                                        尝试 Picker
+                                    </span>
+                            </a>
+                            <a class="btn btn--sm btn--primary type--uppercase" href="#">
+                                    <span class="btn__text">
+                                        登录
+                                    </span>
+                            </a>
+                        </div>
+                        <!--end module-->
+                    </div>
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </nav>
+        <!--end bar-->
+    </div>
+    {% endblock %}
+{% block main %}
+    <section class="cover height-90 imagebg text-center" data-overlay="2" id="home">
+        <div class="background-image-holder">
+            <img alt="background" src="/themes/default/img/blog-1.jpg" />
+        </div>
+        <section class="page-navigator">
+            <ul>
+                <li>
+                    <a href="#" class="inner-link" data-title="文章"></a>
+                </li>
+                <li>
+                    <a href="#snippet" class="inner-link" data-title="碎片"></a>
+                </li>
+                <li>
+                    <a href="#联系" class="inner-link" data-title="联系"></a>
+                </li>
+            </ul>
+        </section>
+        <div class="container pos-vertical-center">
+            <div class="row">
+                <div class="col-sm-8">
+                    <img alt="Image" class="unmarg--bottom" src="/themes/default/img/headline-1.png" />
+                    <h3>
+                        聪明人塑造自己的命运
+                    </h3>
+                    <a class="btn btn--sm type--uppercase" href="#">
+                                <span class="btn__text">
+                                    作品集
+                                </span>
+                    </a>
                 </div>
             </div>
             <!--end of row-->
         </div>
         <!--end of container-->
     </section>
+    <section class="text-center cta cta-4 space--xxs border--bottom ">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="/resume"> <span class="label label--inline">I'm Brain!</span></a>
+                    <span class="">10 年互联网从业经验，连续创业者, </span>
+                    <span class=" inline-block typed-text typed-text--cursor color--primary-1"
+                          data-typed-strings="Code, Design, 反脆弱践行"></span>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+
+    <section class=" ">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="feature feature-1 box-shadow">
+                        <img alt="Image" src="/themes/default/img/blog-1.jpg" />
+                        <div class="feature__body boxed boxed--border">
+                            <h5>Built for teams</h5>
+                            <p>
+                                Ideal for large and small organisations
+                            </p>
+                            <a href="#">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                    <!--end feature-->
+                </div>
+                <div class="col-sm-4">
+                    <div class="feature feature-1 box-shadow">
+                        <img alt="Image" src="/themes/default/img/inner-5.jpg" />
+                        <div class="feature__body boxed boxed--border">
+                            <h5>Modern Aesthetic</h5>
+                            <p>
+                                A highly adaptable look that's simple
+                            </p>
+                            <a href="#">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                    <!--end feature-->
+                </div>
+                <div class="col-sm-4">
+                    <div class="feature feature-1 box-shadow">
+                        <img alt="Image" src="/themes/default/img/inner-4.jpg" />
+                        <div class="feature__body boxed boxed--border">
+                            <h5>Beautiful markup</h5>
+                            <p>
+                                Following BEM conventions for readability
+                            </p>
+                            <a href="#">
+                                Learn More
+                            </a>
+                            <span class="label">Hot</span>
+                        </div>
+                    </div>
+                    <!--end feature-->
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+
+    <section class="bg--secondary" id="snippet">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="heading-block text-center">
+                        <h3>碎片</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row" data-plugin="masonry">
+
+
+                <div class="col-sm-4 masonry-item" v-for="_ in list">
+                    <snippet :snippet="_"></snippet>
+                    <!-- START ITEM -->
+                    <!-- END ITEM -->
+                    <!--end feature-->
+                </div>
+
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+
+    </section>
+
+{% endblock %}
+
+{% block bottom %}
+<infinite-loading  spinner="waveDots" :on-infinite="onInfinite" :distance="distance" ref="infiniteLoading"></infinite-loading>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+    <script src="/themes/default/js/vue-lazyload.js"></script>
+
+    <script>
+        Vue.filter('moment', function (time, format) {
+            moment.locale('zh-cn');
+
+            if (format === "default") {
+                format = 'YYYY-MM-DD HH:mm:ss';
+                return moment(time).format(format);
+            }
+            return moment(time).fromNow();
+        });
+        Vue.use(VueLazyload)
+
+    </script>
+
+    <script src="/themes/default/js/components/main.js"></script>
 
 {% endblock %}
