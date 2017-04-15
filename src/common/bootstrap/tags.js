@@ -46,3 +46,33 @@ global.menus = function () {
         return callback(null, '');
     }
 }
+
+global.stickys = function(){
+    this.tags = ['stickys'];
+
+    this.parse = function (parser, nodes, lexer) {
+        let token = parser.nextToken();
+        let args = parser.parseSignature(null, true);
+
+        parser.advanceAfterBlockEnd(token.value);
+
+        return new nodes.CallExtensionAsync(this, 'run', args)
+    }
+
+    this.run = async function(context, args, callback){
+        let data = think.isEmpty(args.data) ? "home" : args.data;
+
+        let _sticky_ids  = await think.model('options', think.config('db')).getStickys(data);
+
+        let _stick_list = await think.model('posts', think.config("db")).list(_sticky_ids);
+
+        context.ctx[data] = _stick_list;
+
+        // console.log(JSON.stringify(_stick_list))
+
+        return callback(null, '');
+    }
+
+
+
+}

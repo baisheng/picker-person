@@ -9,7 +9,7 @@ export default class extends Base {
      * options cache key
      * @type {String}
      */
-    // cacheKey = 'picker_' + this.aid + '_option' + this.aid;
+        // cacheKey = 'picker_' + this.aid + '_option' + this.aid;
     cacheKey = '$options';
     /**
      * cache options
@@ -57,27 +57,27 @@ export default class extends Base {
         }, this.cacheOptions);
 
         //comment type
-/*        if (ret) {
-            if (ret.comment && think.isString(ret.comment)) {
-                ret.comment = JSON.parse(ret.comment);
-            }
-            if (!ret.comment) {
-                ret.comment = {type: 'disqus'};
-            }
-            // upload settings
-            if (ret.upload && think.isString(ret.upload)) {
-                ret.upload = JSON.parse(ret.upload);
-            }
-            if (!ret.upload) {
-                ret.upload = {type: 'local'};
-            }
-            if (ret.push_sites && think.isString(ret.push_sites)) {
-                ret.push_sites = JSON.parse(ret.push_sites);
-            }
-            if (!ret.push_sites) {
-                ret.push_sites = {};
-            }
-        }*/
+        /*        if (ret) {
+         if (ret.comment && think.isString(ret.comment)) {
+         ret.comment = JSON.parse(ret.comment);
+         }
+         if (!ret.comment) {
+         ret.comment = {type: 'disqus'};
+         }
+         // upload settings
+         if (ret.upload && think.isString(ret.upload)) {
+         ret.upload = JSON.parse(ret.upload);
+         }
+         if (!ret.upload) {
+         ret.upload = {type: 'local'};
+         }
+         if (ret.push_sites && think.isString(ret.push_sites)) {
+         ret.push_sites = JSON.parse(ret.push_sites);
+         }
+         if (!ret.push_sites) {
+         ret.push_sites = {};
+         }
+         }*/
 
         return ret;
     }
@@ -125,8 +125,8 @@ export default class extends Base {
             this.execute(json_sql);
             // let json_sql = `update picker_resume.picker_options set value = json_set(value,'$.${key}', '${value}') where \`key\` = \`${key}\``;
             // if (exist) {
-                // this.execute(update picker_resume.picker_options set value = json_set(value,'$.current_theme', 'limitless') where `key` = 'site';)
-                // p = this.where({key: key}).update({value: value});
+            // this.execute(update picker_resume.picker_options set value = json_set(value,'$.current_theme', 'limitless') where `key` = 'site';)
+            // p = this.where({key: key}).update({value: value});
             // } else {
             //     p = this.add({key, value});
             // }
@@ -179,5 +179,18 @@ export default class extends Base {
         //          delete_option( "mods_$theme_name" );
         //      }
         //  }
+    }
+
+    /**
+     * 获取推荐配置
+     *
+     * @param location
+     * @returns {Promise.<*>}
+     */
+    async getStickys(location) {
+        let options = await this.getOptions(true);
+        let stickys_ids = options['stickys'][location];
+
+        return stickys_ids;
     }
 }

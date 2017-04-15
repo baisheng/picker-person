@@ -151,6 +151,7 @@ export default {
                 // env.addFilter("get_category", async() => {
                 env.addExtension('menus', new menus(), true);
 
+                env.addExtension('stickys', new stickys(), true);
                 // })
                 // env.addExtension('menus',new menus());
                 // env.addExtension('menus',new menus());

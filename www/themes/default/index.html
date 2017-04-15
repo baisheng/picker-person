@@ -1,3 +1,4 @@
+
 {% extends "./_layout.html" %}
 
 {% block style %}
@@ -95,7 +96,7 @@
 {% block main %}
     <section class="cover height-90 imagebg text-center" data-overlay="2" id="home">
         <div class="background-image-holder">
-            <img alt="background" src="/themes/default/img/blog-1.jpg" />
+            <img alt="background" src="/themes/default/img/img-1-3.jpg" />
         </div>
         <section class="page-navigator">
             <ul>
@@ -144,54 +145,44 @@
     </section>
 
     <section class=" ">
+
         <div class="container">
             <div class="row">
-                <div class="col-sm-4">
-                    <div class="feature feature-1 box-shadow">
-                        <img alt="Image" src="/themes/default/img/blog-1.jpg" />
-                        <div class="feature__body boxed boxed--border">
-                            <h5>Built for teams</h5>
-                            <p>
-                                Ideal for large and small organisations
-                            </p>
-                            <a href="#">
-                                Learn More
-                            </a>
-                        </div>
+                <div class="col-sm-12">
+                    <div class="heading-block">
+                        <h3>文</h3>
                     </div>
-                    <!--end feature-->
                 </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-1 box-shadow">
-                        <img alt="Image" src="/themes/default/img/inner-5.jpg" />
-                        <div class="feature__body boxed boxed--border">
-                            <h5>Modern Aesthetic</h5>
-                            <p>
-                                A highly adaptable look that's simple
-                            </p>
-                            <a href="#">
-                                Learn More
-                            </a>
-                        </div>
-                    </div>
-                    <!--end feature-->
+            </div>
+            <div class="row">
+
+                {% stickys data="home" %}
+                <div class="slider" data-paging="true">
+                    <ul class="slides">
+                        {% for item in home %}
+
+                        <li class="col-sm-4 col-xs-12">
+                            <div class="feature feature-1">
+                                <a href="#" class="border-round block">
+                                    <img alt="Image" src="/themes/default/img/tourism-6.jpg" />
+                                </a>
+                                <div class="feature__body boxed boxed--border">
+                                    <h5><$ item.title $></h5>
+                                    <p>
+                                        {#<$ item.excerpt | safe $>#}
+                                    </p>
+                                    <a href="#">
+                                        查看全文
+                                    </a>
+                                </div>
+                            </div>
+                            <!--end feature-->
+                        </li>
+                        {% endfor %}
+
+                    </ul>
                 </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-1 box-shadow">
-                        <img alt="Image" src="/themes/default/img/inner-4.jpg" />
-                        <div class="feature__body boxed boxed--border">
-                            <h5>Beautiful markup</h5>
-                            <p>
-                                Following BEM conventions for readability
-                            </p>
-                            <a href="#">
-                                Learn More
-                            </a>
-                            <span class="label">Hot</span>
-                        </div>
-                    </div>
-                    <!--end feature-->
-                </div>
+
             </div>
             <!--end of row-->
         </div>
@@ -202,7 +193,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="heading-block text-center">
+                    <div class="heading-block">
                         <h3>碎片</h3>
                     </div>
                 </div>
@@ -227,13 +218,17 @@
 {% endblock %}
 
 {% block bottom %}
-<infinite-loading  spinner="waveDots" :on-infinite="onInfinite" :distance="distance" ref="infiniteLoading"></infinite-loading>
+<infinite-loading  spinner="waveDots" :on-infinite="onInfinite" :distance="distance" ref="infiniteLoading">
+    <span slot="no-more">
+        <a href="/snippets">查看更多...</a>
+</span>
+</infinite-loading>
 {% endblock %}
 {% block script %}
     <script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
     <script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+    {#<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>#}
+    {#<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>#}
     <script src="/themes/default/js/vue-lazyload.js"></script>
 
     <script>

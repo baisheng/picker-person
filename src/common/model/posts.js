@@ -303,8 +303,9 @@ export default class extends Base {
 
     async list(ids) {
         let result = await this.where({id: ["IN", ids]}).order('id DESC, modified DESC').select();
+
         // let _items = [];
-        return await this._formatMeta(result);
+        return await this._format_Meta(result);
         // for (let item of result) {
 
         // let post = await this.formatMeta(item);
