@@ -1,6 +1,7 @@
+{% stickys data="home" %}
 
 {% extends "./_layout.html" %}
-
+{% block nav_style %}bar--transparent{% endblock %}
 {% block style %}
 
     <style>
@@ -13,90 +14,10 @@
         }
     </style>
 {% endblock %}
-{% block navbar %}
-    <div class="nav-container ">
-        <div class="bar bar--sm visible-xs">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-3 col-sm-2">
-                        <a href="index.html">
-                            <img class="logo logo-dark" alt="logo" src="img/logo-dark.png" />
-                            <img class="logo logo-light" alt="logo" src="img/logo-light.png" />
-                        </a>
-                    </div>
-                    <div class="col-xs-9 col-sm-10 text-right">
-                        <a href="#" class="hamburger-toggle" data-toggle-class="#menu2;hidden-xs hidden-sm">
-                            <i class="icon icon--sm stack-interface stack-menu"></i>
-                        </a>
-                    </div>
-                </div>
-                <!--end of row-->
-            </div>
-            <!--end of container-->
-        </div>
-        <!--end bar-->
-        <nav id="menu2" class="bar bar-2 hidden-xs bar--transparent bar--absolute" data-scroll-class='90vh:pos-fixed'>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2 text-center text-left-sm hidden-xs col-md-push-5">
-                        <div class="bar__module">
-                            <a href="index.html">
-                                <span class="logo">_DEADLINE</span>
-                                {#<img class="logo logo-dark" alt="logo" src="img/logo-dark.png" />#}
-                                {#<img class="logo logo-light" alt="logo" src="img/logo-light.png" />#}
-                            </a>
-                        </div>
-                        <!--end module-->
-                    </div>
-                    <div class="col-md-5 col-md-pull-2">
-                        <div class="bar__module">
-                            <ul class="menu-horizontal text-left">
-                                <li class="">
-                                    <a class="" href="/">首页</a>
-                                </li>
-                                <li>
-                                    <a href="/works">作品</a>
-                                </li>
-                                <li>
-                                    <a href="/blog">Blog</a>
-                                </li>
-                                <li>
-                                    <a href="/snippets">碎片</a>
-                                </li>
-                                <li>
-                                    <a href="/resume">简历</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--end module-->
-                    </div>
-                    <div class="col-md-5 text-right text-left-xs text-left-sm">
-                        <div class="bar__module">
-                            <a class="btn btn--sm type--uppercase" href="http://picker.cc">
-                                    <span class="btn__text">
-                                        尝试 Picker
-                                    </span>
-                            </a>
-                            <a class="btn btn--sm btn--primary type--uppercase" href="#">
-                                    <span class="btn__text">
-                                        登录
-                                    </span>
-                            </a>
-                        </div>
-                        <!--end module-->
-                    </div>
-                </div>
-                <!--end of row-->
-            </div>
-            <!--end of container-->
-        </nav>
-        <!--end bar-->
-    </div>
-    {% endblock %}
 {% block main %}
     <section class="cover height-90 imagebg text-center" data-overlay="2" id="home">
         <div class="background-image-holder">
-            <img alt="background" src="/themes/default/img/img-1-3.jpg" />
+            <img alt="background" src="/themes/default/img/landing-24.jpg" />
         </div>
         <section class="page-navigator">
             <ul>
@@ -125,15 +46,18 @@
                     </a>
                 </div>
             </div>
+
             <!--end of row-->
         </div>
+
         <!--end of container-->
     </section>
+
     <section class="text-center cta cta-4 space--xxs border--bottom ">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="/resume"> <span class="label label--inline">I'm Brain!</span></a>
+                    <a href="/resume"> <span class="label label--inline">I'm Basil!</span></a>
                     <span class="">10 年互联网从业经验，连续创业者, </span>
                     <span class=" inline-block typed-text typed-text--cursor color--primary-1"
                           data-typed-strings="Code, Design, 反脆弱践行"></span>
@@ -143,53 +67,169 @@
         </div>
         <!--end of container-->
     </section>
-
-    <section class=" ">
-
+    <section>
         <div class="container">
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="heading-block">
-                        <h3>文</h3>
-                    </div>
+                <div class="col-sm-4 col-xs-6">
+                    <a href="#" class="block">
+                        <div class="feature feature-7 boxed text-center imagebg" data-overlay="3">
+                            <div class="background-image-holder" style="background: url(&quot;/themes/default/img/recruitment-1.jpg&quot;); opacity: 1;">
+                                <img alt="background" src="/themes/default/img/recruitment-1.jpg">
+                            </div>
+                            <h4 class="pos-vertical-center">Code</h4>
+                            <p class="pos-vertical-center">Java、JavaScript</p>
+
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-4 col-xs-6">
+                    <a href="#" class="block">
+                        <div class="feature feature-7 boxed text-center imagebg" data-overlay="5">
+                            <div class="background-image-holder" style="background: url(&quot;/themes/default/img/cowork-5.jpg&quot;); opacity: 1;">
+                                <img alt="background" src="/themes/default/img/cowork-5.jpg">
+                            </div>
+                            <h4 class="pos-vertical-center">Design</h4>
+                            <p class="pos-vertical-center">Photograph、Paint、UI</p>
+
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-4 col-xs-6">
+                    <a href="#" class="block">
+                        <div class="feature feature-7 boxed text-center imagebg" data-overlay="5">
+                            <div class="background-image-holder" style="background: url(&quot;/themes/default/img/recruitment-2.jpg&quot;); opacity: 1;">
+                                <img alt="background" src="/themes/default/img/recruitment-2.jpg">
+                            </div>
+                            <h4 class="pos-vertical-center">Portfolio</h4>
+                            <p class="pos-vertical-center">
+                                碎片内容建站、个人信息系统、在线教育平台
+                            </p>
+                        </div>
+                    </a>
                 </div>
             </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+    <section class="bg--secondary">
+        <div class="container">
+
+            <!--end of row-->
             <div class="row">
+                {% for item in home %}
 
-                {% stickys data="home" %}
-                <div class="slider" data-paging="true">
-                    <ul class="slides">
-                        {% for item in home %}
 
-                        <li class="col-sm-4 col-xs-12">
-                            <div class="feature feature-1">
-                                <a href="#" class="border-round block">
-                                    <img alt="Image" src="/themes/default/img/tourism-6.jpg" />
-                                </a>
-                                <div class="feature__body boxed boxed--border">
-                                    <h5><$ item.title $></h5>
-                                    <p>
-                                        {#<$ item.excerpt | safe $>#}
-                                    </p>
-                                    <a href="#">
-                                        查看全文
-                                    </a>
-                                </div>
-                            </div>
-                            <!--end feature-->
-                        </li>
-                        {% endfor %}
+                    <div class="col-sm-4">
+                        <div class="feature feature-1 boxed boxed--border">
+                            <span class="label">Fulltime</span>
+                            <h5><$ item.title $></h5>
+                            <p>
+                                {#<$ item.excerpt $>#}
+                            </p>
+                            <a href="#">
+                                View &amp; Apply
+                            </a>
+                        </div>
+                        <!--end feature-->
+                    </div>
+                {% endfor %}
 
-                    </ul>
+
+                <div class="col-sm-4">
+                    <div class="feature feature-1 boxed boxed--border">
+                        <span class="label bg--primary-2">Remote</span>
+                        <h5>Art Director</h5>
+                        <p>
+                            Hobson &amp; Peterson
+                        </p>
+                        <a href="#">
+                            View &amp; Apply
+                        </a>
+                    </div>
+                    <!--end feature-->
                 </div>
-
+                <div class="col-sm-4">
+                    <div class="feature feature-1 boxed boxed--border">
+                        <h5>Senior Interface Designer</h5>
+                        <p>
+                            Supply Co. (NYC)
+                        </p>
+                        <a href="#">
+                            View &amp; Apply
+                        </a>
+                    </div>
+                    <!--end feature-->
+                </div>
+                <div class="col-sm-4">
+                    <div class="feature feature-1 boxed boxed--border">
+                        <h5>Design Internship</h5>
+                        <p>
+                            Instrument San Francisco
+                        </p>
+                        <a href="#">
+                            View &amp; Apply
+                        </a>
+                    </div>
+                    <!--end feature-->
+                </div>
+                <div class="col-sm-4">
+                    <div class="feature feature-1 boxed boxed--border">
+                        <h5>Graphic Designer (Junior)</h5>
+                        <p>
+                            Paddle Financial
+                        </p>
+                        <a href="#">
+                            View &amp; Apply
+                        </a>
+                    </div>
+                    <!--end feature-->
+                </div>
+                <div class="col-sm-4">
+                    <div class="feature feature-1 boxed boxed--border">
+                        <span class="label">Fulltime</span>
+                        <h5>Expression Engine Expert</h5>
+                        <p>
+                            Hoëffler
+                        </p>
+                        <a href="#">
+                            View &amp; Apply
+                        </a>
+                    </div>
+                    <!--end feature-->
+                </div>
+                <div class="col-sm-4">
+                    <div class="feature feature-1 boxed boxed--border">
+                        <span class="label bg--primary-2">Remote</span>
+                        <h5>Full-stack Developer</h5>
+                        <p>
+                            Envato
+                        </p>
+                        <a href="#">
+                            View &amp; Apply
+                        </a>
+                    </div>
+                    <!--end feature-->
+                </div>
+                <div class="col-sm-4">
+                    <div class="feature feature-1 boxed boxed--border">
+                        <h5>Marketing Director</h5>
+                        <p>
+                            Clear Left
+                        </p>
+                        <a href="#">
+                            View &amp; Apply
+                        </a>
+                    </div>
+                    <!--end feature-->
+                </div>
             </div>
             <!--end of row-->
         </div>
         <!--end of container-->
     </section>
 
-    <section class="bg--secondary" id="snippet">
+    <section class="" id="snippet">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
@@ -212,23 +252,18 @@
             <!--end of row-->
         </div>
         <!--end of container-->
-
+        <infinite-loading  spinner="waveDots" :on-infinite="onInfinite" :distance="distance" ref="infiniteLoading">
+            <span slot="no-more">
+                <a href="/snippets">更多碎片...</a>
+            </span>
+        </infinite-loading>
     </section>
 
 {% endblock %}
 
-{% block bottom %}
-<infinite-loading  spinner="waveDots" :on-infinite="onInfinite" :distance="distance" ref="infiniteLoading">
-    <span slot="no-more">
-        <a href="/snippets">查看更多...</a>
-</span>
-</infinite-loading>
-{% endblock %}
 {% block script %}
     <script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
     <script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
-    {#<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>#}
-    {#<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>#}
     <script src="/themes/default/js/vue-lazyload.js"></script>
 
     <script>
