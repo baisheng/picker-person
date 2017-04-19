@@ -1,107 +1,70 @@
 {% extends "./_layout.html" %}
 
 {% block main %}
-
-    <section class="cover cover-features imagebg space--lg" data-scrim-bottom="9">
-        <div class="background-image-holder" style="background: url(&quot;/themes/default/img/construction-1.jpg&quot;); opacity: 1;">
-            <img alt="background" src="/themes/default/img/construction-1.jpg">
-        </div>
+    <section class="text-center">
         <div class="container">
             <div class="row">
-                <div class="col-sm-9 col-md-7">
-                    <h2>
-                        编程是一种生活
-                    </h2>
+                <div class="col-sm-12">
+                    <h6 class="type--uppercase">我的服务</h6>
+                    <div class="typed-headline">
+                        <span class="h1 inline-block">可提供</span>
+                        <span class="h1 inline-block typed-text typed-text--cursor color--primary" data-typed-strings="产品规划,UI/UE 设计,技术研发,商业规划咨询"></span>
+                    </div>
                     <p class="lead">
-                        自 2003 年接触程序以来，它已经成为我生活、工作的一个重要的组成部分，是我的爱好、朋友、思想的自留地，现在也会经常将一些想法实现起来.
+                        五年在线教育行业、十年互联网从业经验，反脆弱生活践行者，专注于互联网产品 & 技术
                     </p>
-                    <a class="btn btn--default type--uppercase" href="#">
+                    <a class="btn btn--primary type--uppercase inner-link" href="#demos">
                                 <span class="btn__text">
-                                    我的 Github
+                                    与我合作
                                 </span>
                     </a>
-                </div>
-            </div>
-            <!--end of row-->
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="feature feature--featured feature-1 boxed boxed--border bg--white">
-                        <h5>Half Year Results 2017</h5>
-                        <p>
-                            28 February, 2017
-                        </p>
-                        <a href="#">
-                            Read Story
-                        </a>
-                        <span class="label">New</span>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-1 boxed boxed--border bg--white">
-                        <h5>Awarded HSBC Contract</h5>
-                        <p>
-                            24 January, 2017
-                        </p>
-                        <a href="#">
-                            Read Story
-                        </a>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-1 boxed boxed--border bg--white">
-                        <h5>Environmental Statement</h5>
-                        <p>
-                            10 January, 2017
-                        </p>
-                        <a href="#">
-                            Read Story
-                        </a>
-                    </div>
-                    <!--end feature-->
                 </div>
             </div>
             <!--end of row-->
         </div>
         <!--end of container-->
     </section>
-
-    <section class=" space--sm">
+    <section class="bg--dark space--sm">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
                     <div class="masonry masonry-demos">
                         <div class="masonry-filter-container text-center">
-                            <span>Viewing:</span>
+                            <span>部分个人作品展示:</span>
                             <div class="masonry-filter-holder">
-                                <div class="masonry__filters" data-filter-all-text="All Categories"></div>
+                                <div class="masonry__filters" data-filter-all-text="全部类别"></div>
                             </div>
                         </div>
                         <div class="masonry__container">
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="设计">
                                 <a href="home-landing-5.html" class="block text-block">
                                     <div class="hover-shadow">
                                         <img alt="Landing 5" src="/themes/default/img/works/invite.png" />
                                     </div>
                                 </a>
                                 <div class="text-center">
-                                    <h4>中华文化共同体邀请函</h4>
+                                    <h5>中华文化共同体邀请函「腾讯科技(北京)」</h5>
                                     <span>平面设计</span>
+                                    <br />
+                                    <code>Affinity Design、Sketch</code>
+
                                 </div>
                             </div>
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="研发">
                                 <a href="home-landing-1.html" class="block text-block">
                                     <div class="hover-shadow">
                                         <img alt="Landing 1" src="/themes/default/img/works/face3.png" />
                                     </div>
                                 </a>
                                 <div class="text-center">
-                                    <h5>面部识别系统</h5>
+                                    <h5>面部识别系统「日本 JIEM 公司」</h5>
                                     <span>系统研发 & UI 设计</span>
+                                    <br />
+                                    <code>NodeJS、Mongodb、Sketch</code>
+
                                 </div>
                             </div>
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="设计">
                                 <a href="home-landing-7.html" class="block text-block">
                                     <div class="hover-shadow">
                                         <img alt="Landing 5" src="/themes/default/img/works/Login-iPhone.png" />
@@ -109,11 +72,14 @@
                                     </div>
                                 </a>
                                 <div class="text-center">
-                                    <h5>迪士尼英语 APP</h5>
+                                    <h5>迪士尼英语 APP（上海华特迪士尼）</h5>
                                     <span>产品策划 &  UI 设计</span>
+                                    <br />
+                                    <code>Sketch</code>
+
                                 </div>
                             </div>
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="设计">
                                 <a href="home-landing-3.html" class="block text-block">
                                     <div class="hover-shadow">
                                         <img alt="Landing 3" src="/themes/default/img/works/caixie.jpg" />
@@ -122,26 +88,30 @@
                                 <div class="text-center">
                                     <h5>采撷教育 LOGO</h5>
                                     <span>平面设计</span>
+                                    <br />
+                                    <code>AI、Sketch</code>
                                 </div>
                             </div>
 
 
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="设计">
                                 <a href="home-landing-2.html" class="block text-block">
                                     <div class="hover-shadow">
                                         <img alt="Landing 2" src="/themes/default/img/works/img-1.png" />
                                     </div>
                                 </a>
                                 <div class="text-center">
-                                    <h5>面部识别系统</h5>
-                                    <span>系统研发 & UI 设计</span>
+                                    <h5>骏尚汽车（江苏骏尚汽车）</h5>
+                                    <span>产品策划 & UI 设计</span>
+                                    <br />
+                                    <code>Affinity Photo、Sketch</code>
                                 </div>
                             </div>
                             <!--end item-->
 
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="设计">
                                 <a href="home-landing-3.html" class="block text-block">
                                     <div class="hover-shadow">
                                         <img alt="Landing 3" src="/themes/default/img/works/spayoulogo.png" />
@@ -150,12 +120,15 @@
                                 <div class="text-center">
                                     <h5>Spayou LOGO</h5>
                                     <span>平面设计</span>
+                                    <br />
+                                    <code>Sketch</code>
+
                                 </div>
                             </div>
                             <!--end item-->
 
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="研发">
                                 <a href="home-landing-6.html" class="block text-block">
                                     <div class="hover-shadow">
                                         <img alt="Landing 5" src="/themes/default/img/works/haibei.png" />
@@ -163,14 +136,17 @@
                                     </div>
                                 </a>
                                 <div class="text-center">
-                                    <h5>海贝网</h5>
+                                    <h5>海贝网（中国科学院计算所）</h5>
                                     <span>系统研发 & UI 设计</span>
+                                    <br />
+                                    <code>PHP、D3.js、Sketch</code>
+
                                 </div>
                             </div>
                             <!--end item-->
 
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="设计">
                                 <a href="home-landing-8.html" class="block text-block">
                                     <div class="hover-shadow">
                                         <img alt="Landing 5" src="/themes/default/img/works/myblog.png" />
@@ -180,10 +156,13 @@
                                 <div class="text-center">
                                     <h5>Hexo blog 皮肤</h5>
                                     <span>前端 & UI</span>
+                                    <br />
+                                    <code>NodeJS、Sketch</code>
+
                                 </div>
                             </div>
 
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="研发">
                                 <a href="home-landing-8.html" class="block text-block">
                                     <div class="hover-shadow">
                                         <img alt="Landing 5" src="/themes/default/img/works/cmswing.png" />
@@ -193,405 +172,117 @@
                                 <div class="text-center">
                                     <h5>内容管理系统</h5>
                                     <span>产品策划、系统研发 & UI</span>
+                                    <br />
+                                    <code>NodeJS、Sketch</code>
+
                                 </div>
                             </div>
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="咨询">
                                 <a href="home-landing-9.html" class="block text-block">
                                     <div class="hover-shadow">
-                                        <img alt="Landing 9" src="img/demos/landing-9.jpg" />
+                                        <img alt="Landing 5" src="/themes/default/img/works/wl8888.png" />
+
                                     </div>
                                 </a>
                                 <div class="text-center">
-                                    <h5>Landing 9</h5>
-                                    <span>Landing Page</span>
+                                    <h5>大宗物流平台融资方案「河北物流宝兑通」</h5>
+                                    <span>融资计划起草、PPT</span>
+                                    <br />
+                                    <code>Keynote、Sketch</code>
                                 </div>
                             </div>
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="咨询">
                                 <a href="home-landing-10.html" class="block text-block">
                                     <div class="hover-shadow">
-                                        <img alt="Landing 10" src="img/demos/landing-10.jpg" />
+                                        <img alt="Landing 5" src="/themes/default/img/works/cailian.png" />
+
                                     </div>
                                 </a>
                                 <div class="text-center">
-                                    <h5>Landing 10</h5>
-                                    <span>Landing Page</span>
+                                    <h5>财联网教育系统「中联集团」</h5>
+                                    <span>教育赋能系统解决方案</span>
+                                    <br />
+                                    <code>Keynote、JAVA、Sketch</code>
                                 </div>
                             </div>
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="研发">
                                 <a href="home-software-1.html" class="block text-block">
                                     <div class="hover-shadow">
-                                        <img alt="Software 1" src="img/demos/software-1.jpg" />
+                                        <img alt="Landing 5" src="/themes/default/img/works/resume.png" />
+
                                     </div>
                                 </a>
                                 <div class="text-center">
-                                    <h5>Software 1</h5>
-                                    <span>Landing Page</span>
+                                    <h5>在线简历系统</h5>
+                                    <span>产品设计、系统研发 & UI</span>
+                                    <br />
+                                    <code>NodeJS、VUE.js、Sketch</code>
                                 </div>
                             </div>
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="研发">
                                 <a href="home-software-2.html" class="block text-block">
                                     <div class="hover-shadow">
-                                        <img alt="Software 2" src="img/demos/software-2.jpg" />
+                                        <img alt="Landing 5" src="/themes/default/img/works/newcmswing.png" />
+
                                     </div>
                                 </a>
                                 <div class="text-center">
-                                    <h5>Software 2</h5>
-                                    <span>Landing Page</span>
+                                    <h5>CMS 系统</h5>
+                                    <span>系统研发、UI定制</span>
+                                    <br />
+                                    <code>NodeJS、VUE.js、Sketch</code>
                                 </div>
                             </div>
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Landing">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="研发">
                                 <a href="home-software-3.html" class="block text-block">
                                     <div class="hover-shadow">
-                                        <img alt="Software 3" src="img/demos/software-3.jpg" />
+                                        <img alt="Landing 5" src="/themes/default/img/works/caixie-home.png" />
+
                                     </div>
                                 </a>
                                 <div class="text-center">
-                                    <h5>Software 3</h5>
-                                    <span>Landing Page</span>
+                                    <h5>采撷 Landing</h5>
+                                    <span>交互设计、UI</span>
+                                    <br />
+                                    <code>NodeJS、VUE.js、Sketch</code>
                                 </div>
                             </div>
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="咨询">
                                 <a href="home-construction.html" class="block text-block">
                                     <div class="hover-shadow">
-                                        <img alt="Construction" src="img/demos/construction.jpg" />
+                                        <img alt="Landing 5" src="/themes/default/img/works/sunland.png" />
+
                                     </div>
                                 </a>
                                 <div class="text-center">
-                                    <h5>Construction</h5>
-                                    <span>Niche Industry</span>
+                                    <h5>APP 产品咨询「尚德教育」</h5>
+                                    <span>咨询方案</span>
                                 </div>
                             </div>
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-coworking.html" class="block text-block">
+                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="咨询">
+                                <a href="http://static.picker.cc/archive/devops/" class="block text-block">
                                     <div class="hover-shadow">
-                                        <img alt="Coworking" src="img/demos/coworking.jpg" />
+                                        <img alt="Landing 5" src="/themes/default/img/works/devops.png" />
+
                                     </div>
                                 </a>
                                 <div class="text-center">
-                                    <h5>Coworking</h5>
-                                    <span>Niche Industry</span>
+                                    <h5>DevOps 培训「中科院计算所」</h5>
+                                    <span>技术讲座</span>
+
+                                    <br />
+                                    <code>Keynote、Sketch</code>
                                 </div>
                             </div>
                             <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-drone-photography.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Drone Photography" src="img/demos/drone-photography.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Drone Photography</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-education.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Education" src="img/demos/education.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Education</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-event.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Event" src="img/demos/event.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Event</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-fitness.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Fitness" src="img/demos/fitness.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Fitness</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-health-insurance.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Insurance" src="img/demos/insurance.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Insurance</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-knowledge-base.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Knowledge Base" src="img/demos/knowledge-base.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Knowledge Base</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-musician.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Musician" src="img/demos/musician.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Musician</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-nonprofit.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Nonprofit" src="img/demos/nonprofit.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Nonprofit</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-political.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Political" src="img/demos/political.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Political</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-restaurant.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Restaurant" src="img/demos/restaurant.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Restaurant</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-recruitment.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Recruitment" src="img/demos/recruitment.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Recruitment</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-tourism.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Tourism" src="img/demos/tourism.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Tourism</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Industry">
-                                <a href="home-wedding.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Wedding" src="img/demos/wedding.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Wedding</h5>
-                                    <span>Niche Industry</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-agency-1.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Agency" src="img/demos/agency.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Agency</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-agency-2.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Agency 2" src="img/demos/agency-2.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Agency 2</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-personal-1.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Personal 1" src="img/demos/personal-1.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Personal 1</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-photography.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Photography" src="img/demos/photography.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Photography</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-photography-2.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Photography 2" src="img/demos/photography-2.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Photography 2</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-studio-1.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Studio 1" src="img/demos/studio-1.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Studio 1</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-studio-2.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Studio 2" src="img/demos/studio-2.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Studio 2</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Portfolio">
-                                <a href="home-portfolio-video.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Video" src="img/demos/video.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Video</h5>
-                                    <span>Portfolio</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Blog">
-                                <a href="home-magazine.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Magazine" src="img/demos/magazine.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Magazine</h5>
-                                    <span>Blog</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Blog">
-                                <a href="blog-articles-magazine.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Magazine" src="img/demos/magazine-2.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Magazine 2</h5>
-                                    <span>Blog</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Coming Soon">
-                                <a href="home-coming-soon-1.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Coming Soon 1" src="img/demos/coming-soon-1.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Coming Soon 1</h5>
-                                    <span>Coming Soon</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Coming Soon">
-                                <a href="home-coming-soon-2.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Coming Soon 2" src="img/demos/coming-soon-2.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Coming Soon 2</h5>
-                                    <span>Coming Soon</span>
-                                </div>
-                            </div>
-                            <!--end item-->
-                            <div class="masonry__item col-md-4 col-sm-6" data-masonry-filter="Coming Soon">
-                                <a href="home-coming-soon-3.html" class="block text-block">
-                                    <div class="hover-shadow">
-                                        <img alt="Coming Soon 3" src="img/demos/coming-soon-3.jpg" />
-                                    </div>
-                                </a>
-                                <div class="text-center">
-                                    <h5>Coming Soon 3</h5>
-                                    <span>Coming Soon</span>
-                                </div>
-                            </div>
-                            <!--end item-->
+
                         </div>
                         <!--end of masonry container-->
                     </div>

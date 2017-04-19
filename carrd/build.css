@@ -1,0 +1,5483 @@
+#build .panel {
+    -moz-pointer-events: none !important;
+    -webkit-pointer-events: none !important;
+    -ms-pointer-events: none !important;
+    pointer-events: none !important;
+    -moz-transition: left .5s ease, right .5s ease, opacity .25s ease, visibility .25s, margin-left 0s .5s, margin-right 0s .5s;
+    -webkit-transition: left .5s ease, right .5s ease, opacity .25s ease, visibility .25s, margin-left 0s .5s, margin-right 0s .5s;
+    -ms-transition: left .5s ease, right .5s ease, opacity .25s ease, visibility .25s, margin-left 0s .5s, margin-right 0s .5s;
+    transition: left .5s ease, right .5s ease, opacity .25s ease, visibility .25s, margin-left 0s .5s, margin-right 0s .5s;
+    position: absolute;
+    top: 0;
+    display: block;
+    width: 22em;
+    height: 100%;
+    background: rgba(51, 52, 60, 0.9825);
+    opacity: 0;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    z-index: 2;
+    visibility: hidden;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    left: -3em;
+    margin-left: -19em
+}
+
+#build .panel h2 {
+    font-size: 1.75em
+}
+
+#build .panel > .inner {
+    padding: 2.625em 1.75em 0 1.75em;
+    height: auto;
+    overflow: hidden
+}
+
+#build .panel footer {
+    border-top: solid 1px #494952;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%
+}
+
+#build .panel footer > * {
+    border-top: solid 1px rgba(250, 247, 255, 0.1)
+}
+
+#build .panel footer > :first-child {
+    border-top: 0
+}
+
+#build .panel footer .actions {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    position: relative
+}
+
+#build .panel footer .actions > * {
+    text-decoration: none;
+    -moz-flex-grow: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-grow: 1;
+    flex-grow: 1;
+    -moz-transition: color .2s ease;
+    -webkit-transition: color .2s ease;
+    -ms-transition: color .2s ease;
+    transition: color .2s ease;
+    color: #696a6d;
+    cursor: pointer;
+    display: block;
+    height: 3.3em;
+    line-height: 3.3em;
+    text-align: center;
+    border-left: solid 1px rgba(250, 247, 255, 0.1)
+}
+
+#build .panel footer .actions > *:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build .panel footer .actions > *:hover {
+    color: #fff
+}
+
+#build .panel footer .actions > *:first-child {
+    border-left: 0
+}
+
+#build .panel footer .actions .do-up:before {
+    content: '\f077'
+}
+
+#build .panel footer .actions .do-down:before {
+    content: '\f078'
+}
+
+#build .panel footer .actions .do-revert:before {
+    content: '\f0e2'
+}
+
+#build .panel footer .actions .do-clone:before {
+    content: '\f24d'
+}
+
+#build .panel footer .actions .do-remove:before {
+    content: '\f014'
+}
+
+#build .panel footer .buttons {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    padding: 1.75em
+}
+
+#build .panel footer .buttons > * {
+    -moz-flex-grow: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-grow: 1;
+    flex-grow: 1;
+    display: block
+}
+
+#build .panel footer .buttons > *:first-child {
+    margin-top: 0
+}
+
+#build .panel footer .buttons > * > * {
+    display: block;
+    width: 100%
+}
+
+#build .panel > .close {
+    text-decoration: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3em;
+    height: 3em;
+    cursor: pointer;
+    line-height: 3em;
+    text-align: center
+}
+
+#build .panel > .close:before {
+    content: "";
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build .panel > .close:before {
+    position: relative;
+    right: -0.25em
+}
+
+#build .panel form > .tabs {
+    position: relative;
+    top: -0.5em
+}
+
+#build .panel form hr {
+    display: block;
+    clear: both;
+    margin: 0 0 3.5em 0;
+    position: relative;
+    top: 1.25em
+}
+
+#build .panel form > section {
+    clear: both;
+    position: relative
+}
+
+#build .panel form > section:after {
+    content: '';
+    display: block;
+    clear: both;
+    height: 1px
+}
+
+#build .panel.visible {
+    -moz-pointer-events: auto !important;
+    -webkit-pointer-events: auto !important;
+    -ms-pointer-events: auto !important;
+    pointer-events: auto !important;
+    -moz-transition: left .5s ease, right .5s ease, opacity .25s ease, visibility .25s, margin-left 0s, margin-right 0s;
+    -webkit-transition: left .5s ease, right .5s ease, opacity .25s ease, visibility .25s, margin-left 0s, margin-right 0s;
+    -ms-transition: left .5s ease, right .5s ease, opacity .25s ease, visibility .25s, margin-left 0s, margin-right 0s;
+    transition: left .5s ease, right .5s ease, opacity .25s ease, visibility .25s, margin-left 0s, margin-right 0s;
+    opacity: 1;
+    z-index: 3;
+    visibility: visible;
+    left: 0;
+    margin-left: 0
+}
+
+#build .panel > .track {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1em;
+    height: 100%
+}
+
+#build .panel > .track > .cursor {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1em;
+    min-height: 1em
+}
+
+#build .panel > .track > .cursor:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0.3em;
+    left: 0.3em;
+    width: calc(100% - 0.6em);
+    height: calc(100% - 0.6em);
+    border-radius: 0.25em;
+    background: rgba(105, 106, 109, 0.25);
+    -moz-transition: background-color .2s ease;
+    -webkit-transition: background-color .2s ease;
+    -ms-transition: background-color .2s ease;
+    transition: background-color .2s ease
+}
+
+#build .panel > .track:hover > .cursor:before, #build .panel > .track.is-dragging > .cursor:before {
+    background: rgba(105, 106, 109, 0.5)
+}
+
+#build .panel.no-scrollbar > .track {
+    display: none
+}
+
+#build.is-touch .panel {
+    overflow-x: hidden;
+    overflow-y: auto
+}
+
+#build.is-touch .panel > .inner {
+    overflow-x: hidden;
+    overflow-y: auto
+}
+
+@media screen and (min-width: 481px) {
+    #build #ui.is-reversed .panel {
+        left: auto;
+        margin-left: 0;
+        right: -3em;
+        margin-right: -19em
+    }
+
+    #build #ui.is-reversed .panel.visible {
+        right: 0;
+        margin-right: 0
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build .panel {
+        width: 21em
+    }
+
+    #build .panel > .inner {
+        padding: 2.1875em 1.75em 0 1.75em
+    }
+
+    #build .panel h2 {
+        font-size: 1.25em
+    }
+
+    #build .panel form > section hr {
+        margin: 0 0 2.5em 0;
+        top: 0.75em
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #build .panel {
+        box-shadow: 0 0 0.25em 0 rgba(0, 0, 0, 0.25)
+    }
+}
+
+@media screen and (max-height: 736px) {
+    #build .panel footer {
+        position: relative;
+        left: -1.75em;
+        width: calc(100% + 3.5em)
+    }
+}
+
+#build .upgrade-icon {
+    -moz-transition: background-color .2s ease-in-out;
+    -webkit-transition: background-color .2s ease-in-out;
+    -ms-transition: background-color .2s ease-in-out;
+    transition: background-color .2s ease-in-out;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    border: 0;
+    width: 1.75em;
+    height: 1.75em;
+    line-height: 1.75em;
+    text-indent: 100%;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    vertical-align: middle;
+    color: #DED173;
+    border-radius: 4px;
+    margin-left: 0.25em;
+    cursor: pointer
+}
+
+#build .upgrade-icon:before {
+    content: "";
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build .upgrade-icon:before {
+    text-indent: 0;
+    line-height: inherit;
+    width: inherit;
+    height: inherit;
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+#build a.upgrade-icon:hover {
+    background-color: rgba(250, 247, 255, 0.035)
+}
+
+#build input[type="checkbox"] + label + .upgrade-icon, #build input[type="radio"] + label + .upgrade-icon {
+    margin-left: -0.35em
+}
+
+#build label + input + .upgrade-icon {
+    position: absolute;
+    top: 0;
+    right: 0
+}
+
+#build label + .image-cropper + .upgrade-icon {
+    position: absolute;
+    top: 0;
+    right: 0
+}
+
+#build #canvas {
+    position: relative;
+    min-height: 100vh;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    outline: 0;
+    cursor: pointer
+}
+
+#build #canvas img {
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none
+}
+
+#build #canvas #\--main {
+    cursor: pointer;
+    position: relative
+}
+
+#build #canvas #\--main:after {
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none;
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit
+}
+
+#build #canvas #\--main.hover:after {
+    border: dotted 1px #33ada9
+}
+
+#build #canvas #\--main.active:after {
+    border: solid 2px #33ada9 !important
+}
+
+#build #canvas .component-wrapper {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative
+}
+
+#build #canvas .component-wrapper > .component-placeholder {
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none;
+    border: dotted 1px rgba(144, 145, 153, 0.5);
+    background: rgba(144, 145, 153, 0.25);
+    max-width: 100%;
+    overflow: hidden
+}
+
+#build #canvas .component-wrapper > .component {
+    position: relative;
+    width: auto;
+    max-width: 100%
+}
+
+#build #canvas .component-wrapper > .component:after {
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none;
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%
+}
+
+#build #canvas .component-wrapper > .component.hover:after {
+    border: dotted 1px #33ada9 !important
+}
+
+#build #canvas .component-wrapper > .component.active:after {
+    border: solid 2px #33ada9 !important
+}
+
+#build #canvas .component-wrapper > .component.is-dragging {
+    position: fixed;
+    z-index: 10000
+}
+
+#build #canvas .component-wrapper > .component.is-dragging:after {
+    border: dotted 1px #33ada9
+}
+
+#build #canvas .component-wrapper.is-dropTarget.before {
+    box-shadow: inset 0 1px 0 0 #33ada9, 0 -1px 0 0 #33ada9
+}
+
+#build #canvas .component-wrapper.is-dropTarget.after {
+    box-shadow: inset 0 -1px 0 0 #33ada9, 0 1px 0 0 #33ada9
+}
+
+#build #canvas .component-wrapper[data-type="divider"] > .component {
+    width: 100%
+}
+
+#build #canvas .component-wrapper[data-type="image"] > .component.is-dragging img {
+    opacity: 0.75
+}
+
+#build #canvas .component-wrapper[data-type="image"] > .component .placeholder {
+    display: inline-block
+}
+
+#build #canvas .component-wrapper[data-type="image"] > .component .placeholder span {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2560' height='2560' viewBox='0 0 2560 2560' preserveAspectRatio='none'%3E%3Cline x1='0' y1='0' x2='2560' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3Cline x1='2560' y1='0' x2='0' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3C/svg%3E");
+    background-color: rgba(144, 145, 153, 0.5);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100% !important
+}
+
+#build #canvas .component-wrapper[data-type="image"].flush > .component .placeholder {
+    display: block
+}
+
+#build #canvas .component-wrapper[data-type="gallery"] > .component.is-dragging img {
+    opacity: 0.75
+}
+
+#build #canvas .component-wrapper[data-type="gallery"] > .component .placeholder span {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2560' height='2560' viewBox='0 0 2560 2560' preserveAspectRatio='none'%3E%3Cline x1='0' y1='0' x2='2560' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3Cline x1='2560' y1='0' x2='0' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3C/svg%3E");
+    background-color: rgba(144, 145, 153, 0.5);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100% !important
+}
+
+#build #canvas .component-wrapper[data-type="video"] > .component .\--iframe {
+    background-color: rgba(144, 145, 153, 0.5)
+}
+
+#build #canvas .component-wrapper[data-type="video"] > .component span {
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5)
+}
+
+#build #canvas .component-wrapper[data-type="video"] > .component span:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #canvas .component-wrapper[data-type="video"] > .component span:before {
+    font-size: 4rem;
+    display: block;
+    margin: 0 0 1.25rem 0
+}
+
+#build #canvas .component-wrapper[data-type="video"] > .component .placeholder .\--iframe {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2560' height='2560' viewBox='0 0 2560 2560' preserveAspectRatio='none'%3E%3Cline x1='0' y1='0' x2='2560' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3Cline x1='2560' y1='0' x2='0' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3C/svg%3E");
+    background-color: rgba(144, 145, 153, 0.5);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100% !important
+}
+
+#build #canvas .component-wrapper[data-type="video"] > .component .placeholder span:before {
+    content: '\f03d'
+}
+
+#build #canvas .component-wrapper[data-type="video"] > .component .youtube span:before {
+    content: '\f167'
+}
+
+#build #canvas .component-wrapper[data-type="video"] > .component .vimeo span:before {
+    content: '\f27d'
+}
+
+#build #canvas .component-wrapper[data-type="video"] > .component .twitch span:before {
+    content: '\f1e8'
+}
+
+#build #canvas .component-wrapper[data-type="audio"] > .component .\--iframe {
+    background-color: rgba(144, 145, 153, 0.5)
+}
+
+#build #canvas .component-wrapper[data-type="audio"] > .component span {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    overflow: hidden;
+    padding: 0.5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: calc(100% - 3rem)
+}
+
+#build #canvas .component-wrapper[data-type="audio"] > .component span:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #canvas .component-wrapper[data-type="audio"] > .component span:before {
+    display: block;
+    font-size: 2.5rem;
+    margin: 0 0 0.625rem 0
+}
+
+#build #canvas .component-wrapper[data-type="audio"] > .component .placeholder .\--iframe {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2560' height='2560' viewBox='0 0 2560 2560' preserveAspectRatio='none'%3E%3Cline x1='0' y1='0' x2='2560' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3Cline x1='2560' y1='0' x2='0' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3C/svg%3E");
+    background-color: rgba(144, 145, 153, 0.5);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100% !important
+}
+
+#build #canvas .component-wrapper[data-type="audio"] > .component .placeholder .\--frame {
+    width: 12rem;
+    max-width: 100%;
+    height: 8rem
+}
+
+#build #canvas .component-wrapper[data-type="audio"] > .component .placeholder span:before {
+    content: '\f001'
+}
+
+#build #canvas .component-wrapper[data-type="audio"] > .component .soundcloud span:before {
+    content: '\f1be';
+    margin: 0 0 0.25rem 0
+}
+
+#build #canvas .component-wrapper[data-type="audio"] > .component .bandcamp span:before {
+    content: 'bc';
+    font-family: 'Arial', sans-serif;
+    letter-spacing: -0.0375em
+}
+
+#build #canvas .component-wrapper[data-type="audio"] > .component .bandcamp.slim span:before {
+    font-size: 1em;
+    margin: 0 0.5rem 0 0;
+    display: inline-block
+}
+
+#build #canvas .component-wrapper[data-type="control"] > .component .\--control {
+    font-weight: bold;
+    font-size: 0.6rem;
+    height: 1rem;
+    line-height: 1rem;
+    width: 100%;
+    position: relative;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    overflow: hidden;
+    padding: 0 0.6rem
+}
+
+#build #canvas .component-wrapper[data-type="control"] > .component .\--control > * {
+    display: block
+}
+
+#build #canvas .component-wrapper[data-type="control"] > .component .\--control .x, #build #canvas .component-wrapper[data-type="control"] > .component .\--control .y {
+    border-top: dashed 2px #ffffff;
+    height: inherit;
+    -moz-flex-grow: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-grow: 1;
+    flex-grow: 1;
+    position: relative;
+    top: calc(50% - 1px)
+}
+
+#build #canvas .component-wrapper[data-type="control"] > .component .\--control .label {
+    -moz-flex-shrink: 1;
+    -webkit-flex-shrink: 1;
+    -ms-flex-shrink: 1;
+    flex-shrink: 1;
+    padding: 0 0.6rem
+}
+
+#build #canvas .component-wrapper[data-type="control"] > .component .\--control.header-marker {
+    text-transform: uppercase;
+    background-color: rgba(124, 125, 123, 0.75);
+    color: #fff
+}
+
+#build #canvas .component-wrapper[data-type="control"] > .component .\--control.footer-marker {
+    text-transform: uppercase;
+    background-color: rgba(124, 125, 123, 0.75);
+    color: #fff
+}
+
+#build #canvas .component-wrapper[data-type="control"] > .component .\--control.section-break {
+    background-color: rgba(144, 145, 153, 0.5);
+    color: #fff
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.stripe-checkout .stripe-button-el {
+    overflow: hidden;
+    display: inline-block;
+    visibility: visible !important;
+    background-image: -moz-linear-gradient(#28a0e5, #015e94);
+    background-image: -webkit-linear-gradient(#28a0e5, #015e94);
+    background-image: -ms-linear-gradient(#28a0e5, #015e94);
+    background-image: linear-gradient(#28a0e5, #015e94);
+    -webkit-font-smoothing: antialiased;
+    border: 0;
+    padding: 1px;
+    text-decoration: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.stripe-checkout .stripe-button-el span {
+    display: block;
+    position: relative;
+    padding: 0 12px;
+    height: 30px;
+    line-height: 30px;
+    background: #1275ff;
+    background-image: -moz-linear-gradient(#7dc5ee, #008cdd 85%, #30a2e4);
+    background-image: -webkit-linear-gradient(#7dc5ee, #008cdd 85%, #30a2e4);
+    background-image: -ms-linear-gradient(#7dc5ee, #008cdd 85%, #30a2e4);
+    background-image: linear-gradient(#7dc5ee, #008cdd 85%, #30a2e4);
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    min-height: 30px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.gumroad-overlay .gumroad-button {
+    background-color: white;
+    background-image: url("https://gumroad.com/button/button_bar.jpg");
+    background-repeat: repeat-x;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0 0 2px;
+    color: #999;
+    display: inline-block;
+    font-family: -apple-system, ".SFNSDisplay-Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 50px;
+    padding: 0 15px;
+    text-shadow: none;
+    text-decoration: none
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.gumroad-overlay .gumroad-button .gumroad-button-logo {
+    background-image: url("https://gumroad.com/button/button_logo.png");
+    background-size: cover;
+    height: 17px;
+    width: 16px;
+    display: inline-block;
+    margin-bottom: -3px;
+    margin-right: 15px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    color: #1d2129;
+    line-height: 1.28;
+    text-align: left
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginButton {
+    display: inline-block;
+    background: #4c69ba;
+    background: linear-gradient(#4c69ba, #3b55a0);
+    border: none;
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    height: 20px;
+    line-height: 20px;
+    padding: 0;
+    text-shadow: 0 -1px 0 #354c8c;
+    white-space: nowrap
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginButton.share {
+    text-align: center
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginButton .\--button {
+    display: inline-block;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    margin: 0;
+    outline: none;
+    padding: 0;
+    text-shadow: 0 -1px 0 #354c8c
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginButtonImage {
+    display: inline-block
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginButtonIcon {
+    height: 14px;
+    left: 0;
+    margin: 0 4px 0 4px;
+    position: relative;
+    top: 3px;
+    vertical-align: top;
+    width: 14px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginButtonIconPlaceholder {
+    display: block;
+    height: 14px;
+    width: 7px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginButtonIconSVG {
+    height: 14px;
+    width: 14px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginButtonLabel {
+    padding: 0 5px 0 0;
+    position: relative;
+    vertical-align: top
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginCountButton {
+    background: white;
+    border: 1px solid #90949c;
+    border-radius: 2px;
+    color: #4b4f56;
+    display: inline-block;
+    font-size: 11px;
+    height: auto;
+    line-height: 18px;
+    margin-left: 6px;
+    min-width: 15px;
+    padding: 0 3px;
+    text-align: center;
+    white-space: nowrap
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginCountButtonNub {
+    height: 0;
+    left: 2px;
+    position: relative;
+    top: -15px;
+    width: 5px;
+    z-index: 2
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginCountButtonNub .\--i {
+    border-right-color: #fff;
+    left: 2px;
+    top: -7px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginCountButtonNub .\--s, #build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .\--widget.facebook-like .pluginCountButtonNub .\--i {
+    border-color: transparent #90949c;
+    border-style: solid;
+    border-width: 4px 5px 4px 0;
+    display: block;
+    position: relative;
+    top: 1px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginCountBox {
+    background: #fff;
+    border: 1px solid #90949c;
+    border-radius: 2px;
+    color: #4b4f56;
+    font-size: 13px;
+    height: 33px;
+    margin: 0;
+    min-width: 35px;
+    padding: 6px 1px 2px 3px;
+    text-align: center;
+    white-space: nowrap
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginCountBoxTextOnly {
+    padding: 2px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginCountBoxNub {
+    bottom: 1px;
+    height: 7px;
+    left: 7px;
+    position: relative;
+    width: 0;
+    z-index: 2
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginCountBoxNub .\--i {
+    border-top-color: #fff;
+    left: 0;
+    top: -12px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .pluginCountBoxNub .\--s, #build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .\--widget.facebook-like .pluginCountBoxNub .\--i {
+    border-color: #90949c transparent transparent;
+    border-right: 5px solid transparent;
+    border-style: solid;
+    border-width: 5px;
+    display: block;
+    position: relative
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .layout {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .layout.\--box_count {
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .layout.\--box_count .pluginButton.share {
+    margin-top: 4px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .layout.\--button_count {
+    -moz-flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .layout.\--button_count .pluginButton.share {
+    margin-left: 4px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .layout.\--button {
+    -moz-flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.facebook-like .layout.\--button .pluginButton.share {
+    margin-left: 4px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.paypal-button .\--button.large {
+    padding: 4px 19px;
+    font-size: 14px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.paypal-button .\--button {
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: 13px;
+    font-family: "Arial", bold, italic;
+    font-weight: bold;
+    font-style: italic;
+    border: 1px solid #ffa823;
+    color: #0E3168;
+    background: #ffa823;
+    position: relative;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    z-index: 0;
+    display: inline-block;
+    height: 30px;
+    line-height: 20px
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.paypal-button .\--button:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 11px;
+    top: 0;
+    left: 0;
+    background-color: #ffa823;
+    background: -moz-linear-gradient(top, #FFAA00 0%, #FFAA00 80%, #FFF8FC 100%);
+    background: -webkit-linear-gradient(top, #FFAA00 0%, #FFAA00 80%, #FFF8FC 100%);
+    background: -ms-linear-gradient(top, #FFAA00 0%, #FFAA00 80%, #FFF8FC 100%);
+    background: linear-gradient(top, #FFAA00 0%, #FFAA00 80%, #FFF8FC 100%);
+    z-index: -2
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.paypal-button .\--button:after {
+    content: '';
+    position: absolute;
+    width: 98%;
+    height: 60%;
+    border-radius: 40px 40px 38px 38px;
+    top: 0;
+    left: 0;
+    background: -moz-linear-gradient(top, #fefefe 0%, #fed994 100%);
+    background: -webkit-linear-gradient(top, #fefefe 0%, #fed994 100%);
+    background: -ms-linear-gradient(top, #fefefe 0%, #fed994 100%);
+    background: linear-gradient(top, #fefefe 0%, #fed994 100%);
+    z-index: -1;
+    -moz-transform: translateX(1%);
+    -webkit-transform: translateX(1%);
+    -ms-transform: translateX(1%);
+    transform: translateX(1%)
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.typeform .typeform-share-button {
+    -webkit-background-clip: border-box;
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: auto;
+    -webkit-border-image: none;
+    -webkit-user-select: none;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: #eee;
+    background-image: -moz-linear-gradient(top, rgb(243, 243, 243), rgb(225, 225, 225));
+    background-image: -webkit-linear-gradient(top, rgb(243, 243, 243), rgb(225, 225, 225));
+    background-image: -ms-linear-gradient(top, rgb(243, 243, 243), rgb(225, 225, 225));
+    background-image: linear-gradient(top, rgb(243, 243, 243), rgb(225, 225, 225));
+    background-origin: padding-box;
+    background-repeat: repeat-x;
+    background-size: auto;
+    border-bottom-color: #a5a5a5;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-color: #b1b1b1;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: #b1b1b1;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-top-color: #cfcfcf;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    color: #555;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 25px;
+    list-style-type: none;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    padding-bottom: 2px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 3px;
+    position: relative;
+    text-align: left;
+    text-decoration: none !important;
+    text-shadow: none;
+    vertical-align: middle
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.typeform .typeform-widget {
+    background-color: rgba(144, 145, 153, 0.5);
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    -moz-justify-content: center;
+    -webkit-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.typeform .typeform-widget span {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    overflow: hidden;
+    padding: 0.5rem;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: calc(100% - 3rem);
+    position: relative
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.typeform .typeform-widget span:before {
+    content: 't';
+    display: block;
+    font-size: 2.5rem;
+    margin: 0 0 0.625rem 0;
+    font-family: sans-serif;
+    position: relative;
+    left: -0.275rem
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.typeform .typeform-widget span:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0.825rem;
+    left: calc(50% + 0.275rem);
+    font-family: sans-serif;
+    height: 1.825rem;
+    width: 0.25rem;
+    background: rgba(255, 255, 255, 0.5)
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.typeform .typeform-widget.placeholder {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2560' height='2560' viewBox='0 0 2560 2560' preserveAspectRatio='none'%3E%3Cline x1='0' y1='0' x2='2560' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3Cline x1='2560' y1='0' x2='0' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3C/svg%3E");
+    background-color: rgba(144, 145, 153, 0.5);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100% !important
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-iframe .\--iframe {
+    background-color: rgba(144, 145, 153, 0.5);
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    -moz-justify-content: center;
+    -webkit-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-iframe span {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    overflow: hidden;
+    padding: 0.5rem;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: calc(100% - 3rem)
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-iframe span:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-iframe span:before {
+    content: '\f1c9';
+    display: block;
+    font-size: 2.5rem;
+    margin: 0 0 0.625rem 0
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-iframe.placeholder .\--iframe {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2560' height='2560' viewBox='0 0 2560 2560' preserveAspectRatio='none'%3E%3Cline x1='0' y1='0' x2='2560' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3Cline x1='2560' y1='0' x2='0' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3C/svg%3E");
+    background-color: rgba(144, 145, 153, 0.5);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100% !important
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-code .\--content {
+    background-color: rgba(144, 145, 153, 0.5);
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    -moz-justify-content: center;
+    -webkit-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+    min-width: 6.5em;
+    height: 6.5em
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-code span {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    padding: 0 2em
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-code span:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-code span:before {
+    content: '\f121';
+    display: block;
+    font-size: 2rem;
+    margin: 0 0 0.625rem 0
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-code.placeholder .\--content {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2560' height='2560' viewBox='0 0 2560 2560' preserveAspectRatio='none'%3E%3Cline x1='0' y1='0' x2='2560' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3Cline x1='2560' y1='0' x2='0' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='6px' /%3E%3C/svg%3E");
+    background-color: rgba(144, 145, 153, 0.5);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100% !important
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-code.hidden .\--content {
+    background-color: rgba(144, 145, 153, 0.125);
+    position: relative
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-code.hidden .\--content:after {
+    content: '';
+    display: 'block';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: dashed 1px rgba(144, 145, 153, 0.5)
+}
+
+#build #canvas .component-wrapper[data-type="widget"] > .component .\--widget.custom-code.hidden span {
+    opacity: 0.5
+}
+
+#build #canvas .component-wrapper[data-type="grid"] > .component .cell-component {
+    background-color: rgba(144, 145, 153, 0.5);
+    color: rgba(255, 255, 255, 0.5);
+    padding: 1rem;
+    text-align: center
+}
+
+#build #canvas .component-wrapper[data-type="columns"] > .component.is-dragging .--columns {
+    margin: 0 !important
+}
+
+#build #canvas .component-wrapper[data-type="columns"] > .component [data-columns-index] {
+    position: relative
+}
+
+#build #canvas .component-wrapper[data-type="columns"] > .component [data-columns-index].placeholder {
+    -moz-align-self: stretch;
+    -webkit-align-self: stretch;
+    -ms-align-self: stretch;
+    align-self: stretch;
+    min-height: 5rem;
+    position: relative
+}
+
+#build #canvas .component-wrapper[data-type="columns"] > .component [data-columns-index].placeholder:after {
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none;
+    content: '';
+    display: block;
+    min-height: 5rem;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    border: dashed 1px rgba(144, 145, 153, 0.5);
+    background-color: rgba(144, 145, 153, 0.125)
+}
+
+#build #canvas .component-wrapper[data-type="columns"] > .component [data-columns-index].placeholder.is-dropTarget:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #33ada9
+}
+
+#build #canvas.placeholder {
+    background: #1a1a1e
+}
+
+#build #canvas.placeholder:before {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2560' height='2560' viewBox='0 0 2560 2560' preserveAspectRatio='none'%3E%3Cline x1='0' y1='0' x2='2560' y2='2560' stroke='rgba(255,255,255,.25)' stroke-width='1px' /%3E%3Cline x1='2560' y1='0' x2='0' y2='2560' stroke='rgba(255,255,255,.25)' stroke-width='1px' /%3E%3C/svg%3E");
+    background-color: rgba(26, 26, 30, 0.5);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100% !important;
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none
+}
+
+#build #canvas.placeholder:after {
+    content: 'No Background Image';
+    position: fixed;
+    top: 50%;
+    left: 0;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    height: 2em;
+    line-height: 2em;
+    margin-top: -1em;
+    color: rgba(255, 255, 255, 0.125);
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none
+}
+
+@media screen and (max-width: 736px) {
+    #build #canvas.placeholder:after {
+        font-size: 1em
+    }
+}
+
+#build #canvas.active #\--wrapper {
+    box-shadow: inset 0 0 0 2px #33ada9
+}
+
+#build.is-touch #canvas .component-wrapper > .component.hover:after {
+    border: 0
+}
+
+#build.is-touch #canvas .component-wrapper > .component.active:after {
+    border: solid 2px #33ada9
+}
+
+#build.is-touch #canvas .component-wrapper > .component.is-dragging {
+    -moz-transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+    -ms-transform: scale(1.0);
+    transform: scale(1.0)
+}
+
+#build.is-touch #canvas.placeholder:before {
+    position: absolute
+}
+
+#build.is-touch #canvas.placeholder:after {
+    position: absolute
+}
+
+@media screen and (max-width: 480px) {
+    #build #canvas {
+        margin-top: 3.5em;
+        cursor: default
+    }
+
+    #build #canvas.active #\--wrapper {
+        box-shadow: none
+    }
+
+    #build #canvas #\--main {
+        cursor: default;
+        outline: 0 !important
+    }
+}
+
+#build.is-nonTouch #canvas #\--main {
+    -moz-touch-action: none;
+    -webkit-touch-action: none;
+    -ms-touch-action: none;
+    touch-action: none
+}
+
+#build.is-nonTouch #canvas #\--main *, #build.is-nonTouch #canvas #\--main *:before, #build.is-nonTouch #canvas #\--main *:after {
+    -moz-touch-action: none;
+    -webkit-touch-action: none;
+    -ms-touch-action: none;
+    touch-action: none
+}
+
+#build.is-dragging #canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+#build.is-dragging #canvas #\--main.hover:after {
+    border: 0 !important
+}
+
+#build #ui {
+    font-size: 12pt;
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    outline: 0
+}
+
+@media screen and (min-width: 1680px) {
+    #build #ui {
+        font-size: 15pt
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #ui {
+        font-size: 11pt
+    }
+}
+
+#build #ui > * {
+    -moz-pointer-events: auto;
+    -webkit-pointer-events: auto;
+    -ms-pointer-events: auto;
+    pointer-events: auto
+}
+
+#build #ui:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #2c2d34;
+    z-index: 10001;
+    opacity: 0;
+    -moz-transition: opacity 0.5s ease;
+    -webkit-transition: opacity 0.5s ease;
+    -ms-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none
+}
+
+#build.is-loading #ui:before {
+    opacity: 1
+}
+
+#build #menu {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    margin: 0;
+    z-index: 1;
+    background: rgba(51, 52, 60, 0.9825);
+    border-radius: 4px;
+    border: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+#build #menu > * {
+    text-decoration: none;
+    -moz-transition: background-color .2s ease, box-shadow .2s ease, max-width .25s ease-in-out, padding .25s ease-in-out, overflow-x .25s ease-in-out, visibility .25s;
+    -webkit-transition: background-color .2s ease, box-shadow .2s ease, max-width .25s ease-in-out, padding .25s ease-in-out, overflow-x .25s ease-in-out, visibility .25s;
+    -ms-transition: background-color .2s ease, box-shadow .2s ease, max-width .25s ease-in-out, padding .25s ease-in-out, overflow-x .25s ease-in-out, visibility .25s;
+    transition: background-color .2s ease, box-shadow .2s ease, max-width .25s ease-in-out, padding .25s ease-in-out, overflow-x .25s ease-in-out, visibility .25s;
+    display: block;
+    height: 3em;
+    border-style: solid;
+    border-color: rgba(250, 247, 255, 0.1);
+    border-left-width: 1px;
+    color: #fff !important;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 3em;
+    padding: 0 1.5em;
+    text-align: center;
+    text-decoration: none;
+    position: relative;
+    border-bottom: 0;
+    outline: 0
+}
+
+#build #menu > *:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #menu > *:first-child {
+    border-left-width: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px
+}
+
+#build #menu > *:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px
+}
+
+#build #menu > *:before {
+    -moz-transition: color .2s ease;
+    -webkit-transition: color .2s ease;
+    -ms-transition: color .2s ease;
+    transition: color .2s ease;
+    color: #696a6d;
+    margin-right: 0.75em
+}
+
+#build #menu > *.visible .items {
+    -moz-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible
+}
+
+#build #menu > *.visible {
+    background-color: rgba(250, 247, 255, 0.035)
+}
+
+#build #menu > *.visible:before {
+    color: #b9babd
+}
+
+#build #menu > *:hover:before {
+    color: #fff
+}
+
+#build #menu > *:after {
+    -moz-transition: opacity .2s ease;
+    -webkit-transition: opacity .2s ease;
+    -ms-transition: opacity .2s ease;
+    transition: opacity .2s ease;
+    content: '';
+    position: absolute;
+    top: 0.35em;
+    right: 0.35em;
+    background: #33ada9;
+    width: 0.4em;
+    height: 0.4em;
+    display: block;
+    border-radius: 100%;
+    opacity: 0
+}
+
+#build #menu > *.alert:after {
+    opacity: 1
+}
+
+#build #menu > *.disabled {
+    cursor: default
+}
+
+#build #menu > *.disabled:before {
+    color: rgba(250, 247, 255, 0.1)
+}
+
+#build #menu .items {
+    -moz-transform: translateY(-0.125em);
+    -webkit-transform: translateY(-0.125em);
+    -ms-transform: translateY(-0.125em);
+    transform: translateY(-0.125em);
+    -moz-transition: -moz-transform .3125s ease, opacity .25s ease, visibility .25s;
+    -webkit-transition: -webkit-transform .3125s ease, opacity .25s ease, visibility .25s;
+    -ms-transition: -ms-transform .3125s ease, opacity .25s ease, visibility .25s;
+    transition: transform .3125s ease, opacity .25s ease, visibility .25s;
+    position: absolute;
+    top: calc(100% + 1em);
+    right: 0;
+    background: rgba(51, 52, 60, 0.9825);
+    border-radius: 4px;
+    min-width: 11em;
+    padding: 0.75em 0;
+    opacity: 0;
+    visibility: hidden
+}
+
+#build #menu .items:before {
+    content: '';
+    display: block;
+    border-bottom: solid 0.5em rgba(51, 52, 60, 0.9825);
+    border-left: solid 0.5em transparent;
+    border-right: solid 0.5em transparent;
+    position: absolute;
+    top: -0.5em;
+    right: 1.35em
+}
+
+#build #menu .items:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1em;
+    position: absolute;
+    top: -1em;
+    right: 0;
+    background: transparent
+}
+
+#build #menu .items a {
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    line-height: 2.25em;
+    color: #b9babd;
+    text-decoration: none;
+    font-weight: normal;
+    padding: 0 1em;
+    position: relative;
+    border-bottom: 0
+}
+
+#build #menu .items a:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #menu .items a:before {
+    -moz-transition: color .2s ease;
+    -webkit-transition: color .2s ease;
+    -ms-transition: color .2s ease;
+    transition: color .2s ease
+}
+
+#build #menu .items a:hover {
+    color: #fff;
+    background: rgba(250, 247, 255, 0.035)
+}
+
+#build #menu .items a:hover:before {
+    color: #b9babd
+}
+
+#build #menu .items a.break-before {
+    margin-top: 1.5em
+}
+
+#build #menu .items a.break-before:after {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: rgba(250, 247, 255, 0.1);
+    position: absolute;
+    top: -0.75em;
+    left: 0
+}
+
+#build #menu .items a.break-after {
+    margin-bottom: 1.5em
+}
+
+#build #menu .items a.break-after:after {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: rgba(250, 247, 255, 0.1);
+    position: absolute;
+    bottom: -0.75em;
+    left: 0
+}
+
+#build #menu .items a:before {
+    color: #696a6d;
+    margin-right: 0.5em;
+    width: 1.25em;
+    display: inline-block
+}
+
+#build #menu .items.columned {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    padding: 0.75em
+}
+
+#build #menu .items.columned a {
+    border-radius: 3px
+}
+
+#build #menu .items.columned .column {
+    min-width: 8.5em
+}
+
+@media screen and (max-width: 480px) {
+    #build #menu {
+        top: 0;
+        left: 0 !important;
+        right: auto !important;
+        height: 3.5em;
+        width: 100%;
+        -moz-flex-direction: row;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -moz-justify-content: center;
+        -webkit-justify-content: center;
+        -ms-justify-content: center;
+        justify-content: center;
+        border-radius: 0
+    }
+
+    #build #menu > * {
+        height: 3.5em;
+        line-height: 3.65em;
+        padding: 0;
+        -moz-flex-grow: 1;
+        -webkit-flex-grow: 1;
+        -ms-flex-grow: 1;
+        flex-grow: 1;
+        border-left-width: 0;
+        border-radius: 0 !important
+    }
+
+    #build #menu > *.visible {
+        background-color: rgba(44, 45, 52, 0.9825)
+    }
+
+    #build #menu > *:before {
+        color: #b9babd !important
+    }
+
+    #build #menu > *:hover:before {
+        color: #b9babd !important
+    }
+
+    #build #menu > *.visible:before {
+        color: #fff !important
+    }
+
+    #build #menu .items {
+        position: fixed;
+        top: 3.5em;
+        left: 0;
+        width: 100%;
+        padding: 1.75em;
+        border-radius: 0;
+        background: rgba(44, 45, 52, 0.9825)
+    }
+
+    #build #menu .items:before {
+        display: none
+    }
+
+    #build #menu .items a {
+        line-height: 3em !important;
+        padding: 0
+    }
+
+    #build #menu .items a:hover {
+        background: transparent
+    }
+
+    #build #menu .items.columned {
+        padding: 0
+    }
+
+    #build #menu .items.columned .column {
+        padding: 1.75em;
+        min-width: 0;
+        width: 50%
+    }
+
+    #build #menu .items.columned .column:first-child {
+        padding-right: 0
+    }
+
+    #build #menu .items.columned .column:last-child {
+        padding-left: 0
+    }
+}
+
+#build #menu > *:before {
+    margin-right: 0;
+    color: #b9babd
+}
+
+#build #menu > *[data-name="add"]:before {
+    content: '\f067'
+}
+
+#build #menu > *[data-name="add"] .items a {
+    line-height: 2.75em
+}
+
+#build #menu > *[data-name="undo"]:before {
+    content: '\f0e2'
+}
+
+#build #menu > *[data-name="redo"]:before {
+    content: '\f01e'
+}
+
+#build #menu > *[data-name="menu"]:before {
+    content: '\f0c9'
+}
+
+#build #menu > *[data-name="publish"]:before {
+    content: '\f0c7'
+}
+
+#build #menu > *[data-name="play"]:before {
+    content: '\f04b'
+}
+
+#build #menu > *[data-name="page-properties"] {
+    display: none
+}
+
+#build #menu > *[data-name="page-properties"]:before {
+    content: '\f1c5'
+}
+
+#build #menu > *[data-name="content-properties"] {
+    display: none
+}
+
+#build #menu > *[data-name="content-properties"]:before {
+    content: '\f0f6'
+}
+
+#build #menu .items a[data-action="add-text"]:before {
+    content: '\f031'
+}
+
+#build #menu .items a[data-action="add-image"]:before {
+    content: '\f03e'
+}
+
+#build #menu .items a[data-action="add-icons"]:before {
+    content: '\f219'
+}
+
+#build #menu .items a[data-action="add-divider"]:before {
+    content: '\f068'
+}
+
+#build #menu .items a[data-action="add-links"]:before {
+    content: '\f0c1'
+}
+
+#build #menu .items a[data-action="add-buttons"]:before {
+    content: '\f0c9'
+}
+
+#build #menu .items a[data-action="add-video"]:before {
+    content: '\f03d'
+}
+
+#build #menu .items a[data-action="add-form"]:before {
+    content: '\f046'
+}
+
+#build #menu .items a[data-action="add-table"]:before {
+    content: '\f022'
+}
+
+#build #menu .items a[data-action="add-gallery"]:before {
+    content: '\f009'
+}
+
+#build #menu .items a[data-action="add-widget"]:before {
+    content: '\f121'
+}
+
+#build #menu .items a[data-action="add-audio"]:before {
+    content: '\f001'
+}
+
+#build #menu .items a[data-action="add-control"]:before {
+    content: '\f013'
+}
+
+#build #menu .items a[data-action="add-timer"]:before {
+    content: '\f017'
+}
+
+#build #menu .items a[data-action="add-grid"]:before {
+    content: '\f0ce'
+}
+
+#build #menu .items a[data-action="add-columns"]:before {
+    content: '\f0db'
+}
+
+#build #menu .items a[data-action="undo"] {
+    display: none
+}
+
+#build #menu .items a[data-action="undo"]:before {
+    content: '\f0e2'
+}
+
+#build #menu .items a[data-action="redo"] {
+    display: none
+}
+
+#build #menu .items a[data-action="redo"]:before {
+    content: '\f01e'
+}
+
+#build #menu .items a[data-action="publish"]:before {
+    content: '\f0c7'
+}
+
+#build #menu .items a[data-action="start-over"]:before {
+    content: '\f021'
+}
+
+#build #menu .items a[data-action="view-site"]:before {
+    content: '\f08e'
+}
+
+#build #menu .items a[data-action="help"]:before {
+    content: '\f059'
+}
+
+#build #menu .items a[data-action="dashboard"]:before {
+    content: '\f060'
+}
+
+#build #menu .items a[data-action="exit"]:before {
+    content: '\f060'
+}
+
+#build #menu .items a .upgrade-icon {
+    position: absolute;
+    top: 0;
+    right: 1em;
+    line-height: inherit;
+    height: inherit;
+    width: 1em
+}
+
+#build #menu .items a.disabled {
+    color: #696a6d !important
+}
+
+#build #menu .items a.disabled:before {
+    color: #696a6d !important
+}
+
+@media screen and (min-width: 481px) {
+    #build #ui.is-reversed #menu {
+        right: auto;
+        left: 1em;
+        -moz-flex-direction: row-reverse;
+        -webkit-flex-direction: row-reverse;
+        -ms-flex-direction: row-reverse;
+        flex-direction: row-reverse
+    }
+
+    #build #ui.is-reversed #menu > *:first-child {
+        border-left-width: 1px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0
+    }
+
+    #build #ui.is-reversed #menu > *:last-child {
+        border-left-width: 0
+    }
+
+    #build #ui.is-reversed #menu .items {
+        right: auto;
+        left: 0
+    }
+
+    #build #ui.is-reversed #menu .items:before {
+        right: auto;
+        left: 1.35em
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #build #menu > *[data-name="publish"] {
+        display: none
+    }
+
+    #build #menu > *[data-name="undo"] {
+        display: none
+    }
+
+    #build #menu > *[data-name="redo"] {
+        display: none
+    }
+
+    #build #menu > *[data-name="page-properties"] {
+        display: block
+    }
+
+    #build #menu > *[data-name="content-properties"] {
+        display: block
+    }
+
+    #build #menu .items a[data-action="undo"] {
+        display: block
+    }
+
+    #build #menu .items a[data-action="redo"] {
+        display: block
+    }
+}
+
+#build #addPanel ul {
+    list-style: none;
+    padding: 0;
+    position: relative;
+    left: -2em;
+    width: calc(100% + 4em)
+}
+
+#build #addPanel ul li {
+    text-decoration: none;
+    -moz-transition: background-color .2s ease;
+    -webkit-transition: background-color .2s ease;
+    -ms-transition: background-color .2s ease;
+    transition: background-color .2s ease;
+    border-top: solid 2px rgba(250, 247, 255, 0.035);
+    cursor: pointer;
+    padding: 1.5em 2em;
+    position: relative
+}
+
+#build #addPanel ul li:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #addPanel ul li:first-child {
+    border-top: 0
+}
+
+#build #addPanel ul li:hover {
+    background-color: rgba(250, 247, 255, 0.035)
+}
+
+#build #addPanel ul li h3 {
+    margin-bottom: .25em
+}
+
+#build #addPanel ul li p {
+    margin-bottom: 0
+}
+
+#build #addPanel ul li:before {
+    float: left;
+    font-size: 1.25rem;
+    line-height: 2rem;
+    color: #696a6d
+}
+
+#build #addPanel ul li > * {
+    margin-left: 2.5rem
+}
+
+#build #addPanel ul li[data-type="text"]:before {
+    content: '\f031'
+}
+
+#build #addPanel ul li[data-type="image"]:before {
+    content: '\f1c5'
+}
+
+#build #addPanel ul li[data-type="icons"]:before {
+    content: '\f219'
+}
+
+#build #addPanel ul li[data-type="divider"]:before {
+    content: '\f068'
+}
+
+#build #publishPanel > .inner {
+    height: calc(100% - 3.3em - 3.5em)
+}
+
+#build #publishPanel > .track {
+    height: calc(100% - 3.3em - 3.5em)
+}
+
+@media screen and (max-height: 736px) {
+    #build #publishPanel form > section {
+        margin-bottom: 0
+    }
+
+    #build #publishPanel > .inner {
+        height: 100%
+    }
+
+    #build #publishPanel > .track {
+        height: 100%
+    }
+}
+
+#build #propertiesPanel > .inner {
+    height: calc(100% - 6.6em - 3.5em - 1px)
+}
+
+#build #propertiesPanel > .inner .form-wrapper {
+    clear: both
+}
+
+#build #propertiesPanel > .inner .form-wrapper form section {
+    margin-bottom: 0
+}
+
+#build #propertiesPanel > .inner h2, #build #propertiesPanel > .inner .form-wrapper {
+    -moz-transition: opacity .125s ease;
+    -webkit-transition: opacity .125s ease;
+    -ms-transition: opacity .125s ease;
+    transition: opacity .125s ease;
+    opacity: 1
+}
+
+#build #propertiesPanel footer {
+    -moz-transition: opacity .125s ease, visibility .125s;
+    -webkit-transition: opacity .125s ease, visibility .125s;
+    -ms-transition: opacity .125s ease, visibility .125s;
+    transition: opacity .125s ease, visibility .125s;
+    opacity: 1;
+    visibility: visible
+}
+
+#build #propertiesPanel > .track {
+    height: calc(100% - 6.6em - 3.5em - 1px)
+}
+
+#build #propertiesPanel.is-changing > .inner h2, #build #propertiesPanel.is-changing > .inner .form-wrapper {
+    opacity: 0
+}
+
+#build #propertiesPanel.page > .inner, #build #propertiesPanel.content > .inner {
+    height: calc(100% - 3.3em - 3.5em)
+}
+
+#build #propertiesPanel.page footer .actions, #build #propertiesPanel.content footer .actions {
+    display: none
+}
+
+#build #propertiesPanel.page footer .buttons, #build #propertiesPanel.content footer .buttons {
+    border-top: 0
+}
+
+#build #propertiesPanel.page > .track, #build #propertiesPanel.content > .track {
+    height: calc(100% - 3.3em - 3.5em)
+}
+
+@media screen and (max-height: 736px) {
+    #build #propertiesPanel > .inner {
+        height: 100%
+    }
+
+    #build #propertiesPanel > .track {
+        height: 100%
+    }
+
+    #build #propertiesPanel.page > .inner, #build #propertiesPanel.content > .inner {
+        height: 100%
+    }
+
+    #build #propertiesPanel.page > .track, #build #propertiesPanel.content > .track {
+        height: 100%
+    }
+}
+
+#build #templates {
+    min-height: 100vh;
+    font-size: 12pt;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -moz-justify-content: center;
+    -webkit-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+    -moz-transition: opacity 0.35s ease;
+    -webkit-transition: opacity 0.35s ease;
+    -ms-transition: opacity 0.35s ease;
+    transition: opacity 0.35s ease;
+    background: #2c2d34;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 10001;
+    padding: 6em 3em 0 3em;
+    cursor: default
+}
+
+@media screen and (min-width: 1680px) {
+    #build #templates {
+        font-size: 15pt
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #templates {
+        font-size: 11pt
+    }
+}
+
+#build #templates .content {
+    -moz-transition: opacity 0.35s ease;
+    -webkit-transition: opacity 0.35s ease;
+    -ms-transition: opacity 0.35s ease;
+    transition: opacity 0.35s ease;
+    opacity: 1;
+    width: 100%;
+    padding: 0 0 6em 0
+}
+
+@media screen and (max-width: 736px) {
+    #build #templates .content {
+        padding-bottom: 0
+    }
+}
+
+#build #templates .menu {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    margin: 0;
+    z-index: 1;
+    background: rgba(51, 52, 60, 0.9825);
+    border-radius: 4px;
+    border: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+#build #templates .menu > * {
+    text-decoration: none;
+    -moz-transition: background-color .2s ease, box-shadow .2s ease, max-width .25s ease-in-out, padding .25s ease-in-out, overflow-x .25s ease-in-out, visibility .25s;
+    -webkit-transition: background-color .2s ease, box-shadow .2s ease, max-width .25s ease-in-out, padding .25s ease-in-out, overflow-x .25s ease-in-out, visibility .25s;
+    -ms-transition: background-color .2s ease, box-shadow .2s ease, max-width .25s ease-in-out, padding .25s ease-in-out, overflow-x .25s ease-in-out, visibility .25s;
+    transition: background-color .2s ease, box-shadow .2s ease, max-width .25s ease-in-out, padding .25s ease-in-out, overflow-x .25s ease-in-out, visibility .25s;
+    display: block;
+    height: 3em;
+    border-style: solid;
+    border-color: rgba(250, 247, 255, 0.1);
+    border-left-width: 1px;
+    color: #fff !important;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 3em;
+    padding: 0 1.5em;
+    text-align: center;
+    text-decoration: none;
+    position: relative;
+    border-bottom: 0;
+    outline: 0
+}
+
+#build #templates .menu > *:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #templates .menu > *:first-child {
+    border-left-width: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px
+}
+
+#build #templates .menu > *:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px
+}
+
+#build #templates .menu > *:before {
+    -moz-transition: color .2s ease;
+    -webkit-transition: color .2s ease;
+    -ms-transition: color .2s ease;
+    transition: color .2s ease;
+    color: #696a6d;
+    margin-right: 0.75em
+}
+
+#build #templates .menu > *.visible .items {
+    -moz-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible
+}
+
+#build #templates .menu > *.visible {
+    background-color: rgba(250, 247, 255, 0.035)
+}
+
+#build #templates .menu > *.visible:before {
+    color: #b9babd
+}
+
+#build #templates .menu > *:hover:before {
+    color: #fff
+}
+
+#build #templates .menu > *:after {
+    -moz-transition: opacity .2s ease;
+    -webkit-transition: opacity .2s ease;
+    -ms-transition: opacity .2s ease;
+    transition: opacity .2s ease;
+    content: '';
+    position: absolute;
+    top: 0.35em;
+    right: 0.35em;
+    background: #33ada9;
+    width: 0.4em;
+    height: 0.4em;
+    display: block;
+    border-radius: 100%;
+    opacity: 0
+}
+
+#build #templates .menu > *.alert:after {
+    opacity: 1
+}
+
+#build #templates .menu > *.disabled {
+    cursor: default
+}
+
+#build #templates .menu > *.disabled:before {
+    color: rgba(250, 247, 255, 0.1)
+}
+
+#build #templates .menu .items {
+    -moz-transform: translateY(-0.125em);
+    -webkit-transform: translateY(-0.125em);
+    -ms-transform: translateY(-0.125em);
+    transform: translateY(-0.125em);
+    -moz-transition: -moz-transform .3125s ease, opacity .25s ease, visibility .25s;
+    -webkit-transition: -webkit-transform .3125s ease, opacity .25s ease, visibility .25s;
+    -ms-transition: -ms-transform .3125s ease, opacity .25s ease, visibility .25s;
+    transition: transform .3125s ease, opacity .25s ease, visibility .25s;
+    position: absolute;
+    top: calc(100% + 1em);
+    right: 0;
+    background: rgba(51, 52, 60, 0.9825);
+    border-radius: 4px;
+    min-width: 11em;
+    padding: 0.75em 0;
+    opacity: 0;
+    visibility: hidden
+}
+
+#build #templates .menu .items:before {
+    content: '';
+    display: block;
+    border-bottom: solid 0.5em rgba(51, 52, 60, 0.9825);
+    border-left: solid 0.5em transparent;
+    border-right: solid 0.5em transparent;
+    position: absolute;
+    top: -0.5em;
+    right: 1.35em
+}
+
+#build #templates .menu .items:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1em;
+    position: absolute;
+    top: -1em;
+    right: 0;
+    background: transparent
+}
+
+#build #templates .menu .items a {
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    line-height: 2.25em;
+    color: #b9babd;
+    text-decoration: none;
+    font-weight: normal;
+    padding: 0 1em;
+    position: relative;
+    border-bottom: 0
+}
+
+#build #templates .menu .items a:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #templates .menu .items a:before {
+    -moz-transition: color .2s ease;
+    -webkit-transition: color .2s ease;
+    -ms-transition: color .2s ease;
+    transition: color .2s ease
+}
+
+#build #templates .menu .items a:hover {
+    color: #fff;
+    background: rgba(250, 247, 255, 0.035)
+}
+
+#build #templates .menu .items a:hover:before {
+    color: #b9babd
+}
+
+#build #templates .menu .items a.break-before {
+    margin-top: 1.5em
+}
+
+#build #templates .menu .items a.break-before:after {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: rgba(250, 247, 255, 0.1);
+    position: absolute;
+    top: -0.75em;
+    left: 0
+}
+
+#build #templates .menu .items a.break-after {
+    margin-bottom: 1.5em
+}
+
+#build #templates .menu .items a.break-after:after {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: rgba(250, 247, 255, 0.1);
+    position: absolute;
+    bottom: -0.75em;
+    left: 0
+}
+
+#build #templates .menu .items a:before {
+    color: #696a6d;
+    margin-right: 0.5em;
+    width: 1.25em;
+    display: inline-block
+}
+
+#build #templates .menu .items.columned {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    padding: 0.75em
+}
+
+#build #templates .menu .items.columned a {
+    border-radius: 3px
+}
+
+#build #templates .menu .items.columned .column {
+    min-width: 8.5em
+}
+
+@media screen and (max-width: 480px) {
+    #build #templates .menu {
+        top: 0;
+        left: 0 !important;
+        right: auto !important;
+        height: 3.5em;
+        width: 100%;
+        -moz-flex-direction: row;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -moz-justify-content: center;
+        -webkit-justify-content: center;
+        -ms-justify-content: center;
+        justify-content: center;
+        border-radius: 0
+    }
+
+    #build #templates .menu > * {
+        height: 3.5em;
+        line-height: 3.65em;
+        padding: 0;
+        -moz-flex-grow: 1;
+        -webkit-flex-grow: 1;
+        -ms-flex-grow: 1;
+        flex-grow: 1;
+        border-left-width: 0;
+        border-radius: 0 !important
+    }
+
+    #build #templates .menu > *.visible {
+        background-color: rgba(44, 45, 52, 0.9825)
+    }
+
+    #build #templates .menu > *:before {
+        color: #b9babd !important
+    }
+
+    #build #templates .menu > *:hover:before {
+        color: #b9babd !important
+    }
+
+    #build #templates .menu > *.visible:before {
+        color: #fff !important
+    }
+
+    #build #templates .menu .items {
+        position: fixed;
+        top: 3.5em;
+        left: 0;
+        width: 100%;
+        padding: 1.75em;
+        border-radius: 0;
+        background: rgba(44, 45, 52, 0.9825)
+    }
+
+    #build #templates .menu .items:before {
+        display: none
+    }
+
+    #build #templates .menu .items a {
+        line-height: 3em !important;
+        padding: 0
+    }
+
+    #build #templates .menu .items a:hover {
+        background: transparent
+    }
+
+    #build #templates .menu .items.columned {
+        padding: 0
+    }
+
+    #build #templates .menu .items.columned .column {
+        padding: 1.75em;
+        min-width: 0;
+        width: 50%
+    }
+
+    #build #templates .menu .items.columned .column:first-child {
+        padding-right: 0
+    }
+
+    #build #templates .menu .items.columned .column:last-child {
+        padding-left: 0
+    }
+}
+
+#build #templates .menu > *[data-name="back"]:before {
+    content: '\f053'
+}
+
+#build #templates .menu > *[data-name="skip"]:before {
+    content: '\f051'
+}
+
+#build #templates .categories {
+    display: inline-flex;
+    width: 100%;
+    max-width: 45em;
+    margin: 0 0 3em 0
+}
+
+#build #templates .categories li {
+    -moz-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    text-align: center;
+    font-size: 1em;
+    font-weight: normal
+}
+
+#build #templates .categories-alt {
+    display: none
+}
+
+#build #templates .templates {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-align-items: stretch;
+    -webkit-align-items: stretch;
+    -ms-align-items: stretch;
+    align-items: stretch;
+    -moz-justify-content: center;
+    -webkit-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+    -moz-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100em;
+    margin: 0 auto;
+    overflow: hidden;
+    -moz-transition: max-height 0.5s ease, min-height 0.5s ease;
+    -webkit-transition: max-height 0.5s ease, min-height 0.5s ease;
+    -ms-transition: max-height 0.5s ease, min-height 0.5s ease;
+    transition: max-height 0.5s ease, min-height 0.5s ease
+}
+
+#build #templates .templates ul {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(26, 26, 30, 0.625);
+    border-radius: 4px;
+    opacity: 0;
+    z-index: 3;
+    list-style: none;
+    -moz-transition: opacity .2s ease;
+    -webkit-transition: opacity .2s ease;
+    -ms-transition: opacity .2s ease;
+    transition: opacity .2s ease;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    -moz-justify-content: center;
+    -webkit-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none
+}
+
+#build #templates .templates ul li {
+    padding: 0;
+    margin-right: 1em
+}
+
+#build #templates .templates ul li:last-child {
+    margin-right: 0
+}
+
+#build #templates .templates ul .button {
+    width: 8.5em;
+    outline: 0;
+    -moz-pointer-events: auto;
+    -webkit-pointer-events: auto;
+    -ms-pointer-events: auto;
+    pointer-events: auto
+}
+
+#build #templates .templates ul .button.do-upgrade {
+    text-decoration: none
+}
+
+#build #templates .templates ul .button.do-upgrade:before {
+    content: "";
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #templates .templates ul .button.do-upgrade:before {
+    margin-right: 0.5em
+}
+
+#build #templates .templates .thumbnail {
+    color: #b9babd;
+    display: block;
+    width: 100%;
+    border-radius: 4px;
+    outline: 0;
+    border-bottom: 0;
+    position: relative
+}
+
+#build #templates .templates .thumbnail img {
+    width: 100%;
+    display: block;
+    border-radius: 4px
+}
+
+#build #templates .templates .thumbnail.blank {
+    background-color: rgba(51, 52, 60, 0.9825)
+}
+
+#build #templates .templates .thumbnail.blank:before {
+    content: '';
+    display: block;
+    width: 100%;
+    padding-top: 62.5%
+}
+
+#build #templates .templates .thumbnail.blank span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    -moz-justify-content: center;
+    -webkit-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center
+}
+
+#build #templates .templates .thumbnail.blank span strong {
+    color: #696a6d;
+    font-weight: normal
+}
+
+#build #templates .templates article {
+    display: block;
+    width: 22em;
+    margin: 0.75em;
+    position: relative;
+    -moz-transition: opacity 0.5s ease-in-out, -moz-transform 0.5s ease-out;
+    -webkit-transition: opacity 0.5s ease-in-out, -webkit-transform 0.5s ease-out;
+    -ms-transition: opacity 0.5s ease-in-out, -ms-transform 0.5s ease-out;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-out;
+    -moz-transform: translateY(0.5em);
+    -webkit-transform: translateY(0.5em);
+    -ms-transform: translateY(0.5em);
+    transform: translateY(0.5em);
+    opacity: 0
+}
+
+#build #templates .templates article[data-index="1"] {
+    -moz-transition-delay: 0s;
+    -webkit-transition-delay: 0s;
+    -ms-transition-delay: 0s;
+    transition-delay: 0s
+}
+
+#build #templates .templates article[data-index="2"] {
+    -moz-transition-delay: .025s;
+    -webkit-transition-delay: .025s;
+    -ms-transition-delay: .025s;
+    transition-delay: .025s
+}
+
+#build #templates .templates article[data-index="3"] {
+    -moz-transition-delay: .05s;
+    -webkit-transition-delay: .05s;
+    -ms-transition-delay: .05s;
+    transition-delay: .05s
+}
+
+#build #templates .templates article[data-index="4"] {
+    -moz-transition-delay: .075s;
+    -webkit-transition-delay: .075s;
+    -ms-transition-delay: .075s;
+    transition-delay: .075s
+}
+
+#build #templates .templates article[data-index="5"] {
+    -moz-transition-delay: .1s;
+    -webkit-transition-delay: .1s;
+    -ms-transition-delay: .1s;
+    transition-delay: .1s
+}
+
+#build #templates .templates article[data-index="6"] {
+    -moz-transition-delay: .125s;
+    -webkit-transition-delay: .125s;
+    -ms-transition-delay: .125s;
+    transition-delay: .125s
+}
+
+#build #templates .templates article[data-index="7"] {
+    -moz-transition-delay: .15s;
+    -webkit-transition-delay: .15s;
+    -ms-transition-delay: .15s;
+    transition-delay: .15s
+}
+
+#build #templates .templates article[data-index="8"] {
+    -moz-transition-delay: .175s;
+    -webkit-transition-delay: .175s;
+    -ms-transition-delay: .175s;
+    transition-delay: .175s
+}
+
+#build #templates .templates article[data-index="9"] {
+    -moz-transition-delay: .2s;
+    -webkit-transition-delay: .2s;
+    -ms-transition-delay: .2s;
+    transition-delay: .2s
+}
+
+#build #templates .templates article[data-index="10"] {
+    -moz-transition-delay: .225s;
+    -webkit-transition-delay: .225s;
+    -ms-transition-delay: .225s;
+    transition-delay: .225s
+}
+
+#build #templates .templates article[data-index="11"] {
+    -moz-transition-delay: .25s;
+    -webkit-transition-delay: .25s;
+    -ms-transition-delay: .25s;
+    transition-delay: .25s
+}
+
+#build #templates .templates article[data-index="12"] {
+    -moz-transition-delay: .275s;
+    -webkit-transition-delay: .275s;
+    -ms-transition-delay: .275s;
+    transition-delay: .275s
+}
+
+#build #templates .templates article[data-index="13"] {
+    -moz-transition-delay: .3s;
+    -webkit-transition-delay: .3s;
+    -ms-transition-delay: .3s;
+    transition-delay: .3s
+}
+
+#build #templates .templates article[data-index="14"] {
+    -moz-transition-delay: .325s;
+    -webkit-transition-delay: .325s;
+    -ms-transition-delay: .325s;
+    transition-delay: .325s
+}
+
+#build #templates .templates article[data-index="15"] {
+    -moz-transition-delay: .35s;
+    -webkit-transition-delay: .35s;
+    -ms-transition-delay: .35s;
+    transition-delay: .35s
+}
+
+#build #templates .templates article[data-index="16"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="17"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="18"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="19"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="20"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="21"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="22"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="23"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="24"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="25"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="26"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="27"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="28"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="29"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="30"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="31"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="32"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="33"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="34"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="35"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="36"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="37"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="38"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="39"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+#build #templates .templates article[data-index="40"] {
+    -moz-transition-delay: .375s;
+    -webkit-transition-delay: .375s;
+    -ms-transition-delay: .375s;
+    transition-delay: .375s
+}
+
+@media screen and (max-width: 1280px) {
+    #build #templates .templates article {
+        width: calc(50% - 2em)
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #templates .templates article {
+        width: calc(50% - 2em)
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #build #templates .templates article {
+        width: 100%
+    }
+}
+
+#build #templates .templates article:hover ul {
+    opacity: 1
+}
+
+#build #templates .templates article.requires-upgrade {
+    text-decoration: none
+}
+
+#build #templates .templates article.requires-upgrade:before {
+    content: "";
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #templates .templates article.requires-upgrade:before {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -0.75em 0 0 -0.75em;
+    width: 1.5em;
+    height: 1.5em;
+    text-align: center;
+    line-height: 1.5em;
+    z-index: 2;
+    font-size: 1.75em;
+    color: #DED173;
+    -moz-transition: opacity .2s ease;
+    -webkit-transition: opacity .2s ease;
+    -ms-transition: opacity .2s ease;
+    transition: opacity .2s ease
+}
+
+#build #templates .templates article.requires-upgrade:after {
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2560' height='2560' viewBox='0 0 2560 2560' preserveAspectRatio='none'%3E%3Cline x1='0' y1='0' x2='2560' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='2px' /%3E%3Cline x1='2560' y1='0' x2='0' y2='2560' stroke='rgba(255,255,255,.5)' stroke-width='2px' /%3E%3C/svg%3E");
+    background-color: rgba(26, 26, 30, 0.75);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100% !important;
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border-radius: 4px
+}
+
+#build #templates .templates article.requires-upgrade:hover:before {
+    opacity: 0
+}
+
+#build #templates .templates article.inactive {
+    display: none
+}
+
+@media screen and (max-width: 736px) {
+    #build #templates .templates {
+        padding-bottom: 1em
+    }
+}
+
+#build #templates.active {
+    opacity: 1
+}
+
+#build #templates.active .templates article {
+    -moz-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1
+}
+
+#build #templates.switching .templates article {
+    -moz-transition: none !important;
+    -webkit-transition: none !important;
+    -ms-transition: none !important;
+    transition: none !important;
+    -moz-transition-delay: 0s !important;
+    -webkit-transition-delay: 0s !important;
+    -ms-transition-delay: 0s !important;
+    transition-delay: 0s !important;
+    opacity: 0 !important
+}
+
+#build #templates.clicked {
+    opacity: 0
+}
+
+#build #templates.clicked .templates article {
+    -moz-transition: -moz-transform 0.25s ease-out;
+    -webkit-transition: -webkit-transform 0.25s ease-out;
+    -ms-transition: -ms-transform 0.25s ease-out;
+    transition: transform 0.25s ease-out;
+    -moz-transition-delay: 0s !important;
+    -webkit-transition-delay: 0s !important;
+    -ms-transition-delay: 0s !important;
+    transition-delay: 0s !important
+}
+
+#build #templates.clicked .templates article.active {
+    -moz-transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9)
+}
+
+#build #templates.clicked .templates article ul {
+    opacity: 0
+}
+
+@media screen and (max-width: 980px) {
+    #build #templates .categories {
+        display: none
+    }
+
+    #build #templates .categories-alt {
+        display: block;
+        max-width: calc(100% - 2.25em);
+        margin: 0 auto 2em auto;
+        width: 25em
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #templates {
+        padding: 6em 1em 0 1em
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #build #templates .categories li {
+        padding: 0 2vw
+    }
+
+    #build #templates .categories-alt {
+        max-width: calc(100% - 1.25em);
+        margin: 0 auto 0.75em auto;
+        width: 100%
+    }
+}
+
+#build.is-touch #templates .templates ul {
+    position: relative;
+    opacity: 1;
+    height: auto;
+    background-color: transparent;
+    margin-top: 1em
+}
+
+#build #help {
+    font-size: 12pt;
+    z-index: 10001;
+    opacity: 0;
+    color: #fff;
+    background-color: rgba(30, 30, 35, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: default;
+    outline: 0;
+    -moz-transition: opacity 0.35s ease;
+    -webkit-transition: opacity 0.35s ease;
+    -ms-transition: opacity 0.35s ease;
+    transition: opacity 0.35s ease
+}
+
+@media screen and (min-width: 1680px) {
+    #build #help {
+        font-size: 15pt
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help {
+        font-size: 11pt
+    }
+}
+
+#build #help h2 {
+    font-size: 1.75em
+}
+
+#build #help .arrow {
+    width: 1em;
+    height: 1em;
+    display: block;
+    position: absolute
+}
+
+#build #help .arrow:before {
+    content: '';
+    display: block;
+    width: 0.35em;
+    height: 0.35em;
+    margin-left: 0.175em;
+    border-bottom: solid 0.35em #fff;
+    border-left: solid 0.35em transparent;
+    border-right: solid 0.35em transparent
+}
+
+#build #help.visible {
+    opacity: 1
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .extra {
+        display: none
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .label {
+        font-size: 0.75em
+    }
+}
+
+#build #help .title {
+    position: absolute;
+    top: 3rem
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help .title {
+        top: 2rem
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .title {
+        display: none
+    }
+}
+
+#build #help .menu {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    margin: 0;
+    z-index: 1;
+    background: rgba(51, 52, 60, 0.9825);
+    border-radius: 4px;
+    border: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    box-shadow: 0 0 0 1px #fff
+}
+
+#build #help .menu > * {
+    text-decoration: none;
+    -moz-transition: background-color .2s ease, box-shadow .2s ease, max-width .25s ease-in-out, padding .25s ease-in-out, overflow-x .25s ease-in-out, visibility .25s;
+    -webkit-transition: background-color .2s ease, box-shadow .2s ease, max-width .25s ease-in-out, padding .25s ease-in-out, overflow-x .25s ease-in-out, visibility .25s;
+    -ms-transition: background-color .2s ease, box-shadow .2s ease, max-width .25s ease-in-out, padding .25s ease-in-out, overflow-x .25s ease-in-out, visibility .25s;
+    transition: background-color .2s ease, box-shadow .2s ease, max-width .25s ease-in-out, padding .25s ease-in-out, overflow-x .25s ease-in-out, visibility .25s;
+    display: block;
+    height: 3em;
+    border-style: solid;
+    border-color: rgba(250, 247, 255, 0.1);
+    border-left-width: 1px;
+    color: #fff !important;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 3em;
+    padding: 0 1.5em;
+    text-align: center;
+    text-decoration: none;
+    position: relative;
+    border-bottom: 0;
+    outline: 0
+}
+
+#build #help .menu > *:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #help .menu > *:first-child {
+    border-left-width: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px
+}
+
+#build #help .menu > *:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px
+}
+
+#build #help .menu > *:before {
+    -moz-transition: color .2s ease;
+    -webkit-transition: color .2s ease;
+    -ms-transition: color .2s ease;
+    transition: color .2s ease;
+    color: #696a6d;
+    margin-right: 0.75em
+}
+
+#build #help .menu > *.visible .items {
+    -moz-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible
+}
+
+#build #help .menu > *.visible {
+    background-color: rgba(250, 247, 255, 0.035)
+}
+
+#build #help .menu > *.visible:before {
+    color: #b9babd
+}
+
+#build #help .menu > *:hover:before {
+    color: #fff
+}
+
+#build #help .menu > *:after {
+    -moz-transition: opacity .2s ease;
+    -webkit-transition: opacity .2s ease;
+    -ms-transition: opacity .2s ease;
+    transition: opacity .2s ease;
+    content: '';
+    position: absolute;
+    top: 0.35em;
+    right: 0.35em;
+    background: #33ada9;
+    width: 0.4em;
+    height: 0.4em;
+    display: block;
+    border-radius: 100%;
+    opacity: 0
+}
+
+#build #help .menu > *.alert:after {
+    opacity: 1
+}
+
+#build #help .menu > *.disabled {
+    cursor: default
+}
+
+#build #help .menu > *.disabled:before {
+    color: rgba(250, 247, 255, 0.1)
+}
+
+#build #help .menu .items {
+    -moz-transform: translateY(-0.125em);
+    -webkit-transform: translateY(-0.125em);
+    -ms-transform: translateY(-0.125em);
+    transform: translateY(-0.125em);
+    -moz-transition: -moz-transform .3125s ease, opacity .25s ease, visibility .25s;
+    -webkit-transition: -webkit-transform .3125s ease, opacity .25s ease, visibility .25s;
+    -ms-transition: -ms-transform .3125s ease, opacity .25s ease, visibility .25s;
+    transition: transform .3125s ease, opacity .25s ease, visibility .25s;
+    position: absolute;
+    top: calc(100% + 1em);
+    right: 0;
+    background: rgba(51, 52, 60, 0.9825);
+    border-radius: 4px;
+    min-width: 11em;
+    padding: 0.75em 0;
+    opacity: 0;
+    visibility: hidden
+}
+
+#build #help .menu .items:before {
+    content: '';
+    display: block;
+    border-bottom: solid 0.5em rgba(51, 52, 60, 0.9825);
+    border-left: solid 0.5em transparent;
+    border-right: solid 0.5em transparent;
+    position: absolute;
+    top: -0.5em;
+    right: 1.35em
+}
+
+#build #help .menu .items:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1em;
+    position: absolute;
+    top: -1em;
+    right: 0;
+    background: transparent
+}
+
+#build #help .menu .items a {
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    line-height: 2.25em;
+    color: #b9babd;
+    text-decoration: none;
+    font-weight: normal;
+    padding: 0 1em;
+    position: relative;
+    border-bottom: 0
+}
+
+#build #help .menu .items a:before {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-transform: none !important
+}
+
+#build #help .menu .items a:before {
+    -moz-transition: color .2s ease;
+    -webkit-transition: color .2s ease;
+    -ms-transition: color .2s ease;
+    transition: color .2s ease
+}
+
+#build #help .menu .items a:hover {
+    color: #fff;
+    background: rgba(250, 247, 255, 0.035)
+}
+
+#build #help .menu .items a:hover:before {
+    color: #b9babd
+}
+
+#build #help .menu .items a.break-before {
+    margin-top: 1.5em
+}
+
+#build #help .menu .items a.break-before:after {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: rgba(250, 247, 255, 0.1);
+    position: absolute;
+    top: -0.75em;
+    left: 0
+}
+
+#build #help .menu .items a.break-after {
+    margin-bottom: 1.5em
+}
+
+#build #help .menu .items a.break-after:after {
+    display: block;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: rgba(250, 247, 255, 0.1);
+    position: absolute;
+    bottom: -0.75em;
+    left: 0
+}
+
+#build #help .menu .items a:before {
+    color: #696a6d;
+    margin-right: 0.5em;
+    width: 1.25em;
+    display: inline-block
+}
+
+#build #help .menu .items.columned {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-direction: row;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    padding: 0.75em
+}
+
+#build #help .menu .items.columned a {
+    border-radius: 3px
+}
+
+#build #help .menu .items.columned .column {
+    min-width: 8.5em
+}
+
+@media screen and (max-width: 480px) {
+    #build #help .menu {
+        top: 0;
+        left: 0 !important;
+        right: auto !important;
+        height: 3.5em;
+        width: 100%;
+        -moz-flex-direction: row;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -moz-justify-content: center;
+        -webkit-justify-content: center;
+        -ms-justify-content: center;
+        justify-content: center;
+        border-radius: 0
+    }
+
+    #build #help .menu > * {
+        height: 3.5em;
+        line-height: 3.65em;
+        padding: 0;
+        -moz-flex-grow: 1;
+        -webkit-flex-grow: 1;
+        -ms-flex-grow: 1;
+        flex-grow: 1;
+        border-left-width: 0;
+        border-radius: 0 !important
+    }
+
+    #build #help .menu > *.visible {
+        background-color: rgba(44, 45, 52, 0.9825)
+    }
+
+    #build #help .menu > *:before {
+        color: #b9babd !important
+    }
+
+    #build #help .menu > *:hover:before {
+        color: #b9babd !important
+    }
+
+    #build #help .menu > *.visible:before {
+        color: #fff !important
+    }
+
+    #build #help .menu .items {
+        position: fixed;
+        top: 3.5em;
+        left: 0;
+        width: 100%;
+        padding: 1.75em;
+        border-radius: 0;
+        background: rgba(44, 45, 52, 0.9825)
+    }
+
+    #build #help .menu .items:before {
+        display: none
+    }
+
+    #build #help .menu .items a {
+        line-height: 3em !important;
+        padding: 0
+    }
+
+    #build #help .menu .items a:hover {
+        background: transparent
+    }
+
+    #build #help .menu .items.columned {
+        padding: 0
+    }
+
+    #build #help .menu .items.columned .column {
+        padding: 1.75em;
+        min-width: 0;
+        width: 50%
+    }
+
+    #build #help .menu .items.columned .column:first-child {
+        padding-right: 0
+    }
+
+    #build #help .menu .items.columned .column:last-child {
+        padding-left: 0
+    }
+}
+
+#build #help .menu > * {
+    -moz-pointer-events: none;
+    -webkit-pointer-events: none;
+    -ms-pointer-events: none;
+    pointer-events: none;
+    border-color: #fff
+}
+
+@media screen and (max-width: 480px) {
+    #build #help .menu > * {
+        box-shadow: -1px 0 0 0 #fff
+    }
+}
+
+#build #help .menu > *:before {
+    margin-right: 0;
+    color: #fff
+}
+
+#build #help .menu > *[data-name="add"]:before {
+    content: '\f067'
+}
+
+#build #help .menu > *[data-name="undo"]:before {
+    content: '\f0e2'
+}
+
+#build #help .menu > *[data-name="redo"]:before {
+    content: '\f01e'
+}
+
+#build #help .menu > *[data-name="menu"]:before {
+    content: '\f0c9'
+}
+
+#build #help .menu > *[data-name="publish"]:before {
+    content: '\f0c7'
+}
+
+#build #help .menu > *[data-name="play"]:before {
+    content: '\f04b'
+}
+
+#build #help .menu > *[data-name="page-properties"] {
+    display: none
+}
+
+#build #help .menu > *[data-name="page-properties"]:before {
+    content: '\f1c5'
+}
+
+#build #help .menu > *[data-name="content-properties"] {
+    display: none
+}
+
+#build #help .menu > *[data-name="content-properties"]:before {
+    content: '\f0f6'
+}
+
+#build #help .menu > * > span {
+    position: absolute;
+    font-weight: normal
+}
+
+#build #help .menu > * > span:before {
+    content: '';
+    position: absolute;
+    bottom: 1.35em;
+    width: 1px;
+    background: #fff
+}
+
+#build #help .menu > * > span:after {
+    content: '';
+    position: absolute;
+    bottom: 1.35em;
+    height: 1px;
+    background: #fff
+}
+
+#build #help .menu > *[data-pos="1"] > span {
+    bottom: -6em
+}
+
+#build #help .menu > *[data-pos="1"] > span:before {
+    height: calc(100% + 0em)
+}
+
+#build #help .menu > *[data-pos="1"] > span:after {
+    width: 2em
+}
+
+#build #help .menu > *[data-pos="1"] > span .arrow {
+    bottom: calc(100% + 0em + 0.35em)
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help .menu > *[data-pos="1"] > span {
+        bottom: -6em
+    }
+
+    #build #help .menu > *[data-pos="1"] > span:before {
+        height: calc(100% + 0em)
+    }
+
+    #build #help .menu > *[data-pos="1"] > span:after {
+        width: 2em
+    }
+
+    #build #help .menu > *[data-pos="1"] > span .arrow {
+        bottom: calc(100% + 0em + 0.35em)
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help .menu > *[data-pos="1"] > span:after {
+        width: 2em
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .menu > *[data-pos="1"] > span {
+        bottom: -6em
+    }
+
+    #build #help .menu > *[data-pos="1"] > span:before {
+        height: calc(100% + 0em)
+    }
+
+    #build #help .menu > *[data-pos="1"] > span .arrow {
+        bottom: calc(100% + 0em + 0.35em)
+    }
+}
+
+#build #help .menu > *[data-pos="2"] > span {
+    bottom: -9em
+}
+
+#build #help .menu > *[data-pos="2"] > span:before {
+    height: calc(100% + 3em)
+}
+
+#build #help .menu > *[data-pos="2"] > span:after {
+    width: 6em
+}
+
+#build #help .menu > *[data-pos="2"] > span .arrow {
+    bottom: calc(100% + 3em + 0.35em)
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help .menu > *[data-pos="2"] > span {
+        bottom: -8em
+    }
+
+    #build #help .menu > *[data-pos="2"] > span:before {
+        height: calc(100% + 2em)
+    }
+
+    #build #help .menu > *[data-pos="2"] > span:after {
+        width: 6em
+    }
+
+    #build #help .menu > *[data-pos="2"] > span .arrow {
+        bottom: calc(100% + 2em + 0.35em)
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help .menu > *[data-pos="2"] > span:after {
+        width: 2em
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .menu > *[data-pos="2"] > span {
+        bottom: -8em
+    }
+
+    #build #help .menu > *[data-pos="2"] > span:before {
+        height: calc(100% + 2em)
+    }
+
+    #build #help .menu > *[data-pos="2"] > span .arrow {
+        bottom: calc(100% + 2em + 0.35em)
+    }
+}
+
+#build #help .menu > *[data-pos="3"] > span {
+    bottom: -12em
+}
+
+#build #help .menu > *[data-pos="3"] > span:before {
+    height: calc(100% + 6em)
+}
+
+#build #help .menu > *[data-pos="3"] > span:after {
+    width: 10em
+}
+
+#build #help .menu > *[data-pos="3"] > span .arrow {
+    bottom: calc(100% + 6em + 0.35em)
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help .menu > *[data-pos="3"] > span {
+        bottom: -10em
+    }
+
+    #build #help .menu > *[data-pos="3"] > span:before {
+        height: calc(100% + 4em)
+    }
+
+    #build #help .menu > *[data-pos="3"] > span:after {
+        width: 10em
+    }
+
+    #build #help .menu > *[data-pos="3"] > span .arrow {
+        bottom: calc(100% + 4em + 0.35em)
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help .menu > *[data-pos="3"] > span:after {
+        width: 2em
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .menu > *[data-pos="3"] > span {
+        bottom: -10em
+    }
+
+    #build #help .menu > *[data-pos="3"] > span:before {
+        height: calc(100% + 4em)
+    }
+
+    #build #help .menu > *[data-pos="3"] > span .arrow {
+        bottom: calc(100% + 4em + 0.35em)
+    }
+}
+
+#build #help .menu > *[data-pos="4"] > span {
+    bottom: -15em
+}
+
+#build #help .menu > *[data-pos="4"] > span:before {
+    height: calc(100% + 9em)
+}
+
+#build #help .menu > *[data-pos="4"] > span:after {
+    width: 14em
+}
+
+#build #help .menu > *[data-pos="4"] > span .arrow {
+    bottom: calc(100% + 9em + 0.35em)
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help .menu > *[data-pos="4"] > span {
+        bottom: -12em
+    }
+
+    #build #help .menu > *[data-pos="4"] > span:before {
+        height: calc(100% + 6em)
+    }
+
+    #build #help .menu > *[data-pos="4"] > span:after {
+        width: 14em
+    }
+
+    #build #help .menu > *[data-pos="4"] > span .arrow {
+        bottom: calc(100% + 6em + 0.35em)
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help .menu > *[data-pos="4"] > span:after {
+        width: 2em
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .menu > *[data-pos="4"] > span {
+        bottom: -12em
+    }
+
+    #build #help .menu > *[data-pos="4"] > span:before {
+        height: calc(100% + 6em)
+    }
+
+    #build #help .menu > *[data-pos="4"] > span .arrow {
+        bottom: calc(100% + 6em + 0.35em)
+    }
+}
+
+#build #help .menu > *[data-pos="5"] > span {
+    bottom: -18em
+}
+
+#build #help .menu > *[data-pos="5"] > span:before {
+    height: calc(100% + 12em)
+}
+
+#build #help .menu > *[data-pos="5"] > span:after {
+    width: 18em
+}
+
+#build #help .menu > *[data-pos="5"] > span .arrow {
+    bottom: calc(100% + 12em + 0.35em)
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help .menu > *[data-pos="5"] > span {
+        bottom: -14em
+    }
+
+    #build #help .menu > *[data-pos="5"] > span:before {
+        height: calc(100% + 8em)
+    }
+
+    #build #help .menu > *[data-pos="5"] > span:after {
+        width: 18em
+    }
+
+    #build #help .menu > *[data-pos="5"] > span .arrow {
+        bottom: calc(100% + 8em + 0.35em)
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help .menu > *[data-pos="5"] > span:after {
+        width: 2em
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .menu > *[data-pos="5"] > span {
+        bottom: -14em
+    }
+
+    #build #help .menu > *[data-pos="5"] > span:before {
+        height: calc(100% + 8em)
+    }
+
+    #build #help .menu > *[data-pos="5"] > span .arrow {
+        bottom: calc(100% + 8em + 0.35em)
+    }
+}
+
+#build #help .menu > *[data-pos="6"] > span {
+    bottom: -21em
+}
+
+#build #help .menu > *[data-pos="6"] > span:before {
+    height: calc(100% + 15em)
+}
+
+#build #help .menu > *[data-pos="6"] > span:after {
+    width: 22em
+}
+
+#build #help .menu > *[data-pos="6"] > span .arrow {
+    bottom: calc(100% + 15em + 0.35em)
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help .menu > *[data-pos="6"] > span {
+        bottom: -16em
+    }
+
+    #build #help .menu > *[data-pos="6"] > span:before {
+        height: calc(100% + 10em)
+    }
+
+    #build #help .menu > *[data-pos="6"] > span:after {
+        width: 22em
+    }
+
+    #build #help .menu > *[data-pos="6"] > span .arrow {
+        bottom: calc(100% + 10em + 0.35em)
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help .menu > *[data-pos="6"] > span:after {
+        width: 2em
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .menu > *[data-pos="6"] > span {
+        bottom: -16em
+    }
+
+    #build #help .menu > *[data-pos="6"] > span:before {
+        height: calc(100% + 10em)
+    }
+
+    #build #help .menu > *[data-pos="6"] > span .arrow {
+        bottom: calc(100% + 10em + 0.35em)
+    }
+}
+
+#build #help .menu > *[data-pos="7"] > span {
+    bottom: -24em
+}
+
+#build #help .menu > *[data-pos="7"] > span:before {
+    height: calc(100% + 18em)
+}
+
+#build #help .menu > *[data-pos="7"] > span:after {
+    width: 26em
+}
+
+#build #help .menu > *[data-pos="7"] > span .arrow {
+    bottom: calc(100% + 18em + 0.35em)
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help .menu > *[data-pos="7"] > span {
+        bottom: -18em
+    }
+
+    #build #help .menu > *[data-pos="7"] > span:before {
+        height: calc(100% + 12em)
+    }
+
+    #build #help .menu > *[data-pos="7"] > span:after {
+        width: 26em
+    }
+
+    #build #help .menu > *[data-pos="7"] > span .arrow {
+        bottom: calc(100% + 12em + 0.35em)
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help .menu > *[data-pos="7"] > span:after {
+        width: 2em
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .menu > *[data-pos="7"] > span {
+        bottom: -18em
+    }
+
+    #build #help .menu > *[data-pos="7"] > span:before {
+        height: calc(100% + 12em)
+    }
+
+    #build #help .menu > *[data-pos="7"] > span .arrow {
+        bottom: calc(100% + 12em + 0.35em)
+    }
+}
+
+#build #help .menu > *[data-pos="8"] > span {
+    bottom: -27em
+}
+
+#build #help .menu > *[data-pos="8"] > span:before {
+    height: calc(100% + 21em)
+}
+
+#build #help .menu > *[data-pos="8"] > span:after {
+    width: 30em
+}
+
+#build #help .menu > *[data-pos="8"] > span .arrow {
+    bottom: calc(100% + 21em + 0.35em)
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help .menu > *[data-pos="8"] > span {
+        bottom: -20em
+    }
+
+    #build #help .menu > *[data-pos="8"] > span:before {
+        height: calc(100% + 14em)
+    }
+
+    #build #help .menu > *[data-pos="8"] > span:after {
+        width: 30em
+    }
+
+    #build #help .menu > *[data-pos="8"] > span .arrow {
+        bottom: calc(100% + 14em + 0.35em)
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help .menu > *[data-pos="8"] > span:after {
+        width: 2em
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .menu > *[data-pos="8"] > span {
+        bottom: -20em
+    }
+
+    #build #help .menu > *[data-pos="8"] > span:before {
+        height: calc(100% + 14em)
+    }
+
+    #build #help .menu > *[data-pos="8"] > span .arrow {
+        bottom: calc(100% + 14em + 0.35em)
+    }
+}
+
+#build #help .clicking {
+    position: absolute;
+    top: 50%
+}
+
+#build #help .clicking:before {
+    display: block;
+    content: '';
+    height: 1px;
+    position: absolute;
+    top: 1em;
+    background: #fff
+}
+
+#build #help .clicking .arrow {
+    top: 0.5em
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .clicking .label:before {
+        content: '( '
+    }
+
+    #build #help .clicking .label:after {
+        content: ' )'
+    }
+}
+
+#build #help .dragging {
+    position: absolute;
+    bottom: calc(50% - 32vh - 2em);
+    width: 100%;
+    text-align: center
+}
+
+#build #help .dragging:before {
+    display: block;
+    content: '';
+    width: 1px;
+    position: absolute;
+    background: #fff
+}
+
+#build #help .dragging .arrow {
+    bottom: calc(100% + 32vh - 8em)
+}
+
+@media screen and (max-width: 736px) {
+    #build #help .dragging .label:before {
+        content: '( '
+    }
+
+    #build #help .dragging .label:after {
+        content: ' )'
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help .dragging {
+        bottom: calc(50% - 28vh - 2em)
+    }
+
+    #build #help .dragging .arrow {
+        bottom: calc(100% + 28vh - 8em)
+    }
+}
+
+#build #help .footer {
+    position: absolute;
+    bottom: 3rem
+}
+
+#build #help .footer p {
+    margin: 0;
+    font-size: 0.75em;
+    margin-top: 2em
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help .footer {
+        bottom: 2rem
+    }
+}
+
+#build #help.content-center .clicking {
+    right: calc(50% + 18vw);
+    top: 50%
+}
+
+#build #help.content-center .clicking:before {
+    width: calc(18vw - 8em);
+    left: calc(100% + 1em)
+}
+
+#build #help.content-center .clicking .arrow {
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    left: calc(100% + 18vw - 8em)
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help.content-center .clicking {
+        right: calc(50% + 7em)
+    }
+
+    #build #help.content-center .clicking:before {
+        width: 6em
+    }
+
+    #build #help.content-center .clicking .arrow {
+        left: calc(100% + 6em)
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help.content-center .clicking {
+        left: 0;
+        width: 100%;
+        top: 40%;
+        text-align: center
+    }
+
+    #build #help.content-center .clicking:before {
+        width: 1px;
+        height: 3em;
+        left: 50%;
+        top: calc(100% + 0.5em)
+    }
+
+    #build #help.content-center .clicking .arrow {
+        left: calc(50% - 0.5em);
+        top: calc(100% + 2.5em);
+        -moz-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg)
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help.content-center .clicking {
+        top: calc(50% - 2.5em);
+        text-align: left;
+        padding-left: 2rem
+    }
+
+    #build #help.content-center .clicking:before {
+        display: none
+    }
+
+    #build #help.content-center .clicking .arrow {
+        display: none
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #build #help.content-center .clicking {
+        top: calc(42.5% + 5em);
+        text-align: center;
+        padding: 0
+    }
+}
+
+#build #help.content-center .dragging:before {
+    height: calc(32vh - 8em);
+    bottom: calc(100% + 1em);
+    left: 50%
+}
+
+#build #help.content-center .dragging .arrow {
+    left: calc(50% - 0.5em)
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help.content-center .dragging:before {
+        height: calc(28vh - 8em)
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help.content-center .dragging {
+        left: 0;
+        width: 100%;
+        bottom: 35%;
+        text-align: center
+    }
+
+    #build #help.content-center .dragging:before {
+        width: 1px;
+        height: 3em;
+        left: 50%;
+        bottom: calc(100% + 0.5em)
+    }
+
+    #build #help.content-center .dragging .arrow {
+        left: calc(50% - 0.5em);
+        bottom: calc(100% + 2.5em)
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help.content-center .dragging {
+        bottom: calc(50% - 2.5em);
+        text-align: left;
+        padding-left: 2rem
+    }
+
+    #build #help.content-center .dragging:before {
+        display: none
+    }
+
+    #build #help.content-center .dragging .arrow {
+        display: none
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #build #help.content-center .dragging {
+        top: calc(50% + 5em);
+        text-align: center;
+        padding: 0
+    }
+}
+
+#build #help.content-center .footer {
+    right: 3rem;
+    text-align: right
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help.content-center .footer {
+        right: 2rem
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help.content-center .footer {
+        text-align: center;
+        right: 0;
+        width: 100%
+    }
+}
+
+#build #help.content-left .clicking {
+    left: calc(50%);
+    top: 58%
+}
+
+#build #help.content-left .clicking:before {
+    width: calc(32vw - 8em);
+    right: calc(100% + 1em)
+}
+
+#build #help.content-left .clicking .arrow {
+    -moz-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    right: calc(100% + 32vw - 8em)
+}
+
+@media screen and (max-width: 980px) {
+    #build #help.content-left .clicking {
+        left: 0;
+        width: 100%;
+        top: 40%;
+        text-align: center
+    }
+
+    #build #help.content-left .clicking:before {
+        width: 1px;
+        height: 3em;
+        left: 50%;
+        top: calc(100% + 0.5em)
+    }
+
+    #build #help.content-left .clicking .arrow {
+        left: calc(50% - 0.5em);
+        top: calc(100% + 2.5em);
+        -moz-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg)
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help.content-left .clicking {
+        top: calc(50% - 2.5em);
+        text-align: right;
+        padding-right: 2rem
+    }
+
+    #build #help.content-left .clicking:before {
+        display: none
+    }
+
+    #build #help.content-left .clicking .arrow {
+        display: none
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #build #help.content-left .clicking {
+        top: calc(42.5% + 5em);
+        text-align: center;
+        padding: 0
+    }
+}
+
+#build #help.content-left .dragging {
+    text-align: left;
+    left: 9.75em
+}
+
+#build #help.content-left .dragging:before {
+    left: -3em;
+    height: calc(32vh - 8em + 2em);
+    bottom: calc(100% + 1em - 2em)
+}
+
+#build #help.content-left .dragging:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0.75em;
+    height: 1px;
+    background: #fff;
+    left: -3em;
+    width: 2em
+}
+
+#build #help.content-left .dragging .arrow {
+    left: -3.5em
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help.content-left .dragging:before {
+        height: calc(28vh - 8em + 2em)
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help.content-left .dragging {
+        left: 0;
+        width: 100%;
+        bottom: 35%;
+        text-align: center
+    }
+
+    #build #help.content-left .dragging:before {
+        width: 1px;
+        height: 3em;
+        left: 50%;
+        bottom: calc(100% + 0.5em)
+    }
+
+    #build #help.content-left .dragging:after {
+        display: none
+    }
+
+    #build #help.content-left .dragging .arrow {
+        left: calc(50% - 0.5em);
+        bottom: calc(100% + 2.5em)
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help.content-left .dragging {
+        bottom: calc(50% - 2.5em);
+        text-align: right;
+        padding-right: 2rem
+    }
+
+    #build #help.content-left .dragging:before {
+        display: none
+    }
+
+    #build #help.content-left .dragging .arrow {
+        display: none
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #build #help.content-left .dragging {
+        top: calc(50% + 5em);
+        text-align: center;
+        padding: 0
+    }
+}
+
+#build #help.content-left .footer {
+    right: 3rem;
+    text-align: right
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help.content-left .footer {
+        right: 2rem
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help.content-left .footer {
+        text-align: center;
+        right: 0;
+        width: 100%
+    }
+}
+
+#build #help.content-right .clicking {
+    right: calc(50%);
+    top: 58%
+}
+
+#build #help.content-right .clicking:before {
+    width: calc(32vw - 8em);
+    left: calc(100% + 1em)
+}
+
+#build #help.content-right .clicking .arrow {
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    left: calc(100% + 32vw - 8em)
+}
+
+@media screen and (max-width: 980px) {
+    #build #help.content-right .clicking {
+        left: 0;
+        width: 100%;
+        top: 40%;
+        text-align: center
+    }
+
+    #build #help.content-right .clicking:before {
+        width: 1px;
+        height: 3em;
+        left: 50%;
+        top: calc(100% + 0.5em)
+    }
+
+    #build #help.content-right .clicking .arrow {
+        left: calc(50% - 0.5em);
+        top: calc(100% + 2.5em);
+        -moz-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg)
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help.content-right .clicking {
+        top: calc(50% - 2.5em);
+        text-align: left;
+        padding-left: 2rem
+    }
+
+    #build #help.content-right .clicking:before {
+        display: none
+    }
+
+    #build #help.content-right .clicking .arrow {
+        display: none
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #build #help.content-right .clicking {
+        top: calc(42.5% + 5em);
+        text-align: center;
+        padding: 0
+    }
+}
+
+#build #help.content-right .dragging {
+    text-align: right;
+    right: 9.75em
+}
+
+#build #help.content-right .dragging:before {
+    right: -3em;
+    height: calc(32vh - 8em + 2em);
+    bottom: calc(100% + 1em - 2em)
+}
+
+#build #help.content-right .dragging:after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0.75em;
+    height: 1px;
+    background: #fff;
+    right: -3em;
+    width: 2em
+}
+
+#build #help.content-right .dragging .arrow {
+    right: -3.5em
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help.content-right .dragging:before {
+        height: calc(28vh - 8em + 2em)
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help.content-right .dragging {
+        left: 0;
+        width: 100%;
+        bottom: 35%;
+        text-align: center
+    }
+
+    #build #help.content-right .dragging:before {
+        width: 1px;
+        height: 3em;
+        left: 50%;
+        bottom: calc(100% + 0.5em)
+    }
+
+    #build #help.content-right .dragging:after {
+        display: none
+    }
+
+    #build #help.content-right .dragging .arrow {
+        left: calc(50% - 0.5em);
+        bottom: calc(100% + 2.5em)
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #help.content-right .dragging {
+        bottom: calc(50% - 2.5em);
+        text-align: left;
+        padding-left: 2rem
+    }
+
+    #build #help.content-right .dragging:before {
+        display: none
+    }
+
+    #build #help.content-right .dragging .arrow {
+        display: none
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #build #help.content-right .dragging {
+        top: calc(50% + 5em);
+        text-align: center;
+        padding: 0
+    }
+}
+
+#build #help.content-right .footer {
+    left: 3rem;
+    text-align: left
+}
+
+@media screen and (max-width: 1280px) {
+    #build #help.content-right .footer {
+        left: 2rem
+    }
+}
+
+@media screen and (max-width: 980px) {
+    #build #help.content-right .footer {
+        text-align: center;
+        left: 0;
+        width: 100%
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-left .title {
+        right: 3rem
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 1280px) {
+    #build #help.ui-left .title {
+        right: 2rem
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-left .menu {
+        -moz-flex-direction: row-reverse;
+        -webkit-flex-direction: row-reverse;
+        -ms-flex-direction: row-reverse;
+        flex-direction: row-reverse;
+        left: 1em;
+        right: auto
+    }
+
+    #build #help.ui-left .menu > *:first-child {
+        border-left-width: 1px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0
+    }
+
+    #build #help.ui-left .menu > *:last-child {
+        border-left-width: 0
+    }
+
+    #build #help.ui-left .menu > * > span {
+        text-align: left
+    }
+
+    #build #help.ui-left .menu > * > span:after {
+        right: calc(100% + 1em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="1"] > span {
+        left: 5em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="1"] > span:before {
+        right: calc(100% + 3em + 0em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="1"] > span .arrow {
+        right: calc(100% + 3em + 0em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-left .menu > *[data-pos="1"] > span {
+        left: 5em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="1"] > span:before {
+        right: calc(100% + 3em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="1"] > span .arrow {
+        right: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-left .menu > *[data-pos="2"] > span {
+        left: 9em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="2"] > span:before {
+        right: calc(100% + 3em + 4em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="2"] > span .arrow {
+        right: calc(100% + 3em + 4em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-left .menu > *[data-pos="2"] > span {
+        left: 5em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="2"] > span:before {
+        right: calc(100% + 3em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="2"] > span .arrow {
+        right: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-left .menu > *[data-pos="3"] > span {
+        left: 13em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="3"] > span:before {
+        right: calc(100% + 3em + 8em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="3"] > span .arrow {
+        right: calc(100% + 3em + 8em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-left .menu > *[data-pos="3"] > span {
+        left: 5em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="3"] > span:before {
+        right: calc(100% + 3em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="3"] > span .arrow {
+        right: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-left .menu > *[data-pos="4"] > span {
+        left: 17em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="4"] > span:before {
+        right: calc(100% + 3em + 12em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="4"] > span .arrow {
+        right: calc(100% + 3em + 12em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-left .menu > *[data-pos="4"] > span {
+        left: 5em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="4"] > span:before {
+        right: calc(100% + 3em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="4"] > span .arrow {
+        right: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-left .menu > *[data-pos="5"] > span {
+        left: 21em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="5"] > span:before {
+        right: calc(100% + 3em + 16em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="5"] > span .arrow {
+        right: calc(100% + 3em + 16em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-left .menu > *[data-pos="5"] > span {
+        left: 5em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="5"] > span:before {
+        right: calc(100% + 3em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="5"] > span .arrow {
+        right: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-left .menu > *[data-pos="6"] > span {
+        left: 25em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="6"] > span:before {
+        right: calc(100% + 3em + 20em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="6"] > span .arrow {
+        right: calc(100% + 3em + 20em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-left .menu > *[data-pos="6"] > span {
+        left: 5em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="6"] > span:before {
+        right: calc(100% + 3em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="6"] > span .arrow {
+        right: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-left .menu > *[data-pos="7"] > span {
+        left: 29em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="7"] > span:before {
+        right: calc(100% + 3em + 24em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="7"] > span .arrow {
+        right: calc(100% + 3em + 24em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-left .menu > *[data-pos="7"] > span {
+        left: 5em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="7"] > span:before {
+        right: calc(100% + 3em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="7"] > span .arrow {
+        right: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-left .menu > *[data-pos="8"] > span {
+        left: 33em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="8"] > span:before {
+        right: calc(100% + 3em + 28em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="8"] > span .arrow {
+        right: calc(100% + 3em + 28em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-left .menu > *[data-pos="8"] > span {
+        left: 5em
+    }
+
+    #build #help.ui-left .menu > *[data-pos="8"] > span:before {
+        right: calc(100% + 3em)
+    }
+
+    #build #help.ui-left .menu > *[data-pos="8"] > span .arrow {
+        right: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-right .title {
+        left: 3rem
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 1280px) {
+    #build #help.ui-right .title {
+        left: 2rem
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-right .menu > * > span {
+        text-align: right
+    }
+
+    #build #help.ui-right .menu > * > span:after {
+        left: calc(100% + 1em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="1"] > span {
+        right: 5em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="1"] > span:before {
+        left: calc(100% + 3em + 0em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="1"] > span .arrow {
+        left: calc(100% + 3em + 0em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-right .menu > *[data-pos="1"] > span {
+        right: 5em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="1"] > span:before {
+        left: calc(100% + 3em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="1"] > span .arrow {
+        left: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-right .menu > *[data-pos="2"] > span {
+        right: 9em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="2"] > span:before {
+        left: calc(100% + 3em + 4em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="2"] > span .arrow {
+        left: calc(100% + 3em + 4em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-right .menu > *[data-pos="2"] > span {
+        right: 5em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="2"] > span:before {
+        left: calc(100% + 3em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="2"] > span .arrow {
+        left: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-right .menu > *[data-pos="3"] > span {
+        right: 13em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="3"] > span:before {
+        left: calc(100% + 3em + 8em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="3"] > span .arrow {
+        left: calc(100% + 3em + 8em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-right .menu > *[data-pos="3"] > span {
+        right: 5em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="3"] > span:before {
+        left: calc(100% + 3em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="3"] > span .arrow {
+        left: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-right .menu > *[data-pos="4"] > span {
+        right: 17em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="4"] > span:before {
+        left: calc(100% + 3em + 12em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="4"] > span .arrow {
+        left: calc(100% + 3em + 12em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-right .menu > *[data-pos="4"] > span {
+        right: 5em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="4"] > span:before {
+        left: calc(100% + 3em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="4"] > span .arrow {
+        left: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-right .menu > *[data-pos="5"] > span {
+        right: 21em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="5"] > span:before {
+        left: calc(100% + 3em + 16em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="5"] > span .arrow {
+        left: calc(100% + 3em + 16em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-right .menu > *[data-pos="5"] > span {
+        right: 5em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="5"] > span:before {
+        left: calc(100% + 3em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="5"] > span .arrow {
+        left: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-right .menu > *[data-pos="6"] > span {
+        right: 25em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="6"] > span:before {
+        left: calc(100% + 3em + 20em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="6"] > span .arrow {
+        left: calc(100% + 3em + 20em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-right .menu > *[data-pos="6"] > span {
+        right: 5em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="6"] > span:before {
+        left: calc(100% + 3em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="6"] > span .arrow {
+        left: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-right .menu > *[data-pos="7"] > span {
+        right: 29em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="7"] > span:before {
+        left: calc(100% + 3em + 24em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="7"] > span .arrow {
+        left: calc(100% + 3em + 24em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-right .menu > *[data-pos="7"] > span {
+        right: 5em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="7"] > span:before {
+        left: calc(100% + 3em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="7"] > span .arrow {
+        left: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) {
+    #build #help.ui-right .menu > *[data-pos="8"] > span {
+        right: 33em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="8"] > span:before {
+        left: calc(100% + 3em + 28em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="8"] > span .arrow {
+        left: calc(100% + 3em + 28em - 0.5em)
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 980px) {
+    #build #help.ui-right .menu > *[data-pos="8"] > span {
+        right: 5em
+    }
+
+    #build #help.ui-right .menu > *[data-pos="8"] > span:before {
+        left: calc(100% + 3em)
+    }
+
+    #build #help.ui-right .menu > *[data-pos="8"] > span .arrow {
+        left: calc(100% + 3em - 0.5em)
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #build #help .menu {
+        white-space: normal
+    }
+
+    #build #help .menu > *[data-name="undo"] {
+        display: none
+    }
+
+    #build #help .menu > *[data-name="redo"] {
+        display: none
+    }
+
+    #build #help .menu > *[data-name="page-properties"] {
+        display: block
+    }
+
+    #build #help .menu > *[data-name="content-properties"] {
+        display: block
+    }
+
+    #build #help .menu > *[data-name="publish"] {
+        display: none
+    }
+
+    #build #help .menu > * > span {
+        left: calc(50% - 2em);
+        width: 4em;
+        line-height: 1;
+        margin-bottom: 1em
+    }
+
+    #build #help .menu > * > span .label {
+        position: relative;
+        top: 2em
+    }
+
+    #build #help .menu > * > span:before {
+        left: 50%
+    }
+
+    #build #help .menu > * > span:after {
+        display: none
+    }
+
+    #build #help .menu > * > span .arrow {
+        left: calc(50% - 0.5em)
+    }
+}
+
+#build #imageLibraryDialog .title {
+    margin: 0 0 .7em 0
+}
+
+#build #imageLibraryDialog > .content {
+    width: 70em;
+    padding: 3em
+}
+
+#build #imageLibraryDialog .thumbnails {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    max-height: calc(100vh - 14em);
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #25262c;
+    -webkit-overflow-scrolling: touch
+}
+
+#build #imageLibraryDialog .thumbnail {
+    -moz-transition: opacity 1s ease;
+    -webkit-transition: opacity 1s ease;
+    -ms-transition: opacity 1s ease;
+    transition: opacity 1s ease;
+    width: 33.33333%;
+    height: 14em;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    position: relative;
+    opacity: 0
+}
+
+#build #imageLibraryDialog .thumbnail.loaded {
+    opacity: 1
+}
+
+#build #imageLibraryDialog .thumbnail > img {
+    display: none
+}
+
+#build #imageLibraryDialog .thumbnail > .caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 4em 1em 1em 1em;
+    font-size: 0.6em;
+    color: #fff;
+    background-image: -moz-linear-gradient(to top, rgba(16, 16, 16, 0.4), rgba(16, 16, 16, 0));
+    background-image: -webkit-linear-gradient(to top, rgba(16, 16, 16, 0.4), rgba(16, 16, 16, 0));
+    background-image: -ms-linear-gradient(to top, rgba(16, 16, 16, 0.4), rgba(16, 16, 16, 0));
+    background-image: linear-gradient(to top, rgba(16, 16, 16, 0.4), rgba(16, 16, 16, 0))
+}
+
+#build #imageLibraryDialog .thumbnail > .caption a {
+    color: inherit;
+    border-bottom: 0
+}
+
+@media screen and (max-width: 980px) {
+    #build #imageLibraryDialog .thumbnail {
+        width: 50%
+    }
+}
+
+@media screen and (max-width: 736px) {
+    #build #imageLibraryDialog > .content {
+        padding: 1em;
+        overflow: visible
+    }
+
+    #build #imageLibraryDialog > .content > .close {
+        top: -3em
+    }
+
+    #build #imageLibraryDialog .thumbnail {
+        width: 33.33333%;
+        height: 10em
+    }
+
+    #build #imageLibraryDialog .thumbnail > .caption {
+        display: none
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #build #imageLibraryDialog .thumbnail {
+        width: 50%;
+        height: 8em
+    }
+}

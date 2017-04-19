@@ -17,12 +17,12 @@
 {% block main %}
     <section class="cover height-90 imagebg text-center" data-overlay="2" id="home">
         <div class="background-image-holder">
-            <img alt="background" src="/themes/default/img/landing-24.jpg" />
+            <img alt="background" src="/themes/default/img/home2.jpg" />
         </div>
         <section class="page-navigator">
             <ul>
                 <li>
-                    <a href="#" class="inner-link" data-title="文章"></a>
+                    <a href="#" class="inner-link" data-title="Blog"></a>
                 </li>
                 <li>
                     <a href="#snippet" class="inner-link" data-title="碎片"></a>
@@ -39,7 +39,7 @@
                     <h3>
                         聪明人塑造自己的命运
                     </h3>
-                    <a class="btn btn--sm type--uppercase" href="#">
+                    <a class="btn btn--sm type--uppercase" href="/portfolio">
                                 <span class="btn__text">
                                     作品集
                                 </span>
@@ -72,6 +72,19 @@
             <div class="row">
                 <div class="col-sm-4 col-xs-6">
                     <a href="#" class="block">
+                        <div class="feature feature-7 boxed text-center imagebg" data-overlay="5">
+                            <div class="background-image-holder" style="background: url(&quot;/themes/default/img/recruitment-2.jpg&quot;); opacity: 1;">
+                                <img alt="background" src="/themes/default/img/recruitment-2.jpg">
+                            </div>
+                            <h4 class="pos-vertical-center">Portfolio</h4>
+                            <p class="pos-vertical-center">
+                                产品 & UI 设计、商业咨询、在线教育平台
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-4 col-xs-6">
+                    <a href="#" class="block">
                         <div class="feature feature-7 boxed text-center imagebg" data-overlay="3">
                             <div class="background-image-holder" style="background: url(&quot;/themes/default/img/recruitment-1.jpg&quot;); opacity: 1;">
                                 <img alt="background" src="/themes/default/img/recruitment-1.jpg">
@@ -94,19 +107,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-4 col-xs-6">
-                    <a href="#" class="block">
-                        <div class="feature feature-7 boxed text-center imagebg" data-overlay="5">
-                            <div class="background-image-holder" style="background: url(&quot;/themes/default/img/recruitment-2.jpg&quot;); opacity: 1;">
-                                <img alt="background" src="/themes/default/img/recruitment-2.jpg">
-                            </div>
-                            <h4 class="pos-vertical-center">Portfolio</h4>
-                            <p class="pos-vertical-center">
-                                碎片内容建站、个人信息系统、在线教育平台
-                            </p>
-                        </div>
-                    </a>
-                </div>
+
             </div>
             <!--end of row-->
         </div>
@@ -114,115 +115,33 @@
     </section>
     <section class="bg--secondary">
         <div class="container">
-
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="heading-block text-center">
+                        <h3>最新 blog</h3>
+                    </div>
+                </div>
+            </div>
             <!--end of row-->
             <div class="row">
                 {% for item in home %}
 
 
                     <div class="col-sm-4">
-                        <div class="feature feature-1 boxed boxed--border">
-                            <span class="label">Fulltime</span>
+                        <div class="feature feature-1 boxed boxed--border hover-shadow">
+                            <span class="label"><$ item.type $></span>
                             <h5><$ item.title $></h5>
                             <p>
                                 {#<$ item.excerpt $>#}
                             </p>
                             <a href="#">
-                                View &amp; Apply
+                                查看全文
                             </a>
                         </div>
                         <!--end feature-->
                     </div>
                 {% endfor %}
 
-
-                <div class="col-sm-4">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <span class="label bg--primary-2">Remote</span>
-                        <h5>Art Director</h5>
-                        <p>
-                            Hobson &amp; Peterson
-                        </p>
-                        <a href="#">
-                            View &amp; Apply
-                        </a>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <h5>Senior Interface Designer</h5>
-                        <p>
-                            Supply Co. (NYC)
-                        </p>
-                        <a href="#">
-                            View &amp; Apply
-                        </a>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <h5>Design Internship</h5>
-                        <p>
-                            Instrument San Francisco
-                        </p>
-                        <a href="#">
-                            View &amp; Apply
-                        </a>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <h5>Graphic Designer (Junior)</h5>
-                        <p>
-                            Paddle Financial
-                        </p>
-                        <a href="#">
-                            View &amp; Apply
-                        </a>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <span class="label">Fulltime</span>
-                        <h5>Expression Engine Expert</h5>
-                        <p>
-                            Hoëffler
-                        </p>
-                        <a href="#">
-                            View &amp; Apply
-                        </a>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <span class="label bg--primary-2">Remote</span>
-                        <h5>Full-stack Developer</h5>
-                        <p>
-                            Envato
-                        </p>
-                        <a href="#">
-                            View &amp; Apply
-                        </a>
-                    </div>
-                    <!--end feature-->
-                </div>
-                <div class="col-sm-4">
-                    <div class="feature feature-1 boxed boxed--border">
-                        <h5>Marketing Director</h5>
-                        <p>
-                            Clear Left
-                        </p>
-                        <a href="#">
-                            View &amp; Apply
-                        </a>
-                    </div>
-                    <!--end feature-->
-                </div>
             </div>
             <!--end of row-->
         </div>
@@ -233,7 +152,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="heading-block">
+                    <div class="heading-block text-center">
                         <h3>碎片</h3>
                     </div>
                 </div>

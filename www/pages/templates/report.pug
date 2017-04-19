@@ -1,0 +1,14 @@
+extends layout.pug
+
+block content
+  section
+    .wrapper
+      h1 !{title}
+      | !{shortcodes(markdown(text))}
+      each image in images
+        figure.image
+          img(src=image.url, alt=image.title)
+          if (image.title)
+            figcaption !{image.title}
+          if (image.summary)
+            figcaption !{image.summary}  

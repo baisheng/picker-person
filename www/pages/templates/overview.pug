@@ -1,0 +1,18 @@
+extends layout.pug
+
+block content
+  section
+    .wrapper
+      h1 !{title}
+      | !{shortcodes(markdown(text))}
+  each child in children
+    article
+      .wrapper
+        h2 
+          a(href=child.url) !{child.title} (!{child.year})
+        if (child.hasImages)
+          figure.image
+            img(src=child.images[0].url, alt=child.images[0].title)
+            if (child.images[0].title)
+              figcaption !{child.images[0].title}
+        | !{shortcodes(markdown(child.text))}

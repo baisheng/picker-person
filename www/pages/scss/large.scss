@@ -1,0 +1,60 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+figure {
+  margin-bottom: ($spacing-large / 2);
+}
+
+blockquote {
+  padding-left: ($spacing-large / 2);
+}
+
+header,
+section,
+article,
+footer {
+  padding: $spacing-large;
+}
+
+.wrapper {
+
+  max-width: 600px;
+  margin: 0 auto;
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+
+}
+
+.logo {
+  font-size: 32px;
+}
+
+footer {
+
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  p,
+  ul {
+    margin-bottom: 0;
+  }
+
+  ul {
+
+    li {
+      margin: 0 0 0 $spacing-small;
+    }
+
+  }
+
+}

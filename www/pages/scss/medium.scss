@@ -1,0 +1,35 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+figure {
+  margin-bottom: ($spacing-medium / 2);
+}
+
+blockquote {
+  padding-left: ($spacing-medium / 2);
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+header,
+section,
+article,
+footer {
+  padding: $spacing-medium;
+}
+
+.logo {
+  font-size: 28px;
+}

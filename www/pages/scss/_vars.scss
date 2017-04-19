@@ -1,0 +1,15 @@
+$breakpoint-medium: 500px;
+$breakpoint-large: 500px;
+
+$spacing-small: 20px;
+$spacing-medium: 40px;
+$spacing-large: 60px;
+
+$color-background: #fff;
+$color-text: #21272d;
+$color-primary: #d35c5c;
+$color-unremarkable: #a4adb6;
+$color-lines: mix($color-unremarkable, $color-background, 25%);
+
+$font-size: 16px;
+$line-height: 2;

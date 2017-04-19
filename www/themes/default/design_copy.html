@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title><$ options.title $></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<$ options.description $>">
+    <link href="/themes/default/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/themes/default/css/stack-interface.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/themes/default/css/socicon.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/themes/default/css/lightbox.min.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/themes/default/css/flickity.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/themes/default/css/iconsmind.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/themes/default/assets/css/theme.min.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+
+
+
+<body class=" " data-smooth-scroll-offset='64'>
+<div class="main-container" id="main">
+
+    <section class="imageblock switchable feature-large">
+        <div class="imageblock__content col-md-6 col-sm-4 pos-right">
+            <div class="background-image-holder">
+                <img alt="image" src="/themes/default/img/personal-1.jpg" />
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-sm-7">
+                    <h1>Marc Hammond</h1>
+                    <p class="lead">Self-taught designer-developer available for hire. Hailing from Melbourne, Florida
+                        <img alt="flag" src="img/flag-1.png" />.
+                    </p>
+                    <ul class="social-list list-inline list--hover">
+                        <li>
+                            <a href="#">
+                                <i class="socicon socicon-github icon icon--xs"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="socicon socicon-dribbble icon icon--xs"></i>
+                            </a>
+                        </li>
+                        <li data-tooltip="@marchammond">
+                            <a href="#">
+                                <i class="socicon socicon-instagram icon icon--xs"></i>
+                            </a>
+                        </li>
+                        <li data-tooltip="hello@me.com">
+                            <a href="#">
+                                <i class="socicon socicon-mail icon icon--xs"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="heading-block"></div>
+                    <a href="#" class="block">
+                        <div class="feature feature--featured boxed boxed--border bg--secondary">
+                            <span class="label">Current</span>
+                            <h5>City Mapper</h5>
+                            <p>
+                                Lead designer for a public transport companion app, relied on by over 2 million commuters.
+                            </p>
+                        </div>
+                        <!--end feature-->
+                    </a>
+                    <a href="#" class="block">
+                        <div class="feature boxed boxed--border bg--secondary">
+                            <h5>Roomy</h5>
+                            <p>
+                                Front-end development on a reliable review database for prospective NYC renters.
+                            </p>
+                        </div>
+                        <!--end feature-->
+                    </a>
+                    <a href="#" class="block">
+                        <div class="feature boxed boxed--border bg--secondary">
+                            <h5>vent.js</h5>
+                            <p>
+                                A small, lightweight plugin for embedding reviews. Currently maintained by a small team &mdash; headed up by me.
+                            </p>
+                        </div>
+                        <!--end feature-->
+                    </a>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+    {#<script type="text/javascript" src="/static/assets/js/fetch.js"></script>#}
+</div>
+
+<script src="/static/assets/js/vue/vue.js"></script>
+
+    <script>
+        var main = new Vue({
+            el: '#main',
+            data: {
+                message: 'You loaded this page on ' + new Date(),
+                themes: {
+                   title:"",
+                    details: ""
+                }
+            }
+        })
+    </script>
+    <script src="/themes/default/js/jquery-3.1.1.min.js"></script>
+    {#<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>#}
+
+    {#<script src="/themes/default/js/flickity.min.js"></script>#}
+    {#<script src="/themes/default/js/easypiechart.min.js"></script>#}
+    {#<script src="/themes/default/js/parallax.js"></script>#}
+    {#<script src="/themes/default/js/typed.min.js"></script>#}
+    {#<script src="/themes/default/js/datepicker.js"></script>#}
+    {#<script src="/themes/default/js/isotope.min.js"></script>#}
+    {#<script src="/themes/default/js/ytplayer.min.js"></script>#}
+    {#<script src="/themes/default/js/lightbox.min.js"></script>#}
+    {#<script src="/themes/default/js/granim.min.js"></script>#}
+    {#<script src="/themes/default/js/countdown.min.js"></script>#}
+    {#<script src="/themes/default/js/twitterfetcher.min.js"></script>#}
+    {#<script src="/themes/default/js/spectragram.min.js"></script>#}
+    <script src="/themes/default/js/smooth-scroll.min.js"></script>
+    <script src="/themes/default/js/scripts.js"></script>
+</body>
+</html>

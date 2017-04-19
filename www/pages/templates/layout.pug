@@ -1,0 +1,29 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0')
+    block meta
+    title !{title} @ !{site}
+    link(rel='shortcut icon', href=basepath('/favicon.ico'))
+    link(href=basepath('/css/style.css'), rel='stylesheet')
+    link(rel='image_src', href=basepath('/img/share.png'))
+    block head
+  body
+    header
+      .wrapper
+        a.logo(href=genesis.url) !{site}
+        nav
+          ul
+            each page in genesis.children.filter((page) => page.visible)
+              li(class={ 'active': (page.url === url || url.startsWith(`${page.url}/`)) })
+                a(href=page.url) !{page.title} 
+    block content
+    footer
+      .wrapper
+        p © !{(new Date().getFullYear())} !{site}
+        ul
+          - const contactPage = findPageByUrl('/contact')
+          li
+            a(href=contactPage.url) !{contactPage.title}
+    script(src=basepath('/js/scripts.js'))
