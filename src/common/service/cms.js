@@ -6,8 +6,8 @@ const mkdirp = require('mkdirp');
 const glob = require('glob');
 const ShortcodeParser = require('meta-shortcodes');
 const naturalSort = require('javascript-natural-sort');
-const Page = require('./lib/page');
-const defaults = require('./lib/defaults');
+const Page = require('./cms/lib/page');
+const defaults = require('./cms/lib/defaults');
 
 
 
