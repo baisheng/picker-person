@@ -1,3 +1,6 @@
+![homepage](https://github.com/baisheng/picker/blob/master/screenshot/home.jpg?raw=true)
+
+![snippets](https://github.com/baisheng/picker/blob/master/screenshot/snippets.jpg?raw=true)
 
 Application created by [ThinkJS](http://www.thinkjs.org)
 
