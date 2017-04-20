@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 62);
+/******/ 	return __webpack_require__(__webpack_require__.s = 64);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -4569,7 +4569,9 @@ module.exports = g;
 
 
 /***/ }),
-/* 58 */
+/* 58 */,
+/* 59 */,
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4759,10 +4761,11 @@ new Vue({
                     _this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
                     vue.reLayout();
 
-                    if (vue.page === 5) {
-                        _this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
-                        vue.reLayout();
-                    }
+                    // if (vue.page  === 5) {
+                    //     this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+                    //     vue.reLayout();
+                    //
+                    // }
                 } else {
                     _this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
                     vue.reLayout();
@@ -4886,13 +4889,13 @@ new Vue({
 });
 
 /***/ }),
-/* 59 */,
-/* 60 */,
 /* 61 */,
-/* 62 */
+/* 62 */,
+/* 63 */,
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(58);
+module.exports = __webpack_require__(60);
 
 
 /***/ })

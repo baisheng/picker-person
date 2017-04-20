@@ -67,18 +67,56 @@
         </div>
         <!--end of container-->
     </section>
-    <section>
+
+    <section class="" id="snippet">
         <div class="container">
             <div class="row">
-                <div class="github-widget" data-repo="baisheng/CmsWing"></div>
-                <br>
-                <div class="github-widget" data-repo="baisheng/picker-resume"></div>
+                <div class="col-sm-12">
+                    <div class="heading-block text-center">
+                        <h3>碎片</h3>
+                    </div>
+                </div>
             </div>
+            <div class="row" data-plugin="masonry">
+
+
+                <div class="col-sm-4 masonry-item" v-for="_ in list">
+                    <snippet :snippet="_"></snippet>
+                    <!-- START ITEM -->
+                    <!-- END ITEM -->
+                    <!--end feature-->
+                </div>
+
+            </div>
+            <!--end of row-->
         </div>
+        <!--end of container-->
+        <infinite-loading  spinner="waveDots" :on-infinite="onInfinite" :distance="distance" ref="infiniteLoading">
+            <span slot="no-more">
+                没有更多了！
+            </span>
+        </infinite-loading>
     </section>
 {% endblock %}
 
 {% block script %}
+    <script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
+    {#<script src="/themes/default/js/vue-lazyload.js"></script>#}
 
-    <script src="/static/assets/js/jquery.githubRepoWidget.min.js"></script>
+    <script>
+        Vue.filter('moment', function (time, format) {
+            moment.locale('zh-cn');
+
+            if (format === "default") {
+                format = 'YYYY-MM-DD HH:mm:ss';
+                return moment(time).format(format);
+            }
+            return moment(time).fromNow();
+        });
+
+    </script>
+
+    <script src="/themes/default/js/components/snippets.js"></script>
+
 {% endblock %}

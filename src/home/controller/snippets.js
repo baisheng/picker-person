@@ -20,7 +20,7 @@ export default class extends Base {
      */
     async indexAction() {
 
-        let _terms = this.model('terms');
+/*        let _terms = this.model('terms');
 
         let snippet_terms = await _terms.findByTaxonomy('snippet');
 
@@ -38,24 +38,8 @@ export default class extends Base {
         });
 
         // console.log(JSON.stringify(_items))
-        this.assign("snippet_terms", JSON.stringify(_items));
+        this.assign("snippet_terms", JSON.stringify(_items));*/
 
-        // let meta_type = this.get('meta_type');
-        //
-        // let list =  await this.dao.snippets(this.get('page'), meta_type);
-        //
-        //
-        // let _taxonomy = this.model('taxonomy');
-        //
-        // for (let item of list.data) {
-        //     item.terms = await _taxonomy.getTermsByObject(item.id);
-        // }
-
-        // let Pages = think.adapter("pages", "page"); //加载名为 dot 的 Template Adapter
-        // let pages = new Pages(this.http); //实例化 Adapter
-        // let page = pages.pages(list);
-        // this.assign('pagerData', page); //分页展示使用
-        //
         return this.displayView('snippets');
     }
     /**
