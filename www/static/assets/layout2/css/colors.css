@@ -29,13 +29,13 @@
 *
 * ---------------------------------------------------------------------------- */
 .bg-primary {
-  background-color: #2196F3;
-  border-color: #2196F3;
+  background-color: #4680ff;
+  border-color: #4680ff;
   color: #fff;
 }
 .bg-primary-300 {
-  background-color: #64B5F6;
-  border-color: #64B5F6;
+  background-color: #E2EAFE;
+  border-color: #E2EAFE;
   color: #fff;
 }
 .bg-primary-400 {
@@ -577,10 +577,10 @@
   border-color: #546E7A;
 }
 .border-primary {
-  border-color: #2196F3;
+  border-color: #4680ff;
 }
 .border-primary-300 {
-  border-color: #64B5F6;
+  border-color: #E2EAFE;
 }
 .border-primary-400 {
   border-color: #42A5F5;
@@ -871,10 +871,10 @@
   border-color: #ddd;
 }
 .border-top-primary {
-  border-top-color: #2196F3;
+  border-top-color: #4680ff;
 }
 .border-top-primary-300 {
-  border-top-color: #64B5F6;
+  border-top-color: #E2EAFE;
 }
 .border-top-primary-400 {
   border-top-color: #42A5F5;
@@ -1162,10 +1162,10 @@
   border-top-color: #fff;
 }
 .border-bottom-primary {
-  border-bottom-color: #2196F3;
+  border-bottom-color: #4680ff;
 }
 .border-bottom-primary-300 {
-  border-bottom-color: #64B5F6;
+  border-bottom-color: #E2EAFE;
 }
 .border-bottom-primary-400 {
   border-bottom-color: #42A5F5;
@@ -1453,10 +1453,10 @@
   border-bottom-color: #fff;
 }
 .border-left-primary {
-  border-left-color: #2196F3;
+  border-left-color: #4680ff;
 }
 .border-left-primary-300 {
-  border-left-color: #64B5F6;
+  border-left-color: #E2EAFE;
 }
 .border-left-primary-400 {
   border-left-color: #42A5F5;
@@ -1744,10 +1744,10 @@
   border-left-color: #fff;
 }
 .border-right-primary {
-  border-right-color: #2196F3;
+  border-right-color: #4680ff;
 }
 .border-right-primary-300 {
-  border-right-color: #64B5F6;
+  border-right-color: #E2EAFE;
 }
 .border-right-primary-400 {
   border-right-color: #42A5F5;
@@ -2037,12 +2037,12 @@
 .text-primary,
 .text-primary:hover,
 .text-primary:focus {
-  color: #2196F3 !important;
+  color: #4680ff !important;
 }
 .text-primary-300,
 .text-primary-300:hover,
 .text-primary-300:focus {
-  color: #2196F3 !important;
+  color: #4680ff !important;
 }
 .text-primary-400,
 .text-primary-400:hover,

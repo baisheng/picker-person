@@ -57,103 +57,10 @@
     {#{{ post.snippets }}#}
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
+            <Editor></Editor>
             {#{{editorModel}}#}
             {#<vue-editor :model="editorModel" v-on:modelchange="modelChangeEvent"> </vue-editor>#}
             <!-- Single mail -->
-            <div class="panel panel-white">
-
-                <div class="profile-cover" v-show="is_cover">
-                    <div id="cover" class="profile-cover-img"
-                         style="background-image: url('/static/assets/images/demo/blog/2.jpg')"></div>
-                    <div class="media">
-                        {#<div class="media-left">#}
-                        {#<a href="#" class="profile-thumb">#}
-                        {#<img src="/static/assets/images/placeholder.jpg" class="img-circle" alt="">#}
-                        {#</a>#}
-                        {#</div>#}
-
-                        <div class="media-body">
-                            <h1>
-                                ${ title }
-                                {#<small class="display-block">UX/UI designer</small>#}
-                            </h1>
-                        </div>
-
-                        <div class="media-right media-middle">
-                            <ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
-                                {#<li><a href="#" class="btn btn-default"><i#}
-                                {#class="icon-file-picture position-left"></i> 换图</a></li>#}
-                                {#<button type="button" class="btn btn-primary btn-icon btn-rounded"><i class="icon-menu7"></i></button>#}
-                                <li>
-                                    <a href="#" class="btn btn-icon btn-xs btn-primary   btn-rounded"><i
-                                                class=" icon-cross"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <input type="hidden" name="cover" id="cover"/>
-                <!-- Mail details -->
-
-                <div class="table-responsive mail-details-write">
-                    <table class="table">
-                        <tbody>
-
-                        <tr>
-                            <td class="p-5 no-border" colspan="2">
-                                <input type="text" class="form-control text-semibold" placeholder="无标题" name="title"
-                                       v-model="post.title">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /mail details -->
-
-
-                <!-- Mail container -->
-                <div class="mail-container-write">
-                    {#<div class="summernote" placeholder="书写是一种乐趣，也是一种生活。">#}
-                    {#{{ doc.content | safe }}#}
-                    {#</div>#}
-                    <summernote :model="post" v-on:modelchange="modelChangeEvent"></summernote>
-                    {#{{editorModel}}#}
-                        {#<div id="snippet.id" class="m-20" v-for="snippet, index in post.snippets">#}
-                            {#{{ snippet.content }}#}
-                            {#<editable v-model="post.snippets[index].content"></editable>#}
-
-                        {#</div>#}
-
-                </div>
-                <!-- /mail container -->
-
-                <!-- Attachments -->
-                {#<div class="mail-attachments-container">#}
-                    {#<h6 class="mail-attachments-heading">{{ post.snippets.length }} 碎片</h6>#}
-
-                    {#<ul class="mail-attachments">#}
-                        {#<li v-for="_,index in post.snippets">#}
-                            {#<span class="mail-attachments-preview">#}
-                                {#<i class="" :class="typeof(_.meta['_snippet_link']) != 'undefined' ? 'icon-link' : 'icon-file-empty'"></i>#}
-                            {#</span>#}
-
-                            {#<div class="mail-attachments-content">#}
-                                {#<span class="text-semibold" v-if="typeof(_.meta['_snippet_link']) != 'undefined'">{{ _.meta['_snippet_link']['title'] }}</span>#}
-                                {#<span class="text-semibold" v-model="_[index]" v-html="_.content"></span>#}
-                                {#<editable v-model="post.snippets[index].content" v-html="_.content"></editable>#}
-
-                                {#<ul class="list-inline list-inline-condensed no-margin">#}
-                                    {#<li class="text-muted">174 KB</li>#}
-                                    {#<li><a href="#">查看</a></li>#}
-                                    {#<li><a href="#">删除</a></li>#}
-                                {#</ul>#}
-                            {#</div>#}
-                        {#</li>#}
-
-                    {#</ul>#}
-                {#</div>#}
-                <!-- /attachments -->
-            </div>
             <!-- /single mail -->
             {#</form>#}
         </div>
@@ -377,8 +284,8 @@
 {% block script %}
     {#<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/uniform.min.js"></script>#}
 
-    <script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>
-    <script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>
+    {#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>#}
+    {#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>#}
 
     <script>
         //        var currentLocation = document.location.pathname + decodeURIComponent(document.location.search);
@@ -420,6 +327,7 @@
         POST = <$ post | dump | safe $>;
         // @formatter:on
     </script>
+    {#<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>#}
 
     <script type="text/javascript" src="/static/components/post/index.js"></script>
     <script type="text/javascript">

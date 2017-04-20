@@ -8,6 +8,7 @@
 
     <!-- Global stylesheets -->
     {#<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"type="text/css">#}
+    <link href="/static/assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
     <link href="/static/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
     <link href="/static/assets/material/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/static/assets/material/css/core.min.css" rel="stylesheet" type="text/css">
@@ -16,315 +17,51 @@
     <!-- /global stylesheets -->
 
     <style type="text/css">
-        .login-cover {
-            background: url('/static/limitless/assets/images/login_cover.jpg') no-repeat;
-            background-size: cover;
+        body#index {
+            /*display: -moz-flex;*/
+            /*display: -webkit-flex;*/
+            /*display: -ms-flex;*/
+            /*display: flex;*/
+            /*-moz-flex-direction: column;*/
+            /*-webkit-flex-direction: column;*/
+            /*-ms-flex-direction: column;*/
+            /*flex-direction: column;*/
+            /*-moz-align-items: center;*/
+            /*-webkit-align-items: center;*/
+            /*-ms-align-items: center;*/
+            /*align-items: center;*/
+            /*-moz-justify-content: space-between;*/
+            /*-webkit-justify-content: space-between;*/
+            /*-ms-justify-content: space-between;*/
+            /*justify-content: space-between;*/
+            min-height: 100vh;
+            padding: 6em 0;
+            text-align: center;
+            background-image: url("/static/assets/images/bg.svg"), linear-gradient(45deg, #6E436C 25%, #2A4584 75%);
+            background-size: cover, cover;
+            background-position: top, center;
+            background-repeat: no-repeat, no-repeat;
+            cursor: default
         }
 
-        .nux-fullscreen {
-            /*background-color: #fc7279;*/
-            /*background-image: -webkit-linear-gradient(bottom left, #fc7279 10%, #ff7b9c 65%, #ffc019 125%);*/
-            /*background-image: linear-gradient(to top right, #fc7279 10%, #ff7b9c 65%, #ffc019 125%);*/
-            /*bottom: auto;*/
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0
+        body#index:before {
+            content: '';
+            display: block
         }
 
-        .nux-fullscreen.nux-grey-background {
-            background-image: radial-gradient(circle, #fafafa 30%, #f5f5f5 100%)
-        }
 
-        .hero {
-            height: 100%;
-        }
-
-        .hero.navbar-fixed-top-hero {
-            margin-top: 134px;
-        }
-
-        .hero-content {
-            overflow: hidden;
-            position: relative;
-            height: 100%;
-        }
-
-        .hero-content .container-fluid {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 35%;
-            transform: translateY(-50%);
-            z-index: 2;
-        }
-
-        .hero-content h1 {
-            line-height: 75px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-content h1 span {
-            position: relative;
-        }
-
-        .hero-content h1 span.cd-words-wrapper {
-            display: inline-block;
-            position: relative;
-            text-align: left;
-            border-bottom: 0;
-        }
-
-        .hero-content h1 span.cd-words-wrapper b {
-            display: inline-block;
-            position: absolute;
-            white-space: nowrap;
-            left: 0;
-            top: 0;
-        }
-
-        .hero-content h1 span.cd-words-wrapper b.is-visible {
-            position: relative;
-        }
-
-        .no-js .hero-content h1 span.cd-words-wrapper b {
-            opacity: 0;
-        }
-
-        .no-js .hero-content h1 span.cd-words-wrapper b.is-visible {
-            opacity: 1;
-        }
-
-        .hero-content p {
-            font-size: 1.125em;
-            line-height: 2em;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 2;
-            color: #000;
-        }
-
-        .dot {
-            border-radius: 50%;
-            position: absolute;
-            z-index: 0;
-        }
-
-        .dot_red {
-            background-color: #CE4841;
-        }
-
-        .dot_black {
-            background-color: #000;
-        }
-
-        .dot_blue {
-            background-color: #74C0C0;
-        }
-
-        .dot_orange {
-            background-color: #F6AA3D;
-        }
-
-        .hero-dot_1 {
-            position: absolute;
-            top: 8vh;
-            left: 5vw;
-            height: 6px;
-            width: 6px;
-        }
-
-        .hero-dot_2 {
-            position: absolute;
-            top: 12vh;
-            left: -3vw;
-            height: 84px;
-            width: 84px;
-        }
-
-        .hero-dot_3 {
-            position: absolute;
-            top: 35vh;
-            left: 2vw;
-            height: 12px;
-            width: 12px;
-        }
-
-        .hero-dot_4 {
-            position: absolute;
-            top: 50vh;
-            left: 4vw;
-            height: 55px;
-            width: 55px;
-        }
-
-        .hero-dot_5 {
-            position: absolute;
-            top: 70vh;
-            left: 2vw;
-            height: 9px;
-            width: 9px;
-        }
-
-        .hero-dot_6 {
-            position: absolute;
-            top: 7vh;
-            right: 6vw;
-            height: 9px;
-            width: 9px;
-        }
-
-        .hero-dot_7 {
-            position: absolute;
-            top: 22vh;
-            right: 3vw;
-            height: 65px;
-            width: 65px;
-        }
-
-        .hero-dot_8 {
-            position: absolute;
-            top: 46vh;
-            right: 4vw;
-            height: 27px;
-            width: 27px;
-        }
-
-        .hero-dot_9 {
-            position: absolute;
-            top: 60vh;
-            right: 2vw;
-            height: 7px;
-            width: 7px;
-        }
-
-        .hero-dot_10 {
-            position: absolute;
-            top: 71vh;
-            right: 4vw;
-            height: 8px;
-            width: 8px;
-        }
-
-        /* ---- particles.js container ---- */
-        #particlesred-js, #particlesblack-js, #particlesblue-js, #particlesorange-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-            background-image: url("");
-            background-size: cover;
-            background-position: 50% 50%;
-            background-repeat: no-repeat;
-        }
-
-        #particlesred-js-expect, #particlesred-js-thanks, #particlesblack-js-expect, #particlesblack-js-thanks, #particlesblue-js-expect, #particlesblue-js-thanks, #particlesorange-js-expect, #particlesorange-js-thanks {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-            background-image: url("");
-            background-size: cover;
-            background-position: 50% 50%;
-            background-repeat: no-repeat;
-        }
-
-        /* =========================================================================
-           Responsive
-           ========================================================================= */
-        @media screen and (max-width: 767px) {
-            .hero {
-                height: auto;
-                padding-bottom: 96px;
-            }
-
-            .hero.navbar-fixed-top-hero {
-                margin-top: 50px;
-            }
-
-            .hero-content .container-fluid {
-                position: static;
-                left: 0;
-                right: 0;
-                top: 0;
-                transform: none;
-            }
-
-            .hero-content h1 {
-                font-size: 3em;
-                line-height: 1.33;
-                margin-bottom: 25px;
-            }
-
-            .hero-content p {
-                font-size: 0.875em;
-                line-height: 1.85;
-                padding-left: 28px;
-                padding-right: 28px;
-            }
-
-            .hero-dot_2,
-            .hero-dot_5,
-            .hero-dot_9 {
-                display: none;
-            }
-
-            .hero-dot_1 {
-                top: 82%;
-                left: 15px;
-            }
-
-            .hero-dot_2 {
-                display: none;
-            }
-
-            .hero-dot_3 {
-                left: -5px;
-                top: 46%;
-            }
-
-            .hero-dot_4 {
-                left: -39px;
-                bottom: auto;
-                top: 2%;
-                display: none;
-            }
-
-            .hero-dot_6 {
-                right: 39px;
-            }
-
-            .hero-dot_7 {
-                right: -50px;
-                display: none;
-            }
-
-            .hero-dot_8 {
-                right: -10px;
-            }
-
-            .hero-dot_10 {
-                right: 42px;
-                bottom: 24%;
-            }
-        }
 
     </style>
 
 </head>
 
-<body class="login-container nux-fullscreen nux-grey-background">
+<body class="login-container " id="index">
 
-<div id="particlesred-js"></div>
-<div id="particlesblack-js"></div>
-<div id="particlesblue-js"></div>
-<div id="particlesorange-js"></div>
-
+{#<div id="particlesred-js"></div>#}
+{#<div id="particlesblack-js"></div>#}
+{#<div id="particlesblue-js"></div>#}
+{#<div id="particlesorange-js"></div>#}
+{##}
 {#
 <!-- Main navbar -->
 <div class="navbar navbar-inverse bg-slate-800">
@@ -368,7 +105,7 @@
 #}
 
 <!-- Page container -->
-<div class="page-container">
+<div class="page-container ">
     <!-- Page content -->
     <div class="page-content">
 
@@ -376,14 +113,14 @@
         <div class="content-wrapper">
 
             <!-- Content area -->
-            <div class="content">
+            <div class="content ">
 
                 <!-- Simple login form -->
                 <form metod="post" class="form-validate" id="_form">
 
                     <div class="panel panel-body login-form">
                         <div class="text-center">
-                            <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                            {#<div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>#}
                             <h5 class="content-group"><$ options.site.title $>
                                 <small class="display-block"><$ options.site.desc $></small>
                             </h5>
@@ -420,7 +157,7 @@
                 <div class="footer text-muted text-center">
                     <$ options.site.copyright | safe $>
                     ・
-                    <a href="#"><$ options.site.icp $></a>
+                    <a href="#" class="text-white"><$ options.site.icp $></a>
                 </div>
                 <!-- /footer -->
 
@@ -447,9 +184,9 @@
 <script type="text/javascript" src="/static/assets/js/pages/form_validation.js"></script>
 
 
-<script src="/static/assets/js/particles/particles.min.js"></script>
-<script src="/static/assets/js/viewport/lib/isInViewport.min.js"></script>
-<script type="text/javascript" src="/static/assets/js/pages/login.js"></script>
+{#<script src="/static/assets/js/particles/particles.min.js"></script>#}
+{#<script src="/static/assets/js/viewport/lib/isInViewport.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/pages/login.js"></script>#}
 {#<script src="/static/themes/picker/js/particles.js" type="text/javascript" name="main-scripts"></script>#}
 {#<script src="/static/themes/picker/js/particles.js" type="text/javascript" name="main-scripts"></script>#}
 

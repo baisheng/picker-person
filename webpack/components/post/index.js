@@ -1,7 +1,10 @@
 import axios from 'axios'
 Vue.prototype.$http = axios;
 import Editable from '../ui/editable.vue';
-import Summernote from '../ui/summernote.vue'
+// import Summernote from '../ui/summernote.vue'
+
+import Editor from './editor.vue';
+
 
 new Vue({
     el: "#app",
@@ -40,6 +43,12 @@ new Vue({
 
         vue.taxonomy("category");
         vue.taxonomy("post_tag");
+
+        Vue.nextTick(() => {
+            Prism.highlightAll();
+            // vue.reLayout();
+
+        })
         // let currentLocation = document.location.pathname + decodeURIComponent(document.location.search);
         // if (currentLocation === this._url) {
         //     console.log("Refresh");
@@ -52,7 +61,8 @@ new Vue({
 
     },
     components: {
-        Summernote,
+        Editor,
+        // Summernote,
         Editable
         // Datepicker,
     },
