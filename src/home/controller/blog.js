@@ -8,10 +8,6 @@ export default class extends Base {
      * @return {Promise} []
      */
     async indexAction() {
-        // console.log("index");
-        //auto render template file index_index.html
-
-        // 首页显示产品推荐
         let posts = this.model('posts');
         // let top5 = await posts.limit(5).where({"type":"portfolio"}).select();
         // let portfolios = await posts.top(5, {"type": "portfolio"});
@@ -19,27 +15,23 @@ export default class extends Base {
         // console.log(JSON.stringify(portfolios));
         // this.assign("list", portfolios);
 
-        let _taxonomy = this.model('taxonomy');
+        let _terms = this.model('terms');
 
-        let categorys = await _taxonomy.getTerms('category');
+        let categorys = await _terms.findByTaxonomy('category');
 
+        // console.log(JSON.stringify(categorys))
         // 从分类中获取到分类下面的内容
         let term_slug = "blog";
         let _term = await think._.find(categorys, {slug: term_slug});
 
-        // console.log(JSON.stringify(_term));
-        // let list = await this.dao.where(query).field(fields.join(",")).order('modified DESC').page(this.get("page"), 10).countSelect();
-
-        // let page = await this.get('page');
         let page = 1;
         if (!think.isEmpty(this.get('page'))){
-           page = this.get('page');
-           console.log(page + "======")
+            page = this.get('page');
         }
 
         if (!think.isEmpty(_term)){
             // console.log(page + "----")
-            let post_id_page = await _taxonomy.getObjectsInTerm(_term.term_id, _term.taxonomy, page);
+            let post_id_page = await _terms.getObjectsInTerm(_term.id, 'category', page);
 
             let Pages = think.adapter("pages", "page"); //加载名为 dot 的 Template Adapter
             let pages = new Pages(this.http); //实例化 Adapter
@@ -52,6 +44,7 @@ export default class extends Base {
                 this.assign("posts", posts);
             }
         }
+        let meta_type = this.get('meta_type');
         return this.displayView('blog');
     }
 
