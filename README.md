@@ -5,6 +5,7 @@
 
 # 后台管理页
 ![admin-snippets](https://github.com/baisheng/picker/blob/master/screenshot/admin-snippets.jpg?raw=true)
+![admin-posts](https://github.com/baisheng/picker/blob/master/screenshot/admin-posts.jpg?raw=true)
 Application created by [ThinkJS](http://www.thinkjs.org)
 
 ## Install dependencies
