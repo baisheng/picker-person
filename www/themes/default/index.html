@@ -183,7 +183,7 @@
 {% block script %}
     <script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
     <script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
-    <script src="/themes/default/js/vue-lazyload.js"></script>
+    {#<script src="/themes/default/js/vue-lazyload.js"></script>#}
 
     <script>
         Vue.filter('moment', function (time, format) {
@@ -195,7 +195,6 @@
             }
             return moment(time).fromNow();
         });
-        Vue.use(VueLazyload)
 
     </script>
 
