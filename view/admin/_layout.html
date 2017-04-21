@@ -23,6 +23,7 @@
 
 
     <link href="/static/assets/css/extras/animate.min.css" rel="stylesheet" type="text/css">
+
     <!-- /global stylesheets -->
     <style>
         [v-cloak] {
@@ -707,7 +708,6 @@
                 <!-- Page header -->
                 {% block page_header %}{% endblock %}
                 <!-- /page header -->
-
                 <!-- Content area -->
                 <div class="content">
                     {% block content %}
@@ -734,7 +734,6 @@
         <!-- /page content -->
     </div>
     <!-- /page container -->
-
 
 </div>
 
@@ -798,7 +797,10 @@
 
 <!-- /theme JS files -->
 <script>
+
+
     jQuery(document).ready(function ($) {
+
         // Bottom navbar
         function headroomBottom() {
             $(".navbar-fixed-bottom").headroom({

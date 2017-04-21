@@ -61,7 +61,7 @@
                                 tabindex="-1" title="" data-original-title="粗体 (⌘+B)"><i class="note-icon-bold"></i>
                         </button>
                         <button @click="addItalic" type="button" class="note-btn btn btn-default btn-sm note-btn-underline legitRipple"
-                                tabindex="-1" title="" data-original-title="下划线 (⌘+I)"><i
+                                tabindex="-1" title="" data-original-title="下划线 (⌘+U)"><i
                                 class="note-icon-italic"></i></button>
 
                         <button @click="addStrikethrough" type="button" class="note-btn btn btn-default btn-sm legitRipple" tabindex="-1" title=""
@@ -107,8 +107,7 @@
                         </div>
                     </div>
 
-                    <textarea class="note-codable" style="height:380px" @keydown.9="tabFn" v-model="source"></textarea>
-
+                    <textarea class="note-codable form-control wdt-emoji-bundle-enabled wdt-emoji-open-on-colon wdt-emoji-picker-ready " rows="10" style="height:380px" @keydown.9="tabFn" v-model="source" ></textarea>
                     <div class="note-editable panel-body"
                          style="height: 360px; max-height: 1000px; min-height: 360px;" contenteditable="true">
 
@@ -349,8 +348,13 @@
             VueMarkdown,
 
         },
+        mounted: function(){
+
+        },
+
         computed: {},
         methods: {
+
             tabFn: function(evt) {
                 insertContent("    ", this);
                 // 屏蔽屌tab切换事件
@@ -499,14 +503,15 @@
 
         },
         watch: {
-//            source() {
-//                if (this.source === this.$refs.element.innerHTML) {
+            source() {
+                if (this.source === this.$refs.element.innerHTML) {
 //                     if the change is done by this same component, do not update the contents to prevent
 //                     caret from resetting to the beginning of the editor
-//                    return;
-//                }
-//                this.$refs.element.innerHTML = this.source
-//            }
+                    return;
+                }
+                console.log(this.source)
+                this.$refs.element.innerHTML = this.source
+            }
         }
     }
 

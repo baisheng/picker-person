@@ -1,6 +1,11 @@
+// import CodeMirror from 'codemirror';
+
+
+// import CodeMirrorSpellChecker from 'codemirror-spell-checker';
+
 import axios from 'axios'
 Vue.prototype.$http = axios;
-import Editable from '../ui/editable.vue';
+// import Editable from '../ui/editable.vue';
 // import Summernote from '../ui/summernote.vue'
 
 import Editor from './editor.vue';
@@ -66,7 +71,7 @@ new Vue({
     components: {
         Editor,
         // Summernote,
-        Editable
+        // Editable
         // Datepicker,
     },
     methods: {
@@ -216,39 +221,6 @@ new Vue({
                 this.saveTerm(difference[0]);
 
             }
-            //
-            //
-            // this.post.terms = val;
-            // function intersection(a,b){
-            //     var c=[];
-            //     for(m in a){
-            //         for(n in b){
-            //             if((a[m].id==a[n].id)&&(a[m].name==b[n].name))
-            //                 c.push(a[m]);
-            //         }}
-            //     return c;
-            // }
-
-            // console.log(JSON.stringify(oldVal) + "--old--")
-            // console.log(JSON.stringify(val) + "--new--")
-            // let intersection = val.filter(v => oldVal.includes(v))
-            // console.log(JSON.stringify(intersection) + "--intersection--")
-            // console.log(JSON.stringify(difference) + "--difference--")
-
-            // console.log(intersection(val,oldVal));
-            // console.log(JSON.stringify(val))
         }
-        // 'post.status': function(val){
-            // console.log(val + "xxx")
-            // this.save();
-        // }
-        // post: {
-        //     handler: function (val, oldVal) {
-        //         this.status = 'editing';
-        // this.post = val;
-        // this.save();
-        // },
-        // deep: true
-        // },
     }
 });
