@@ -23603,17 +23603,6 @@ __webpack_require__(346); //
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-
-//    import VueMarkdown from 'vue-markdown'
-//    import range from '../js/rangeFn'
 
 __webpack_require__(217);
 __webpack_require__(344);
@@ -23631,22 +23620,21 @@ __webpack_require__(299);
 
 //import toc from 'markdown-it-toc-and-anchor'
 //import katex from 'markdown-it-katex'
-
-//    function insertContent(val, that) {
-//        let textareaDom = document.querySelector('.note-codable');
-//        let value = textareaDom.value;
-//        let point = range.getCursortPosition(textareaDom);
-//        let lastChart = value.substring(point - 1, point);
-//        let lastFourCharts = value.substring(point - 4, point);
-//        if (lastChart != '\n' && value != '' && lastFourCharts != '    ') {
-//            val = '\n' + val;
-//            range.insertAfterText(textareaDom, val);
-//        } else {
-//            range.insertAfterText(textareaDom, val);
-//        }
-//        that.source = document.querySelector('.note-codable').value;
-//    }
-// Some variables
+// 获取选中文字
+function getSelectText() {
+    var userSelection, text;
+    if (window.getSelection) {
+        // Firefox support
+        userSelection = window.getSelection();
+    } else if (document.selection) {
+        // IE Support
+        userSelection = document.selection.createRange();
+    }
+    if (!(text = userSelection.text)) {
+        text = userSelection;
+    }
+    return text;
+}
 var isMac = /Mac/.test(navigator.platform);
 /**
  * Fix shortcut. Mac use Command, others use Ctrl.
@@ -23670,13 +23658,13 @@ function getState(cm, pos) {
     var types = stat.type.split(" ");
 
     var ret = {},
-        data,
-        text;
+        data = void 0,
+        text = void 0;
     for (var i = 0; i < types.length; i++) {
         data = types[i];
         if (data === "strong") {
             ret.bold = true;
-        } else if (data === "variable-2") {
+        } else if (data === "letiable-2") {
             text = cm.getLine(pos.line);
             if (/^\s*\d+\.\s/.test(text)) {
                 ret["ordered-list"] = true;
@@ -23799,12 +23787,6 @@ exports.default = {
     data: function data() {
         return {
             sourceData: this.source,
-            //                show: true,
-            //                html: false,
-            //                breaks: true,
-            //                linkify: false,
-            //                emoji: true,
-            //                typographer: true,
             //                toc: false,
             isView: false,
             isFullScreen: false,
@@ -23978,6 +23960,13 @@ exports.default = {
         this.editor.codemirror.on('change', function (cm) {
             scope.sourceData = cm.getValue();
         });
+
+        this.editor.codemirror.on('beforeSelectionChange', function (cm) {
+            //                let cm = this.editor.codemirror;
+            var selectionText = cm.getSelection();
+
+            console.log(selectionText);
+        });
     },
 
     computed: {
@@ -23995,6 +23984,14 @@ exports.default = {
                 }
             }
             return count;
+        },
+
+        words: function words() {
+            return this.sourceData.split(' ').length - 1;
+        },
+        //
+        chars: function chars() {
+            return this.sourceData.length;
         }
     },
     methods: {
@@ -24053,7 +24050,15 @@ exports.default = {
             this._w = this.$el.offsetWidth;
             this._h = this.$el.offsetHeight;
         },
+        addSnippet: function addSnippet() {
+            alert("lalala");
+            var cm = this.editor.codemirror;
+            var selectionText = cm.getSelection();
+
+            console.log(selectionText);
+        },
         toggleBold: function toggleBold() {
+
             this._toggleBlock(this.editor, "bold", this.editor.options.blockStyles.bold);
         },
         toggleItalic: function toggleItalic() {
@@ -24063,10 +24068,10 @@ exports.default = {
             this.isFullScreen = !this.isFullScreen;
         },
         togglePreview: function togglePreview(editor) {
-            var cm = this.editor.codemirror;
+
             var wrapper = cm.getWrapperElement();
             var toolbar_div = wrapper.previousSibling;
-            //                var toolbar = this.editor.options.toolbar ? this.editor.toolbarElements.preview : false;
+            //                let toolbar = this.editor.options.toolbar ? this.editor.toolbarElements.preview : false;
             var preview = wrapper.lastChild;
             if (!preview || !/editor-preview/.test(preview.className)) {
                 preview = document.createElement("div");
@@ -24099,7 +24104,7 @@ exports.default = {
 
             preview.innerHTML = this.md.render(this.sourceData);
             // Turn off side by side if needed
-            //                var sidebyside = cm.getWrapperElement().nextSibling;
+            //                let sidebyside = cm.getWrapperElement().nextSibling;
             //                if(/editor-preview-active-side/.test(sidebyside.className))
             //                    toggleSideBySide(editor);
         },
@@ -24191,7 +24196,9 @@ exports.default = {
 
             console.log(is_code);
 
-            var block_start, block_end, lineCount;
+            var block_start = void 0,
+                block_end = void 0,
+                lineCount = void 0;
 
             if (is_code === "single") {
                 // similar to some SimpleMDE _toggleBlock logic
@@ -24226,8 +24233,10 @@ exports.default = {
                         ch: 1
                     });
                     var fence_chars = token_state(fencedTok).fencedChars;
-                    var start_text, start_line;
-                    var end_text, end_line;
+                    var start_text = void 0,
+                        start_line = void 0;
+                    var end_text = void 0,
+                        end_line = void 0;
                     // check for selection going up against fenced lines, in which case we don't want to add more fencing
                     if (fencing_line(cm.getLineHandle(cur_start.line))) {
                         start_text = "";
@@ -24469,7 +24478,7 @@ exports.default = {
          * Action for clean block (remove headline, list, blockquote code, markers)
          */
         //            cleanBlock(editor) {
-        //                var cm = this.editor.codemirror;
+        //                let cm = this.editor.codemirror;
         //                _cleanBlock(cm);
         //            },
 
@@ -24544,7 +24553,7 @@ exports.default = {
         _replaceSelection: function _replaceSelection(cm, active, startEnd, url) {
             if (/editor-preview-active/.test(cm.getWrapperElement().lastChild.className)) return;
 
-            var text;
+            var text = void 0;
             var start = startEnd[0];
             var end = startEnd[1];
             var startPoint = cm.getCursor("start");
@@ -24681,7 +24690,7 @@ exports.default = {
             var cm = editor.codemirror;
             var stat = getState(cm);
 
-            var text;
+            var text = void 0;
             var start = start_chars;
             var end = end_chars;
 
@@ -31989,7 +31998,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h6', [_vm._v("标题 6")])])])])])]), _vm._v(" "), _c('div', {
     staticClass: "note-btn-group btn-group note-font"
   }, [_c('button', {
-    staticClass: "note-btn btn btn-default btn-sm note-btn-bold legitRipple ",
+    staticClass: "note-btn btn btn-link btn-sm note-btn-bold legitRipple ",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32002,7 +32011,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "note-icon-bold"
   })]), _vm._v(" "), _c('button', {
-    staticClass: "note-btn btn btn-default btn-sm note-btn-underline legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm note-btn-underline legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32015,7 +32024,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "note-icon-italic"
   })]), _vm._v(" "), _c('button', {
-    staticClass: "note-btn btn btn-default btn-sm legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32028,7 +32037,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "note-icon-strikethrough"
   })]), _vm._v(" "), _c('button', {
-    staticClass: "note-btn btn btn-default btn-sm legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32038,10 +32047,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.toggleHeadingSmaller
     }
-  }, [_vm._v("H\n                        ")])]), _vm._v(" "), _c('div', {
-    staticClass: "note-btn-group btn-group note-para"
-  }, [_c('button', {
-    staticClass: "note-btn btn btn-default btn-sm legitRipple",
+  }, [_vm._v("H\n                        ")]), _vm._v(" "), _c('button', {
+    staticClass: "note-btn btn btn-link btn-sm legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32056,7 +32063,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "note-icon-unorderedlist"
   })]), _vm._v(" "), _c('button', {
-    staticClass: "note-btn btn btn-default btn-sm legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32070,10 +32077,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "note-icon-orderedlist"
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "note-btn-group btn-group note-insert"
-  }, [_c('button', {
-    staticClass: "note-btn btn btn-default btn-sm legitRipple",
+  })]), _vm._v(" "), _c('button', {
+    staticClass: "note-btn btn btn-link btn-sm legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32086,7 +32091,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "note-icon-link"
   })]), _vm._v(" "), _c('button', {
-    staticClass: "note-btn btn btn-default btn-sm legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32099,7 +32104,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "note-icon-picture"
   })]), _vm._v(" "), _c('button', {
-    staticClass: "note-btn btn btn-default btn-sm legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32111,12 +32116,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "note-icon-code"
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "note-btn-group btn-group note-table"
-  }, [_c('div', {
+  })]), _vm._v(" "), _c('div', {
     staticClass: "note-btn-group btn-group"
   }, [_c('button', {
-    staticClass: "note-btn btn btn-default btn-sm legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32129,7 +32132,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "note-icon-table"
   })]), _vm._v(" "), _c('button', {
-    staticClass: "note-btn btn btn-default btn-sm legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32142,7 +32145,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("—\n                            ")])])]), _vm._v(" "), _c('div', {
     staticClass: "note-btn-group btn-group note-undo"
   }, [_c('button', {
-    staticClass: "note-btn btn btn-default btn-sm btn-fullscreen legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm btn-fullscreen legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32155,7 +32158,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "note-icon-undo"
   })]), _vm._v(" "), _c('button', {
-    staticClass: "note-btn btn btn-default btn-sm legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32170,7 +32173,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])]), _vm._v(" "), _c('div', {
     staticClass: "note-btn-group btn-group note-view"
   }, [_c('a', {
-    staticClass: "btn btn-default note-btn btn btn-default btn-sm btn-codeview legitRipple",
+    staticClass: "btn btn-link note-btn btn btn-link btn-sm btn-codeview legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32183,7 +32186,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "fa fa-eye"
   })]), _vm._v(" "), _c('button', {
-    staticClass: "note-btn btn btn-default btn-sm btn-fullscreen legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm btn-fullscreen legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32199,7 +32202,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "mail-attachments-container"
   }, [_c('h6', {
     staticClass: "mail-attachments-heading"
-  }, [_vm._v("附件： 2 字数：" + _vm._s(_vm.wordCount))]), _vm._v(" "), _vm._m(12)])])
+  }, [_vm._v("附件： 2 字数：" + _vm._s(_vm.wordCount) + "  字符：" + _vm._s(_vm.chars))]), _vm._v(" "), _vm._m(12)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "profile-cover",
@@ -32248,7 +32251,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
-    staticClass: "note-btn btn btn-default btn-sm dropdown-toggle legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm dropdown-toggle legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32270,7 +32273,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('pre', [_vm._v("代码")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
-    staticClass: "note-btn btn btn-default btn-sm legitRipple",
+    staticClass: "note-btn btn btn-link btn-sm legitRipple",
     attrs: {
       "type": "button",
       "tabindex": "-1",
@@ -32325,9 +32328,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "note-icon-bar"
   }), _vm._v(" "), _c('div', {
     staticClass: "note-icon-bar"
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "card card-block"
-  })])
+  })])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal link-dialog",

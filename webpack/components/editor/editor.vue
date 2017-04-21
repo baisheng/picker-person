@@ -38,7 +38,7 @@
                 <div class="note-toolbar panel-heading  ">
                     <div class="note-btn-group btn-group note-style">
                         <div class="note-btn-group btn-group">
-                            <button type="button" class="note-btn btn btn-default btn-sm dropdown-toggle legitRipple"
+                            <button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"
                                     tabindex="-1" data-toggle="dropdown" title="" data-original-title="样式"><i
                                     class="note-icon-magic"></i> <span class="note-icon-caret"></span></button>
                             <div class="dropdown-menu dropdown-style">
@@ -59,87 +59,79 @@
                     </div>
                     <div class="note-btn-group btn-group note-font">
                         <button @click="toggleBold" type="button"
-                                class="note-btn btn btn-default btn-sm note-btn-bold legitRipple "
+                                class="note-btn btn btn-link btn-sm note-btn-bold legitRipple "
                                 tabindex="-1" title="" data-original-title="粗体 (⌘+B)"><i class="note-icon-bold"></i>
                         </button>
                         <button @click="toggleItalic" type="button"
-                                class="note-btn btn btn-default btn-sm note-btn-underline legitRipple"
+                                class="note-btn btn btn-link btn-sm note-btn-underline legitRipple"
                                 tabindex="-1" title="" data-original-title="下划线 (⌘+U)"><i
                                 class="note-icon-italic"></i></button>
 
                         <button @click="toggleStrikethrough" type="button"
-                                class="note-btn btn btn-default btn-sm legitRipple" tabindex="-1" title=""
+                                class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
                                 data-original-title="删除线 (⌘+\)"><i class="note-icon-strikethrough"></i></button>
 
                         <button @click="toggleHeadingSmaller" type="button"
-                                class="note-btn btn btn-default btn-sm legitRipple" tabindex="-1" title=""
+                                class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
                                 data-original-title="段落 (⌘+\)">H
                         </button>
 
 
-                    </div>
-                    <div class="note-btn-group btn-group note-para">
                         <button @click="toggleUnorderedList()" type="button"
-                                class="note-btn btn btn-default btn-sm legitRipple" tabindex="-1" title=""
+                                class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
                                 data-original-title="Unordered list (⌘+⇧+NUM7)"><i class="note-icon-unorderedlist"></i>
                         </button>
                         <button @click="toggleOrderedList()" type="button"
-                                class="note-btn btn btn-default btn-sm legitRipple" tabindex="-1" title=""
+                                class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
                                 data-original-title="Ordered list (⌘+⇧+NUM8)"><i class="note-icon-orderedlist"></i>
                         </button>
                         <!--
                         <div class="note-btn-group btn-group">
-                            <button type="button" class="note-btn btn btn-default btn-sm dropdown-toggle legitRipple"
+                            <button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"
                                     tabindex="-1" data-toggle="dropdown" title="" data-original-title="Paragraph"><i
                                     class="note-icon-align-left"></i> <span class="note-icon-caret"></span></button>
                             <div class="dropdown-menu">
                                 <div class="note-btn-group btn-group note-align">
-                                    <button type="button" class="note-btn btn btn-default btn-sm legitRipple"
+                                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
                                             tabindex="-1" title="" data-original-title="Align left (⌘+⇧+L)"><i
                                             class="note-icon-align-left"></i></button>
-                                    <button type="button" class="note-btn btn btn-default btn-sm legitRipple"
+                                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
                                             tabindex="-1" title="" data-original-title="Align center (⌘+⇧+E)"><i
                                             class="note-icon-align-center"></i></button>
-                                    <button type="button" class="note-btn btn btn-default btn-sm legitRipple"
+                                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
                                             tabindex="-1" title="" data-original-title="Align right (⌘+⇧+R)"><i
                                             class="note-icon-align-right"></i></button>
-                                    <button type="button" class="note-btn btn btn-default btn-sm legitRipple"
+                                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
                                             tabindex="-1" title="" data-original-title="Justify full (⌘+⇧+J)"><i
                                             class="note-icon-align-justify"></i></button>
                                 </div>
                                 <div class="note-btn-group btn-group note-list">
-                                    <button type="button" class="note-btn btn btn-default btn-sm legitRipple"
+                                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
                                             tabindex="-1" title="" data-original-title="Outdent (⌘+[)"><i
                                             class="note-icon-align-outdent"></i></button>
-                                    <button type="button" class="note-btn btn btn-default btn-sm legitRipple"
+                                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
                                             tabindex="-1" title="" data-original-title="Indent (⌘+])"><i
                                             class="note-icon-align-indent"></i></button>
                                 </div>
                             </div>
                         </div>
                         -->
-                    </div>
-
-
-                    <div class="note-btn-group btn-group note-insert">
-                        <button @click="drawLink" type="button" class="note-btn btn btn-default btn-sm legitRipple"
+                        <button @click="drawLink" type="button" class="note-btn btn btn-link btn-sm legitRipple"
                                 tabindex="-1" title=""
                                 data-original-title="链接 (⌘+K)"><i class="note-icon-link"></i></button>
-                        <button @click="drawImage" type="button" class="note-btn btn btn-default btn-sm legitRipple"
+                        <button @click="drawImage" type="button" class="note-btn btn btn-link btn-sm legitRipple"
                                 tabindex="-1" title=""
                                 data-original-title="图片"><i class="note-icon-picture"></i></button>
                         <button @click="toggleCodeBlock" type="button"
-                                class="note-btn btn btn-default btn-sm legitRipple" tabindex="-1" title=""
+                                class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
                                 data-original-title="代码"><i class="note-icon-code"></i></button>
-                    </div>
-                    <div class="note-btn-group btn-group note-table">
                         <div class="note-btn-group btn-group">
-                            <button @click="drawTable" type="button" class="note-btn btn btn-default btn-sm legitRipple"
+                            <button @click="drawTable" type="button" class="note-btn btn btn-link btn-sm legitRipple"
                                     tabindex="-1" title="" data-original-title="表格"><i
                                     class="note-icon-table"></i></button>
 
                             <button @click="drawHorizontalRule" type="button"
-                                    class="note-btn btn btn-default btn-sm legitRipple"
+                                    class="note-btn btn btn-link btn-sm legitRipple"
                                     tabindex="-1" title="" data-original-title="分隔线">—
                             </button>
 
@@ -147,11 +139,11 @@
                     </div>
                     <div class="note-btn-group btn-group note-undo">
                         <button @click="undo" type="button"
-                                class="note-btn btn btn-default btn-sm btn-fullscreen legitRipple"
+                                class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"
                                 tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-undo"></i>
                         </button>
 
-                        <button @click="redo" type="button" class="note-btn btn btn-default btn-sm legitRipple"
+                        <button @click="redo" type="button" class="note-btn btn btn-link btn-sm legitRipple"
                                 tabindex="-1" title=""
                                 data-original-title="帮助"><i class="note-icon-redo"></i></button>
                     </div>
@@ -159,14 +151,14 @@
                     <div class="note-btn-group btn-group note-view">
 
                         <a @click="togglePreview" type="button"
-                           class="btn btn-default note-btn btn btn-default btn-sm btn-codeview legitRipple"
+                           class="btn btn-link note-btn btn btn-link btn-sm btn-codeview legitRipple"
                            tabindex="-1" title="" data-original-title=""><i
                                 class="fa fa-eye"></i></a>
                         <button @click="toggleFullScreen" type="button"
-                                class="note-btn btn btn-default btn-sm btn-fullscreen legitRipple"
+                                class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"
                                 tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-arrows-alt"></i>
                         </button>
-                        <button type="button" class="note-btn btn btn-default btn-sm legitRipple" tabindex="-1" title=""
+                        <button type="button" class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
                                 data-original-title="帮助"><i class="note-icon-question"></i></button>
                     </div>
 
@@ -186,7 +178,7 @@
                     <textarea
                             id="_editor"
                             class="note-codable  note-editable"
-                            rows="10" style="height: 360px; max-height: 1000px; min-height: 360px;"></textarea>
+                            rows="10" style="height: 360px; max-height: 1000px; min-height: 360px;" ></textarea>
 
                     <!--<div class="note-editable panel-body"-->
                     <!--style="height: 360px; max-height: 1000px; min-height: 360px;" contenteditable="true">-->
@@ -198,11 +190,11 @@
                         <div class="note-icon-bar"></div>
                         <div class="note-icon-bar"></div>
                     </div>
-                    <div class="card card-block">
+                    <!--<div class="card card-block">-->
                         <!--<p>Total words: <b>{{words}}</b></p>-->
                         <!--<p>Total chars: <b>{{chars}}</b></p>-->
                         <!--<p>Last character: <b>{{lastChar}}</b></p>-->
-                    </div>
+                    <!--</div>-->
                 </div>
                 <div class="modal link-dialog" aria-hidden="false" tabindex="-1">
                     <div class="modal-dialog">
@@ -340,7 +332,7 @@
             </div>
         </div>
         <div class="mail-attachments-container">
-            <h6 class="mail-attachments-heading">附件： 2 字数：{{ wordCount }}</h6>
+            <h6 class="mail-attachments-heading">附件： 2 字数：{{ wordCount }}  字符：{{ chars }}</h6>
 
             <ul class="mail-attachments">
                 <li>
@@ -427,8 +419,6 @@
 </style>
 
 <script>
-    //    import VueMarkdown from 'vue-markdown'
-    //    import range from '../js/rangeFn'
     import CodeMirror from 'codemirror';
     require('codemirror/addon/edit/continuelist.js')
     require("./codemirror/tablist");
@@ -450,23 +440,22 @@
     import mark from 'markdown-it-mark'
     //import toc from 'markdown-it-toc-and-anchor'
     //import katex from 'markdown-it-katex'
-
-    //    function insertContent(val, that) {
-    //        let textareaDom = document.querySelector('.note-codable');
-    //        let value = textareaDom.value;
-    //        let point = range.getCursortPosition(textareaDom);
-    //        let lastChart = value.substring(point - 1, point);
-    //        let lastFourCharts = value.substring(point - 4, point);
-    //        if (lastChart != '\n' && value != '' && lastFourCharts != '    ') {
-    //            val = '\n' + val;
-    //            range.insertAfterText(textareaDom, val);
-    //        } else {
-    //            range.insertAfterText(textareaDom, val);
-    //        }
-    //        that.source = document.querySelector('.note-codable').value;
-    //    }
-    // Some variables
-    var isMac = /Mac/.test(navigator.platform);
+    // 获取选中文字
+    function getSelectText() {
+        var userSelection, text;
+        if (window.getSelection) {
+            // Firefox support
+            userSelection = window.getSelection();
+        } else if (document.selection) {
+            // IE Support
+            userSelection = document.selection.createRange();
+        }
+        if (!(text = userSelection.text)) {
+            text = userSelection;
+        }
+        return text;
+    }
+    let isMac = /Mac/.test(navigator.platform);
     /**
      * Fix shortcut. Mac use Command, others use Ctrl.
      */
@@ -483,18 +472,18 @@
      */
     function getState(cm, pos) {
         pos = pos || cm.getCursor("start");
-        var stat = cm.getTokenAt(pos);
+        let stat = cm.getTokenAt(pos);
         if (!stat.type) return {};
 
-        var types = stat.type.split(" ");
+        let types = stat.type.split(" ");
 
-        var ret = {},
+        let ret = {},
             data, text;
-        for (var i = 0; i < types.length; i++) {
+        for (let i = 0; i < types.length; i++) {
             data = types[i];
             if (data === "strong") {
                 ret.bold = true;
-            } else if (data === "variable-2") {
+            } else if (data === "letiable-2") {
                 text = cm.getLine(pos.line);
                 if (/^\s*\d+\.\s/.test(text)) {
                     ret["ordered-list"] = true;
@@ -615,12 +604,6 @@
         data(){
             return {
                 sourceData: this.source,
-//                show: true,
-//                html: false,
-//                breaks: true,
-//                linkify: false,
-//                emoji: true,
-//                typographer: true,
 //                toc: false,
                 isView: false,
                 isFullScreen: false,
@@ -739,7 +722,7 @@
             }
 
             let self = this;
-            for (var key in this.options.shortcuts) {
+            for (let key in this.options.shortcuts) {
                 // null stands for "do not bind this command"
                 if (this.options.shortcuts[key] !== null && this.bindings[key] !== null) {
                     (function (key) {
@@ -767,7 +750,7 @@
                 console.log(this._w + ":" + this._h)
             })
 
-            var scope = this;
+            let scope = this;
             let mode = {}
             mode.name = "gfm";
 
@@ -790,16 +773,24 @@
             this.editor.codemirror.on('change', function (cm) {
                 scope.sourceData = cm.getValue();
             });
+
+
+            this.editor.codemirror.on('beforeSelectionChange', function (cm) {
+//                let cm = this.editor.codemirror;
+                let selectionText = cm.getSelection();
+
+                console.log(selectionText);
+            });
         },
 
         computed: {
             wordCount() {
-                var pattern = /[a-zA-Z0-9_\u0392-\u03c9\u0410-\u04F9]+|[\u4E00-\u9FFF\u3400-\u4dbf\uf900-\ufaff\u3040-\u309f\uac00-\ud7af]+/g;
+                let pattern = /[a-zA-Z0-9_\u0392-\u03c9\u0410-\u04F9]+|[\u4E00-\u9FFF\u3400-\u4dbf\uf900-\ufaff\u3040-\u309f\uac00-\ud7af]+/g;
 
-                var m = this.sourceData.match(pattern);
-                var count = 0;
+                let m = this.sourceData.match(pattern);
+                let count = 0;
                 if (m === null) return count;
-                for (var i = 0; i < m.length; i++) {
+                for (let i = 0; i < m.length; i++) {
                     if (m[i].charCodeAt(0) >= 0x4E00) {
                         count += m[i].length;
                     } else {
@@ -808,16 +799,16 @@
                 }
                 return count;
             },
-//            words: function () {
-//                return this.model.text.split(' ').length - 1;
-//            },
-
-//            chars: function () {
-//                return this.model.text.length;
-//            },
-
+            words: function () {
+                return this.sourceData.split(' ').length - 1;
+            },
+//
+            chars: function () {
+                return this.sourceData.length;
+            },
+//
 //            lastChar: function () {
-//                return this.model.text[this.model.text.length - 1];
+//                return this.sourceData[this.model.text.length - 1];
 //            }
         },
         methods: {
@@ -850,7 +841,15 @@
                 this._h = this.$el.offsetHeight
             },
 
+            addSnippet(){
+                alert("lalala")
+                let cm = this.editor.codemirror;
+                let selectionText = cm.getSelection();
+
+                console.log(selectionText);
+            },
             toggleBold(){
+
                 this._toggleBlock(this.editor, "bold", this.editor.options.blockStyles.bold);
             },
             toggleItalic() {
@@ -859,12 +858,14 @@
             toggleFullScreen(){
                 this.isFullScreen = !this.isFullScreen;
             },
+
             togglePreview(editor) {
-                var cm = this.editor.codemirror;
-                var wrapper = cm.getWrapperElement();
-                var toolbar_div = wrapper.previousSibling;
-//                var toolbar = this.editor.options.toolbar ? this.editor.toolbarElements.preview : false;
-                var preview = wrapper.lastChild;
+
+
+                let wrapper = cm.getWrapperElement();
+                let toolbar_div = wrapper.previousSibling;
+//                let toolbar = this.editor.options.toolbar ? this.editor.toolbarElements.preview : false;
+                let preview = wrapper.lastChild;
                 if (!preview || !/editor-preview/.test(preview.className)) {
                     preview = document.createElement("div");
                     preview.className = "editor-preview";
@@ -898,7 +899,7 @@
 
                 preview.innerHTML = this.md.render(this.sourceData)
                 // Turn off side by side if needed
-//                var sidebyside = cm.getWrapperElement().nextSibling;
+//                let sidebyside = cm.getWrapperElement().nextSibling;
 //                if(/editor-preview-active-side/.test(sidebyside.className))
 //                    toggleSideBySide(editor);
             },
@@ -907,7 +908,7 @@
              */
             toggleCodeBlock() {
                 let vue = this;
-                var fenceCharsToInsert = this.editor.options.blockStyles.code;
+                let fenceCharsToInsert = this.editor.options.blockStyles.code;
 
                 function fencing_line(line) {
                     /* return true, if this is a ``` or ~~~ line */
@@ -938,7 +939,7 @@
                             line: line_num,
                             ch: line.text.length - 1
                         }));
-                    var types = firstTok.type ? firstTok.type.split(" ") : [];
+                    let types = firstTok.type ? firstTok.type.split(" ") : [];
                     if (lastTok && token_state(lastTok).indentedCode) {
                         // have to check last char, since first chars of first line aren"t marked as indented
                         return "indented";
@@ -953,7 +954,7 @@
                 }
 
                 function insertFencingAtSelection(cm, cur_start, cur_end, fenceCharsToInsert) {
-                    var start_line_sel = cur_start.line + 1,
+                    let start_line_sel = cur_start.line + 1,
                         end_line_sel = cur_end.line + 1,
                         sel_multi = cur_start.line !== cur_end.line,
                         repl_start = fenceCharsToInsert + "\n",
@@ -976,7 +977,7 @@
                     });
                 }
 
-                var cm = vue.editor.codemirror,
+                let cm = vue.editor.codemirror,
                     cur_start = cm.getCursor("start"),
                     cur_end = cm.getCursor("end"),
                     tok = cm.getTokenAt({
@@ -988,12 +989,12 @@
 
                 console.log(is_code)
 
-                var block_start, block_end, lineCount;
+                let block_start, block_end, lineCount;
 
 
                 if (is_code === "single") {
                     // similar to some SimpleMDE _toggleBlock logic
-                    var start = line.text.slice(0, cur_start.ch).replace("`", ""),
+                    let start = line.text.slice(0, cur_start.ch).replace("`", ""),
                         end = line.text.slice(cur_start.ch).replace("`", "");
                     cm.replaceRange(start + end, {
                         line: cur_start.line,
@@ -1019,13 +1020,13 @@
                                 break;
                             }
                         }
-                        var fencedTok = cm.getTokenAt({
+                        let fencedTok = cm.getTokenAt({
                             line: block_start,
                             ch: 1
                         });
-                        var fence_chars = token_state(fencedTok).fencedChars;
-                        var start_text, start_line;
-                        var end_text, end_line;
+                        let fence_chars = token_state(fencedTok).fencedChars;
+                        let start_text, start_line;
+                        let end_text, end_line;
                         // check for selection going up against fenced lines, in which case we don't want to add more fencing
                         if (fencing_line(cm.getLineHandle(cur_start.line))) {
                             start_text = "";
@@ -1081,7 +1082,7 @@
                         cm.focus();
                     } else {
                         // no selection, search for ends of this fenced block
-                        var search_from = cur_start.line;
+                        let search_from = cur_start.line;
                         if (fencing_line(cm.getLineHandle(cur_start.line))) { // gets a little tricky if cursor is right on a fenced line
                             if (code_type(cm, cur_start.line + 1) === "fenced") {
                                 block_start = cur_start.line;
@@ -1164,7 +1165,7 @@
                     }
                     // if we are going to un-indent based on a selected set of lines, and the next line is indented too, we need to
                     // insert a blank line so that the next line(s) continue to be indented code
-                    var next_line = cm.getLineHandle(block_end + 1),
+                    let next_line = cm.getLineHandle(block_end + 1),
                         next_line_last_tok = next_line && cm.getTokenAt({
                                 line: block_end + 1,
                                 ch: next_line.text.length - 1
@@ -1177,14 +1178,14 @@
                         });
                     }
 
-                    for (var i = block_start; i <= block_end; i++) {
+                    for (let i = block_start; i <= block_end; i++) {
                         cm.indentLine(i, "subtract"); // TODO: this doesn't get tracked in the history, so can't be undone :(
                     }
                     cm.focus();
                 } else {
                     // insert code formatting
-                    var no_sel_and_starting_of_line = (cur_start.line === cur_end.line && cur_start.ch === cur_end.ch && cur_start.ch === 0);
-                    var sel_multi = cur_start.line !== cur_end.line;
+                    let no_sel_and_starting_of_line = (cur_start.line === cur_end.line && cur_start.ch === cur_end.ch && cur_start.ch === 0);
+                    let sel_multi = cur_start.line !== cur_end.line;
                     if (no_sel_and_starting_of_line || sel_multi) {
                         insertFencingAtSelection(cm, cur_start, cur_end, fenceCharsToInsert);
                     } else {
@@ -1198,14 +1199,14 @@
                 this._toggleBlock(this.editor, "strikethrough", "~~");
             },
             toggleBlockquote() {
-                var cm = this.editor.codemirror;
+                let cm = this.editor.codemirror;
                 this._toggleLine(cm, "quote");
             },
             /**
              * Action for toggling heading size: normal -> h1 -> h2 -> h3 -> h4 -> h5 -> h6 -> normal
              */
             toggleHeadingSmaller() {
-                var cm = this.editor.codemirror;
+                let cm = this.editor.codemirror;
                 this._toggleHeading(cm, "smaller");
             },
 
@@ -1213,7 +1214,7 @@
              * Action for toggling heading size: normal -> h6 -> h5 -> h4 -> h3 -> h2 -> h1 -> normal
              */
             toggleHeadingBigger() {
-                var cm = this.editor.codemirror;
+                let cm = this.editor.codemirror;
                 this._toggleHeading(cm, "bigger");
             },
 
@@ -1221,7 +1222,7 @@
              * Action for toggling heading size 1
              */
             toggleHeading1() {
-                var cm = this.editor.codemirror;
+                let cm = this.editor.codemirror;
                 _toggleHeading(cm, undefined, 1);
             },
 
@@ -1229,7 +1230,7 @@
              * Action for toggling heading size 2
              */
             toggleHeading2() {
-                var cm = this.editor.codemirror;
+                let cm = this.editor.codemirror;
                 _toggleHeading(cm, undefined, 2);
             },
 
@@ -1237,7 +1238,7 @@
              * Action for toggling heading size 3
              */
             toggleHeading3() {
-                var cm = this.editor.codemirror;
+                let cm = this.editor.codemirror;
                 _toggleHeading(cm, undefined, 3);
             },
 
@@ -1245,14 +1246,14 @@
              * Action for toggling ul.
              */
             toggleUnorderedList() {
-                var cm = this.editor.codemirror;
+                let cm = this.editor.codemirror;
                 this._toggleLine(cm, "unordered-list");
             },
             /**
              * Action for toggling ol.
              */
             toggleOrderedList() {
-                var cm = this.editor.codemirror;
+                let cm = this.editor.codemirror;
                 this._toggleLine(cm, "ordered-list");
             },
 
@@ -1261,7 +1262,7 @@
              * Action for clean block (remove headline, list, blockquote code, markers)
              */
 //            cleanBlock(editor) {
-//                var cm = this.editor.codemirror;
+//                let cm = this.editor.codemirror;
 //                _cleanBlock(cm);
 //            },
 
@@ -1269,10 +1270,10 @@
              * Action for drawing a link.
              */
             drawLink() {
-                var cm = this.editor.codemirror;
-                var stat = getState(cm);
-                var options = this.editor.options;
-                var url = "http://";
+                let cm = this.editor.codemirror;
+                let stat = getState(cm);
+                let options = this.editor.options;
+                let url = "http://";
                 if (options.promptURLs) {
                     url = prompt(options.promptTexts.link);
                     if (!url) {
@@ -1282,10 +1283,10 @@
                 this._replaceSelection(cm, stat.link, options.insertTexts.link, url);
             },
             drawImage() {
-                var cm = this.editor.codemirror;
-                var stat = getState(cm);
-                var options = this.editor.options;
-                var url = "http://";
+                let cm = this.editor.codemirror;
+                let stat = getState(cm);
+                let options = this.editor.options;
+                let url = "http://";
                 if (options.promptURLs) {
                     url = prompt(options.promptTexts.image);
                     if (!url) {
@@ -1298,18 +1299,18 @@
              * Action for drawing a table.
              */
             drawTable() {
-                var cm = this.editor.codemirror;
-                var stat = getState(cm);
-                var options = this.editor.options;
+                let cm = this.editor.codemirror;
+                let stat = getState(cm);
+                let options = this.editor.options;
                 this._replaceSelection(cm, stat.table, options.insertTexts.table);
             },
             /**
              * Action for drawing a horizontal rule.
              */
             drawHorizontalRule() {
-                var cm = this.editor.codemirror;
-                var stat = getState(cm);
-                var options = this.editor.options;
+                let cm = this.editor.codemirror;
+                let stat = getState(cm);
+                let options = this.editor.options;
                 this._replaceSelection(cm, stat.image, options.insertTexts.horizontalRule);
             },
 
@@ -1318,7 +1319,7 @@
              * Undo action.
              */
             undo(editor) {
-                var cm = this.editor.codemirror;
+                let cm = this.editor.codemirror;
                 cm.undo();
                 cm.focus();
             },
@@ -1326,7 +1327,7 @@
              * Redo action.
              */
             redo(editor) {
-                var cm = this.editor.codemirror;
+                let cm = this.editor.codemirror;
                 cm.redo();
                 cm.focus();
             },
@@ -1334,11 +1335,11 @@
                 if (/editor-preview-active/.test(cm.getWrapperElement().lastChild.className))
                     return;
 
-                var text;
-                var start = startEnd[0];
-                var end = startEnd[1];
-                var startPoint = cm.getCursor("start");
-                var endPoint = cm.getCursor("end");
+                let text;
+                let start = startEnd[0];
+                let end = startEnd[1];
+                let startPoint = cm.getCursor("start");
+                let endPoint = cm.getCursor("end");
                 if (url) {
                     end = end.replace("#url#", url);
                 }
@@ -1366,12 +1367,12 @@
                 if (/editor-preview-active/.test(cm.getWrapperElement().lastChild.className))
                     return;
 
-                var startPoint = cm.getCursor("start");
-                var endPoint = cm.getCursor("end");
-                for (var i = startPoint.line; i <= endPoint.line; i++) {
+                let startPoint = cm.getCursor("start");
+                let endPoint = cm.getCursor("end");
+                for (let i = startPoint.line; i <= endPoint.line; i++) {
                     (function (i) {
-                        var text = cm.getLine(i);
-                        var currHeadingLevel = text.search(/[^#]/);
+                        let text = cm.getLine(i);
+                        let currHeadingLevel = text.search(/[^#]/);
 
                         if (direction !== undefined) {
                             if (currHeadingLevel <= 0) {
@@ -1436,22 +1437,22 @@
                     return;
 
 
-                var stat = getState(cm);
-                var startPoint = cm.getCursor("start");
-                var endPoint = cm.getCursor("end");
-                var repl = {
+                let stat = getState(cm);
+                let startPoint = cm.getCursor("start");
+                let endPoint = cm.getCursor("end");
+                let repl = {
                     "quote": /^(\s*)\>\s+/,
                     "unordered-list": /^(\s*)(\*|\-|\+)\s+/,
                     "ordered-list": /^(\s*)\d+\.\s+/
                 };
-                var map = {
+                let map = {
                     "quote": "> ",
                     "unordered-list": "* ",
                     "ordered-list": "1. "
                 };
-                for (var i = startPoint.line; i <= endPoint.line; i++) {
+                for (let i = startPoint.line; i <= endPoint.line; i++) {
                     (function (i) {
-                        var text = cm.getLine(i);
+                        let text = cm.getLine(i);
                         if (stat[name]) {
                             text = text.replace(repl[name], "$1");
                         } else {
@@ -1474,15 +1475,15 @@
                     return;
 
                 end_chars = (typeof end_chars === "undefined") ? start_chars : end_chars;
-                var cm = editor.codemirror;
-                var stat = getState(cm);
+                let cm = editor.codemirror;
+                let stat = getState(cm);
 
-                var text;
-                var start = start_chars;
-                var end = end_chars;
+                let text;
+                let start = start_chars;
+                let end = end_chars;
 
-                var startPoint = cm.getCursor("start");
-                var endPoint = cm.getCursor("end");
+                let startPoint = cm.getCursor("start");
+                let endPoint = cm.getCursor("end");
 
                 if (stat[type]) {
                     text = cm.getLine(startPoint.line);
