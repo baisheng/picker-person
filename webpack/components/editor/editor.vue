@@ -1,6 +1,7 @@
 <template>
 
-    <div class="panel panel-white">
+    <div class="panel panel-flat">
+
         <div class="profile-cover" style="display: none;">
             <!--<div id="cover" class="profile-cover-img"-->
             <!--style="background-image: url(&quot;/static/assets/images/demo/blog/2.jpg&quot;);"></div>-->
@@ -17,7 +18,32 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="cover">
+        <!--<input type="hidden" name="cover">-->
+
+        <!--<div class="shadowBox"></div>-->
+        <div class="panel panel-white  snippet--panel" :class="{'fadeout' : selectedWordCount === 0 }">
+            <div class="panel-heading ">
+                    <mark class="">生成内容碎片？</mark>
+
+            </div>
+
+
+            <div class="panel-body">
+                <div class="content-group snippet--content" v-html="selectedWord"></div>
+            </div>
+            <div class="panel-footer panel-footer-condensed "><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                <div class="heading-elements">
+                    <span class="heading-text"><small>选中了 {{ selectedWordCount }} 个字</small></span>
+                    <ul class="list-inline list-inline-separate heading-text pull-right">
+                        <li><a href="#" class="" data-popup="tooltip" data-placement="top" data-container="body" title="" data-original-title="剪切成碎片"><i class="fa fa-cut"></i></a></li>
+                        <li><a href="#" class="" data-popup="tooltip" data-placement="top" data-container="body" title="" data-original-title="复制成碎片"><i class="fa fa-copy"></i></a></li>
+                        <!--<li><a href="#">Generate</a></li>-->
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
         <div class="table-responsive mail-details-write">
             <table class="table">
                 <tbody>
@@ -177,25 +203,24 @@
 
                     <textarea
                             id="_editor"
-                            class="note-codable  note-editable"
-                            rows="10" style="height: 360px; max-height: 1000px; min-height: 360px;" ></textarea>
+                            class="note-codable  note-editable"></textarea>
 
                     <!--<div class="note-editable panel-body"-->
                     <!--style="height: 360px; max-height: 1000px; min-height: 360px;" contenteditable="true">-->
                     <!--</div>-->
                 </div>
-                <div class="note-statusbar">
-                    <div class="note-resizebar">
-                        <div class="note-icon-bar"></div>
-                        <div class="note-icon-bar"></div>
-                        <div class="note-icon-bar"></div>
-                    </div>
+                <!--<div class="note-statusbar">-->
+                    <!--<div class="note-resizebar">-->
+                        <!--<div class="note-icon-bar"></div>-->
+                        <!--<div class="note-icon-bar"></div>-->
+                        <!--<div class="note-icon-bar"></div>-->
+                    <!--</div>-->
                     <!--<div class="card card-block">-->
                         <!--<p>Total words: <b>{{words}}</b></p>-->
                         <!--<p>Total chars: <b>{{chars}}</b></p>-->
                         <!--<p>Last character: <b>{{lastChar}}</b></p>-->
                     <!--</div>-->
-                </div>
+                <!--</div>-->
                 <div class="modal link-dialog" aria-hidden="false" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -331,6 +356,12 @@
                 </div>
             </div>
         </div>
+        <!--<div id="text-count" class="text-count" :class="{'fadeout' : selectedWordCount === 0 }" data-reactid=".2.2.2" style="bottom: 30px;"><span class="text-count-number" data-reactid=".2.2.2.0">{{ selectedWordCount }}</span><span data-reactid=".2.2.2.1">个字</span></div>-->
+
+
+<!---->
+<!--
+
         <div class="mail-attachments-container">
             <h6 class="mail-attachments-heading">附件： 2 字数：{{ wordCount }}  字符：{{ chars }}</h6>
 
@@ -368,19 +399,84 @@
                 </li>
             </ul>
         </div>
-        <!--<div class="doc-comment-box active" style="top: 165px;">-->
-
+        -->
+        <!--<div class="snippet&#45;&#45;panel shadowBox" style="top: 165px;">-->
+<!---->
         <!--</div>-->
+
     </div>
 
 
 </template>
 
 <style>
+    /*.shadowBox {*/
+        /*position: absolute;*/
+        /*background: #ddd;*/
+        /*width: 268px;*/
+        /*height: 418px;*/
+        /*top: 50%;*/
+        /*left: 50%;*/
+        /*margin-top: -180px;*/
+        /*margin-left: -134px;*/
+        /*border-radius: 16px;*/
+        /*filter: blur(50px);*/
+        /*-webkit-filter: blur(50px);*/
+    /*}*/
 
+    .shadowBox {
+        background: #999;
+        width: 250px;
+        height: 158px;
+
+        position: fixed;
+        right: calc(10% - 0px);
+        margin-right: -100px;
+        top: 200px;
+        border-radius: 16px;
+        filter: blur(50px);
+        /*z-index: 9998;*/
+        z-index: 10;
+        -webkit-filter: blur(50px);
+    }
+
+    .snippet--content{
+        font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
+        max-height: 300px;
+        overflow: auto;
+    }
+    .snippet--panel {
+        position: fixed;
+        right: calc(10% - 0px);
+        margin-right: -125px;
+        top: 100px;
+        width: 280px;
+        color: #898989;
+        opacity: 1;
+        z-index: 11;
+        /*z-index: 9999;*/
+        background-color: #fafafa;
+        /*border-radius: 4px;*/
+
+        /*-webkit-border-radius: 4px;*/
+        /*-moz-border-radius: 4px;*/
+
+        transition: all .2s ease-in;
+
+        -ms-box-shadow: 0 2px 8px hsla(0,0%,50%,.8);
+        -o-box-shadow: 0 2px 8px hsla(0,0%,50%,.8);
+        box-shadow: 0 2px 8px hsla(0,0%,50%,.8);
+        transition-property: right;
+    }
+    .snippet--panel.fadeout {
+        opacity: 0;
+        transition: all .5s ease-in;
+    }
     .note-editor .note-codable {
         display: none;
         width: 100%;
+        overflow: auto;
+
         padding: 20px;
         margin-bottom: 0;
         font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
@@ -395,25 +491,25 @@
         box-shadow: none;
     }
 
-    .doc-comment-box {
-        width: 260px;
-        background: #fff;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
-        border-radius: 2px;
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        margin-left: 0;
-        cursor: pointer;
-        transition: opacity .3s ease-out, margin-left .3s ease, top .3s ease;
-    }
+    /*.doc-comment-box {*/
+        /*width: 260px;*/
+        /*background: #fff;*/
+        /*box-shadow: 0 1px 4px rgba(0, 0, 0, .2);*/
+        /*border-radius: 2px;*/
+        /*position: absolute;*/
+        /*right: 0;*/
+        /*bottom: 0;*/
+        /*margin-left: 0;*/
+        /*cursor: pointer;*/
+        /*transition: opacity .3s ease-out, margin-left .3s ease, top .3s ease;*/
+    /*}*/
 
-    .doc-comment-box.active {
-        cursor: default;
-        box-shadow: 0 0 20px #c8c8c8;
-        margin-left: -30px;
-        width: 290px;
-    }
+    /*.doc-comment-box.active {*/
+        /*cursor: default;*/
+        /*box-shadow: 0 0 20px #c8c8c8;*/
+        /*margin-left: -30px;*/
+        /*width: 290px;*/
+    /*}*/
 
 
 </style>
@@ -608,16 +704,18 @@
                 isView: false,
                 isFullScreen: false,
                 keyMaps: {},
-
+                selectedWordCount: 0,
+                selectedText:'',
+                selectedWord: '',
                 options: {
                     tabSize: 2,
                     indentUnit: 2,
                     indentWithTabs: false,
                     lineNumbers: false,
                     autofocus: true,
-                    lineWrapping: false,
+                    lineWrapping: true,
                     placeholder: "输入入内容",
-                    styleSelectedText: '选中我了',
+                    styleSelectedText: true,
                     shortcuts: {
                         "toggleBold": "Cmd-B",
                         "toggleItalic": "Cmd-I",
@@ -775,29 +873,36 @@
             });
 
 
-            this.editor.codemirror.on('beforeSelectionChange', function (cm) {
+            this.editor.codemirror.on('cursorActivity', function (cm) {
 //                let cm = this.editor.codemirror;
-                let selectionText = cm.getSelection();
+//                scope.selectedWord = cm.getSelection();
+                scope.selectedWord = scope.md.render(cm.getSelection())
+                scope.selectedWordCount = scope._wordCount(cm.getSelection());
+//                scope.selectedText = cm.getSelection();
 
-                console.log(selectionText);
+//                console.log(scope.selectedText);
             });
         },
 
+
         computed: {
             wordCount() {
-                let pattern = /[a-zA-Z0-9_\u0392-\u03c9\u0410-\u04F9]+|[\u4E00-\u9FFF\u3400-\u4dbf\uf900-\ufaff\u3040-\u309f\uac00-\ud7af]+/g;
 
-                let m = this.sourceData.match(pattern);
-                let count = 0;
-                if (m === null) return count;
-                for (let i = 0; i < m.length; i++) {
-                    if (m[i].charCodeAt(0) >= 0x4E00) {
-                        count += m[i].length;
-                    } else {
-                        count += 1;
-                    }
-                }
-                return count;
+                return this._wordCount(this.sourceData);
+//                return (this.sourceData)
+//                let pattern = /[a-zA-Z0-9_\u0392-\u03c9\u0410-\u04F9]+|[\u4E00-\u9FFF\u3400-\u4dbf\uf900-\ufaff\u3040-\u309f\uac00-\ud7af]+/g;
+//
+//                let m = this.sourceData.match(pattern);
+//                let count = 0;
+//                if (m === null) return count;
+//                for (let i = 0; i < m.length; i++) {
+//                    if (m[i].charCodeAt(0) >= 0x4E00) {
+//                        count += m[i].length;
+//                    } else {
+//                        count += 1;
+//                    }
+//                }
+//                return count;
             },
             words: function () {
                 return this.sourceData.split(' ').length - 1;
@@ -812,6 +917,21 @@
 //            }
         },
         methods: {
+            _wordCount(data) {
+                let pattern = /[a-zA-Z0-9_\u0392-\u03c9\u0410-\u04F9]+|[\u4E00-\u9FFF\u3400-\u4dbf\uf900-\ufaff\u3040-\u309f\uac00-\ud7af]+/g;
+
+                let m = data.match(pattern);
+                let count = 0;
+                if (m === null) return count;
+                for (let i = 0; i < m.length; i++) {
+                    if (m[i].charCodeAt(0) >= 0x4E00) {
+                        count += m[i].length;
+                    } else {
+                        count += 1;
+                    }
+                }
+                return count;
+            },
             toggleBtn: function () {
                 let el = document.querySelectorAll('.note-btn-group button');
                 for (let x of el) {
@@ -859,8 +979,8 @@
                 this.isFullScreen = !this.isFullScreen;
             },
 
-            togglePreview(editor) {
-
+            togglePreview() {
+                let cm = this.editor.codemirror;
 
                 let wrapper = cm.getWrapperElement();
                 let toolbar_div = wrapper.previousSibling;

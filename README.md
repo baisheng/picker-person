@@ -1,5 +1,7 @@
 # 特性
 ## 基于 markdown 语法的实时编辑器
+![md-snippet](https://github.com/baisheng/picker/blob/master/screenshot/snippet.jpg?raw=true)
+
 ![md-edit](https://github.com/baisheng/picker/blob/master/screenshot/md-edit1.jpg?raw=true)
 
 ![md-edit2](https://github.com/baisheng/picker/blob/master/screenshot/md-edit2.jpg?raw=true)

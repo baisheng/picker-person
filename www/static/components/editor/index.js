@@ -23603,6 +23603,102 @@ __webpack_require__(346); //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 __webpack_require__(217);
 __webpack_require__(344);
@@ -23791,16 +23887,18 @@ exports.default = {
             isView: false,
             isFullScreen: false,
             keyMaps: {},
-
+            selectedWordCount: 0,
+            selectedText: '',
+            selectedWord: '',
             options: {
                 tabSize: 2,
                 indentUnit: 2,
                 indentWithTabs: false,
                 lineNumbers: false,
                 autofocus: true,
-                lineWrapping: false,
+                lineWrapping: true,
                 placeholder: "输入入内容",
-                styleSelectedText: '选中我了',
+                styleSelectedText: true,
                 shortcuts: {
                     "toggleBold": "Cmd-B",
                     "toggleItalic": "Cmd-I",
@@ -23961,19 +24059,50 @@ exports.default = {
             scope.sourceData = cm.getValue();
         });
 
-        this.editor.codemirror.on('beforeSelectionChange', function (cm) {
+        this.editor.codemirror.on('cursorActivity', function (cm) {
             //                let cm = this.editor.codemirror;
-            var selectionText = cm.getSelection();
+            //                scope.selectedWord = cm.getSelection();
+            scope.selectedWord = scope.md.render(cm.getSelection());
+            scope.selectedWordCount = scope._wordCount(cm.getSelection());
+            //                scope.selectedText = cm.getSelection();
 
-            console.log(selectionText);
+            //                console.log(scope.selectedText);
         });
     },
 
     computed: {
         wordCount: function wordCount() {
+
+            return this._wordCount(this.sourceData);
+            //                return (this.sourceData)
+            //                let pattern = /[a-zA-Z0-9_\u0392-\u03c9\u0410-\u04F9]+|[\u4E00-\u9FFF\u3400-\u4dbf\uf900-\ufaff\u3040-\u309f\uac00-\ud7af]+/g;
+            //
+            //                let m = this.sourceData.match(pattern);
+            //                let count = 0;
+            //                if (m === null) return count;
+            //                for (let i = 0; i < m.length; i++) {
+            //                    if (m[i].charCodeAt(0) >= 0x4E00) {
+            //                        count += m[i].length;
+            //                    } else {
+            //                        count += 1;
+            //                    }
+            //                }
+            //                return count;
+        },
+
+        words: function words() {
+            return this.sourceData.split(' ').length - 1;
+        },
+        //
+        chars: function chars() {
+            return this.sourceData.length;
+        }
+    },
+    methods: {
+        _wordCount: function _wordCount(data) {
             var pattern = /[a-zA-Z0-9_\u0392-\u03c9\u0410-\u04F9]+|[\u4E00-\u9FFF\u3400-\u4dbf\uf900-\ufaff\u3040-\u309f\uac00-\ud7af]+/g;
 
-            var m = this.sourceData.match(pattern);
+            var m = data.match(pattern);
             var count = 0;
             if (m === null) return count;
             for (var i = 0; i < m.length; i++) {
@@ -23986,15 +24115,6 @@ exports.default = {
             return count;
         },
 
-        words: function words() {
-            return this.sourceData.split(' ').length - 1;
-        },
-        //
-        chars: function chars() {
-            return this.sourceData.length;
-        }
-    },
-    methods: {
         toggleBtn: function toggleBtn() {
             var el = document.querySelectorAll('.note-btn-group button');
             for (var _iterator = el, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : (0, _getIterator3.default)(_iterator);;) {
@@ -24067,7 +24187,8 @@ exports.default = {
         toggleFullScreen: function toggleFullScreen() {
             this.isFullScreen = !this.isFullScreen;
         },
-        togglePreview: function togglePreview(editor) {
+        togglePreview: function togglePreview() {
+            var cm = this.editor.codemirror;
 
             var wrapper = cm.getWrapperElement();
             var toolbar_div = wrapper.previousSibling;
@@ -25480,7 +25601,7 @@ exports = module.exports = __webpack_require__(153)(undefined);
 
 
 // module
-exports.push([module.i, "\n.note-editor .note-codable {\n    display: none;\n    width: 100%;\n    padding: 20px;\n    margin-bottom: 0;\n    font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n    line-height: 1.7;\n    font-size: 14px;\n    color: #333;\n    background-color: #fff;\n    border: 0;\n    border-radius: 0;\n    resize: none;\n    -webkit-box-shadow: none;\n    box-shadow: none;\n}\n.doc-comment-box {\n    width: 260px;\n    background: #fff;\n    box-shadow: 0 1px 4px rgba(0, 0, 0, .2);\n    border-radius: 2px;\n    position: absolute;\n    right: 0;\n    bottom: 0;\n    margin-left: 0;\n    cursor: pointer;\n    transition: opacity .3s ease-out, margin-left .3s ease, top .3s ease;\n}\n.doc-comment-box.active {\n    cursor: default;\n    box-shadow: 0 0 20px #c8c8c8;\n    margin-left: -30px;\n    width: 290px;\n}\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.shadowBox {*/\n    /*position: absolute;*/\n    /*background: #ddd;*/\n    /*width: 268px;*/\n    /*height: 418px;*/\n    /*top: 50%;*/\n    /*left: 50%;*/\n    /*margin-top: -180px;*/\n    /*margin-left: -134px;*/\n    /*border-radius: 16px;*/\n    /*filter: blur(50px);*/\n    /*-webkit-filter: blur(50px);*/\n/*}*/\n.shadowBox {\n    background: #999;\n    width: 250px;\n    height: 158px;\n\n    position: fixed;\n    right: calc(10% - 0px);\n    margin-right: -100px;\n    top: 200px;\n    border-radius: 16px;\n    filter: blur(50px);\n    /*z-index: 9998;*/\n    z-index: 10;\n    -webkit-filter: blur(50px);\n}\n.snippet--content{\n    font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n    max-height: 300px;\n    overflow: auto;\n}\n.snippet--panel {\n    position: fixed;\n    right: calc(10% - 0px);\n    margin-right: -125px;\n    top: 100px;\n    width: 280px;\n    color: #898989;\n    opacity: 1;\n    z-index: 11;\n    /*z-index: 9999;*/\n    background-color: #fafafa;\n    /*border-radius: 4px;*/\n\n    /*-webkit-border-radius: 4px;*/\n    /*-moz-border-radius: 4px;*/\n\n    transition: all .2s ease-in;\n\n    -ms-box-shadow: 0 2px 8px hsla(0,0%,50%,.8);\n    -o-box-shadow: 0 2px 8px hsla(0,0%,50%,.8);\n    box-shadow: 0 2px 8px hsla(0,0%,50%,.8);\n    transition-property: right;\n}\n.snippet--panel.fadeout {\n    opacity: 0;\n    transition: all .5s ease-in;\n}\n.note-editor .note-codable {\n    display: none;\n    width: 100%;\n    overflow: auto;\n\n    padding: 20px;\n    margin-bottom: 0;\n    font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n    line-height: 1.7;\n    font-size: 14px;\n    color: #333;\n    background-color: #fff;\n    border: 0;\n    border-radius: 0;\n    resize: none;\n    -webkit-box-shadow: none;\n    box-shadow: none;\n}\n\n/*.doc-comment-box {*/\n    /*width: 260px;*/\n    /*background: #fff;*/\n    /*box-shadow: 0 1px 4px rgba(0, 0, 0, .2);*/\n    /*border-radius: 2px;*/\n    /*position: absolute;*/\n    /*right: 0;*/\n    /*bottom: 0;*/\n    /*margin-left: 0;*/\n    /*cursor: pointer;*/\n    /*transition: opacity .3s ease-out, margin-left .3s ease, top .3s ease;*/\n/*}*/\n\n/*.doc-comment-box.active {*/\n    /*cursor: default;*/\n    /*box-shadow: 0 0 20px #c8c8c8;*/\n    /*margin-left: -30px;*/\n    /*width: 290px;*/\n/*}*/\n\n\n", ""]);
 
 // exports
 
@@ -31897,13 +32018,26 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "panel panel-white"
-  }, [_vm._m(0), _vm._v(" "), _c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": "cover"
+    staticClass: "panel panel-flat"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "panel panel-white  snippet--panel",
+    class: {
+      'fadeout': _vm.selectedWordCount === 0
     }
-  }), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "panel-body"
+  }, [_c('div', {
+    staticClass: "content-group snippet--content",
+    domProps: {
+      "innerHTML": _vm._s(_vm.selectedWord)
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer panel-footer-condensed "
+  }, [_vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "heading-elements"
+  }, [_c('span', {
+    staticClass: "heading-text"
+  }, [_c('small', [_vm._v("选中了 " + _vm._s(_vm.selectedWordCount) + " 个字")])]), _vm._v(" "), _vm._m(3)])])]), _vm._v(" "), _vm._m(4), _vm._v(" "), _c('div', {
     staticClass: "mail-container-write"
   }, [_c('div', {
     staticClass: "form-control",
@@ -31919,13 +32053,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     class: {
       'codeview': !_vm.isView, 'fullscreen': _vm.isFullScreen
     }
-  }, [_vm._m(2), _vm._v(" "), _c('div', {
+  }, [_vm._m(5), _vm._v(" "), _c('div', {
     staticClass: "note-toolbar panel-heading  "
   }, [_c('div', {
     staticClass: "note-btn-group btn-group note-style"
   }, [_c('div', {
     staticClass: "note-btn-group btn-group"
-  }, [_vm._m(3), _vm._v(" "), _c('div', {
+  }, [_vm._m(6), _vm._v(" "), _c('div', {
     staticClass: "dropdown-menu dropdown-style"
   }, [_c('li', [_c('a', {
     attrs: {
@@ -31935,7 +32069,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.toggleBlockquote
     }
-  }, [_c('blockquote', [_vm._v("引用")])], 1)]), _vm._v(" "), _vm._m(4), _vm._v(" "), _c('li', [_c('a', {
+  }, [_c('blockquote', [_vm._v("引用")])], 1)]), _vm._v(" "), _vm._m(7), _vm._v(" "), _c('li', [_c('a', {
     attrs: {
       "href": "#",
       "data-value": "h1"
@@ -32198,11 +32332,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "note-icon-arrows-alt"
-  })]), _vm._v(" "), _vm._m(5)])]), _vm._v(" "), _vm._m(6), _vm._v(" "), _vm._m(7), _vm._v(" "), _vm._m(8), _vm._v(" "), _vm._m(9), _vm._v(" "), _vm._m(10), _vm._v(" "), _vm._m(11)])]), _vm._v(" "), _c('div', {
-    staticClass: "mail-attachments-container"
-  }, [_c('h6', {
-    staticClass: "mail-attachments-heading"
-  }, [_vm._v("附件： 2 字数：" + _vm._s(_vm.wordCount) + "  字符：" + _vm._s(_vm.chars))]), _vm._v(" "), _vm._m(12)])])
+  })]), _vm._v(" "), _vm._m(8)])]), _vm._v(" "), _vm._m(9), _vm._v(" "), _vm._m(10), _vm._v(" "), _vm._m(11), _vm._v(" "), _vm._m(12), _vm._v(" "), _vm._m(13)])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "profile-cover",
@@ -32225,6 +32355,42 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: " icon-cross"
   })])])])])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "panel-heading "
+  }, [_c('mark', {}, [_vm._v("生成内容碎片？")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('a', {
+    staticClass: "heading-elements-toggle"
+  }, [_c('i', {
+    staticClass: "icon-more"
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ul', {
+    staticClass: "list-inline list-inline-separate heading-text pull-right"
+  }, [_c('li', [_c('a', {
+    attrs: {
+      "href": "#",
+      "data-popup": "tooltip",
+      "data-placement": "top",
+      "data-container": "body",
+      "title": "",
+      "data-original-title": "剪切成碎片"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-cut"
+  })])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#",
+      "data-popup": "tooltip",
+      "data-placement": "top",
+      "data-container": "body",
+      "title": "",
+      "data-original-title": "复制成碎片"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-copy"
+  })])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "table-responsive mail-details-write"
@@ -32307,28 +32473,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "note-control-selection-info"
   })])]), _vm._v(" "), _c('textarea', {
     staticClass: "note-codable  note-editable",
-    staticStyle: {
-      "height": "360px",
-      "max-height": "1000px",
-      "min-height": "360px"
-    },
     attrs: {
-      "id": "_editor",
-      "rows": "10"
+      "id": "_editor"
     }
   })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "note-statusbar"
-  }, [_c('div', {
-    staticClass: "note-resizebar"
-  }, [_c('div', {
-    staticClass: "note-icon-bar"
-  }), _vm._v(" "), _c('div', {
-    staticClass: "note-icon-bar"
-  }), _vm._v(" "), _c('div', {
-    staticClass: "note-icon-bar"
-  })])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal link-dialog",
@@ -32732,50 +32880,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "target": "_blank"
     }
   }, [_vm._v("Issues")])])])])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ul', {
-    staticClass: "mail-attachments"
-  }, [_c('li', [_c('span', {
-    staticClass: "mail-attachments-preview"
-  }, [_c('i', {
-    staticClass: "icon-file-pdf icon-2x"
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "mail-attachments-content"
-  }, [_c('span', {
-    staticClass: "text-semibold"
-  }, [_vm._v("new_december_offers.pdf")]), _vm._v(" "), _c('ul', {
-    staticClass: "list-inline list-inline-condensed no-margin"
-  }, [_c('li', {
-    staticClass: "text-muted"
-  }, [_vm._v("174 KB")]), _vm._v(" "), _c('li', [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("View")])]), _vm._v(" "), _c('li', [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("Remove")])])])])]), _vm._v(" "), _c('li', [_c('span', {
-    staticClass: "mail-attachments-preview"
-  }, [_c('i', {
-    staticClass: "icon-file-pdf icon-2x"
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "mail-attachments-content"
-  }, [_c('span', {
-    staticClass: "text-semibold"
-  }, [_vm._v("assignment_letter.pdf")]), _vm._v(" "), _c('ul', {
-    staticClass: "list-inline list-inline-condensed no-margin"
-  }, [_c('li', {
-    staticClass: "text-muted"
-  }, [_vm._v("736 KB")]), _vm._v(" "), _c('li', [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("View")])]), _vm._v(" "), _c('li', [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("Remove")])])])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

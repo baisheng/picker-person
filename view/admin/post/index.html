@@ -2,6 +2,7 @@
     {% block style %}
         {#<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">#}
 
+
         <style>
             .CodeMirror {
                 color: #000
@@ -687,6 +688,9 @@
                 padding: 5px
             }
 
+            .editor-preview img{
+                width: 30%;
+            }
             .CodeMirror .CodeMirror-code .cm-tag {
                 color: #63a35c
             }
@@ -806,7 +810,7 @@
 {% endblock %}
 {% block navbar2 %}
     <!-- Second navbar -->
-    <div class="navbar navbar-default alpha-grey" id="navbar-second" v-cloak>
+    <div class="navbar navbar-default" id="navbar-second" v-cloak>
         <ul class="nav navbar-nav no-border visible-xs-block ">
             <li><a class=" collapsed pull-left" href="/admin/posts"><i class="icon-arrow-left7"></i></a></li>
 
@@ -833,11 +837,170 @@
 
             </ul>
 
+            {#<ul class="nav navbar-nav">#}
+                {#<li>#}
+                    {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
+                        {#<i class="note-icon-bold"></i>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
+                        {#<i class="note-icon-bold"></i>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
+                        {#<i class="note-icon-bold"></i>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
+                        {#<i class="note-icon-bold"></i>#}
+                    {#</a>#}
+                {#</li>#}
+
+
+                {#<li>#}
+                    {#<a href="#">#}
+                        {#<i class="icon-stats-bars"></i>#}
+                        {#<span class="visible-xs-inline-block position-right">My statistics</span>#}
+                    {#</a>#}
+                {#</li>#}
+            {#</ul>#}
+            {#<ul class="nav navbar-nav">#}
+                {#<div class="note-btn-group btn-group note-style">#}
+                    {#<div class="note-btn-group btn-group">#}
+                        {#<button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"#}
+                                {#tabindex="-1" data-toggle="dropdown" title="" data-original-title="样式"><i#}
+                                    {#class="note-icon-magic"></i> <span class="note-icon-caret"></span></button>#}
+                        {#<div class="dropdown-menu dropdown-style">#}
+                            {#<li><a @click="toggleBlockquote" href="#" data-value="blockquote">#}
+                                    {#<blockquote>引用</blockquote>#}
+                                {#</a></li>#}
+                            {#<li><a href="#" data-value="pre">#}
+                                    {#<pre>代码</pre>#}
+                                {#</a></li>#}
+                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h1"><h1>标题 1</h1></a></li>#}
+                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h2"><h2>标题 2</h2></a></li>#}
+                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h3"><h3>标题 3</h3></a></li>#}
+                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h4"><h4>标题 4</h4></a></li>#}
+                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h5"><h5>标题 5</h5></a></li>#}
+                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h6"><h6>标题 6</h6></a></li>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="note-btn-group btn-group note-font">#}
+                    {#<button @click="toggleBold" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm note-btn-bold legitRipple "#}
+                            {#tabindex="-1" title="" data-original-title="粗体 (⌘+B)"><i class="note-icon-bold"></i>#}
+                    {#</button>#}
+                    {#<button @click="toggleItalic" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm note-btn-underline legitRipple"#}
+                            {#tabindex="-1" title="" data-original-title="下划线 (⌘+U)"><i#}
+                                {#class="note-icon-italic"></i></button>#}
+
+                    {#<button @click="toggleStrikethrough" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+                            {#data-original-title="删除线 (⌘+\)"><i class="note-icon-strikethrough"></i></button>#}
+
+                    {#<button @click="toggleHeadingSmaller" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+                            {#data-original-title="段落 (⌘+\)">H#}
+                    {#</button>#}
+
+
+                    {#<button @click="toggleUnorderedList()" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+                            {#data-original-title="Unordered list (⌘+⇧+NUM7)"><i class="note-icon-unorderedlist"></i>#}
+                    {#</button>#}
+                    {#<button @click="toggleOrderedList()" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+                            {#data-original-title="Ordered list (⌘+⇧+NUM8)"><i class="note-icon-orderedlist"></i>#}
+                    {#</button>#}
+                    {#<!--#}
+                    {#<div class="note-btn-group btn-group">#}
+                        {#<button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"#}
+                                {#tabindex="-1" data-toggle="dropdown" title="" data-original-title="Paragraph"><i#}
+                                {#class="note-icon-align-left"></i> <span class="note-icon-caret"></span></button>#}
+                        {#<div class="dropdown-menu">#}
+                            {#<div class="note-btn-group btn-group note-align">#}
+                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                        {#tabindex="-1" title="" data-original-title="Align left (⌘+⇧+L)"><i#}
+                                        {#class="note-icon-align-left"></i></button>#}
+                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                        {#tabindex="-1" title="" data-original-title="Align center (⌘+⇧+E)"><i#}
+                                        {#class="note-icon-align-center"></i></button>#}
+                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                        {#tabindex="-1" title="" data-original-title="Align right (⌘+⇧+R)"><i#}
+                                        {#class="note-icon-align-right"></i></button>#}
+                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                        {#tabindex="-1" title="" data-original-title="Justify full (⌘+⇧+J)"><i#}
+                                        {#class="note-icon-align-justify"></i></button>#}
+                            {#</div>#}
+                            {#<div class="note-btn-group btn-group note-list">#}
+                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                        {#tabindex="-1" title="" data-original-title="Outdent (⌘+[)"><i#}
+                                        {#class="note-icon-align-outdent"></i></button>#}
+                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                        {#tabindex="-1" title="" data-original-title="Indent (⌘+])"><i#}
+                                        {#class="note-icon-align-indent"></i></button>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#-->#}
+                    {#<button @click="drawLink" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                            {#tabindex="-1" title=""#}
+                            {#data-original-title="链接 (⌘+K)"><i class="note-icon-link"></i></button>#}
+                    {#<button @click="drawImage" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                            {#tabindex="-1" title=""#}
+                            {#data-original-title="图片"><i class="note-icon-picture"></i></button>#}
+                    {#<button @click="toggleCodeBlock" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+                            {#data-original-title="代码"><i class="note-icon-code"></i></button>#}
+                    {#<div class="note-btn-group btn-group">#}
+                        {#<button @click="drawTable" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                {#tabindex="-1" title="" data-original-title="表格"><i#}
+                                    {#class="note-icon-table"></i></button>#}
+
+                        {#<button @click="drawHorizontalRule" type="button"#}
+                                {#class="note-btn btn btn-link btn-sm legitRipple"#}
+                                {#tabindex="-1" title="" data-original-title="分隔线">—#}
+                        {#</button>#}
+
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="note-btn-group btn-group note-undo">#}
+                    {#<button @click="undo" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"#}
+                            {#tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-undo"></i>#}
+                    {#</button>#}
+
+                    {#<button @click="redo" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                            {#tabindex="-1" title=""#}
+                            {#data-original-title="帮助"><i class="note-icon-redo"></i></button>#}
+                {#</div>#}
+{##}
+                {#<div class="note-btn-group btn-group note-view">#}
+
+                    {#<a @click="togglePreview" type="button"#}
+                       {#class="btn btn-link note-btn btn btn-link btn-sm btn-codeview legitRipple"#}
+                       {#tabindex="-1" title="" data-original-title=""><i#}
+                                {#class="fa fa-eye"></i></a>#}
+                    {#<button @click="toggleFullScreen" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"#}
+                            {#tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-arrows-alt"></i>#}
+                    {#</button>#}
+                    {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+                            {#data-original-title="帮助"><i class="note-icon-question"></i></button>#}
+                {#</div>#}
+{##}
+            {#</ul>#}
             <ul class="nav navbar-nav navbar-right">
+
                 {#<a class="sidebar-control sidebar-opposite-toggle hidden-xs">#}
                 {#<i class="icon-indent-decrease2"></i>#}
                 {#</a>#}
-                <li class="disabled"><a class=""><i class="icon-eye position-left"></i> 预览</a></li>
+                {#<li class="disabled"><a class=""><i class="icon-eye position-left"></i> 预览</a></li>#}
                 <li class=""><a class="sidebar-control sidebar-opposite-toggle hidden-xs"><i
                                 class="icon-cog position-left"></i> 文章设置</a></li>
                 <li class="disabled"><a><i class=" icon-paperplane position-left"></i> 发布</a></li>
