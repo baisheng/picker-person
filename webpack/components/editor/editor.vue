@@ -23,7 +23,7 @@
         <!--<div class="shadowBox"></div>-->
         <div class="panel panel-white  snippet--panel" :class="{'fadeout' : selectedWordCount === 0 }">
             <div class="panel-heading ">
-                    <mark class="">生成内容碎片？</mark>
+                <mark class="">生成内容碎片？</mark>
 
             </div>
 
@@ -35,8 +35,8 @@
                 <div class="heading-elements">
                     <span class="heading-text"><small>选中了 {{ selectedWordCount }} 个字</small></span>
                     <ul class="list-inline list-inline-separate heading-text pull-right">
-                        <li><a href="#" class="" data-popup="tooltip" data-placement="top" data-container="body" title="" data-original-title="剪切成碎片"><i class="fa fa-cut"></i></a></li>
-                        <li><a href="#" class="" data-popup="tooltip" data-placement="top" data-container="body" title="" data-original-title="复制成碎片"><i class="fa fa-copy"></i></a></li>
+                        <li><a @click="clearAndSnippet" class="" data-popup="tooltip" data-placement="top" data-container="body" title="" data-original-title="剪切成碎片"><i class="fa fa-cut"></i></a></li>
+                        <li><a @click="copyAndSnippet" class="" data-popup="tooltip" data-placement="top" data-container="body" title="" data-original-title="复制成碎片"><i class="fa fa-copy"></i></a></li>
                         <!--<li><a href="#">Generate</a></li>-->
                     </ul>
                 </div>
@@ -55,7 +55,8 @@
             </table>
         </div>
         <div class="mail-container-write">
-            <div contenteditable="true" name="" class="form-control" style="display: none;">1</div>
+            <!--<div contenteditable="true" name="" class="form-control" style="display: none;">1</div>-->
+
             <div class="note-editor note-frame panel panel-default "
                  :class="{ 'codeview': !isView, 'fullscreen': isFullScreen}">
                 <div class="note-dropzone">
@@ -210,16 +211,10 @@
                     <!--</div>-->
                 </div>
                 <!--<div class="note-statusbar">-->
-                    <!--<div class="note-resizebar">-->
-                        <!--<div class="note-icon-bar"></div>-->
-                        <!--<div class="note-icon-bar"></div>-->
-                        <!--<div class="note-icon-bar"></div>-->
-                    <!--</div>-->
-                    <!--<div class="card card-block">-->
-                        <!--<p>Total words: <b>{{words}}</b></p>-->
-                        <!--<p>Total chars: <b>{{chars}}</b></p>-->
-                        <!--<p>Last character: <b>{{lastChar}}</b></p>-->
-                    <!--</div>-->
+                <!--<div class="note-resizebar">-->
+                <!--<div class="note-icon-bar"></div>-->
+                <!--<div class="note-icon-bar"></div>-->
+                <!--<div class="note-icon-bar"></div>-->
                 <!--</div>-->
                 <div class="modal link-dialog" aria-hidden="false" tabindex="-1">
                     <div class="modal-dialog">
@@ -356,52 +351,50 @@
                 </div>
             </div>
         </div>
-        <!--<div id="text-count" class="text-count" :class="{'fadeout' : selectedWordCount === 0 }" data-reactid=".2.2.2" style="bottom: 30px;"><span class="text-count-number" data-reactid=".2.2.2.0">{{ selectedWordCount }}</span><span data-reactid=".2.2.2.1">个字</span></div>-->
 
+        <!---->
+        <!--
 
-<!---->
-<!--
+                <div class="mail-attachments-container">
+                    <h6 class="mail-attachments-heading">附件： 2 字数：{{ wordCount }}  字符：{{ chars }}</h6>
 
-        <div class="mail-attachments-container">
-            <h6 class="mail-attachments-heading">附件： 2 字数：{{ wordCount }}  字符：{{ chars }}</h6>
+                    <ul class="mail-attachments">
+                        <li>
+                                        <span class="mail-attachments-preview">
+                                            <i class="icon-file-pdf icon-2x"></i>
+                                        </span>
 
-            <ul class="mail-attachments">
-                <li>
-								<span class="mail-attachments-preview">
-									<i class="icon-file-pdf icon-2x"></i>
-								</span>
+                            <div class="mail-attachments-content">
+                                <span class="text-semibold">new_december_offers.pdf</span>
 
-                    <div class="mail-attachments-content">
-                        <span class="text-semibold">new_december_offers.pdf</span>
+                                <ul class="list-inline list-inline-condensed no-margin">
+                                    <li class="text-muted">174 KB</li>
+                                    <li><a href="#">View</a></li>
+                                    <li><a href="#">Remove</a></li>
+                                </ul>
+                            </div>
+                        </li>
 
-                        <ul class="list-inline list-inline-condensed no-margin">
-                            <li class="text-muted">174 KB</li>
-                            <li><a href="#">View</a></li>
-                            <li><a href="#">Remove</a></li>
-                        </ul>
-                    </div>
-                </li>
+                        <li>
+                                        <span class="mail-attachments-preview">
+                                            <i class="icon-file-pdf icon-2x"></i>
+                                        </span>
 
-                <li>
-								<span class="mail-attachments-preview">
-									<i class="icon-file-pdf icon-2x"></i>
-								</span>
+                            <div class="mail-attachments-content">
+                                <span class="text-semibold">assignment_letter.pdf</span>
 
-                    <div class="mail-attachments-content">
-                        <span class="text-semibold">assignment_letter.pdf</span>
-
-                        <ul class="list-inline list-inline-condensed no-margin">
-                            <li class="text-muted">736 KB</li>
-                            <li><a href="#">View</a></li>
-                            <li><a href="#">Remove</a></li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        -->
+                                <ul class="list-inline list-inline-condensed no-margin">
+                                    <li class="text-muted">736 KB</li>
+                                    <li><a href="#">View</a></li>
+                                    <li><a href="#">Remove</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                -->
         <!--<div class="snippet&#45;&#45;panel shadowBox" style="top: 165px;">-->
-<!---->
+        <!---->
         <!--</div>-->
 
     </div>
@@ -411,17 +404,17 @@
 
 <style>
     /*.shadowBox {*/
-        /*position: absolute;*/
-        /*background: #ddd;*/
-        /*width: 268px;*/
-        /*height: 418px;*/
-        /*top: 50%;*/
-        /*left: 50%;*/
-        /*margin-top: -180px;*/
-        /*margin-left: -134px;*/
-        /*border-radius: 16px;*/
-        /*filter: blur(50px);*/
-        /*-webkit-filter: blur(50px);*/
+    /*position: absolute;*/
+    /*background: #ddd;*/
+    /*width: 268px;*/
+    /*height: 418px;*/
+    /*top: 50%;*/
+    /*left: 50%;*/
+    /*margin-top: -180px;*/
+    /*margin-left: -134px;*/
+    /*border-radius: 16px;*/
+    /*filter: blur(50px);*/
+    /*-webkit-filter: blur(50px);*/
     /*}*/
 
     .shadowBox {
@@ -492,23 +485,23 @@
     }
 
     /*.doc-comment-box {*/
-        /*width: 260px;*/
-        /*background: #fff;*/
-        /*box-shadow: 0 1px 4px rgba(0, 0, 0, .2);*/
-        /*border-radius: 2px;*/
-        /*position: absolute;*/
-        /*right: 0;*/
-        /*bottom: 0;*/
-        /*margin-left: 0;*/
-        /*cursor: pointer;*/
-        /*transition: opacity .3s ease-out, margin-left .3s ease, top .3s ease;*/
+    /*width: 260px;*/
+    /*background: #fff;*/
+    /*box-shadow: 0 1px 4px rgba(0, 0, 0, .2);*/
+    /*border-radius: 2px;*/
+    /*position: absolute;*/
+    /*right: 0;*/
+    /*bottom: 0;*/
+    /*margin-left: 0;*/
+    /*cursor: pointer;*/
+    /*transition: opacity .3s ease-out, margin-left .3s ease, top .3s ease;*/
     /*}*/
 
     /*.doc-comment-box.active {*/
-        /*cursor: default;*/
-        /*box-shadow: 0 0 20px #c8c8c8;*/
-        /*margin-left: -30px;*/
-        /*width: 290px;*/
+    /*cursor: default;*/
+    /*box-shadow: 0 0 20px #c8c8c8;*/
+    /*margin-left: -30px;*/
+    /*width: 290px;*/
     /*}*/
 
 
@@ -523,12 +516,14 @@
     require("codemirror/addon/mode/overlay.js");
     require("codemirror/addon/display/placeholder.js");
     require("codemirror/addon/selection/mark-selection.js");
+//    require("codemirror/addon/mode/css.js")
+//    http://codemirror.net/mode/clike/clike.js
     require("codemirror/mode/gfm/gfm.js");
     require("codemirror/mode/xml/xml.js");
     import markdownIt from 'markdown-it'
     import emoji from 'markdown-it-emoji'
-    //import subscript from 'markdown-it-sub'
-    //import superscript from 'markdown-it-sup'
+    import subscript from 'markdown-it-sub'
+    import superscript from 'markdown-it-sup'
     import footnote from 'markdown-it-footnote'
     import deflist from 'markdown-it-deflist'
     //import abbreviation from 'markdown-it-abbr'
@@ -614,9 +609,12 @@
                 type: Array,
                 default: () => ['source', 'show', 'toc'],
             },
-            source: {
-                type: String,
-                default: ``,
+//            source: {
+//                type: String,
+//                default: ``,
+//            },
+            model: {
+                required: true
             },
             show: {
                 type: Boolean,
@@ -699,7 +697,8 @@
         },
         data(){
             return {
-                sourceData: this.source,
+
+                sourceData: this.model.content,
 //                toc: false,
                 isView: false,
                 isFullScreen: false,
@@ -844,6 +843,7 @@
             this.$nextTick(() => {
                 this._w = this.$el.offsetWidth
                 this._h = this.$el.offsetHeight
+                Prism.highlightAll();
 
                 console.log(this._w + ":" + this._h)
             })
@@ -932,6 +932,14 @@
                 }
                 return count;
             },
+            copyAndSnippet(){},
+            clearAndSnippet(){
+//                this._replaceSelection("");
+                let cm = this.editor.codemirror;
+                let doc = cm.getDoc();
+                doc.replaceSelection("");
+            },
+
             toggleBtn: function () {
                 let el = document.querySelectorAll('.note-btn-group button');
                 for (let x of el) {

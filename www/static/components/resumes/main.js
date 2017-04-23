@@ -474,7 +474,7 @@ var UNESCAPE_ALL_RE = new RegExp(UNESCAPE_MD_RE.source + '|' + ENTITY_RE.source,
 
 var DIGITAL_ENTITY_TEST_RE = /^#((?:x[a-f0-9]{1,8}|[0-9]{1,8}))/i;
 
-var entities = __webpack_require__(211);
+var entities = __webpack_require__(213);
 
 function replaceEntityPattern(match, name) {
   var code = 0;
@@ -652,7 +652,7 @@ function normalizeReference(str) {
 //
 exports.lib                 = {};
 exports.lib.mdurl           = __webpack_require__(115);
-exports.lib.ucmicro         = __webpack_require__(210);
+exports.lib.ucmicro         = __webpack_require__(212);
 
 exports.assign              = assign;
 exports.isString            = isString;
@@ -3454,7 +3454,7 @@ var metrics = {
 // metrics, including height, depth, italic correction, and skew (kern from the
 // character to the corresponding \skewchar)
 // This map is generated via `make metrics`. It should not be changed manually.
-var metricMap = __webpack_require__(230);
+var metricMap = __webpack_require__(232);
 
 /**
  * This function is a convenience function for looking up information in the
@@ -6859,10 +6859,10 @@ module.exports = function (value) {
 
 
 
-module.exports.encode = __webpack_require__(205);
-module.exports.decode = __webpack_require__(204);
-module.exports.format = __webpack_require__(206);
-module.exports.parse  = __webpack_require__(207);
+module.exports.encode = __webpack_require__(207);
+module.exports.decode = __webpack_require__(206);
+module.exports.format = __webpack_require__(208);
+module.exports.parse  = __webpack_require__(209);
 
 
 /***/ }),
@@ -13506,6 +13506,151 @@ module.exports = function ins_plugin(md) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+// Process ~subscript~
+
+
+
+// same as UNESCAPE_MD_RE plus a space
+var UNESCAPE_RE = /\\([ \\!"#$%&'()*+,.\/:;<=>?@[\]^_`{|}~-])/g;
+
+
+function subscript(state, silent) {
+  var found,
+      content,
+      token,
+      max = state.posMax,
+      start = state.pos;
+
+  if (state.src.charCodeAt(start) !== 0x7E/* ~ */) { return false; }
+  if (silent) { return false; } // don't run any pairs in validation mode
+  if (start + 2 >= max) { return false; }
+
+  state.pos = start + 1;
+
+  while (state.pos < max) {
+    if (state.src.charCodeAt(state.pos) === 0x7E/* ~ */) {
+      found = true;
+      break;
+    }
+
+    state.md.inline.skipToken(state);
+  }
+
+  if (!found || start + 1 === state.pos) {
+    state.pos = start;
+    return false;
+  }
+
+  content = state.src.slice(start + 1, state.pos);
+
+  // don't allow unescaped spaces/newlines inside
+  if (content.match(/(^|[^\\])(\\\\)*\s/)) {
+    state.pos = start;
+    return false;
+  }
+
+  // found!
+  state.posMax = state.pos;
+  state.pos = start + 1;
+
+  // Earlier we checked !silent, but this implementation does not need it
+  token         = state.push('sub_open', 'sub', 1);
+  token.markup  = '~';
+
+  token         = state.push('text', '', 0);
+  token.content = content.replace(UNESCAPE_RE, '$1');
+
+  token         = state.push('sub_close', 'sub', -1);
+  token.markup  = '~';
+
+  state.pos = state.posMax + 1;
+  state.posMax = max;
+  return true;
+}
+
+
+module.exports = function sub_plugin(md) {
+  md.inline.ruler.after('emphasis', 'sub', subscript);
+};
+
+
+/***/ }),
+/* 205 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Process ^superscript^
+
+
+
+// same as UNESCAPE_MD_RE plus a space
+var UNESCAPE_RE = /\\([ \\!"#$%&'()*+,.\/:;<=>?@[\]^_`{|}~-])/g;
+
+function superscript(state, silent) {
+  var found,
+      content,
+      token,
+      max = state.posMax,
+      start = state.pos;
+
+  if (state.src.charCodeAt(start) !== 0x5E/* ^ */) { return false; }
+  if (silent) { return false; } // don't run any pairs in validation mode
+  if (start + 2 >= max) { return false; }
+
+  state.pos = start + 1;
+
+  while (state.pos < max) {
+    if (state.src.charCodeAt(state.pos) === 0x5E/* ^ */) {
+      found = true;
+      break;
+    }
+
+    state.md.inline.skipToken(state);
+  }
+
+  if (!found || start + 1 === state.pos) {
+    state.pos = start;
+    return false;
+  }
+
+  content = state.src.slice(start + 1, state.pos);
+
+  // don't allow unescaped spaces/newlines inside
+  if (content.match(/(^|[^\\])(\\\\)*\s/)) {
+    state.pos = start;
+    return false;
+  }
+
+  // found!
+  state.posMax = state.pos;
+  state.pos = start + 1;
+
+  // Earlier we checked !silent, but this implementation does not need it
+  token         = state.push('sup_open', 'sup', 1);
+  token.markup  = '^';
+
+  token         = state.push('text', '', 0);
+  token.content = content.replace(UNESCAPE_RE, '$1');
+
+  token         = state.push('sup_close', 'sup', -1);
+  token.markup  = '^';
+
+  state.pos = state.posMax + 1;
+  state.posMax = max;
+  return true;
+}
+
+
+module.exports = function sup_plugin(md) {
+  md.inline.ruler.after('emphasis', 'sup', superscript);
+};
+
+
+/***/ }),
+/* 206 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
 
@@ -13631,7 +13776,7 @@ module.exports = decode;
 
 
 /***/ }),
-/* 205 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13736,7 +13881,7 @@ module.exports = encode;
 
 
 /***/ }),
-/* 206 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13768,7 +13913,7 @@ module.exports = function format(url) {
 
 
 /***/ }),
-/* 207 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14087,7 +14232,7 @@ module.exports = urlParse;
 
 
 /***/ }),
-/* 208 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -14626,13 +14771,13 @@ module.exports = urlParse;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(131)(module), __webpack_require__(98)))
 
 /***/ }),
-/* 209 */
+/* 211 */
 /***/ (function(module, exports) {
 
 module.exports=/[\xAD\u0600-\u0605\u061C\u06DD\u070F\u08E2\u180E\u200B-\u200F\u202A-\u202E\u2060-\u2064\u2066-\u206F\uFEFF\uFFF9-\uFFFB]|\uD804\uDCBD|\uD82F[\uDCA0-\uDCA3]|\uD834[\uDD73-\uDD7A]|\uDB40[\uDC01\uDC20-\uDC7F]/
 
 /***/ }),
-/* 210 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14640,13 +14785,13 @@ module.exports=/[\xAD\u0600-\u0605\u061C\u06DD\u070F\u08E2\u180E\u200B-\u200F\u2
 
 exports.Any = __webpack_require__(118);
 exports.Cc  = __webpack_require__(116);
-exports.Cf  = __webpack_require__(209);
+exports.Cf  = __webpack_require__(211);
 exports.P   = __webpack_require__(96);
 exports.Z   = __webpack_require__(117);
 
 
 /***/ }),
-/* 211 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14659,7 +14804,7 @@ module.exports = __webpack_require__(155);
 
 
 /***/ }),
-/* 212 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14694,7 +14839,7 @@ module.exports.HTML_OPEN_CLOSE_TAG_RE = HTML_OPEN_CLOSE_TAG_RE;
 
 
 /***/ }),
-/* 213 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14824,7 +14969,7 @@ module.exports.postProcess = function emphasis(state) {
 
 
 /***/ }),
-/* 214 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14948,11 +15093,11 @@ module.exports.postProcess = function strikethrough(state) {
 
 
 /***/ }),
-/* 215 */,
-/* 216 */,
 /* 217 */,
 /* 218 */,
-/* 219 */
+/* 219 */,
+/* 220 */,
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15257,8 +15402,8 @@ var _ = {
 };
 
 /***/ }),
-/* 220 */,
-/* 221 */
+/* 222 */,
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint no-console:0 */
@@ -15273,8 +15418,8 @@ var _ = {
 var ParseError = __webpack_require__(45);
 var Settings = __webpack_require__(193);
 
-var buildTree = __webpack_require__(227);
-var parseTree = __webpack_require__(233);
+var buildTree = __webpack_require__(229);
+var parseTree = __webpack_require__(235);
 var utils = __webpack_require__(35);
 
 /**
@@ -15338,7 +15483,7 @@ module.exports = {
 
 
 /***/ }),
-/* 222 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -15506,7 +15651,7 @@ module.exports = Lexer;
 
 
 /***/ }),
-/* 223 */
+/* 225 */
 /***/ (function(module, exports) {
 
 /**
@@ -15701,13 +15846,13 @@ module.exports = Options;
 
 
 /***/ }),
-/* 224 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint no-constant-condition:0 */
-var functions = __webpack_require__(231);
-var environments = __webpack_require__(229);
-var Lexer = __webpack_require__(222);
+var functions = __webpack_require__(233);
+var environments = __webpack_require__(231);
+var Lexer = __webpack_require__(224);
 var symbols = __webpack_require__(101);
 var utils = __webpack_require__(35);
 
@@ -16444,7 +16589,7 @@ module.exports = Parser;
 
 
 /***/ }),
-/* 225 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint no-console:0 */
@@ -16459,7 +16604,7 @@ var ParseError = __webpack_require__(45);
 var Style = __webpack_require__(99);
 
 var buildCommon = __webpack_require__(100);
-var delimiter = __webpack_require__(228);
+var delimiter = __webpack_require__(230);
 var domTree = __webpack_require__(194);
 var fontMetrics = __webpack_require__(95);
 var utils = __webpack_require__(35);
@@ -17852,7 +17997,7 @@ module.exports = buildHTML;
 
 
 /***/ }),
-/* 226 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -17863,7 +18008,7 @@ module.exports = buildHTML;
 
 var buildCommon = __webpack_require__(100);
 var fontMetrics = __webpack_require__(95);
-var mathMLTree = __webpack_require__(232);
+var mathMLTree = __webpack_require__(234);
 var ParseError = __webpack_require__(45);
 var symbols = __webpack_require__(101);
 var utils = __webpack_require__(35);
@@ -18391,13 +18536,13 @@ module.exports = buildMathML;
 
 
 /***/ }),
-/* 227 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var buildHTML = __webpack_require__(225);
-var buildMathML = __webpack_require__(226);
+var buildHTML = __webpack_require__(227);
+var buildMathML = __webpack_require__(228);
 var buildCommon = __webpack_require__(100);
-var Options = __webpack_require__(223);
+var Options = __webpack_require__(225);
 var Settings = __webpack_require__(193);
 var Style = __webpack_require__(99);
 
@@ -18437,7 +18582,7 @@ module.exports = buildTree;
 
 
 /***/ }),
-/* 228 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -18985,7 +19130,7 @@ module.exports = {
 
 
 /***/ }),
-/* 229 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint no-constant-condition:0 */
@@ -19212,7 +19357,7 @@ defineEnvironment("aligned", {
 
 
 /***/ }),
-/* 230 */
+/* 232 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -20970,7 +21115,7 @@ module.exports = {
 
 
 /***/ }),
-/* 231 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var utils = __webpack_require__(35);
@@ -21556,7 +21701,7 @@ defineFunction(["\\begin", "\\end"], {
 
 
 /***/ }),
-/* 232 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -21664,7 +21809,7 @@ module.exports = {
 
 
 /***/ }),
-/* 233 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -21672,7 +21817,7 @@ module.exports = {
  * TODO(emily): Remove this
  */
 
-var Parser = __webpack_require__(224);
+var Parser = __webpack_require__(226);
 
 /**
  * Parses an expression using a Parser, then returns the parsed result.
@@ -21687,7 +21832,7 @@ module.exports = parseTree;
 
 
 /***/ }),
-/* 234 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21842,7 +21987,7 @@ module.exports = function sub_plugin(md) {
 
 
 /***/ }),
-/* 235 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21969,7 +22114,7 @@ module.exports = function ins_plugin(md) {
 
 
 /***/ }),
-/* 236 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21985,7 +22130,7 @@ for rendering output.
 /*jslint node: true */
 
 
-var katex = __webpack_require__(221);
+var katex = __webpack_require__(223);
 
 // Test if potential opening or closing delimieter
 // Assumes that there is a "$" at state.src[pos]
@@ -22169,151 +22314,6 @@ module.exports = function math_plugin(md, options) {
     });
     md.renderer.rules.math_inline = inlineRenderer;
     md.renderer.rules.math_block = blockRenderer;
-};
-
-
-/***/ }),
-/* 237 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// Process ~subscript~
-
-
-
-// same as UNESCAPE_MD_RE plus a space
-var UNESCAPE_RE = /\\([ \\!"#$%&'()*+,.\/:;<=>?@[\]^_`{|}~-])/g;
-
-
-function subscript(state, silent) {
-  var found,
-      content,
-      token,
-      max = state.posMax,
-      start = state.pos;
-
-  if (state.src.charCodeAt(start) !== 0x7E/* ~ */) { return false; }
-  if (silent) { return false; } // don't run any pairs in validation mode
-  if (start + 2 >= max) { return false; }
-
-  state.pos = start + 1;
-
-  while (state.pos < max) {
-    if (state.src.charCodeAt(state.pos) === 0x7E/* ~ */) {
-      found = true;
-      break;
-    }
-
-    state.md.inline.skipToken(state);
-  }
-
-  if (!found || start + 1 === state.pos) {
-    state.pos = start;
-    return false;
-  }
-
-  content = state.src.slice(start + 1, state.pos);
-
-  // don't allow unescaped spaces/newlines inside
-  if (content.match(/(^|[^\\])(\\\\)*\s/)) {
-    state.pos = start;
-    return false;
-  }
-
-  // found!
-  state.posMax = state.pos;
-  state.pos = start + 1;
-
-  // Earlier we checked !silent, but this implementation does not need it
-  token         = state.push('sub_open', 'sub', 1);
-  token.markup  = '~';
-
-  token         = state.push('text', '', 0);
-  token.content = content.replace(UNESCAPE_RE, '$1');
-
-  token         = state.push('sub_close', 'sub', -1);
-  token.markup  = '~';
-
-  state.pos = state.posMax + 1;
-  state.posMax = max;
-  return true;
-}
-
-
-module.exports = function sub_plugin(md) {
-  md.inline.ruler.after('emphasis', 'sub', subscript);
-};
-
-
-/***/ }),
-/* 238 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// Process ^superscript^
-
-
-
-// same as UNESCAPE_MD_RE plus a space
-var UNESCAPE_RE = /\\([ \\!"#$%&'()*+,.\/:;<=>?@[\]^_`{|}~-])/g;
-
-function superscript(state, silent) {
-  var found,
-      content,
-      token,
-      max = state.posMax,
-      start = state.pos;
-
-  if (state.src.charCodeAt(start) !== 0x5E/* ^ */) { return false; }
-  if (silent) { return false; } // don't run any pairs in validation mode
-  if (start + 2 >= max) { return false; }
-
-  state.pos = start + 1;
-
-  while (state.pos < max) {
-    if (state.src.charCodeAt(state.pos) === 0x5E/* ^ */) {
-      found = true;
-      break;
-    }
-
-    state.md.inline.skipToken(state);
-  }
-
-  if (!found || start + 1 === state.pos) {
-    state.pos = start;
-    return false;
-  }
-
-  content = state.src.slice(start + 1, state.pos);
-
-  // don't allow unescaped spaces/newlines inside
-  if (content.match(/(^|[^\\])(\\\\)*\s/)) {
-    state.pos = start;
-    return false;
-  }
-
-  // found!
-  state.posMax = state.pos;
-  state.pos = start + 1;
-
-  // Earlier we checked !silent, but this implementation does not need it
-  token         = state.push('sup_open', 'sup', 1);
-  token.markup  = '^';
-
-  token         = state.push('text', '', 0);
-  token.content = content.replace(UNESCAPE_RE, '$1');
-
-  token         = state.push('sup_close', 'sup', -1);
-  token.markup  = '^';
-
-  state.pos = state.posMax + 1;
-  state.posMax = max;
-  return true;
-}
-
-
-module.exports = function sup_plugin(md) {
-  md.inline.ruler.after('emphasis', 'sup', superscript);
 };
 
 
@@ -23546,7 +23546,7 @@ exports.Z = [32, 160, 5760, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(119), __webpack_require__(255), __webpack_require__(197), __webpack_require__(237), __webpack_require__(238), __webpack_require__(254), __webpack_require__(196), __webpack_require__(234), __webpack_require__(235), __webpack_require__(203), __webpack_require__(239), __webpack_require__(236));
+		module.exports = factory(__webpack_require__(119), __webpack_require__(255), __webpack_require__(197), __webpack_require__(204), __webpack_require__(205), __webpack_require__(254), __webpack_require__(196), __webpack_require__(236), __webpack_require__(237), __webpack_require__(203), __webpack_require__(239), __webpack_require__(238));
 	else if(typeof define === 'function' && define.amd)
 		define(["babel-runtime/core-js/get-iterator", "markdown-it", "markdown-it-emoji", "markdown-it-sub", "markdown-it-sup", "markdown-it-footnote", "markdown-it-deflist", "markdown-it-abbr", "markdown-it-ins", "markdown-it-mark", "markdown-it-toc-and-anchor", "markdown-it-katex"], factory);
 	else if(typeof exports === 'object')
@@ -25191,7 +25191,7 @@ var ParserBlock  = __webpack_require__(259);
 var ParserInline = __webpack_require__(261);
 var LinkifyIt    = __webpack_require__(252);
 var mdurl        = __webpack_require__(115);
-var punycode     = __webpack_require__(208);
+var punycode     = __webpack_require__(210);
 
 
 var config = {
@@ -25978,8 +25978,8 @@ var _rules = [
   [ 'newline',         __webpack_require__(293) ],
   [ 'escape',          __webpack_require__(289) ],
   [ 'backticks',       __webpack_require__(286) ],
-  [ 'strikethrough',   __webpack_require__(214).tokenize ],
-  [ 'emphasis',        __webpack_require__(213).tokenize ],
+  [ 'strikethrough',   __webpack_require__(216).tokenize ],
+  [ 'emphasis',        __webpack_require__(215).tokenize ],
   [ 'link',            __webpack_require__(292) ],
   [ 'image',           __webpack_require__(291) ],
   [ 'autolink',        __webpack_require__(285) ],
@@ -25989,8 +25989,8 @@ var _rules = [
 
 var _rules2 = [
   [ 'balance_pairs',   __webpack_require__(287) ],
-  [ 'strikethrough',   __webpack_require__(214).postProcess ],
-  [ 'emphasis',        __webpack_require__(213).postProcess ],
+  [ 'strikethrough',   __webpack_require__(216).postProcess ],
+  [ 'emphasis',        __webpack_require__(215).postProcess ],
   [ 'text_collapse',   __webpack_require__(296) ]
 ];
 
@@ -27135,7 +27135,7 @@ module.exports = function hr(state, startLine, endLine, silent) {
 
 
 var block_names = __webpack_require__(256);
-var HTML_OPEN_CLOSE_TAG_RE = __webpack_require__(212).HTML_OPEN_CLOSE_TAG_RE;
+var HTML_OPEN_CLOSE_TAG_RE = __webpack_require__(214).HTML_OPEN_CLOSE_TAG_RE;
 
 // An array of opening and corresponding closing sequences for html tags,
 // last argument defines whether it can terminate a paragraph or not
@@ -28962,7 +28962,7 @@ module.exports = function link_pairs(state) {
 
 
 
-var entities          = __webpack_require__(211);
+var entities          = __webpack_require__(213);
 var has               = __webpack_require__(3).has;
 var isValidEntityCode = __webpack_require__(3).isValidEntityCode;
 var fromCodePoint     = __webpack_require__(3).fromCodePoint;
@@ -29077,7 +29077,7 @@ module.exports = function escape(state, silent) {
 
 
 
-var HTML_TAG_RE = __webpack_require__(212).HTML_TAG_RE;
+var HTML_TAG_RE = __webpack_require__(214).HTML_TAG_RE;
 
 
 function isLetter(ch) {
@@ -29801,7 +29801,7 @@ var _vuedraggable = __webpack_require__(456);
 
 var _vuedraggable2 = _interopRequireDefault(_vuedraggable);
 
-var _vueDragging = __webpack_require__(219);
+var _vueDragging = __webpack_require__(221);
 
 var _vueDragging2 = _interopRequireDefault(_vueDragging);
 

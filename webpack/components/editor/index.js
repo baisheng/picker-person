@@ -34,9 +34,9 @@ new Vue({
         // dateId: '',
         // date: '',
         // _url: document.location.pathname + decodeURIComponent(document.location.search),
-        // editorModel: {
-        //     content: ""
-        // }
+        editorModel: {
+            content: ""
+        }
     },
     created: function () {
         if (POST) {

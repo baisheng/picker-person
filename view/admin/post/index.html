@@ -1,6 +1,5 @@
 {% extends "../_layout.html" %}
     {% block style %}
-        {#<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">#}
 
 
         <style>
@@ -1016,7 +1015,7 @@
     {#{{ post.snippets }}#}
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-            <Editor></Editor>
+            <Editor :model="editorModel"></Editor>
             {#{{editorModel}}#}
             {#<vue-editor :model="editorModel" v-on:modelchange="modelChangeEvent"> </vue-editor>#}
             <!-- Single mail -->
@@ -1139,53 +1138,6 @@
             </div>
 
 
-            <!-- Quick stats -->
-            <div class="sidebar-category">
-                <div class="category-title category-collapsed">
-                    <span>特色图片</span>
-                    <ul class="icons-list">
-                        <li><a href="#" data-action="collapse"></a></li>
-                    </ul>
-                </div>
-
-                <div class="category-content" style="display: none;">
-                    <ul class="progress-list">
-                        <li>
-                            <label>CPU usage <span>50%</span></label>
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-info" style="width: 50%">
-                                    <span class="sr-only">50% Complete</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <label>RAM usage <span>70%</span></label>
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-danger" style="width: 70%">
-                                    <span class="sr-only">70% Complete</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <label>Disc space <span>80%</span></label>
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-success" style="width: 80%">
-                                    <span class="sr-only">80% Complete</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <label>Bandwidth <span>60%</span></label>
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-primary" style="width: 60%">
-                                    <span class="sr-only">60% Complete</span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- /quick stats -->
             <div class="sidebar-category">
                 <div class="category-title category-collapsed">
                     <span>更多选项</span>

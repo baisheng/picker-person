@@ -343,7 +343,7 @@ module.exports = {};
 
 /***/ }),
 
-/***/ 220:
+/***/ 222:
 /***/ (function(module, exports, __webpack_require__) {
 
 // most Object methods by ES6 should accept primitives
@@ -1075,7 +1075,7 @@ module.exports = function getOwnPropertyNames(it){
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 Object.getOwnPropertyNames(O)
-__webpack_require__(220)('getOwnPropertyNames', function(){
+__webpack_require__(222)('getOwnPropertyNames', function(){
   return __webpack_require__(125).f;
 });
 
