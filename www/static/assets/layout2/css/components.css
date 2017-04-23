@@ -153,12 +153,14 @@ a.badge,
   position: relative;
   width: 100%;
   display: none;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 @media (min-width: 769px) {
   .sidebar {
     display: table-cell;
     vertical-align: top;
-    width: 210px;
+    width: 260px;
   }
 }
 .sidebar-main {
@@ -642,7 +644,7 @@ a.badge,
 @media (min-width: 769px) {
   .sidebar-fixed .sidebar-content {
     position: fixed;
-    width: 210px;
+    width: 260px;
     max-height: 100%;
     overflow: auto;
     top: 50px;
@@ -653,7 +655,7 @@ a.badge,
     width: 56px;
   }
   .sidebar-fixed.sidebar-default .sidebar-content {
-    width: 210px;
+    width: 260px;
   }
   .sidebar-fixed-expanded .sidebar-fixed.sidebar-main {
     position: fixed;
@@ -665,7 +667,7 @@ a.badge,
     position: fixed;
   }
   .sidebar-xs .sidebar-fixed-expanded .sidebar-fixed.sidebar-main {
-    width: 210px;
+    width: 260px;
   }
   .sidebar-fixed-expanded .content-wrapper {
     padding-left: 56px;
@@ -677,22 +679,22 @@ a.badge,
 @media (min-width: 769px) {
   .has-detached-left .container-detached {
     float: right;
-    margin-left: -210px;
+    margin-left: -260px;
     width: 100%;
   }
   .has-detached-left .content-detached {
-    margin-left: 230px;
+    margin-left: 280px;
   }
   .has-detached-left .sidebar-detached {
     float: left;
   }
   .has-detached-right .container-detached {
     float: left;
-    margin-right: -210px;
+    margin-right: -260px;
     width: 100%;
   }
   .has-detached-right .content-detached {
-    margin-right: 230px;
+    margin-right: 280px;
   }
   .has-detached-right .sidebar-detached {
     float: right;
@@ -854,10 +856,10 @@ a.badge,
     display: none;
     position: absolute;
     top: 0;
-    right: -210px;
+    right: -260px;
     background-color: #eeeded;
     padding: 14px 20px;
-    width: 210px;
+    width: 260px;
     text-align: left;
     color: #222;
     cursor: pointer;
@@ -906,9 +908,9 @@ a.badge,
   }
   .sidebar-xs .sidebar-main .navigation > li > ul {
     position: absolute;
-    right: -210px;
+    right: -260px;
     top: 44px;
-    width: 210px;
+    width: 260px;
     display: none;
     background-color: #eeeded;
     border-radius: 0 0 3px 0;
@@ -1005,14 +1007,14 @@ a.badge,
 @media (max-width: 768px) {
   .sidebar .sp-container {
     display: block;
-    width: 170px;
+    width: 220px;
     margin-left: auto;
     margin-right: auto;
   }
 }
 .sidebar .sp-flat .sp-picker-container {
   display: block;
-  width: 168px;
+  width: 218px;
 }
 .sidebar .panel-group .panel {
   border-radius: 0;

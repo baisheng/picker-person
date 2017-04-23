@@ -311,7 +311,7 @@
 
 <script>
     import VueMarkdown from 'vue-markdown'
-    import range from '../js/rangeFn'
+    import range from '../../js/rangeFn'
 
     function insertContent(val, that) {
         let textareaDom = document.querySelector('.note-codable');

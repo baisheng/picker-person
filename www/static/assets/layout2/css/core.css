@@ -3524,7 +3524,7 @@ select[multiple].input-group-xs > .input-group-btn > .btn {
   }
 }
 .navbar-header {
-  min-width: 210px;
+  min-width: 260px;
 }
 .navbar-collapse > .navbar-header {
   margin-left: 0;

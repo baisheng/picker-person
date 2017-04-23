@@ -1,402 +1,302 @@
 <template>
 
-    <div class="panel panel-flat">
 
-        <div class="profile-cover" style="display: none;">
-            <!--<div id="cover" class="profile-cover-img"-->
-            <!--style="background-image: url(&quot;/static/assets/images/demo/blog/2.jpg&quot;);"></div>-->
-            <div class="media">
-                <div class="media-body"><h1>
-                    ${ title }
+    <div class="mail-container-write">
+        <!--<div contenteditable="true" name="" class="form-control" style="display: none;">1</div>-->
 
-                </h1></div>
-                <div class="media-right media-middle">
-                    <ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
-                        <li><a href="#" class="btn btn-icon btn-xs btn-primary   btn-rounded legitRipple"><i
-                                class=" icon-cross"></i></a></li>
-                    </ul>
+        <div class="note-editor note-frame panel panel-default "
+             :class="{ 'codeview': !isView, 'fullscreen': isFullScreen}">
+            <div class="note-dropzone">
+                <div class="note-dropzone-message"></div>
+            </div>
+            <div class="note-toolbar panel-heading  ">
+                <div class="note-btn-group btn-group note-style">
+                    <div class="note-btn-group btn-group">
+                        <button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"
+                                tabindex="-1" data-toggle="dropdown" title="" data-original-title="样式"><i
+                                class="note-icon-magic"></i> <span class="note-icon-caret"></span></button>
+                        <div class="dropdown-menu dropdown-style">
+                            <li><a @click="toggleBlockquote" href="#" data-value="blockquote">
+                                <blockquote>引用</blockquote>
+                            </a></li>
+                            <li><a href="#" data-value="pre">
+                                <pre>代码</pre>
+                            </a></li>
+                            <li><a @click="toggleHeadingSmaller()" href="#" data-value="h1"><h1>标题 1</h1></a></li>
+                            <li><a @click="toggleHeadingSmaller()" href="#" data-value="h2"><h2>标题 2</h2></a></li>
+                            <li><a @click="toggleHeadingSmaller()" href="#" data-value="h3"><h3>标题 3</h3></a></li>
+                            <li><a @click="toggleHeadingSmaller()" href="#" data-value="h4"><h4>标题 4</h4></a></li>
+                            <li><a @click="toggleHeadingSmaller()" href="#" data-value="h5"><h5>标题 5</h5></a></li>
+                            <li><a @click="toggleHeadingSmaller()" href="#" data-value="h6"><h6>标题 6</h6></a></li>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <!--<input type="hidden" name="cover">-->
+                <div class="note-btn-group btn-group note-font">
+                    <button @click="toggleBold" type="button"
+                            class="note-btn btn btn-link btn-sm note-btn-bold legitRipple "
+                            tabindex="-1" title="" data-original-title="粗体 (⌘+B)"><i class="note-icon-bold"></i>
+                    </button>
+                    <button @click="toggleItalic" type="button"
+                            class="note-btn btn btn-link btn-sm note-btn-underline legitRipple"
+                            tabindex="-1" title="" data-original-title="下划线 (⌘+U)"><i
+                            class="note-icon-italic"></i></button>
 
-        <!--<div class="shadowBox"></div>-->
-        <div class="panel panel-white  snippet--panel" :class="{'fadeout' : selectedWordCount === 0 }">
-            <div class="panel-heading ">
-                <mark class="">生成内容碎片？</mark>
+                    <button @click="toggleStrikethrough" type="button"
+                            class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
+                            data-original-title="删除线 (⌘+\)"><i class="note-icon-strikethrough"></i></button>
 
-            </div>
+                    <button @click="toggleHeadingSmaller" type="button"
+                            class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
+                            data-original-title="段落 (⌘+\)">H
+                    </button>
 
 
-            <div class="panel-body">
-                <div class="content-group snippet--content" v-html="selectedWord"></div>
-            </div>
-            <div class="panel-footer panel-footer-condensed "><a class="heading-elements-toggle"><i class="icon-more"></i></a>
-                <div class="heading-elements">
-                    <span class="heading-text"><small>选中了 {{ selectedWordCount }} 个字</small></span>
-                    <ul class="list-inline list-inline-separate heading-text pull-right">
-                        <li><a @click="clearAndSnippet" class="" data-popup="tooltip" data-placement="top" data-container="body" title="" data-original-title="剪切成碎片"><i class="fa fa-cut"></i></a></li>
-                        <li><a @click="copyAndSnippet" class="" data-popup="tooltip" data-placement="top" data-container="body" title="" data-original-title="复制成碎片"><i class="fa fa-copy"></i></a></li>
-                        <!--<li><a href="#">Generate</a></li>-->
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="table-responsive mail-details-write">
-            <table class="table">
-                <tbody>
-                <tr>
-                    <td colspan="2" class="p-5 no-border"><input type="text" placeholder="无标题" name="title"
-                                                                 class="form-control text-semibold"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="mail-container-write">
-            <!--<div contenteditable="true" name="" class="form-control" style="display: none;">1</div>-->
-
-            <div class="note-editor note-frame panel panel-default "
-                 :class="{ 'codeview': !isView, 'fullscreen': isFullScreen}">
-                <div class="note-dropzone">
-                    <div class="note-dropzone-message"></div>
-                </div>
-                <div class="note-toolbar panel-heading  ">
-                    <div class="note-btn-group btn-group note-style">
-                        <div class="note-btn-group btn-group">
-                            <button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"
-                                    tabindex="-1" data-toggle="dropdown" title="" data-original-title="样式"><i
-                                    class="note-icon-magic"></i> <span class="note-icon-caret"></span></button>
-                            <div class="dropdown-menu dropdown-style">
-                                <li><a @click="toggleBlockquote" href="#" data-value="blockquote">
-                                    <blockquote>引用</blockquote>
-                                </a></li>
-                                <li><a href="#" data-value="pre">
-                                    <pre>代码</pre>
-                                </a></li>
-                                <li><a @click="toggleHeadingSmaller()" href="#" data-value="h1"><h1>标题 1</h1></a></li>
-                                <li><a @click="toggleHeadingSmaller()" href="#" data-value="h2"><h2>标题 2</h2></a></li>
-                                <li><a @click="toggleHeadingSmaller()" href="#" data-value="h3"><h3>标题 3</h3></a></li>
-                                <li><a @click="toggleHeadingSmaller()" href="#" data-value="h4"><h4>标题 4</h4></a></li>
-                                <li><a @click="toggleHeadingSmaller()" href="#" data-value="h5"><h5>标题 5</h5></a></li>
-                                <li><a @click="toggleHeadingSmaller()" href="#" data-value="h6"><h6>标题 6</h6></a></li>
+                    <button @click="toggleUnorderedList()" type="button"
+                            class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
+                            data-original-title="Unordered list (⌘+⇧+NUM7)"><i class="note-icon-unorderedlist"></i>
+                    </button>
+                    <button @click="toggleOrderedList()" type="button"
+                            class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
+                            data-original-title="Ordered list (⌘+⇧+NUM8)"><i class="note-icon-orderedlist"></i>
+                    </button>
+                    <!--
+                    <div class="note-btn-group btn-group">
+                        <button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"
+                                tabindex="-1" data-toggle="dropdown" title="" data-original-title="Paragraph"><i
+                                class="note-icon-align-left"></i> <span class="note-icon-caret"></span></button>
+                        <div class="dropdown-menu">
+                            <div class="note-btn-group btn-group note-align">
+                                <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
+                                        tabindex="-1" title="" data-original-title="Align left (⌘+⇧+L)"><i
+                                        class="note-icon-align-left"></i></button>
+                                <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
+                                        tabindex="-1" title="" data-original-title="Align center (⌘+⇧+E)"><i
+                                        class="note-icon-align-center"></i></button>
+                                <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
+                                        tabindex="-1" title="" data-original-title="Align right (⌘+⇧+R)"><i
+                                        class="note-icon-align-right"></i></button>
+                                <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
+                                        tabindex="-1" title="" data-original-title="Justify full (⌘+⇧+J)"><i
+                                        class="note-icon-align-justify"></i></button>
+                            </div>
+                            <div class="note-btn-group btn-group note-list">
+                                <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
+                                        tabindex="-1" title="" data-original-title="Outdent (⌘+[)"><i
+                                        class="note-icon-align-outdent"></i></button>
+                                <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
+                                        tabindex="-1" title="" data-original-title="Indent (⌘+])"><i
+                                        class="note-icon-align-indent"></i></button>
                             </div>
                         </div>
                     </div>
-                    <div class="note-btn-group btn-group note-font">
-                        <button @click="toggleBold" type="button"
-                                class="note-btn btn btn-link btn-sm note-btn-bold legitRipple "
-                                tabindex="-1" title="" data-original-title="粗体 (⌘+B)"><i class="note-icon-bold"></i>
+                    -->
+                    <button @click="drawLink" type="button" class="note-btn btn btn-link btn-sm legitRipple"
+                            tabindex="-1" title=""
+                            data-original-title="链接 (⌘+K)"><i class="note-icon-link"></i></button>
+                    <button @click="drawImage" type="button" class="note-btn btn btn-link btn-sm legitRipple"
+                            tabindex="-1" title=""
+                            data-original-title="图片"><i class="note-icon-picture"></i></button>
+                    <button @click="toggleCodeBlock" type="button"
+                            class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
+                            data-original-title="代码"><i class="note-icon-code"></i></button>
+                    <div class="note-btn-group btn-group">
+                        <button @click="drawTable" type="button" class="note-btn btn btn-link btn-sm legitRipple"
+                                tabindex="-1" title="" data-original-title="表格"><i
+                                class="note-icon-table"></i></button>
+
+                        <button @click="drawHorizontalRule" type="button"
+                                class="note-btn btn btn-link btn-sm legitRipple"
+                                tabindex="-1" title="" data-original-title="分隔线">—
                         </button>
-                        <button @click="toggleItalic" type="button"
-                                class="note-btn btn btn-link btn-sm note-btn-underline legitRipple"
-                                tabindex="-1" title="" data-original-title="下划线 (⌘+U)"><i
-                                class="note-icon-italic"></i></button>
 
-                        <button @click="toggleStrikethrough" type="button"
-                                class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
-                                data-original-title="删除线 (⌘+\)"><i class="note-icon-strikethrough"></i></button>
-
-                        <button @click="toggleHeadingSmaller" type="button"
-                                class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
-                                data-original-title="段落 (⌘+\)">H
-                        </button>
-
-
-                        <button @click="toggleUnorderedList()" type="button"
-                                class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
-                                data-original-title="Unordered list (⌘+⇧+NUM7)"><i class="note-icon-unorderedlist"></i>
-                        </button>
-                        <button @click="toggleOrderedList()" type="button"
-                                class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
-                                data-original-title="Ordered list (⌘+⇧+NUM8)"><i class="note-icon-orderedlist"></i>
-                        </button>
-                        <!--
-                        <div class="note-btn-group btn-group">
-                            <button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"
-                                    tabindex="-1" data-toggle="dropdown" title="" data-original-title="Paragraph"><i
-                                    class="note-icon-align-left"></i> <span class="note-icon-caret"></span></button>
-                            <div class="dropdown-menu">
-                                <div class="note-btn-group btn-group note-align">
-                                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
-                                            tabindex="-1" title="" data-original-title="Align left (⌘+⇧+L)"><i
-                                            class="note-icon-align-left"></i></button>
-                                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
-                                            tabindex="-1" title="" data-original-title="Align center (⌘+⇧+E)"><i
-                                            class="note-icon-align-center"></i></button>
-                                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
-                                            tabindex="-1" title="" data-original-title="Align right (⌘+⇧+R)"><i
-                                            class="note-icon-align-right"></i></button>
-                                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
-                                            tabindex="-1" title="" data-original-title="Justify full (⌘+⇧+J)"><i
-                                            class="note-icon-align-justify"></i></button>
-                                </div>
-                                <div class="note-btn-group btn-group note-list">
-                                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
-                                            tabindex="-1" title="" data-original-title="Outdent (⌘+[)"><i
-                                            class="note-icon-align-outdent"></i></button>
-                                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple"
-                                            tabindex="-1" title="" data-original-title="Indent (⌘+])"><i
-                                            class="note-icon-align-indent"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-                        <button @click="drawLink" type="button" class="note-btn btn btn-link btn-sm legitRipple"
-                                tabindex="-1" title=""
-                                data-original-title="链接 (⌘+K)"><i class="note-icon-link"></i></button>
-                        <button @click="drawImage" type="button" class="note-btn btn btn-link btn-sm legitRipple"
-                                tabindex="-1" title=""
-                                data-original-title="图片"><i class="note-icon-picture"></i></button>
-                        <button @click="toggleCodeBlock" type="button"
-                                class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
-                                data-original-title="代码"><i class="note-icon-code"></i></button>
-                        <div class="note-btn-group btn-group">
-                            <button @click="drawTable" type="button" class="note-btn btn btn-link btn-sm legitRipple"
-                                    tabindex="-1" title="" data-original-title="表格"><i
-                                    class="note-icon-table"></i></button>
-
-                            <button @click="drawHorizontalRule" type="button"
-                                    class="note-btn btn btn-link btn-sm legitRipple"
-                                    tabindex="-1" title="" data-original-title="分隔线">—
-                            </button>
-
-                        </div>
                     </div>
-                    <div class="note-btn-group btn-group note-undo">
-                        <button @click="undo" type="button"
-                                class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"
-                                tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-undo"></i>
-                        </button>
-
-                        <button @click="redo" type="button" class="note-btn btn btn-link btn-sm legitRipple"
-                                tabindex="-1" title=""
-                                data-original-title="帮助"><i class="note-icon-redo"></i></button>
-                    </div>
-
-                    <div class="note-btn-group btn-group note-view">
-
-                        <a @click="togglePreview" type="button"
-                           class="btn btn-link note-btn btn btn-link btn-sm btn-codeview legitRipple"
-                           tabindex="-1" title="" data-original-title=""><i
-                                class="fa fa-eye"></i></a>
-                        <button @click="toggleFullScreen" type="button"
-                                class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"
-                                tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-arrows-alt"></i>
-                        </button>
-                        <button type="button" class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
-                                data-original-title="帮助"><i class="note-icon-question"></i></button>
-                    </div>
-
                 </div>
-                <div class="note-editing-area">
-                    <div class="note-handle">
-                        <div class="note-control-selection" style="display: none;">
-                            <div class="note-control-selection-bg"></div>
-                            <div class="note-control-holder note-control-nw"></div>
-                            <div class="note-control-holder note-control-ne"></div>
-                            <div class="note-control-holder note-control-sw"></div>
-                            <div class="note-control-sizing note-control-se"></div>
-                            <div class="note-control-selection-info"></div>
-                        </div>
-                    </div>
+                <div class="note-btn-group btn-group note-undo">
+                    <button @click="undo" type="button"
+                            class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"
+                            tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-undo"></i>
+                    </button>
 
-                    <textarea
-                            id="_editor"
-                            class="note-codable  note-editable"></textarea>
-
-                    <!--<div class="note-editable panel-body"-->
-                    <!--style="height: 360px; max-height: 1000px; min-height: 360px;" contenteditable="true">-->
-                    <!--</div>-->
+                    <button @click="redo" type="button" class="note-btn btn btn-link btn-sm legitRipple"
+                            tabindex="-1" title=""
+                            data-original-title="帮助"><i class="note-icon-redo"></i></button>
                 </div>
-                <!--<div class="note-statusbar">-->
-                <!--<div class="note-resizebar">-->
-                <!--<div class="note-icon-bar"></div>-->
-                <!--<div class="note-icon-bar"></div>-->
-                <!--<div class="note-icon-bar"></div>-->
+
+                <div class="note-btn-group btn-group note-view">
+
+                    <a @click="togglePreview" type="button"
+                       class="btn btn-link note-btn btn btn-link btn-sm btn-codeview legitRipple"
+                       tabindex="-1" title="" data-original-title=""><i
+                            class="fa fa-eye"></i></a>
+                    <button @click="toggleFullScreen" type="button"
+                            class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"
+                            tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-arrows-alt"></i>
+                    </button>
+                    <button type="button" class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""
+                            data-original-title="帮助"><i class="note-icon-question"></i></button>
+                </div>
+
+            </div>
+            <div class="note-editing-area">
+                <div class="note-handle">
+                    <div class="note-control-selection" style="display: none;">
+                        <div class="note-control-selection-bg"></div>
+                        <div class="note-control-holder note-control-nw"></div>
+                        <div class="note-control-holder note-control-ne"></div>
+                        <div class="note-control-holder note-control-sw"></div>
+                        <div class="note-control-sizing note-control-se"></div>
+                        <div class="note-control-selection-info"></div>
+                    </div>
+                </div>
+
+                <textarea
+                        id="_editor"
+                        class="note-codable  note-editable"></textarea>
+
+                <!--<div class="note-editable panel-body"-->
+                <!--style="height: 360px; max-height: 1000px; min-height: 360px;" contenteditable="true">-->
                 <!--</div>-->
-                <div class="modal link-dialog" aria-hidden="false" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">×</span></button>
-                                <h4 class="modal-title">插入链接</h4></div>
-                            <div class="modal-body">
-                                <div class="form-group"><label>显示文本</label><input class="note-link-text form-control"
-                                                                                  type="text"></div>
-                                <div class="form-group"><label>链接地址</label><input class="note-link-url form-control"
-                                                                                  type="text" value="http://"></div>
-                                <div class="checkbox"><label><input type="checkbox" checked=""> 在新窗口打开</label></div>
-                            </div>
-                            <div class="modal-footer">
-                                <button href="#" class="btn btn-primary note-link-btn disabled" disabled="">插入链接
-                                </button>
-                            </div>
+            </div>
+            <!--<div class="note-statusbar">-->
+            <!--<div class="note-resizebar">-->
+            <!--<div class="note-icon-bar"></div>-->
+            <!--<div class="note-icon-bar"></div>-->
+            <!--<div class="note-icon-bar"></div>-->
+            <!--</div>-->
+            <div class="modal link-dialog" aria-hidden="false" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">插入链接</h4></div>
+                        <div class="modal-body">
+                            <div class="form-group"><label>显示文本</label><input class="note-link-text form-control"
+                                                                              type="text"></div>
+                            <div class="form-group"><label>链接地址</label><input class="note-link-url form-control"
+                                                                              type="text" value="http://"></div>
+                            <div class="checkbox"><label><input type="checkbox" checked=""> 在新窗口打开</label></div>
                         </div>
-                    </div>
-                </div>
-                <div class="modal" aria-hidden="false" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">×</span></button>
-                                <h4 class="modal-title">插入图片</h4></div>
-                            <div class="modal-body">
-                                <div class="form-group note-group-select-from-files"><label>从本地上传</label><input
-                                        class="note-image-input form-control" type="file" name="files" accept="image/*"
-                                        multiple="multiple"></div>
-                                <div class="form-group note-group-image-url" style="overflow:auto;">
-                                    <label>图片地址</label><input class="note-image-url form-control col-md-12" type="text">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button href="#" class="btn btn-primary note-image-btn disabled" disabled="">插入图片
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal" aria-hidden="false" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">×</span></button>
-                                <h4 class="modal-title">插入视频</h4></div>
-                            <div class="modal-body">
-                                <div class="form-group row-fluid"><label>视频地址
-                                    <small class="text-muted">(优酷, Instagram, Youtube等)</small>
-                                </label><input class="note-video-url form-control span12" type="text"></div>
-                            </div>
-                            <div class="modal-footer">
-                                <button href="#" class="btn btn-primary note-video-btn disabled" disabled="">插入视频
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal modal-show" aria-hidden="false" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">×</span></button>
-                                <h4 class="modal-title">帮助</h4></div>
-                            <div class="modal-body" style="max-height: 300px; overflow: scroll;">
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>ENTER</kbd></label><span>Insert Paragraph</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+Z</kbd></label><span>Undoes the last command</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+Z</kbd></label><span>Redoes the last command</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>TAB</kbd></label><span>Tab</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>SHIFT+TAB</kbd></label><span>Untab</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+B</kbd></label><span>Set a bold style</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+I</kbd></label><span>Set a italic style</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+U</kbd></label><span>Set a underline style</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+S</kbd></label><span>Set a strikethrough style</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+BACKSLASH</kbd></label><span>Clean a style</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+L</kbd></label><span>Set left align</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+E</kbd></label><span>Set center align</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+R</kbd></label><span>Set right align</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+J</kbd></label><span>Set full align</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+NUM7</kbd></label><span>Toggle unordered list</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+NUM8</kbd></label><span>Toggle ordered list</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+LEFTBRACKET</kbd></label><span>Outdent on current paragraph</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+RIGHTBRACKET</kbd></label><span>Indent on current paragraph</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM0</kbd></label><span>Change current block's format as a paragraph(P tag)</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM1</kbd></label><span>Change current block's format as H1</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM2</kbd></label><span>Change current block's format as H2</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM3</kbd></label><span>Change current block's format as H3</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM4</kbd></label><span>Change current block's format as H4</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM5</kbd></label><span>Change current block's format as H5</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM6</kbd></label><span>Change current block's format as H6</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+ENTER</kbd></label><span>Insert horizontal rule</span>
-                                <div class="help-list-item"></div>
-                                <label style="width: 180px; margin-right: 10px;"><kbd>CMD+K</kbd></label><span>Show Link Dialog</span>
-                            </div>
-                            <div class="modal-footer"><p class="text-center"><a href="http://summernote.org/"
-                                                                                target="_blank">Summernote 0.8.2</a>
-                                · <a href="https://github.com/summernote/summernote" target="_blank">Project</a> · <a
-                                        href="https://github.com/summernote/summernote/issues"
-                                        target="_blank">Issues</a></p></div>
+                        <div class="modal-footer">
+                            <button href="#" class="btn btn-primary note-link-btn disabled" disabled="">插入链接
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!---->
-        <!--
-
-                <div class="mail-attachments-container">
-                    <h6 class="mail-attachments-heading">附件： 2 字数：{{ wordCount }}  字符：{{ chars }}</h6>
-
-                    <ul class="mail-attachments">
-                        <li>
-                                        <span class="mail-attachments-preview">
-                                            <i class="icon-file-pdf icon-2x"></i>
-                                        </span>
-
-                            <div class="mail-attachments-content">
-                                <span class="text-semibold">new_december_offers.pdf</span>
-
-                                <ul class="list-inline list-inline-condensed no-margin">
-                                    <li class="text-muted">174 KB</li>
-                                    <li><a href="#">View</a></li>
-                                    <li><a href="#">Remove</a></li>
-                                </ul>
+            <div class="modal" aria-hidden="false" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">插入图片</h4></div>
+                        <div class="modal-body">
+                            <div class="form-group note-group-select-from-files"><label>从本地上传</label><input
+                                    class="note-image-input form-control" type="file" name="files" accept="image/*"
+                                    multiple="multiple"></div>
+                            <div class="form-group note-group-image-url" style="overflow:auto;">
+                                <label>图片地址</label><input class="note-image-url form-control col-md-12" type="text">
                             </div>
-                        </li>
-
-                        <li>
-                                        <span class="mail-attachments-preview">
-                                            <i class="icon-file-pdf icon-2x"></i>
-                                        </span>
-
-                            <div class="mail-attachments-content">
-                                <span class="text-semibold">assignment_letter.pdf</span>
-
-                                <ul class="list-inline list-inline-condensed no-margin">
-                                    <li class="text-muted">736 KB</li>
-                                    <li><a href="#">View</a></li>
-                                    <li><a href="#">Remove</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button href="#" class="btn btn-primary note-image-btn disabled" disabled="">插入图片
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                -->
-        <!--<div class="snippet&#45;&#45;panel shadowBox" style="top: 165px;">-->
-        <!---->
-        <!--</div>-->
-
+            </div>
+            <div class="modal" aria-hidden="false" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">插入视频</h4></div>
+                        <div class="modal-body">
+                            <div class="form-group row-fluid"><label>视频地址
+                                <small class="text-muted">(优酷, Instagram, Youtube等)</small>
+                            </label><input class="note-video-url form-control span12" type="text"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button href="#" class="btn btn-primary note-video-btn disabled" disabled="">插入视频
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal modal-show" aria-hidden="false" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">帮助</h4></div>
+                        <div class="modal-body" style="max-height: 300px; overflow: scroll;">
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>ENTER</kbd></label><span>Insert Paragraph</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+Z</kbd></label><span>Undoes the last command</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+Z</kbd></label><span>Redoes the last command</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>TAB</kbd></label><span>Tab</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>SHIFT+TAB</kbd></label><span>Untab</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+B</kbd></label><span>Set a bold style</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+I</kbd></label><span>Set a italic style</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+U</kbd></label><span>Set a underline style</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+S</kbd></label><span>Set a strikethrough style</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+BACKSLASH</kbd></label><span>Clean a style</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+L</kbd></label><span>Set left align</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+E</kbd></label><span>Set center align</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+R</kbd></label><span>Set right align</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+J</kbd></label><span>Set full align</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+NUM7</kbd></label><span>Toggle unordered list</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+SHIFT+NUM8</kbd></label><span>Toggle ordered list</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+LEFTBRACKET</kbd></label><span>Outdent on current paragraph</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+RIGHTBRACKET</kbd></label><span>Indent on current paragraph</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM0</kbd></label><span>Change current block's format as a paragraph(P tag)</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM1</kbd></label><span>Change current block's format as H1</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM2</kbd></label><span>Change current block's format as H2</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM3</kbd></label><span>Change current block's format as H3</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM4</kbd></label><span>Change current block's format as H4</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM5</kbd></label><span>Change current block's format as H5</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+NUM6</kbd></label><span>Change current block's format as H6</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+ENTER</kbd></label><span>Insert horizontal rule</span>
+                            <div class="help-list-item"></div>
+                            <label style="width: 180px; margin-right: 10px;"><kbd>CMD+K</kbd></label><span>Show Link Dialog</span>
+                        </div>
+                        <div class="modal-footer"><p class="text-center"><a href="http://summernote.org/"
+                                                                            target="_blank">Summernote 0.8.2</a>
+                            · <a href="https://github.com/summernote/summernote" target="_blank">Project</a> · <a
+                                    href="https://github.com/summernote/summernote/issues"
+                                    target="_blank">Issues</a></p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -433,11 +333,12 @@
         -webkit-filter: blur(50px);
     }
 
-    .snippet--content{
+    .snippet--content {
         font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
         max-height: 300px;
         overflow: auto;
     }
+
     .snippet--panel {
         position: fixed;
         right: calc(10% - 0px);
@@ -456,15 +357,17 @@
 
         transition: all .2s ease-in;
 
-        -ms-box-shadow: 0 2px 8px hsla(0,0%,50%,.8);
-        -o-box-shadow: 0 2px 8px hsla(0,0%,50%,.8);
-        box-shadow: 0 2px 8px hsla(0,0%,50%,.8);
+        -ms-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);
+        -o-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);
+        box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);
         transition-property: right;
     }
+
     .snippet--panel.fadeout {
         opacity: 0;
         transition: all .5s ease-in;
     }
+
     .note-editor .note-codable {
         display: none;
         width: 100%;
@@ -513,11 +416,13 @@
     require("./codemirror/tablist");
     require("codemirror/addon/display/fullscreen.js");
     require("codemirror/mode/markdown/markdown.js");
+    require("codemirror/mode/css/css.js");
+    require("codemirror/mode/clike/clike.js");
+    require("codemirror/mode/javascript/javascript.js");
+    require("codemirror/mode/meta.js");
     require("codemirror/addon/mode/overlay.js");
     require("codemirror/addon/display/placeholder.js");
     require("codemirror/addon/selection/mark-selection.js");
-//    require("codemirror/addon/mode/css.js")
-//    http://codemirror.net/mode/clike/clike.js
     require("codemirror/mode/gfm/gfm.js");
     require("codemirror/mode/xml/xml.js");
     import markdownIt from 'markdown-it'
@@ -703,9 +608,15 @@
                 isView: false,
                 isFullScreen: false,
                 keyMaps: {},
-                selectedWordCount: 0,
-                selectedText:'',
-                selectedWord: '',
+//                selectedWordCount: 0,
+//                selectedText: '',
+//                selectedWord: '',
+
+                selected: {
+                    word: '',
+                    wordHtml: '',
+                    wordCount: 0
+                },
                 options: {
                     tabSize: 2,
                     indentUnit: 2,
@@ -767,12 +678,12 @@
         },
         created: function () {
             this.md = new markdownIt()
-            //                .use(subscript)
-            //                .use(superscript)
+                .use(subscript)
+                .use(superscript)
                 .use(footnote)
                 //                .use(deflist)
-                //                .use(abbreviation)
-                //                .use(insert)
+                //                                .use(abbreviation)
+                //                                .use(insert)
                 .use(mark)
 //                .use(katex, {"throwOnError" : false, "errorColor" : " #cc0000"})
 
@@ -839,23 +750,24 @@
         },
         mounted: function () {
 
-
-            this.$nextTick(() => {
-                this._w = this.$el.offsetWidth
-                this._h = this.$el.offsetHeight
-                Prism.highlightAll();
-
-                console.log(this._w + ":" + this._h)
+            eventHub.$on('replaceSelection', (content) => {
+                this.clearAndSnippet(content)
             })
+//            this.$nextTick(() => {
+//                this._w = this.$el.offsetWidth
+//                this._h = this.$el.offsetHeight
+//
+//                console.log(this._w + ":" + this._h)
+//            })
 
             let scope = this;
             let mode = {}
             mode.name = "gfm";
 
             this.editor.codemirror = CodeMirror.fromTextArea(document.getElementById("_editor"), {
-                mode: mode,
+                mode: 'gfm',
 //                backdrop: backdrop,
-                theme: "paper",
+                theme: "default",
                 tabSize: (this.options.tabSize != undefined) ? this.options.tabSize : 2,
                 indentUnit: (this.options.tabSize != undefined) ? this.options.tabSize : 2,
                 indentWithTabs: (this.options.indentWithTabs === false) ? false : true,
@@ -870,39 +782,29 @@
 
             this.editor.codemirror.on('change', function (cm) {
                 scope.sourceData = cm.getValue();
+
+                scope.$emit('change', cm.getValue())
             });
 
 
             this.editor.codemirror.on('cursorActivity', function (cm) {
-//                let cm = this.editor.codemirror;
-//                scope.selectedWord = cm.getSelection();
-                scope.selectedWord = scope.md.render(cm.getSelection())
-                scope.selectedWordCount = scope._wordCount(cm.getSelection());
-//                scope.selectedText = cm.getSelection();
 
-//                console.log(scope.selectedText);
+                scope.selected.word = cm.getSelection();
+                scope.selected.wordCount = scope._wordCount(cm.getSelection());
+                scope.selected.wordHtml = scope.md.render(cm.getSelection());
+
+                scope.$emit('selection', scope.selected);
             });
+
+
+            // 初始化值
+            this.value(scope.sourceData);
         },
 
 
         computed: {
             wordCount() {
-
                 return this._wordCount(this.sourceData);
-//                return (this.sourceData)
-//                let pattern = /[a-zA-Z0-9_\u0392-\u03c9\u0410-\u04F9]+|[\u4E00-\u9FFF\u3400-\u4dbf\uf900-\ufaff\u3040-\u309f\uac00-\ud7af]+/g;
-//
-//                let m = this.sourceData.match(pattern);
-//                let count = 0;
-//                if (m === null) return count;
-//                for (let i = 0; i < m.length; i++) {
-//                    if (m[i].charCodeAt(0) >= 0x4E00) {
-//                        count += m[i].length;
-//                    } else {
-//                        count += 1;
-//                    }
-//                }
-//                return count;
             },
             words: function () {
                 return this.sourceData.split(' ').length - 1;
@@ -932,7 +834,8 @@
                 }
                 return count;
             },
-            copyAndSnippet(){},
+            copyAndSnippet(){
+            },
             clearAndSnippet(){
 //                this._replaceSelection("");
                 let cm = this.editor.codemirror;
@@ -1667,23 +1570,21 @@
                 cm.focus();
             },
 
-
-            tabFn: function (evt) {
-                insertContent("    ", this);
-                // 屏蔽屌tab切换事件
-                if (evt.preventDefault) {
-                    evt.preventDefault();
+            value(val){
+                if(val === undefined) {
+                    return this.editor.codemirror.getValue();
                 } else {
-                    evt.returnValue = false;
+                    this.editor.codemirror.getDoc().setValue(val);
+                    return this;
                 }
             },
+
             toggle(){
                 Prism.highlightAll();
                 this.isView = !this.isView
             },
             allRight: function (htmlStr) {
-                console.log(htmlStr)
-//                console.log("markdown is parsed !");
+                console.log("markdown is parsed !");
             },
             tocAllRight: function (tocHtmlStr) {
                 console.log("toc is parsed :", tocHtmlStr);
@@ -1691,13 +1592,6 @@
 
             addImage: function (evt) {
                 insertContent("![Vue](https://cn.vuejs.org/images/logo.png)", this);
-            },
-
-            addUl: function () {
-                insertContent('* ', this);
-            },
-            addOl: function () {
-                insertContent('1. ', this);
             },
 
         },

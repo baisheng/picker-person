@@ -1,9 +1,14 @@
+// import CodeMirror from 'codemirror';
+
+
+// import CodeMirrorSpellChecker from 'codemirror-spell-checker';
+
 import axios from 'axios'
 Vue.prototype.$http = axios;
-import Editable from '../ui/editable.vue';
-// import Summernote from '../ui/summernote.vue'
 
-import Editor from './editor.vue';
+// import Editor from './editor/editor.vue';
+// import PostEditor from './post.vue';
+import Editor from './editor/editor.vue';
 
 
 new Vue({
@@ -18,6 +23,11 @@ new Vue({
             title: '',
             content: '',
             terms:[]
+        },
+        selected: {
+            wordHtml:'',
+            wordCount: 0,
+            word: ''
         },
         status: 'init',
         isActive: true,
@@ -66,7 +76,7 @@ new Vue({
     components: {
         Editor,
         // Summernote,
-        Editable
+        // Editable
         // Datepicker,
     },
     methods: {
@@ -188,16 +198,35 @@ new Vue({
 
             for(let _cate of this.post.terms){
                 if (_cate === cate) {
-                   console.log(cate.id + "减少")
+                    console.log(cate.id + "减少")
                 }else {
                     console.log(cate.id + "添加")
                 }
             }
             // console.log(JSON.stringify(cate))
+        },
+
+        onChange(content){
+            this.post.content = content;
+            this._editing();
+            this.save();
+        },
+        onSelection(selected){
+            this.selected = selected;
+        },
+        clearAndSnippet(){
+            eventHub.$emit('replaceSelection', "")
+        },
+        copyAndSnippet(){
+            eventHub.$emit('replaceSelection', "")
         }
 
     },
     watch: {
+        // 'post.content': function(){
+        //     this._editing();
+        //     this.save();
+        // },
         'post.title': function () {
             this._editing();
             this.save();
@@ -216,39 +245,6 @@ new Vue({
                 this.saveTerm(difference[0]);
 
             }
-            //
-            //
-            // this.post.terms = val;
-            // function intersection(a,b){
-            //     var c=[];
-            //     for(m in a){
-            //         for(n in b){
-            //             if((a[m].id==a[n].id)&&(a[m].name==b[n].name))
-            //                 c.push(a[m]);
-            //         }}
-            //     return c;
-            // }
-
-            // console.log(JSON.stringify(oldVal) + "--old--")
-            // console.log(JSON.stringify(val) + "--new--")
-            // let intersection = val.filter(v => oldVal.includes(v))
-            // console.log(JSON.stringify(intersection) + "--intersection--")
-            // console.log(JSON.stringify(difference) + "--difference--")
-
-            // console.log(intersection(val,oldVal));
-            // console.log(JSON.stringify(val))
         }
-        // 'post.status': function(val){
-            // console.log(val + "xxx")
-            // this.save();
-        // }
-        // post: {
-        //     handler: function (val, oldVal) {
-        //         this.status = 'editing';
-        // this.post = val;
-        // this.save();
-        // },
-        // deep: true
-        // },
     }
 });
