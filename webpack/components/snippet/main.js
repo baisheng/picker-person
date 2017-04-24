@@ -384,6 +384,8 @@ new Vue({
             if (r !== null)return decodeURI(r[2]);
             return null;
         },
+
+
         statusStyle: function (item) {
             if (item.status === 'publish') {
                 return "text-success-400"

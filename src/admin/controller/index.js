@@ -35,7 +35,28 @@ export default class extends Base {
          */
         // let _dao = this.model('posts', {aid: this.aid});
         // let _taxonomy = this.model('taxonomy', {aid: this.aid});
+        let _terms = this.model('terms', {aid: this.aid});
+//
+        let snippet_terms = await _terms.findByTaxonomy('snippet');
 
+        // console.log(JSON.stringify(snippet_terms))
+        let _items = [];
+        snippet_terms.forEach((item) => {
+            let _item = {};
+            // _item.id = item.id;
+            _item.text = item.name;
+            _item.slug = think._.replace(item.slug, 'snippet-format-', '');
+
+            if (!think.isEmpty(item.meta['_snippet_icon'])) {
+                _item.icon = item.meta['_snippet_icon'];
+            }
+            if (!think.isEmpty(item.meta['_status']) && item.meta['_status'] === 'active') {
+                _items.push(_item);
+            }
+        });
+
+        // console.log(JSON.stringify(_items))
+        this.assign("snippet_terms", JSON.stringify(_items));
 
         return this.display();
     }

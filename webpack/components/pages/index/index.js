@@ -1,5 +1,6 @@
 import axios from 'axios'
 Vue.prototype.$http = axios;
+
 import ProfileCover from './profile-cover.vue';
 import Timeline from './timeline.vue';
 
@@ -7,7 +8,9 @@ new Vue({
     el: "#app",
     components: {
         ProfileCover,
-        Timeline
+        Timeline,
+        // Select2,
+
         // PageButton
         // Datepicker
     },
@@ -31,10 +34,11 @@ new Vue({
         status: '',
         current: 1,
         pagedata: {},
-        isActive: true,
+        isActive: false,
         isToolbar: false,
         checkboxModel: [],
         checked: [],
+
     },
     created: function () {
         var vue = this;
@@ -77,11 +81,12 @@ new Vue({
             }
         }
 
-        // vue.render();
 
 
     },
     methods: {
+
+
         incrementTotal: function (id) {
             this.total += 1
             History.pushState({state: id}, "State", '?page=' + id.toString());
@@ -147,7 +152,7 @@ new Vue({
             let vue = this;
             let _url = "/admin/posts/";
             if (!type) {
-                _url += 'list'
+                _url += 'listgroup'
             }
             else {
                 _url += type;

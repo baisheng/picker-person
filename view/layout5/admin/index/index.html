@@ -338,6 +338,13 @@
 
 {% block script %}
 
+    <script>
+        // @formatter:off
+
+        TERMS = <$ snippet_terms | safe $>;
+
+        // @formatter:on
+    </script>
     <script type="text/javascript" src="/static/components/pages/index/index.js"></script>
 
 {% endblock %}

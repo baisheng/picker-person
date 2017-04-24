@@ -1160,9 +1160,10 @@ export default class extends Base {
 
         let type = this.get('type');
         let query = {};
-        query.type = "article";
+        // query.type = "article";
         query.status = ['NOT IN', 'trash']
 
+        // query.type = "";
         let fields = [];
         fields.push('id');
         fields.push('author');
@@ -1179,26 +1180,44 @@ export default class extends Base {
 
         if (!think.isEmpty(type)) {
             query.type = type;
+            switch (query.type) {
+                case "article":
+                    break;
+                case "resume":
+                    fields.push('content_json')
+                    // fields.push('content')
+
+                    break;
+                case "snippets":
+                    break;
+                case "pages":
+                    break;
+            }
         }
 
         let dao = this.model('posts', {aid: this.aid});
 
-        switch (query.type) {
-            case "article":
-                break;
-            case "resume":
-                fields.push('content_json')
-                // fields.push('content')
 
-                break;
-            case "snippets":
-                break;
-            case "pages":
-                break;
-        }
 
 
         let list = await dao.where(query).field(fields.join(",")).order('modified DESC').page(this.get("page"), 10).countSelect();
+
+        //
+        // let doc_group = {};
+        //
+        // for (let i = 0; i < list.data.length; i++) {
+        //     let doc = list.data[i],
+        //         cate = doc.type,
+        //         doc_item = doc_group[cate];
+        //
+        //     if (doc_item) {
+        //         doc_group[cate].push(doc);
+        //     } else {
+        //         doc_group[cate] = [doc];
+        //     }
+        // }
+        //
+        // console.log(JSON.stringify(doc_group))
 
         let _taxonomy = this.model('taxonomy');
 
@@ -1233,5 +1252,127 @@ export default class extends Base {
 
         return this.json(list);
     }
+
+
+    async listgroupAction() {
+
+        let type = this.get('type');
+        let query = {};
+        // query.type = "article";
+        query.status = ['NOT IN', 'trash']
+
+        // query.type = "";
+        let fields = [];
+        fields.push('id');
+        fields.push('author');
+        fields.push('status');
+        fields.push('type');
+        fields.push('title');
+        fields.push('name');
+        fields.push('content');
+        fields.push('excerpt');
+        fields.push('date');
+        fields.push('modified');
+        fields.push('parent');
+        fields = unique(fields);
+
+        if (!think.isEmpty(type)) {
+            query.type = type;
+            switch (query.type) {
+                case "article":
+                    break;
+                case "resume":
+                    fields.push('content_json')
+                    // fields.push('content')
+
+                    break;
+                case "snippets":
+                    break;
+                case "pages":
+                    break;
+            }
+        }
+
+        let dao = this.model('posts', {aid: this.aid});
+
+        let _taxonomy = this.model('taxonomy');
+
+
+
+        let list = await dao.where(query).field(fields.join(",")).order('modified DESC').page(this.get("page"), 10).countSelect();
+
+        for (let item of list.data) {
+            item.terms = await _taxonomy.getTermsByObject(item.id);
+
+            if (item.type === 'resume'){
+                item.content_json = JSON.parse(item.content_json)
+
+            }
+
+            if (item.type === 'snippet'){
+                // let _items = [];
+
+                // for (let post of posts) {
+                item.meta = {};
+                if (item.metas.length > 0) {
+                    for (let meta of item.metas) {
+                        // console.log(meta.meta_key + ":" + meta.meta_value);
+                        item.meta[meta.meta_key] = JSON.parse(meta.meta_value);
+                    }
+                }
+                delete item.metas;
+                // _items.push(post);
+                // }
+                // return _items;
+            }
+        }
+
+        let doc_group = {};
+
+        for (let i = 0; i < list.data.length; i++) {
+            let doc = list.data[i],
+                cate = doc.type,
+                doc_item = doc_group[cate];
+
+            if (doc_item) {
+                doc_group[cate].push(doc);
+            } else {
+                doc_group[cate] = [doc];
+            }
+        }
+
+        console.log(JSON.stringify(doc_group))
+
+
+        // 获取内容分类
+
+        // if (query.type === 'resume') {
+        //     for (let resume of list.data) {
+        //         resume.content_json = JSON.parse(resume.content_json)
+        //         // console.log(JSON.stringify(resume.content_json.work[0].company));
+        //
+        //     }
+        // }
+        //
+        // if (query.type === 'snippets') {
+        //     for (let snippt of list.data) {
+        //         console.log(JSON.stringify(snippt))
+        //     }
+        // }
+
+        // list.data['content_json'] = JSON.parse(list.data['content_json']);
+        /**
+         * 处理内容为　JSON 对象
+         */
+        // let treeList = await arr_to_tree(list.data, 0);
+
+        // list.data = treeList;
+
+        list.data = doc_group;
+        // console.log(JSON.stringify(list.data))
+
+        return this.json(list);
+    }
+
 
 }
