@@ -63,12 +63,63 @@
 /******/ 	__webpack_require__.p = "../static";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 466);
+/******/ 	return __webpack_require__(__webpack_require__.s = 471);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 17:
+/***/ 176:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// CodeMirror, copyright (c) by Marijn Haverbeke and others
+// Distributed under an MIT license: http://codemirror.net/LICENSE
+
+var CodeMirror = __webpack_require__(20);
+
+CodeMirror.commands.tabAndIndentMarkdownList = function (cm) {
+    var ranges = cm.listSelections();
+    var pos = ranges[0].head;
+    var eolState = cm.getStateAfter(pos.line);
+    var inList = eolState.list !== false;
+
+    if (inList) {
+        cm.execCommand("indentMore");
+        return;
+    }
+
+    if (cm.options.indentWithTabs) {
+        cm.execCommand("insertTab");
+    } else {
+        var spaces = Array(cm.options.tabSize + 1).join(" ");
+        cm.replaceSelection(spaces);
+    }
+};
+
+CodeMirror.commands.shiftTabAndUnindentMarkdownList = function (cm) {
+    var ranges = cm.listSelections();
+    var pos = ranges[0].head;
+    var eolState = cm.getStateAfter(pos.line);
+    var inList = eolState.list !== false;
+
+    if (inList) {
+        cm.execCommand("indentLess");
+        return;
+    }
+
+    if (cm.options.indentWithTabs) {
+        cm.execCommand("insertTab");
+    } else {
+        var spaces = Array(cm.options.tabSize + 1).join(" ");
+        cm.replaceSelection(spaces);
+    }
+};
+
+/***/ }),
+
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
@@ -9407,61 +9458,10 @@ return CodeMirror$1;
 
 /***/ }),
 
-/***/ 171:
+/***/ 471:
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: http://codemirror.net/LICENSE
-
-var CodeMirror = __webpack_require__(17);
-
-CodeMirror.commands.tabAndIndentMarkdownList = function (cm) {
-    var ranges = cm.listSelections();
-    var pos = ranges[0].head;
-    var eolState = cm.getStateAfter(pos.line);
-    var inList = eolState.list !== false;
-
-    if (inList) {
-        cm.execCommand("indentMore");
-        return;
-    }
-
-    if (cm.options.indentWithTabs) {
-        cm.execCommand("insertTab");
-    } else {
-        var spaces = Array(cm.options.tabSize + 1).join(" ");
-        cm.replaceSelection(spaces);
-    }
-};
-
-CodeMirror.commands.shiftTabAndUnindentMarkdownList = function (cm) {
-    var ranges = cm.listSelections();
-    var pos = ranges[0].head;
-    var eolState = cm.getStateAfter(pos.line);
-    var inList = eolState.list !== false;
-
-    if (inList) {
-        cm.execCommand("indentLess");
-        return;
-    }
-
-    if (cm.options.indentWithTabs) {
-        cm.execCommand("insertTab");
-    } else {
-        var spaces = Array(cm.options.tabSize + 1).join(" ");
-        cm.replaceSelection(spaces);
-    }
-};
-
-/***/ }),
-
-/***/ 466:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(171);
+module.exports = __webpack_require__(176);
 
 
 /***/ })

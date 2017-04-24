@@ -1,0 +1,1050 @@
+{% extends "./_layout.html" %}
+
+{% block style %}
+    <style>
+        fieldset[disabled] .multiselect {
+            pointer-events: none
+        }
+
+        .multiselect__spinner {
+            position: absolute;
+            right: 1px;
+            top: 1px;
+            width: 48px;
+            height: 34px;
+            background: #fff;
+            display: block
+        }
+
+        .multiselect__spinner:after, .multiselect__spinner:before {
+            position: absolute;
+            content: "";
+            top: 50%;
+            left: 50%;
+            margin: -8px 0 0 -8px;
+            width: 16px;
+            height: 16px;
+            border-radius: 100%;
+            border-color: #41b883 transparent transparent;
+            border-style: solid;
+            border-width: 2px;
+            box-shadow: 0 0 0 1px transparent
+        }
+
+        .multiselect__spinner:before {
+            animation: a 2.4s cubic-bezier(.41, .26, .2, .62);
+            animation-iteration-count: infinite
+        }
+
+        .multiselect__spinner:after {
+            animation: a 2.4s cubic-bezier(.51, .09, .21, .8);
+            animation-iteration-count: infinite
+        }
+
+        .multiselect__loading-enter-active, .multiselect__loading-leave-active {
+            transition: opacity .4s ease-in-out;
+            opacity: 1
+        }
+
+        .multiselect__loading-enter, .multiselect__loading-leave-active {
+            opacity: 0
+        }
+
+        .multiselect, .multiselect__input, .multiselect__single {
+            font-family: inherit;
+            font-size: 14px;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation
+        }
+
+        .multiselect {
+            box-sizing: content-box;
+            display: block;
+            position: relative;
+            width: 100%;
+            min-height: 32px;
+            text-align: left;
+            color: #35495e
+        }
+
+        .multiselect * {
+            box-sizing: border-box
+        }
+
+        .multiselect:focus {
+            outline: none
+        }
+
+        .multiselect--disabled {
+            pointer-events: none;
+            opacity: .6
+        }
+
+        .multiselect--active {
+            z-index: 1
+        }
+
+        .multiselect--active .multiselect__current, .multiselect--active .multiselect__input, .multiselect--active .multiselect__tags {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0
+        }
+
+        .multiselect--active .multiselect__select {
+            transform: rotate(180deg)
+        }
+
+        .multiselect--above.multiselect--active .multiselect__current, .multiselect--above.multiselect--active .multiselect__input, .multiselect--above.multiselect--active .multiselect__tags {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0
+        }
+
+        .multiselect__input, .multiselect__single {
+            position: relative;
+            display: inline-block;
+            min-height: 20px;
+            line-height: 20px;
+            border: none;
+            border-radius: 4px;
+            background: #fff;
+            /*padding: 1px 0 0 5px;*/
+            width: 100%;
+            transition: border .1s ease;
+            box-sizing: border-box;
+            /*margin-bottom: 8px*/
+        }
+
+        .multiselect__tag ~ .multiselect__input, .multiselect__tag ~ .multiselect__single {
+            width: auto
+        }
+
+        .multiselect__input:hover, .multiselect__single:hover {
+            border-color: #ddd;
+        }
+
+        .multiselect__input:focus, .multiselect__single:focus {
+            border-color: #ddd;
+            outline: none
+        }
+
+        .multiselect__single {
+            padding-left: 6px;
+            margin-bottom: 8px
+        }
+
+        .multiselect__tags {
+            min-height: 34px;
+            display: block;
+            padding: 6px 34px 0 5px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+            background: #fff
+        }
+
+        .multiselect__tag {
+            position: relative;
+            display: inline-block;
+            padding: 5px 26px 4px 10px;
+            border-radius: 5px;
+            margin-right: 10px;
+            color: #fff;
+            line-height: 1;
+            background: #41b883;
+            margin-bottom: 8px;
+            white-space: nowrap
+        }
+
+        .multiselect__tag-icon {
+            cursor: pointer;
+            margin-left: 7px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            font-weight: 700;
+            font-style: normal;
+            width: 22px;
+            text-align: center;
+            line-height: 22px;
+            transition: all .2s ease;
+            border-radius: 5px
+        }
+
+        .multiselect__tag-icon:after {
+            content: "\D7";
+            color: #266d4d;
+            font-size: 14px
+        }
+
+        .multiselect__tag-icon:focus, .multiselect__tag-icon:hover {
+            background: #369a6e
+        }
+
+        .multiselect__tag-icon:focus:after, .multiselect__tag-icon:hover:after {
+            color: #fff
+        }
+
+        .multiselect__current {
+            min-height: 32px;
+            overflow: hidden;
+            padding: 8px 12px 0;
+            padding-right: 30px;
+            white-space: nowrap;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .multiselect__current, .multiselect__select {
+            line-height: 16px;
+            box-sizing: border-box;
+            display: block;
+            margin: 0;
+            text-decoration: none;
+            cursor: pointer
+        }
+
+        .multiselect__select {
+            position: absolute;
+            width: 40px;
+            height: 32px;
+            right: 1px;
+            top: 1px;
+            padding: 4px 8px;
+            text-align: center;
+            transition: transform .2s ease
+        }
+
+        .multiselect__select:before {
+            position: relative;
+            right: 0;
+            top: 65%;
+            color: #999;
+            margin-top: 4px;
+            border-style: solid;
+            border-width: 5px 5px 0;
+            border-color: #999 transparent transparent;
+            content: ""
+        }
+
+        .multiselect__placeholder {
+            color: #adadad;
+            display: inline-block;
+            margin-bottom: 10px;
+            padding-top: 2px
+        }
+
+        .multiselect--active .multiselect__placeholder {
+            display: none
+        }
+
+        .multiselect__content {
+            position: absolute;
+            list-style: none;
+            display: block;
+            background: #fff;
+            width: 100%;
+            max-height: 240px;
+            overflow: auto;
+            padding: 0;
+            margin: 0;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            z-index: 1
+        }
+
+        .multiselect--above .multiselect__content {
+            bottom: 100%;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            border-bottom: none;
+            border-top: 1px solid #ddd;
+        }
+
+        .multiselect__content::webkit-scrollbar {
+            display: none
+        }
+
+        .multiselect__element {
+            display: block
+        }
+
+        .multiselect__option {
+            display: block;
+            padding: 12px;
+            min-height: 32px;
+            line-height: 16px;
+            text-decoration: none;
+            text-transform: none;
+            vertical-align: middle;
+            position: relative;
+            cursor: pointer;
+            white-space: nowrap
+        }
+
+        .multiselect__option:after {
+            top: 0;
+            right: 0;
+            position: absolute;
+            line-height: 32px;
+            padding-right: 12px;
+            padding-left: 20px
+        }
+
+        .multiselect__option--highlight {
+            background: #41b883;
+            outline: none;
+            color: #fff
+        }
+
+        .multiselect__option--highlight:after {
+            content: attr(data-select);
+            background: #41b883;
+            color: #fff
+        }
+
+        .multiselect__option--selected {
+            background: #f3f3f3;
+            color: #35495e;
+            font-weight: 700
+        }
+
+        .multiselect__option--selected:after {
+            content: attr(data-selected);
+            color: silver
+        }
+
+        .multiselect__option--selected.multiselect__option--highlight {
+            background: #ff6a6a;
+            color: #fff
+        }
+
+        .multiselect__option--selected.multiselect__option--highlight:after {
+            background: #ff6a6a;
+            content: attr(data-deselect);
+            color: #fff
+        }
+
+        .multiselect--disabled {
+            background: #ededed;
+            pointer-events: none
+        }
+
+        .multiselect--disabled .multiselect__current, .multiselect--disabled .multiselect__select, .multiselect__option--disabled {
+            background: #ededed;
+            color: #a6a6a6
+        }
+
+        .multiselect__option--disabled {
+            cursor: text;
+            pointer-events: none
+        }
+
+        .multiselect__option--disabled.multiselect__option--highlight {
+            background: #dedede !important
+        }
+
+        .multiselect-enter-active, .multiselect-leave-active {
+            transition: all .15s ease
+        }
+
+        .multiselect-enter, .multiselect-leave-active {
+            opacity: 0
+        }
+
+        @keyframes a {
+            0% {
+                transform: rotate(0)
+            }
+            to {
+                transform: rotate(2turn)
+            }
+        }
+    </style>
+    <style>
+
+        li .controls .edit, li .controls .del {
+            display: none
+        }
+
+        li .controls .del {
+            cursor: pointer
+        }
+
+        li:hover .controls .edit, li:hover .controls .del, li:hover .controls .reorder {
+            display: inline-block
+        }
+
+        li .controls .reorder {
+            display: none;
+
+            cursor: move
+        }
+
+        li .controls {
+
+            position: absolute;
+            right: 0;
+            top: 4px
+        }
+
+        li .controls i {
+            margin: 0 0 0 5px
+        }
+
+        li .controls i {
+            display: inline-block
+        }
+
+        .input-box {
+            /*background: #fff;*/
+            /*box-shadow: 0 1px 2px rgba(0,0,0,0.16);*/
+            /*margin-bottom: 8px;*/
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sortable-item .controls {
+            display: none;
+            position: absolute;
+
+            top: 6px;
+            right: 16px;
+            box-shadow: 0 0 4px 4px #fff;
+            background: #fff
+        }
+
+        .sortable-item.one-line .controls, #list ul#listing.contact-links li .controls {
+            top: 16px
+        }
+
+        .sortable-item.skill-item .controls {
+            top: 16px
+        }
+
+        .sortable-item .controls i {
+            cursor: pointer
+        }
+
+        .sortable-item .controls i.reorder {
+            cursor: move;
+            margin: 0 0 0 16px
+        }
+
+        .sortable-item .controls i.del {
+            margin: 0 0 0 16px
+        }
+
+        .sortable-item:hover .controls {
+            display: block;
+            /*display: inline-block*/
+
+        }
+
+    </style>
+
+    <style>
+
+
+        @-webkit-keyframes pulse-light {
+            50% {
+                background-color: #e9eff3;
+            }
+        }
+
+        @keyframes pulse-light {
+            50% {
+                background-color: #e9eff3;
+            }
+        }
+
+        /*.button {*/
+        /*border-radius: 28px;*/
+        /*margin: 10% auto 0 auto;*/
+        /*display: block;*/
+        /*position: relative;*/
+        /*background: #fff;*/
+        /*width: 150px;*/
+        /*box-shadow: 0 2px 6px rgba(170, 185, 200, 0.4);*/
+        /*}*/
+        /*.button svg {*/
+        /*display: none;*/
+        /*position: absolute;*/
+        /*left: 50%;*/
+        /*top: 50%;*/
+        /*margin: -15px 0 0 -15px;*/
+        /*fill: #fff;*/
+        /*}*/
+        .button div {
+            /*height: 4px;*/
+            /*margin: -2px 0 0 0;*/
+            /*position: absolute;*/
+            /*top: 50%;*/
+            /*left: 71px;*/
+            /*right: 25px;*/
+            /*background: #d3d7e0;*/
+            /*display: none;*/
+            /*border-radius: 2px;*/
+        }
+
+        /*.button div span {*/
+        /*position: absolute;*/
+        /*background: #28e470;*/
+        /*height: 4px;*/
+        /*left: 0;*/
+        /*top: 0;*/
+        /*width: 0;*/
+        /*display: block;*/
+        /*border-radius: 2px;*/
+        /*}*/
+        /*.button a {*/
+        /*position: relative;*/
+        /*display: block;*/
+        /*background: #3f82d7;*/
+        /*z-index: 2;*/
+        /*line-height: 56px;*/
+        /*height: 56px;*/
+        /*border-radius: 28px;*/
+        /*width: 100%;*/
+        /*text-align: center;*/
+        /*color: #fff;*/
+        /*box-shadow: 0 2px 6px rgba(170, 185, 200, 0.4);*/
+        /*}*/
+        /*.button a span {*/
+        /*cursor: pointer;*/
+        /*display: block;*/
+        /*}*/
+
+        .upload input {
+            visibility: hidden;
+            position: absolute;
+        }
+
+        .upload .button {
+            /*border-radius: 28px;*/
+            border-radius: 4px;
+            /*display: block;*/
+            position: relative;
+            background: #2e3038;
+            /*background: #f5f5f5;*/
+            padding: 0;
+            height: 36px;
+            /*width: 105px;*/
+            box-shadow: 0 2px 6px rgba(170, 185, 200, 0.4);
+
+            /**/
+            /**/
+            /*border-radius: 28px;*/
+            /*margin: 10% auto 0 auto;*/
+            /*display: block;*/
+            /*position: relative;*/
+            /*background: #fff;*/
+            /*width: 105px;*/
+            /*box-shadow: 0 2px 6px rgba(170, 185, 200, 0.4);*/
+        }
+
+        /*.upload .button   svg {*/
+        /*display: none;*/
+        /*position: absolute;*/
+        /*left: 50%;*/
+        /*top: 50%;*/
+        /*margin: -15px 0 0 -15px;*/
+        /*fill: #fff;*/
+        /*}*/
+        .upload .button a {
+            /*position: relative;*/
+            /*display: block;*/
+            /*background: #3f82d7;*/
+            /*z-index: 2;*/
+            /*line-height: 36px;*/
+            /*height: 36px;*/
+            /*width: 100%;*/
+            /*text-align: center;*/
+            /*color: #fff;*/
+            /*-webkit-border-radius: 4px;*/
+            /*-moz-border-radius: 4px;*/
+            /*border-radius: 4px;*/
+        }
+
+        .upload .button a {
+            position: relative;
+            /*display: block;*/
+            /*background: #3f82d7;*/
+            z-index: 2;
+            /*line-height: 36px;*/
+            height: 36px;
+        }
+
+        .upload .button a span {
+            cursor: pointer;
+            display: block;
+        }
+
+        .upload .button a:hover {
+            /*background: #377dd5;*/
+        }
+
+        .upload .button svg {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -12px 0 0 -12px;
+            width: 24px;
+            height: 24px;
+            fill: #009988;
+        }
+
+        .upload .button div {
+            height: 4px;
+            margin: -2px 0 0 0;
+            position: absolute;
+            top: 50%;
+            left: 51px;
+            right: 15px;
+            background: #666978;
+            display: none;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+        }
+
+        .upload .button div span {
+            position: absolute;
+            background: #41da54;
+            height: 4px;
+            left: 0;
+            top: 0;
+            width: 0;
+            display: block;
+            -webkit-transition: all 0.2s ease-in-out;
+            -moz-transition: all 0.2s ease-in-out;
+            -o-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+        }
+
+
+    </style>
+
+
+    <style>
+
+        #resume-preview {
+            min-height: 576px;
+            width: 1024px;
+            position: relative;
+            display: inline-block;
+            background: #fff;
+            max-width: 1024px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+            overflow: hidden;
+            margin-bottom: 24px
+        }
+
+        #resume-preview iframe {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1
+        }
+
+        #resume-preview .share-bar {
+            opacity: 0;
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            margin-left: -168px;
+            width: 336px;
+            height: 48px;
+            background: rgba(24, 97, 242, 0.9);
+            z-index: 2;
+            box-shadow: 0px 16px 24px 0px rgba(0, 0, 0, 0.16), 0px 6px 8px 0px rgba(0, 0, 0, 0.16);
+            -webkit-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            -moz-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            -ms-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            -o-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            display: none
+        }
+
+        #resume-preview:hover .share-bar {
+            opacity: 1
+        }
+
+        #resume-preview .share-bar .bar-item {
+            float: left;
+            width: 112px;
+            height: 100%;
+            cursor: pointer;
+            color: #fff;
+            font-size: 14px;
+            line-height: 50px;
+            text-align: center;
+            font-weight: 500
+        }
+
+        #resume-preview .share-bar .bar-item:hover {
+            background: rgba(0, 0, 0, 0.16)
+        }
+
+        @media screen and (max-width: 1504px) {
+            #resume-preview {
+                width: 100%
+            }
+        }
+
+        /*iframe {*/
+        /*position: fixed;*/
+        /*top: 10vh;*/
+        /*width: 100vw;*/
+        /*height: 90vh;*/
+        /*}*/
+        .frame-wrapper {
+            position: relative;
+            font-size: 0;
+        }
+
+        .frame-wrapper .frame-border {
+            position: absolute;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.13);*/
+            pointer-events: none;
+        }
+
+        .frame-viewer {
+            width: 100%;
+            height: 400px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .frame-viewer img.preview {
+            width: 100%;
+        }
+
+        .frame-viewer iframe {
+
+            width: 1024px;
+            height: 900px;
+            position: fixed;
+            /*top: 10vh;*/
+            /*width: 100vw;*/
+            /*height: 100vh;*/
+
+            /*width: 100%;*/
+            /*height: 100%;*/
+            /*position: relative;*/
+            z-index: 1;
+            border: 0;
+            overflow: hidden;
+            -webkit-transform: scale(0.685);
+            transform: scale(0.825);
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            background-color: white;
+            border: none;
+        }
+
+        .col-md-7 .frame-viewer iframe {
+            -webkit-transform: scale(0.53);
+            transform: scale(0.53);
+        }
+
+        .col-md-6 .frame-viewer iframe {
+            width: 1266px;
+            height: 888px;
+            -webkit-transform: scale(0.45);
+            transform: scale(0.45);
+        }
+
+        .col-md-9 .frame-viewer iframe {
+            width: 1266px;
+            height: 888px;
+            -webkit-transform: scale(0.45);
+            transform: scale(0.45);
+        }
+
+        img.screenshot {
+            width: 100%;
+            box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2), inset 0 2px 0 0 rgba(255, 255, 255, 0.2);
+        }
+
+        a.site-link {
+            display: block;
+            padding: 14px 10px;
+            text-align: center;
+            /*border: 1px solid rgba(43, 50, 57, 0.15);*/
+            border-top: none;
+            background-color: #FDFDFD;
+            /*border-radius: 0 0 3px 3px;*/
+            text-decoration: none;
+        }
+
+        a.site-link i {
+            margin-right: 10px;
+            position: relative;
+            top: 2px;
+        }
+
+        a.site-link:hover {
+            color: #24588a;
+        }
+
+        a.site-link:hover i.icon {
+            -webkit-filter: brightness(70%);
+            filter: brightness(70%);
+        }
+
+        .col-padding {
+            position: relative;
+            min-height: 1px;
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block navbar %}
+    <form class="navbar-form navbar-left" v-if="form == 'basics'">
+        <div class="form-group">
+            <input type="text" class="form-control text-semibold" placeholder="简历名称"
+                   v-model="title">
+        </div>
+        <div class="form-group">
+{#            <multiselect v-model="type" track-by="title" label="title" :options="options" :searchable="false" :close-on-select="true"
+                         :show-labels="false" placeholder="简历类型"></multiselect>#}
+        </div>
+    </form>
+    {#<ul class="nav navbar-nav">#}
+    {#<li :class="form == 'basics' ? 'active' : '' "><a href="#" class="legitRipple" @click="basics()">基本信息</a></li>#}
+    {#<li :class="sectionMenu ? 'active' : ''"><a href="#" class="legitRipple" @click="showSection()">简历模块 <span class="caret"></span></a></li>#}
+    {#<li><a href="#" class="legitRipple">联络方式</a></li>#}
+    {#<li><a href="#" class="legitRipple">样式设计</a></li>#}
+    {#</ul>#}
+    <ul class="nav navbar-nav" v-if="sectionMenu == true">
+        <li :class="form == 'works' ? 'active': '' "><a href="#" @click="form = 'works'">工作经历</a></li>
+        <li :class="form == 'education'? 'active': '' "><a @click="form = 'education'"> 教育背景</a></li>
+        {#<li><a href="#"> 获得奖项</a></li>#}
+        <li :class="form == 'project' ? 'active' : '' "><a @click="form = 'project'"> 项目经验</a></li>
+        <li :class="form == 'skills' ? 'active' : '' "><a @click="form = 'skills'"> 擅长技能</a></li>
+        {#<li><a href="#"> 个人技能</a></li>#}
+    </ul>
+{% endblock %}
+{#{% block page_navbar %}
+    <div class="navbar navbar-default navbar-default-secondary navbar-xs" data-animation="slideInDown" v-if="sectionMenu == true">
+        <ul class="nav navbar-nav no-border visible-xs-block">
+            <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second"><i
+                            class="icon-circle-down2"></i></a></li>
+        </ul>
+
+        <div class="navbar-collapse collapse" id="navbar-second">
+            <ul class="nav navbar-nav">
+                <li :class="form == 'works' ? 'active': '' "><a href="#" @click="form = 'works'">工作经历</a></li>
+                <li :class="form == 'education'? 'active': '' "><a @click="form = 'education'"> 教育背景</a></li>
+                #}{#<li><a href="#"> 获得奖项</a></li>#}{#
+                <li :class="form == 'project' ? 'active' : '' "><a @click="form = 'project'"> 项目经验</a></li>
+                <li :class="form == 'skills' ? 'active' : '' "><a @click="form = 'skills'"> 擅长技能</a></li>
+                #}{#<li><a href="#"> 个人技能</a></li>#}{#
+            </ul>
+
+        </div>
+    </div>
+{% endblock %}#}
+
+{% block sidebar_main %}
+    <div class="sidebar sidebar-main sidebar-default sidebar-fixed">
+        <div class="sidebar-content">
+            <div class="category-title bg-grey-50">
+                <span><a href="/admin"><i class="icon-arrow-left8 position-left"></i>返回</a></span>
+                <div class="heading-elements">
+
+                    <span class="heading-text text-size-small">
+                        <p v-if="status == 'saving'" class="text-teal">
+                            <i class="icon-spinner2 spinner position-left"></i>
+                            正在保存
+                        </p>
+                        <p v-if="status == 'success'" class="text-muted">
+                            <i class="icon-check2"></i> 保存成功
+                        </p>
+                        <p v-else-if="status == 'editing'"><a>保存</a></p>
+                        <p v-else-if="status == 'init'" class="text-muted">内容将实时更新</p>
+                    </span>
+
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="sidebar-category">
+
+                {#<div class="category-title text-muted">#}
+                {#<span>菜单管理</span>#}
+                {#<ul class="icons-list">#}
+                {#<li><a href="#" data-action="collapse"></a></li>#}
+                {#<li><a href="#"><i class="icon-plus22 text-teal"></i></a></li>#}
+                {#</ul>#}
+                {#</div>#}
+
+                <div class="category-content no-padding">
+                    {#<ul class="navigation navigation-main navigation-accordion navigation-bordered">#}
+                    <ul class="navigation navigation-main navigation-accordion">
+
+                        {#<li><a class="list-group-item">工作机会</a></li>#}
+                        {#<li><a class="list-group-item">基本信息</a></li>#}
+                        {#<li><a class="list-group-item">简历模块</a></li>#}
+                        <li :class="form == 'basics' ? 'active' : '' "><a href="#" class="legitRipple"
+                                                                          @click="basics()">基本信息</a></li>
+                        <li :class="sectionMenu ? 'active' : ''"><a href="#" class="legitRipple" @click="showSection()">简历模块
+                                <span class=" icon-arrow-right22"></span></a></li>
+                        {#<li><a class="list-group-item">模块管理</a></li>#}
+                        {#<li><a class="list-group-item">简历设置</a></li>#}
+                        {#<li><a class="list-group-item">我的简历</a></li>#}
+                        {#<li><a class="list-group-item">简历分享/投递</a></li>#}
+                        {#<li><a class="list-group-item">模板管理</a></li>#}
+
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /categories -->
+
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        {#<div class="row" :class="sectionMenu == true ? 'mt-20' : ''">#}
+        <basics-form :resume="resume" :isImage="isImage" v-if="form == 'basics'"></basics-form>
+
+        <works-form :resume="resume" v-on:cancel="cancel" v-if="form == 'works'"></works-form>
+
+        <education-form :resume="resume" v-on:cancel="cancel" v-if="form == 'education'"></education-form>
+
+        <project-form :resume="resume" v-on:cancel="cancel" v-if="form == 'project'"></project-form>
+        <skills-form :resume="resume" v-on:cancel="cancel" v-if="form == 'skills'"></skills-form>
+
+        <div class="col-md-8 col-lg-9">
+            <basics :resume="resume" v-if="form == 'basics'"></basics>
+
+            <works :resume="resume" v-if="form == 'works' || form == 'basics'"></works>
+
+            <education :resume="resume" v-if="form == 'education' || form == 'basics'"></education>
+
+            <project :resume="resume" v-if="form == 'project' || form == 'basics'"></project>
+
+            <skills :resume="resume" v-if="form == 'skills' || form == 'basics'"></skills>
+
+
+            {#
+            {% if resume %}
+                {% include "./_resume_preview.html" %}
+            {% endif %}
+            #}
+
+            {#<div class="panel">#}
+            {#<div class="frame-viewer">#}
+            {#<div class="frame-border"></div>#}
+            {#<div id="preview">#}
+            {#<iframe src="http://registry.jsonresume.org/mudassirali" height="100%" width="100%" name="previewframe"#}
+            {#id="previewframe"></iframe>#}
+            {#</div>#}
+            {#<div class="frame-viewer" id="preview">#}
+            {#<iframe src="/admin/resumes/privew" height="100%" width="100%" name="previewframe" id="previewframe"></iframe>#}
+            {#<iframe :src="iframe.src" ref="frame" @load="load" v-show="iframe.loaded" id="previewframe"></iframe>#}
+            {#</div>#}
+
+            {#</div>#}
+            {#</div>#}
+        </div>
+    </div>
+{% endblock %}
+
+<!-- /main content -->
+
+{% block script %}
+
+    <script src="/static/assets/js/plugins/forms/form.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $(".upload").on("click", ".button a span", function (e) {
+                e.preventDefault();
+                var btn = $(this).parent().parent();
+                btn.next(".file").trigger("click");
+            });
+            $(".upload .file").on("change", function () {
+                var upload = $(this).parent();
+
+                var btn = upload.children(".button");
+                var loadSVG = btn.children("a").children(".load");
+                var loadBar = btn.children("div").children("span");
+                var checkSVG = btn.children("a").children(".check");
+                btn.children("a").children("span").fadeOut(200, function () {
+                    btn.children("a").animate({
+                        width: 36
+                    }, 100, function () {
+                        loadSVG.fadeIn(300);
+                        btn.animate({
+                            width: '100%'
+                        }, '100%', function () {
+                            btn.children("div").fadeIn(200, function () {
+                                upload.ajaxSubmit({
+                                    uploadProgress: function (event, position, total, percentComplete) {
+                                        loadBar.width(percentComplete + "%");
+                                    },
+                                    complete: function (data) {
+
+                                        loadSVG.fadeOut(100, function () {
+                                            checkSVG.fadeIn(100, function () {
+                                                setTimeout(function () {
+//                                                    jQuery.event.trigger("fetch");
+//                                                    jQuery.event.trigger("fetch", data);
+                                                    if (data != null) {
+                                                        eventHub.$emit("fetch", data.responseJSON.data);
+
+                                                    }
+
+                                                    btn.children("div").fadeOut(100, function () {
+                                                        loadBar.width(0);
+                                                        checkSVG.fadeOut(100, function () {
+                                                            btn.children("a").animate({
+                                                                width: '100%'
+                                                            }, '100%');
+                                                            btn.animate({
+                                                                width: '100%'
+                                                            }, '100%', function () {
+                                                                btn.children("a").children("span").fadeIn(100);
+                                                            });
+                                                        });
+                                                    });
+                                                }, 1000);
+                                            });
+                                        });
+                                    }
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+
+        var _RESUME_DATA = <$ resume | dump | safe $>
+
+    </script>
+    <script type="text/javascript" src="/static/components/resumes/index.js"></script>
+
+{% endblock %}

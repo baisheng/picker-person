@@ -162,8 +162,34 @@ global.str_replace = function (search, replace, subject, count) {
  * @param date  时间戳
  * @return  '2015-12-17 15:39:44'
  */
+// /* global dateformat */
+// global.dateformat = function (date, extra) {
+//     let D = new Date(date);
+//     let time = {
+//         "Y": D.getFullYear(),
+//         'm': D.getMonth() + 1,
+//         'd': D.getDate(),
+//         'H': D.getHours(),
+//         'i': D.getMinutes(),
+//         's': D.getSeconds()
+//     }
+//     let key = extra.split(/\W/);
+//     let _date;
+//     for (let k of key) {
+//         time[k] = time[k] < 10 ? "0" + time[k] : time[k]
+//         _date = extra.replace(k, time[k])
+//         extra = _date;
+//     }
+//     return _date;
+// }
+/**
+ * 时间戳格式化 dateformat()
+ * @param extra 'Y-m-d H:i:s'
+ * @param date  时间戳
+ * @return  '2015-12-17 15:39:44'
+ */
 /* global dateformat */
-global.dateformat = function (date, extra) {
+global.dateformat = function (extra, date) {
     let D = new Date(date);
     let time = {
         "Y": D.getFullYear(),
@@ -182,7 +208,6 @@ global.dateformat = function (date, extra) {
     }
     return _date;
 }
-
 /**
  * 数组去重
  * @param arr

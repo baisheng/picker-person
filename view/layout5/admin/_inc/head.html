@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><$ options.title $> - <$ options.description $></title>
+    <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    {#<link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">#}
+    <link href="/static/assets/full/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/core.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/components.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/colors.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/extras/animate.min.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <style>
+        a.delete {
+            z-index: 5;
+            position: relative;
+        }
+
+        a.delete div {
+            width: 76px;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            background: #fefefe;
+            position: absolute;
+            z-index: 5;
+            margin: -20px 0 0 -38px;
+            -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            -moz-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+        }
+
+        a.delete div .confirm,
+        a.delete div .abort {
+            vertical-align: top;
+            line-height: 32px;
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            font-size: 21px !important;
+            top: 4px;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        a.delete div .confirm:before,
+        a.delete div .abort:before {
+            line-height: 32px;
+            display: block;
+        }
+
+        a.delete div .confirm {
+            color: #fff;
+            background: #ef4748;
+            left: 4px;
+        }
+
+        a.delete div .abort {
+            color: #858a95;
+            right: 4px;
+        }
+
+        /* 定制化 */
+        /*html .layer-snippet{background-color:#eee;}*/
+        /*.layer-snippet .layui-layer-title{border:none; background-color:#333; color:#fff;}*/
+
+        /*.runtest {*/
+        /*position: relative;*/
+        /*display: none;*/
+        /*}*/
+
+        .runtest textarea {
+            display: block;
+            /*width: 420px;*/
+            /*height: 200px;*/
+            /*border: 10px solid #F8F8F8;*/
+            /*border-top-width: 0;*/
+            padding: 20px;
+            line-height: 20px;
+            overflow: auto;
+            background-color: #3F3F3F;
+            color: #eee;
+            font-size: 12px;
+            font-family: Courier New;
+        }
+
+        /*.runtest a {*/
+        /*position: absolute;*/
+        /*right: 20px;*/
+        /*bottom: 20px;*/
+        /*}*/
+
+        .layer-photos-demo {
+            margin: 10px 0;
+        }
+
+        .layer-photos-demo img {
+            width: 160px;
+            height: 100px;
+        }
+    </style>
+    <style>
+        #messages {
+            position: fixed;
+            top: 65px;
+            left: 50%;
+            z-index: 110;
+            margin-left: 125px;
+            -webkit-transform: translate(-50%, 0);
+            -moz-transform: translate(-50%, 0);
+            -o-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        #messages .animated {
+            -webkit-animation-duration: 0.2s;
+            animation-duration: 0.2s;
+        }
+
+        @media (max-width: 992px ) {
+            #messages {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #messages {
+                left: 15px;
+                right: 15px;
+                top: 61px;
+                -webkit-transform: translate(0, 0);
+                -moz-transform: translate(0, 0);
+                -o-transform: translate(0, 0);
+                -ms-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        .message {
+            padding: 8px 10px;
+            color: #fff;
+            margin: 0 0 5px 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        .message.success {
+            background: #41da54;
+        }
+
+        .message.info {
+            background: #3f82d7;
+        }
+
+        .message.warning {
+            background: #e4c139;
+        }
+
+        .message.error {
+            background: #ef4748;
+        }
+
+        .message ol {
+            margin: 0;
+            padding: 0 0 0 18px;
+        }
+
+        .message ol li {
+            margin: 4px 0;
+        }
+
+    </style>
+    {% block style %}{% endblock %}
+
+</head>

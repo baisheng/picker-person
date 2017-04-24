@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><$ options.site.title $> - <$ options.site.desc $></title>
+    <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+
+
+    <link href="/static/assets/layout5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/layout5/css/core.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/layout5/css/components.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/layout5/css/colors.min.css" rel="stylesheet" type="text/css">
+
+
+    <link href="/static/assets/css/extras/animate.min.css" rel="stylesheet" type="text/css">
+
+    <!-- /global stylesheets -->
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+
+    <style>
+        .dummy-fixed {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            padding: 15px;
+            width: 100%;
+            height: calc(3em + 30px);
+            /*background: #E2E0D3;*/
+            /*text-align: center;*/
+            z-index: 1090;
+        }
+
+        .editor textarea {
+            border: none;
+            resize: none;
+            outline: none;
+            font-size: 14px;
+            font-family: 'Monaco', courier, monospace;
+            display: inline-block;
+            box-sizing: border-box;
+            height: 42vh !important;;
+            max-height: 350px; /* optional, but recommended */
+            min-height: 350px;
+            overflow-x: hidden; /* for Firefox (issue #5) */
+        }
+
+        .snippet__icon {
+            position: absolute;
+            top: 1.5em;
+            left: 1.5em;
+            fill: #4e4e4f;
+        }
+
+        .snippet {
+            position: absolute;
+            left: 50%;
+            margin: 0 auto;
+            margin-left: -4.5em;
+            width: 9em;
+            height: 3em;
+            font-weight: 400;
+            font-family: 'Maven Pro', sans-serif;
+            -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+            -webkit-transition: -webkit-transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .snippet--active {
+            /* center on screen (padding of parent, half of summary height, half of viewport height) */
+            -webkit-transform: translate3d(0, 15px, 0) translate3d(0, 30vh, 0) translate3d(0, -50vh, 0);
+            transform: translate3d(0, 15px, 0) translate3d(0, 30vh, 0) translate3d(0, -50vh, 0);
+        }
+
+        a.snippet__button {
+            position: relative;
+            z-index: 10;
+            /*display: block;*/
+            /*margin: 0 auto;*/
+            height: 100%;
+            /*border-radius: 10px;*/
+            /*color: #fff;*/
+            /*line-height: 3em;*/
+            -webkit-transition: background-color 0.6s cubic-bezier(0.7, 0, 0.3, 1), -webkit-transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: background-color 0.6s cubic-bezier(0.7, 0, 0.3, 1), transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        a.snippet__button:hover,
+        a.snippet__button:focus {
+            outline: none;
+            color: #fff;
+        }
+
+        .snippet--active a.snippet__button {
+            background-color: #3f3d3d;
+            -webkit-transform: perspective(1000px) translate3d(0, -2.5em, 0);
+            transform: perspective(1000px) translate3d(0, -2.5em, 0);
+        }
+
+        .snippet__text-inner {
+            font-weight: bold;
+        }
+
+        .snippet__final-text,
+        .snippet__initial-text {
+            -webkit-transition: opacity 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: opacity 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .snippet--active .snippet__initial-text {
+            opacity: 0
+        }
+
+        .snippet__final-text {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+        }
+
+        .snippet--active .snippet__final-text {
+            opacity: 1;
+        }
+
+        .snippet_content,
+        .snippet_content::before {
+            position: absolute;
+            bottom: 0%;
+            left: 50%;
+            -webkit-transform: translate3d(-50%, 0%, 0);
+            transform: translate3d(-50%, 0%, 0);
+        }
+
+        .snippet_content {
+            overflow: hidden;
+            min-width: 320px;
+            max-width: 700px;
+            width: 95vw;
+            height: 60vh;
+            /*text-align: right;*/
+            pointer-events: none;
+            /*box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);*/
+            box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
+
+        }
+
+        .snippet--active .snippet_content {
+            pointer-events: auto;
+
+        }
+
+        .snippet_content::before {
+            content: '';
+            z-index: 0;
+            width: 9em;
+            height: 3em;
+            border-radius: 10px;
+            /*background: #fafafa;*/
+            /*background: #4e4e4f;*/
+            -webkit-transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .snippet--active .snippet_content::before {
+            width: 100%;
+            height: 100%;
+            -webkit-transition-delay: 0s;
+            transition-delay: 0s;
+        }
+
+        .snippet_content-inner {
+            position: relative;
+            padding: 3em 4em;
+        }
+
+        .snippet__close {
+            position: absolute;
+            top: 1.5em;
+            right: 1.5em;
+            overflow: hidden;
+            width: 20px;
+            height: 20px;
+            border: none;
+            background: transparent;
+            color: transparent;
+            text-indent: 100%;
+            opacity: 0;
+            backface-visibility: hidden;
+        }
+
+        .snippet__close:focus {
+            outline: none;
+        }
+
+        .snippet--active .snippet__close {
+            opacity: 1;
+            -webkit-transition: opacity 0.8s cubic-bezier(0.7, 0, 0.3, 1) 0.015s;
+            transition: opacity 0.8s cubic-bezier(0.7, 0, 0.3, 1) 0.015s;
+        }
+
+        .snippet__close .icon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #444;
+            text-indent: 0;
+        }
+
+        .snippet__close:hover .icon {
+            /*color: #e48895;*/
+            color: #c82e00;
+
+        }
+
+        .snippet__summary {
+            margin: 0.5em 0 0.75em;
+            width: 100%;
+            color: #f5f5f5;
+            /*text-align: center;*/
+            font-size: 1.15em;
+            line-height: 1.5;
+            -webkit-transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .snippet__action {
+            padding: 0;
+            border: none;
+            background: none;
+        }
+
+        .snippet__action:focus {
+            outline: none;
+        }
+
+        .snippet__action .icon {
+            color: #c82e00;
+        }
+
+        @media screen and (max-width: 26em) {
+            .snippet--active {
+                -webkit-transform: translate3d(0, 15px, 0);
+                transform: translate3d(0, 15px, 0);
+            }
+
+            .snippet_content::before {
+                border-radius: 0
+            }
+
+            .snippet__summary {
+                margin-top: 2em
+            }
+
+            .snippet_content-inner {
+                padding: 1em 1.75em
+            }
+
+            .snippet_content {
+                width: 100vw;
+                height: 100vh;
+            }
+
+        }
+    </style>
+
+    <style>
+        a.delete {
+            z-index: 5;
+            position: relative;
+        }
+
+        a.delete div {
+            width: 76px;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            background: #fefefe;
+            position: absolute;
+            z-index: 5;
+            margin: -20px 0 0 -38px;
+            -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            -moz-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+        }
+
+        a.delete div .confirm,
+        a.delete div .abort {
+            vertical-align: top;
+            line-height: 32px;
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            font-size: 21px !important;
+            top: 4px;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        a.delete div .confirm:before,
+        a.delete div .abort:before {
+            line-height: 32px;
+            display: block;
+        }
+
+        a.delete div .confirm {
+            color: #fff;
+            background: #ef4748;
+            left: 4px;
+        }
+
+        a.delete div .abort {
+            color: #858a95;
+            right: 4px;
+        }
+
+        /* 定制化 */
+        /*html .layer-snippet{background-color:#eee;}*/
+        /*.layer-snippet .layui-layer-title{border:none; background-color:#333; color:#fff;}*/
+
+        /*.runtest {*/
+        /*position: relative;*/
+        /*display: none;*/
+        /*}*/
+
+        .runtest textarea {
+            display: block;
+            /*width: 420px;*/
+            /*height: 200px;*/
+            /*border: 10px solid #F8F8F8;*/
+            /*border-top-width: 0;*/
+            padding: 20px;
+            line-height: 20px;
+            overflow: auto;
+            background-color: #3F3F3F;
+            color: #eee;
+            font-size: 12px;
+            font-family: Courier New;
+        }
+
+        /*.runtest a {*/
+        /*position: absolute;*/
+        /*right: 20px;*/
+        /*bottom: 20px;*/
+        /*}*/
+
+        .layer-photos-demo {
+            margin: 10px 0;
+        }
+
+        .layer-photos-demo img {
+            width: 160px;
+            height: 100px;
+        }
+    </style>
+    <style>
+        #messages {
+            position: fixed;
+            top: 65px;
+            left: 50%;
+            z-index: 110;
+            /*margin-left: 125px;*/
+            -webkit-transform: translate(-50%, 0);
+            -moz-transform: translate(-50%, 0);
+            -o-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        #messages .animated {
+            -webkit-animation-duration: 0.2s;
+            animation-duration: 0.2s;
+        }
+
+        @media (max-width: 992px ) {
+            #messages {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #messages {
+                left: 15px;
+                right: 15px;
+                top: 61px;
+                -webkit-transform: translate(0, 0);
+                -moz-transform: translate(0, 0);
+                -o-transform: translate(0, 0);
+                -ms-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        .message {
+            padding: 8px 10px;
+            color: #fff;
+            margin: 0 0 5px 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        .message.success {
+            background: #41da54;
+        }
+
+        .message.info {
+            background: #3f82d7;
+        }
+
+        .message.warning {
+            background: #e4c139;
+        }
+
+        .message.error {
+            background: #ef4748;
+        }
+
+        .message ol {
+            margin: 0;
+            padding: 0 0 0 18px;
+        }
+
+        .message ol li {
+            margin: 4px 0;
+        }
+
+    </style>
+    {% block style %}{% endblock %}
+
+</head>
+{% if http.controller == 'snippets' %}
+    {% set body_navbar = 'navbar-top' %}
+{% endif %}
+
+<body data-spy="scroll" data-target="#resume-section" data-offset="70" class="{% block body_style %}{% endblock %} <$ body_navbar $>">
+{#<body data-spy="scroll" data-target=".sidebar-fixed" class=" {% block body_style %}{% endblock %}">#}
+
+<div class="dummy-fixed" id="snippet-bar">
+
+    <div class="snippet" :class="isOpen || isOpenSubject ? 'snippet--active': ''">
+        <a id="snippet__button" class="btn bg-primary btn-icon btn-raised  snippet__button"
+           @click="openOrSave" :class="!isActive ? 'disabled': ''" v-if="!isOpenSubject"><!-- Fallback location -->
+            <span class="snippet__text">
+                <span class="snippet__text-inner snippet__initial-text ">
+                    <i class="icon-versions"></i>
+                </span>
+                <span class="snippet__text-inner snippet__final-text">
+                    <i class="icon-sync spinner" v-if="status == 'saving'" ></i>
+                    {#<i class="icon-check text-success" v-else-if="status == 'success'" ></i>#}
+                    {#<i class="icon-warning22 text-danger" v-else-if="status == 'error'" ></i>#}
+                    <i class=" icon-floppy-disk" v-else></i>
+
+                </span>
+            </span>
+        </a>
+        <a @click="openOrSave('subject')" class="btn bg-teal-400 btn-icon btn-raised  snippet__button"
+           :class="!isActive ? 'disabled': ''"><!-- Fallback location -->
+            <span class="snippet__text">
+                <span class="snippet__text-inner snippet__initial-text ">
+                    <i class=" icon-ampersand"></i>
+                </span>
+                <span class="snippet__text-inner snippet__final-text">
+                    <i class="icon-sync spinner" v-if="status == 'saving'" ></i>
+                    {#<i class="icon-check text-success" v-else-if="status == 'success'" ></i>#}
+                    {#<i class="icon-warning22 text-danger" v-else-if="status == 'error'" ></i>#}
+                    <i class="  icon-floppy-disk" v-else></i>
+{##}
+                </span>
+            </span>
+        </a>
+        <div class="snippet_content panel panel-body alpha-grey" v-if="isOpenSubject" v-cloak>
+            <div class="snippet_content-inner">
+                <div class="snippet__summary">
+
+                    <form action="#">
+
+
+                            <div class="panel panel-body">
+                                <div class="text-center">
+                                    <h6 class="no-margin text-semibold">新建主题</h6>
+                                    <p class="content-group-sm text-muted">主题可连接碎片或生产独立内容</p>
+                                </div>
+                                <div class="form-group">
+                                    <label>主题名:</label>
+                                    <input type="text" class="form-control" placeholder="这是一个主题名称">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="display-block">主题类别:</label>
+
+                                    <label class="radio-inline">
+                                        <input type="radio" class="styled" name="gender" value="article">
+                                        文章
+                                    </label>
+
+                                    {#<label class="radio-inline">#}
+                                        {#<input type="radio" class="styled" name="gender">#}
+                                        {#下载#}
+                                    {#</label>#}
+                                    {#<label class="radio-inline">#}
+                                        {#<input type="radio" class="styled" name="gender">#}
+                                        {#商品#}
+                                    {#</label>#}
+                                    {#<label class="radio-inline">#}
+                                        {#<input type="radio" class="styled" name="gender">#}
+                                        {#图片#}
+                                    {#</label>#}
+{##}
+                                    {#<label class="radio-inline">#}
+                                        {#<input type="radio" class="styled" name="gender">#}
+                                        {#视频#}
+                                    {#</label>#}
+                                    {#<label class="radio-inline">#}
+                                        {#<input type="radio" class="styled" name="gender">#}
+                                        {#综合型#}
+                                    {#</label>#}
+                                </div>
+
+                        </div>
+                    </form>
+                    {#<div class="form-group">#}
+                        {#<input type="text">#}
+                    {#</div>#}
+                    {#<div class="editor">#}
+                        {#<textarea class="form-control snippet-editor"#}
+                                  {#placeholder="Remember, be nice!"#}
+                                  {#rows="5"#}
+                                  {#v-model="content"#}
+                                  {#@keyup.ctrl.enter="openOrSave"> </textarea>#}
+                    {#</div>#}
+                </div>
+                <button class="snippet__close snippet__cancel" @click="cancel"><i
+                            class="icon fa fa-fw fa-close"></i>
+                    关闭
+                </button>
+            </div><!-- /snippet_content-inner -->
+        </div><!-- /snippet_content -->
+        <div class="snippet_content panel panel-body alpha-grey" v-else-if="isOpen" v-cloak>
+            <div class="snippet_content-inner">
+                <div class="snippet__summary">
+                    <div class="editor">
+                        <textarea class="form-control snippet-editor"
+                                  placeholder="Remember, be nice!"
+                                  rows="5"
+                                  v-model="content"
+                                  @keyup.ctrl.enter="openOrSave"> </textarea>
+                    </div>
+                </div>
+                <button class="snippet__close snippet__cancel" @click="cancel"><i
+                            class="icon fa fa-fw fa-close"></i>
+                    关闭
+                </button>
+            </div><!-- /snippet_content-inner -->
+        </div><!-- /snippet_content -->
+    </div><!-- /snippet -->
+</div>
+{#<body class="navbar-top  sidebar-opposite-visible ">#}
+<div id="app">
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            <!-- Main content -->
+            <div class="content-wrapper">
+
+                {% block cover %}{% endblock %}
+
+                {% block toolbar %}
+                    <!-- Toolbar -->
+                    <div class="navbar navbar-default navbar-xs navbar-component no-border-radius-top">
+                        <ul class="nav navbar-nav visible-xs-block">
+                            <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+                        </ul>
+
+                        <div class="navbar-collapse collapse" id="navbar-filter">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="#activity" data-toggle="tab"><i class="icon-menu7 position-left"></i> 我的动态</a></li>
+                                {#<li><a href="#schedule" data-toggle="tab"><i class="icon-calendar3 position-left"></i> 日程安排 <span class="badge badge-success badge-inline position-right">32</span></a></li>#}
+                                {#<li><a href="#settings" data-toggle="tab"><i class="icon-cog3 position-left"></i> 系统配置</a></li>#}
+                            </ul>
+
+                            <div class="navbar-right">
+                                <ul class="nav navbar-nav">
+                                    <li><a href="/admin/post"><i class="icon-stack-text position-left"></i> 写文章</a></li>
+                                    {#<li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>#}
+                                    {#<li><a href="#"><i class="icon-images3 position-left"></i> 发图</a></li>#}
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            {#<li><a href="#"><i class="icon-image2"></i> Update cover</a></li>#}
+                                            {#<li><a href="#"><i class="icon-clippy"></i> Update info</a></li>#}
+                                            {#<li><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>#}
+                                            {#<li class="divider"></li>#}
+                                            <li><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>
+                                            <li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /toolbar -->
+                {% endblock %}
+
+                {% block content %}{% endblock %}
+
+
+            </div>
+            <!-- /main content -->
+
+            {#{% block opposite_sidebar %}{% endblock %}#}
+        </div>
+        <!-- /page content -->
+
+    </div>
+    <!-- /page container -->
+
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    var PROFILE_COVER = <$ options.site.profile_cover | safe $>;
+    var lang = <$ 'zh-cn' | language | dump | safe $>;
+</script>
+{#<script type="text/javascript" src="/static/assets/js/fetch.js"></script>#}
+
+<script type="text/javascript" src="/static/assets/js/plugins/loaders/pace.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/bootstrap.min.js"></script>
+<!-- Plugin JS files -->
+<script type="text/javascript" src="/static/assets/js/masonry/masonry.pkgd.min.js"></script>
+
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/selects/select2.min.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
+<!-- /plugin js files -->
+<script type="text/javascript" src="/static/assets/js/plugins/ui/nicescroll.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/drilldown.js"></script>
+<!-- Theme JS files -->
+<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switchery.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/pages/animations_css3.js"></script>
+
+
+<script type="text/javascript" src="/static/assets/js/plugins/ui/headroom/headroom.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/headroom/headroom_jquery.min.js"></script>
+
+
+<script src="/static/assets/js/vue/vue.js"></script>
+<script>
+    Vue.config.debug = true;
+    Vue.config.devtools = true;
+</script>
+
+<script type="text/javascript" src="/static/assets/js/native.history.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/core/app.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/ripple.min.js"></script>
+<script type="text/javascript"
+        src="/static/assets/js/plugins/textarea-autosize/dist/jquery.textarea_autosize.min.js"></script>
+
+<script type="text/javascript">
+    $('textarea.snippet-editor').textareaAutoSize();
+</script>
+<script type="text/javascript" src="/static/components/snippet/snippet-bar.js"></script>
+
+<!-- /theme JS files -->
+<script>
+
+
+    jQuery(document).ready(function ($) {
+
+        // Bottom navbar
+        function headroomBottom() {
+            $(".navbar-fixed-bottom").headroom({
+                classes : {
+                    pinned : "headroom-bottom-pinned",
+                    unpinned : "headroom-bottom-unpinned"
+                },
+                offset: $('.navbar').outerHeight(),
+                onPin : function() {
+                    $('.navbar .dropdown-menu').parent().removeClass('open');
+                }
+            });
+        }
+
+//        $('.page-container').addClass('pb-20');
+//        headroomBottom();
+
+        $(document).on("click", ".delete", function (e) {
+
+            e.preventDefault();
+
+            var _this = $(this);
+
+            if (!_this.hasClass("active")) {
+
+                _this.addClass("active");
+
+                var div = $("<div><i class='icon confirm ion-ios-checkmark-outline'></i><i class='icon abort ion-ios-close-empty'></i></div>");
+                var element = $(this).append(div);
+
+                div.addClass("animated zoomIn");
+
+                div.on("click", ".abort", function () {
+                    div.fadeOut(300, function () {
+                        div.remove();
+                        _this.removeClass("active");
+                    });
+                });
+
+                div.on("click", ".confirm", function () {
+
+                    if (_this.hasClass("ajax")) {
+                        $.ajax({
+                            method: "POST",
+                            url: _this.attr("href"),
+                            success: function () {
+                                div.fadeOut(300, function () {
+                                    div.remove();
+                                    _this.removeClass("active");
+                                });
+                                eventHub.$emit("fetch");
+                                $.event.trigger({
+                                    type: "fetch"
+                                });
+                            }
+                        });
+                    } else {
+                        window.location = _this.attr("href");
+                    }
+                });
+
+            }
+
+        });
+        var focus;
+
+        $(window).focus(function () {
+            focus = true;
+        }).blur(function () {
+            focus = false;
+        });
+
+        setInterval("getMessages(focus)", 1000);
+
+//            setTabs();
+
+    });
+
+
+    function getMessages(focus) {
+
+        if (focus && document.hasFocus()) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/ajax/messages",
+                data: {
+                    method: "getMessages"
+                },
+                dataType: "json",
+                success: function (message) {
+                    if (!jQuery.isEmptyObject(message)) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/admin/ajax/messages",
+                            data: {
+                                method: "deleteMessage",
+                                index: message.index
+                            },
+                            success: function () {
+
+                                var element = $(message.html).appendTo("#messages");
+
+                                element.addClass("animated fadeInDown");
+
+                                setTimeout(function () {
+                                    element.removeClass("fadeInDown").addClass("fadeOutUp");
+                                    element.one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function () {
+                                        element.remove();
+                                    });
+                                }, 2200);
+
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+    }
+</script>
+
+{% block script %}{% endblock %}
+
+</body>
+</html>

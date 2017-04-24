@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><$ options.title $> - <$ options.description $></title>
+    <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    {#<link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">#}
+    <link href="/static/assets/full/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/core.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/components.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/colors.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/extras/animate.min.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <style>
+        a.delete {
+            z-index: 5;
+            position: relative;
+        }
+
+        a.delete div {
+            width: 76px;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            background: #fefefe;
+            position: absolute;
+            z-index: 5;
+            margin: -20px 0 0 -38px;
+            -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            -moz-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+        }
+
+        a.delete div .confirm,
+        a.delete div .abort {
+            vertical-align: top;
+            line-height: 32px;
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            font-size: 21px !important;
+            top: 4px;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        a.delete div .confirm:before,
+        a.delete div .abort:before {
+            line-height: 32px;
+            display: block;
+        }
+
+        a.delete div .confirm {
+            color: #fff;
+            background: #ef4748;
+            left: 4px;
+        }
+
+        a.delete div .abort {
+            color: #858a95;
+            right: 4px;
+        }
+
+        /* 定制化 */
+        /*html .layer-snippet{background-color:#eee;}*/
+        /*.layer-snippet .layui-layer-title{border:none; background-color:#333; color:#fff;}*/
+
+        /*.runtest {*/
+        /*position: relative;*/
+        /*display: none;*/
+        /*}*/
+
+        .runtest textarea {
+            display: block;
+            /*width: 420px;*/
+            /*height: 200px;*/
+            /*border: 10px solid #F8F8F8;*/
+            /*border-top-width: 0;*/
+            padding: 20px;
+            line-height: 20px;
+            overflow: auto;
+            background-color: #3F3F3F;
+            color: #eee;
+            font-size: 12px;
+            font-family: Courier New;
+        }
+
+        /*.runtest a {*/
+        /*position: absolute;*/
+        /*right: 20px;*/
+        /*bottom: 20px;*/
+        /*}*/
+
+        .layer-photos-demo {
+            margin: 10px 0;
+        }
+
+        .layer-photos-demo img {
+            width: 160px;
+            height: 100px;
+        }
+    </style>
+    <style>
+        #messages {
+            position: fixed;
+            top: 65px;
+            left: 50%;
+            z-index: 110;
+            margin-left: 125px;
+            -webkit-transform: translate(-50%, 0);
+            -moz-transform: translate(-50%, 0);
+            -o-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        #messages .animated {
+            -webkit-animation-duration: 0.2s;
+            animation-duration: 0.2s;
+        }
+
+        @media (max-width: 992px ) {
+            #messages {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #messages {
+                left: 15px;
+                right: 15px;
+                top: 61px;
+                -webkit-transform: translate(0, 0);
+                -moz-transform: translate(0, 0);
+                -o-transform: translate(0, 0);
+                -ms-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        .message {
+            padding: 8px 10px;
+            color: #fff;
+            margin: 0 0 5px 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        .message.success {
+            background: #41da54;
+        }
+
+        .message.info {
+            background: #3f82d7;
+        }
+
+        .message.warning {
+            background: #e4c139;
+        }
+
+        .message.error {
+            background: #ef4748;
+        }
+
+        .message ol {
+            margin: 0;
+            padding: 0 0 0 18px;
+        }
+
+        .message ol li {
+            margin: 4px 0;
+        }
+
+    </style>
+    {% block style %}{% endblock %}
+
+</head>
+
+<body class="navbar-top-md-xs  has-detached-right">
+
+{#<body class="navbar-top  sidebar-opposite-visible ">#}
+<div id="app">
+
+    <!-- Multiple navbars wrapper -->
+    <div class="navbar-fixed-top">
+
+        <!-- Main navbar -->
+        <div class="navbar navbar-inverse">
+            <div class="navbar-header navbar-inverse">
+                <a class="navbar-brand" href="index.html"><img src="/static/assets/images/logo_light.png" alt=""></a>
+                <ul class="nav navbar-nav">
+                    {#<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-magazine position-left"></i></a></li>#}
+                    <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class=" icon-feed position-left"></i>发现</a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="navbar-collapse collapse" id="navbar-mobile">
+                <ul class="nav navbar-nav">
+                    <li :class="form == 'basics' ? 'active' : '' "><a @click="basics()">基本信息</a></li>
+                    <li :class="sectionMenu ? 'active' : ''"><a @click="showSection()">简历模块</a></li>
+                    <li class="disabled"><a>联络方式</a></li>
+                    <li class="disabled"><a>样式设计</a></li>
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class=""><i class="icon-plus22 position-left"></i>新简历</a></li>
+
+                    <li>
+                        <a href="#">
+                            <i class="icon-cog3"></i>
+                            <span class="visible-xs-inline-block position-right">Ic</span>
+                        </a>
+                    </li>
+
+                    <li class="dropdown dropdown-user">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="/static/assets/images/avatar.png" alt="">
+                            <span>Victoria</span>
+                            <i class="caret"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="#"><i class="icon-user-plus"></i> 个人信息</a></li>
+                            {#<li><a href="#"><i class="icon-coins"></i> My balance</a></li>#}
+                            {#<li><a href="#"><span class="badge badge-warning pull-right">58</span> <i class="icon-comment-discussion"></i> Messages</a></li>#}
+                            <li class="divider"></li>
+                            <li><a href="#"><i class="icon-cog5"></i> 账户设置</a></li>
+                            <li><a href="#"><i class="icon-switch2"></i> 登出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /main navbar -->
+
+
+        <!-- Second navbar -->
+        <div class="navbar navbar-default navbar-xs ">
+            <ul class="nav navbar-nav no-border visible-xs-block ">
+                <li><a class=" collapsed pull-left" href="../index.html"><i class="icon-arrow-left7"></i></a></li>
+
+                <li><a class=" collapsed pull-right" data-toggle="collapse" data-target="#navbar-second-toggle"><i
+                                class="icon-circle-down2"></i></a></li>
+            </ul>
+
+            <div class="navbar-collapse collapse" id="navbar-second-toggle">
+                <ul class="nav navbar-nav ">
+                    <li class="visible-lg-block"><a href="/admin"><i class="text-teal-400 icon-arrow-left7"></i></a>
+                    </li>
+                    <li class="disabled">
+                        {#<a><i class="text-primary-400 icon-sync spinner position-left"></i>内容自动保存</a>#}
+                        <a v-if="status == 'saving'" class="text-teal">
+                            <i class="icon-sync spinner position-left"></i>
+                            保存中...
+                        </a>
+                        <a v-if="status == 'success'" class="text-muted">
+                            已保存
+                        </a>
+                        <a v-else-if="status == 'editing'">修改中...</a>
+                        <a v-else-if="status == 'init'" class="text-muted">内容将自动保存</a>
+                    </li>
+                    <template v-if="sectionMenu == true">
+                        <li :class="form == 'works' ? 'active': '' "><a @click="form = 'works'"><i
+                                        class=" icon-briefcase3 position-left"></i>工作经历 </a></li>
+                        <li :class="form == 'education'? 'active': '' "><a @click="form = 'education'"><i
+                                        class=" icon-graduation2 position-left"></i>教育背景 </a></li>
+                        <li :class="form == 'project' ? 'active' : '' "><a @click="form = 'project'"><i
+                                        class="icon-thumbs-up3 position-left"></i>项目经验 </a></li>
+                        <li :class="form == 'skills' ? 'active' : '' "><a @click="form = 'skills'"><i
+                                        class=" icon-stats-bars3 position-left"></i>擅长技能 </a></li>
+                        {#<li><a href="#"><i class="icon-trophy3 position-left"></i>获得荣誉 </a></li>#}
+
+                    </template>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="disabled"><a><i class="icon-eye position-left"></i> 预览</a></li>
+                    <li class="disabled"><a><i class="icon-cog position-left"></i> 简历设置</a></li>
+                    <li class="disabled"><a><i class=" icon-paperplane position-left"></i> 发布</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /second navbar -->
+
+    </div>
+    <!-- /multiple navbars wrapper -->
+
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+            <!-- Main sidebar -->
+            {% block sidebar_main %}{% endblock %}
+            <!-- /main sidebar -->
+
+            <!-- Secondary sidebar -->
+            {% block sidebar_secondary %}{% endblock %}
+            <!-- /secondary sidebar -->
+
+            <!-- Main content -->
+            <div class="content-wrapper ">
+
+                {% block fab_menu %}{% endblock %}
+                {% block page_navbar %} {% endblock %}
+                <!-- Page header -->
+                {% block page_header %}{% endblock %}
+                <!-- /page header -->
+
+                <!-- Content area -->
+                <div class="content">
+                    <div class="sidebar-detached affix-top">
+                        <div class="sidebar sidebar-default">
+                            <div class="sidebar-content">
+
+                                <!-- Support -->
+                                <div class="sidebar-category no-margin">
+                                    <div class="category-title">
+                                        <span>简历设置</span>
+                                        <i class="icon-menu7 pull-right"></i>
+                                    </div>
+
+                                    {#<div class="category-content">#}
+                                    {#<a href="http://kopyov.ticksy.com" class="btn bg-danger-400 btn-block" target="_blank"><i class="icon-lifebuoy position-left"></i> Item support</a>#}
+                                    {#</div>#}
+                                </div>
+                                <!-- /support -->
+                                <div class="sidebar-category">
+
+                                    <div class="category-content no-padding">
+                                        <div class="panel-group" id="accordion1">
+                                            <div class="panel panel-white">
+                                                <div class="panel-heading">
+                                                    <div class="panel-title text-semibold">
+                                                        <a data-toggle="collapse" data-parent="#accordion1"
+                                                           href="#accordion-group1" aria-expanded="true"> 简历设置</a>
+                                                    </div>
+                                                </div>
+                                                <div id="accordion-group1" class="panel-collapse collapse in"
+                                                     aria-expanded="false" style="height: 0px;">
+                                                    <div class="panel-body">
+                                                        可见性 : 隐私、公开、加密码
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="panel panel-white">
+                                                <div class="panel-heading">
+                                                    <div class="panel-title text-semibold">
+                                                        <a class="collapsed" data-toggle="collapse"
+                                                           data-parent="#accordion1" href="#accordion-group2"
+                                                           aria-expanded="false">简历卡设置</a>
+                                                    </div>
+                                                </div>
+                                                <div id="accordion-group2" class="panel-collapse collapse"
+                                                     aria-expanded="false" style="height: 0px;">
+                                                    <div class="panel-body">
+                                                        简历卡 : 背景图、标签、定制信息
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="panel panel-white">
+                                                <div class="panel-heading">
+                                                    <div class="panel-title text-semibold">
+                                                        <a class="" data-toggle="collapse" data-parent="#accordion1"
+                                                           href="#accordion-group3" aria-expanded="true">其它</a>
+                                                    </div>
+                                                </div>
+                                                <div id="accordion-group3" class="panel-collapse collapse "
+                                                     aria-expanded="false">
+                                                    <div class="panel-body">
+                                                        简历个性化 : 域名、是否允许评论、简历下载、简历打印等
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                {#
+                                                                <!-- Navigation -->
+                                                                <div class="sidebar-category">
+                                                                    <div class="category-content no-padding">
+                                                                        <ul class="nav navigation">
+                                                                            <li class="navigation-divider no-margin-top"></li>
+                                                                            <li class="navigation-header"><i class="icon-history pull-right"></i> Version history</li>
+                                                                            <li class=""><a href="#basics">Version 1.5 <span class="text-muted text-regular pull-right">15.01.2017</span></a></li>
+                                                                            <li class=""><a href="#v_1_4">Version 1.4 <span class="text-muted text-regular pull-right">01.09.2016</span></a></li>
+                                                                            <li class=""><a href="#education">Version 1.3 <span class="text-muted text-regular pull-right">01.04.2016</span></a></li>
+                                                                            <li>
+                                                                                <a href="#v_1_2_1" class="has-ul">Version 1.2 <span class="text-muted text-regular pull-right">16.12.2015</span></a>
+                                                                                <ul class="hidden-ul">
+                                                                                    <li><a href="#v_1_2_1">Version 1.2.1 <span class="text-muted text-regular pull-right">16.12.2015</span></a></li>
+                                                                                    <li><a href="#v_1_2">Version 1.2 <span class="text-muted text-regular pull-right">02.12.2015</span></a></li>
+                                                                                </ul>
+                                                                            </li>
+                                                                            <li><a href="#v_1_1">Version 1.1 <span class="text-muted text-regular pull-right">21.10.2015</span></a></li>
+                                                                            <li><a href="#release">Initial release <span class="text-muted text-regular pull-right">01.10.2015</span></a></li>
+                                                                            <li class="navigation-divider"></li>
+                                                                            <li class="navigation-header"><i class="icon-gear pull-right"></i> Extras</li>
+                                                                            <li><a href="http://themeforest.net/user/kopyov" target="_blank"><i class="icon-bubbles4 text-slate-400"></i> Contact me</a></li>
+                                                                            <li><a href="http://kopyov.ticksy.com" target="_blank"><i class="icon-lifebuoy text-slate-400"></i> Support</a></li>
+                                                                            <li><a href="http://themeforest.net/user/kopyov/portfolio?ref=Kopyov" target="_blank"><i class="icon-rocket text-slate-400"></i> Other templates</a></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                #} <!-- /navigation -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-detached">
+                        <div class="content-detached">
+                            <div id="messages"></div>
+
+                            {% block content %}{% endblock %}
+                        </div>
+                    </div>
+
+
+                    <!-- Footer -->
+                    {% block footer %}
+                        <div class="footer text-muted">
+                            &copy; 2017. Power by <a
+                                    href=""
+                                    target="_blank">Picker</a>
+                        </div>
+                    {% endblock %}
+                    <!-- /footer -->
+
+                </div>
+                <!-- /content area -->
+
+            </div>
+            <!-- /main content -->
+
+
+            <!-- Opposite sidebar -->
+            {% block opposite_sidebar %}
+                <!-- Detached sidebar -->
+                <div class="sidebar-detached">
+                    <div class="sidebar sidebar-default">
+                        <div class="sidebar-content">
+
+                            <!-- Sidebar search -->
+                            <div class="sidebar-category">
+                                <div class="category-title">
+                                    <span>Search</span>
+                                    <ul class="icons-list">
+                                        <li><a href="#" data-action="collapse"></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="category-content">
+                                    <form action="#">
+                                        <div class="has-feedback has-feedback-left">
+                                            <input type="search" class="form-control" placeholder="Search">
+                                            <div class="form-control-feedback">
+                                                <i class="icon-search4 text-size-base text-muted"></i>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /sidebar search -->
+
+
+                            <!-- Sub navigation -->
+                            <div class="sidebar-category">
+                                <div class="category-title">
+                                    <span>Navigation</span>
+                                    <ul class="icons-list">
+                                        <li><a href="#" data-action="collapse"></a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="category-content no-padding">
+                                    <ul class="navigation navigation-alt navigation-accordion">
+                                        <li class="navigation-header">Category title</li>
+                                        <li><a href="#"><i class="icon-googleplus5"></i> Link</a></li>
+                                        <li><a href="#"><i class="icon-googleplus5"></i> Another link</a></li>
+                                        <li><a href="#"><i class="icon-portfolio"></i> Link with label <span
+                                                        class="label bg-success-400">Online</span></a></li>
+                                        <li class="navigation-divider"></li>
+                                        <li>
+                                            <a href="#"><i class="icon-cog3"></i> Menu levels</a>
+                                            <ul>
+                                                <li><a href="#"><i class="icon-IE"></i> Second level</a></li>
+                                                <li>
+                                                    <a href="#"><i class="icon-firefox"></i> Second level with child</a>
+                                                    <ul>
+                                                        <li><a href="#"><i class="icon-android"></i> Third level</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#"><i class="icon-apple2"></i> Third level with
+                                                                child</a>
+                                                            <ul>
+                                                                <li><a href="#"><i class="icon-html5"></i> Fourth level</a>
+                                                                </li>
+                                                                <li><a href="#"><i class="icon-css3"></i> Fourth
+                                                                        level</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li><a href="#"><i class="icon-windows"></i> Third level</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#"><i class="icon-chrome"></i> Second level</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- /sub navigation -->
+
+
+                            <!-- Form sample -->
+                            <div class="sidebar-category">
+                                <div class="category-title">
+                                    <span>Form example</span>
+                                    <ul class="icons-list">
+                                        <li><a href="#" data-action="collapse"></a></li>
+                                    </ul>
+                                </div>
+
+                                <form action="#" class="category-content">
+                                    <div class="form-group">
+                                        <label>Your name:</label>
+                                        <input type="text" class="form-control" placeholder="Username">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Your password:</label>
+                                        <input type="password" class="form-control" placeholder="Password">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Your message:</label>
+                                        <textarea rows="3" cols="3" class="form-control"
+                                                  placeholder="Default textarea"></textarea>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <button type="reset" class="btn btn-danger btn-block">Reset</button>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <button type="submit" class="btn btn-info btn-block">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /form sample -->
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /detached sidebar -->
+            {% endblock %}
+            <!-- /opposite sidebar -->
+
+        </div>
+        <!-- /page content -->
+    </div>
+    <!-- /page container -->
+
+</div>
+
+{% block components %}{% endblock %}
+<!-- @formatter:off -->
+<script type="text/javascript">
+    //    <$ controller.lang $>
+    var lang =<$ 'zh-cn' | language | dump | safe $>;
+</script>
+<!-- @formatter:on -->
+
+<script type="text/javascript" src="/static/assets/js/fetch.js"></script>
+{#<script type="text/javascript" src="/static/layui/layui.js"></script>#}
+
+<script type="text/javascript" src="/static/assets/js/plugins/loaders/pace.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/bootstrap.min.js"></script>
+{#<script type="text/javascript" src="/static/assets/js/plugins/loaders/blockui.min.js"></script>#}
+<!-- /core JS files -->
+
+<!-- Plugin JS files -->
+<script type="text/javascript" src="/static/assets/js/masonry/masonry.pkgd.min.js"></script>
+
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/selects/select2.min.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
+<!-- /plugin js files -->
+{#<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/core.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/effects.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/interactions.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/trees/fancytree_all.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/trees/fancytree_childcounter.js"></script>#}
+
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/uniform.min.js"></script>
+{#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>#}
+<script type="text/javascript" src="/static/assets/js/plugins/forms/tags/tagsinput.min.js"></script>
+{##}
+{#<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/core.min.js"></script>#}
+<!-- Theme JS files -->
+{#<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switchery.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switch.min.js"></script>#}
+<script type="text/javascript" src="/static/assets/js/pages/animations_css3.js"></script>
+<script src="/static/assets/js/vue/vue.js"></script>
+<script>
+    Vue.config.debug = true;
+    Vue.config.devtools = true;
+</script>
+
+<script type="text/javascript" src="/static/assets/js/native.history.js"></script>
+{#<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>#}
+
+<script type="text/javascript" src="/static/assets/js/core/app.min.js"></script>
+
+<!-- /theme JS files -->
+<script>
+    jQuery(document).ready(function ($) {
+
+        $(document).on("click", ".delete", function (e) {
+
+            e.preventDefault();
+
+            var _this = $(this);
+
+            if (!_this.hasClass("active")) {
+
+                _this.addClass("active");
+
+                var div = $("<div><i class='icon confirm ion-ios-checkmark-outline'></i><i class='icon abort ion-ios-close-empty'></i></div>");
+                var element = $(this).append(div);
+
+                div.addClass("animated zoomIn");
+
+                div.on("click", ".abort", function () {
+                    div.fadeOut(300, function () {
+                        div.remove();
+                        _this.removeClass("active");
+                    });
+                });
+
+                div.on("click", ".confirm", function () {
+
+                    if (_this.hasClass("ajax")) {
+                        $.ajax({
+                            method: "POST",
+                            url: _this.attr("href"),
+                            success: function () {
+                                div.fadeOut(300, function () {
+                                    div.remove();
+                                    _this.removeClass("active");
+                                });
+                                $.event.trigger({
+                                    type: "fetch"
+                                });
+                            }
+                        });
+                    } else {
+                        window.location = _this.attr("href");
+                    }
+                });
+
+            }
+
+        });
+        var focus;
+
+        $(window).focus(function () {
+            focus = true;
+        }).blur(function () {
+            focus = false;
+        });
+
+        setInterval("getMessages(focus)", 1000);
+
+//            setTabs();
+
+    });
+
+
+    function getMessages(focus) {
+
+        if (focus && document.hasFocus()) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/ajax/messages",
+                data: {
+                    method: "getMessages"
+                },
+                dataType: "json",
+                success: function (message) {
+                    if (!jQuery.isEmptyObject(message)) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/admin/ajax/messages",
+                            data: {
+                                method: "deleteMessage",
+                                index: message.index
+                            },
+                            success: function () {
+
+                                var element = $(message.html).appendTo("#messages");
+
+                                element.addClass("animated fadeInDown");
+
+                                setTimeout(function () {
+                                    element.removeClass("fadeInDown").addClass("fadeOutUp");
+                                    element.one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function () {
+                                        element.remove();
+                                    });
+                                }, 2200);
+
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+    }
+</script>
+
+<script>
+    /* ------------------------------------------------------------------------------
+     *
+     *  # Sticky sidebar with native scrollbar
+     *
+     *  Specific JS code additions for layout_sidebar_sticky_native.html blank page
+     *
+     *  Version: 1.0
+     *  Latest update: Aug 1, 2015
+     *
+     * ---------------------------------------------------------------------------- */
+
+    $(function () {
+
+
+        // Resize sidebar on scroll
+        // ------------------------------
+
+        // Resize detached sidebar vertically when bottom reached
+        function resizeDetached() {
+            $(window).on('load scroll', function () {
+                if ($(window).scrollTop() > $(document).height() - $(window).height() - 40) {
+                    $('.sidebar-detached').addClass('fixed-sidebar-space');
+                }
+                else {
+                    $('.sidebar-detached').removeClass('fixed-sidebar-space');
+                }
+            });
+        }
+
+
+        // Affix detached sidebar
+        // ------------------------------
+
+        // Init nicescroll when sidebar affixed
+        $('.sidebar-detached').on('affix.bs.affix', function () {
+            resizeDetached();
+        });
+
+        // Attach BS affix component to the sidebar
+        $('.sidebar-detached').affix({
+            offset: {
+                top: $('.sidebar-detached').offset().top - 20 // top offset - computed line height
+            }
+        });
+
+
+        // Remove affix and scrollbar on mobile
+        $(window).on('resize', function () {
+            setTimeout(function () {
+                if ($(window).width() <= 768) {
+
+                    // Remove affix on mobile
+                    $(window).off('.affix')
+                    $('.sidebar-detached').removeData('affix').removeClass('affix affix-top affix-bottom');
+                }
+            }, 100);
+        }).resize();
+
+    });
+
+
+</script>
+{% block script %}{% endblock %}
+
+</body>
+</html>

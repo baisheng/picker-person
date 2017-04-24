@@ -1,0 +1,272 @@
+{
+  "resume": {
+    "work": [
+      {
+        "company": "阿里巴巴",
+        "endDate": "2016.07",
+        "summary": "负责人工智能相关的智能服务产品、私人助理产品，成为用户在淘宝购物的首选在线服务通道，打造私人助理功能：打车、外卖、听歌、语聊等核心助理功能",
+        "website": "",
+        "position": "产品运营",
+        "startDate": "2015.06",
+        "highlights": [
+          "负责公司各系产品，包括安彼教育网（http://www.9anbi.com）、安彼内部系统、各终端系统的技术研发管理",
+          "责产品部、技术部、日常事务、人员培训、业务系统搭建、团队建设、技术人员招聘等。"
+        ]
+      },
+      {
+        "company": "京东集团",
+        "endDate": "2015.05",
+        "summary": "负责京东商城Crm系统，包括订单查询系统、用户信息系统、交易系统、赔付系统等主要功能页面的产品设计",
+        "website": "",
+        "position": "产品经理",
+        "startDate": "2013.12",
+        "highlights": [
+          "进入华清中科技负责其医疗项目手机端、业务端的延续和重新架构，带领团队为期教育行业打造的(http://aa100.com)的服务端架构、IM服务端架构、外包手机端协议设计。",
+          "负责日常事务管理、人员培训、技术人员招聘等。"
+        ]
+      },
+      {
+        "company": "网易集团",
+        "endDate": "今",
+        "summary": "负责SaaS类后台产品设计，熟悉B端产品的设计理念和核心功能打造，重点打造人工智能方向的核心系统配置产品，让目前市场上的智能硬件、软件企业都可以用我们的平台轻松打造聊天机器人",
+        "website": "",
+        "position": "高级产品经理",
+        "startDate": "2016.08",
+        "highlights": [
+          "负责公司团队组建，日常业务管理",
+          "负责公司的新产品研发",
+          "<code>采撷 CMS</code> <code>采撷教育系统</code> <code>采记（自品牌内容管理系统）</code>"
+        ]
+      }
+    ],
+    "awards": [
+      {
+        "date": "2014-11-01",
+        "title": "Digital Compression Pioneer Award",
+        "awarder": "Techcrunch",
+        "summary": "There is no spoon."
+      }
+    ],
+    "basics": {
+      "name": "郭小采",
+      "email": "baisheng@caixie.ltd",
+      "label": "产品经理",
+      "phone": "18911894578",
+      "picture": "http://data.picker.cc/vrjBywDds24R6zw2NMs7kOTw.jpg",
+      "summary": "10年以上互联网UED和产品经理，对工具、社交、电商、旅游、金融类产品都有较深的理解和丰富的项目经验，熟悉前台\\后台、WEB\\APP、2B\\2C类产品设计。",
+      "website": "http://baisheng.me",
+      "location": {
+        "city": "杭州",
+        "region": "丰台区",
+        "address": "芳星园三区四号楼",
+        "postalCode": "100086",
+        "countryCode": "ZH"
+      },
+      "profiles": [
+        {
+          "url": "",
+          "network": "twitter",
+          "username": "baisheng"
+        },
+        {
+          "url": "",
+          "network": "github",
+          "username": "baisheng@gmail.com"
+        },
+        {
+          "url": "",
+          "network": "facebook",
+          "username": "baisheng"
+        },
+        {
+          "url": "",
+          "network": "dribbble",
+          "username": "baisheng@gmail.com"
+        }
+      ],
+      "highlights": [
+        "如果你不喜欢某个人，要么随他去，要么击垮他，不要只是停留于口头攻击。"
+      ]
+    },
+    "skills": [
+      {
+        "name": "Web Development",
+        "level": "pro",
+        "keywords": [
+          "HTML",
+          "CSS",
+          "Javascript"
+        ]
+      },
+      {
+        "name": "JAVASCRIPT 技术栈",
+        "level": "pro",
+        "keywords": [
+          "NODE.JS",
+          "JQUERY",
+          "VUE",
+          "AngularJS",
+          "REACTJS",
+          "BOOTSTRAP",
+          "EXTJS"
+        ]
+      },
+      {
+        "name": "JAVA 技术栈",
+        "level": "pro",
+        "keywords": [
+          "JAVA",
+          "JavaEE",
+          "Spring",
+          "Spring MVC",
+          "Spring Boot",
+          "JFinal"
+        ]
+      }
+
+    ],
+    "version": "An identifier for the schema verion (currently '1'). If there are future updates to the schema, then ResumeFodder can use this field to recognize outdated files and warn you about it.",
+    "education": [
+      {
+        "gpa": "",
+        "area": "计算机应用技术",
+        "courses": [],
+        "endDate": "2009",
+        "startDate": "2006",
+        "studyType": "学士学位",
+        "institution": "北京人民大学"
+      }
+    ],
+    "interests": [
+      {
+        "name": "阅读",
+        "keywords": [
+          "文学",
+          "历史",
+          "古典",
+          "哲学"
+        ]
+      },
+      {
+        "name": "音乐",
+        "keywords": [
+          "Country",
+          "Pop",
+          "Vocal",
+          "Soul",
+          "Folk",
+          "Punk",
+          "Instrumental"
+        ]
+      }
+    ],
+    "languages": [
+      {
+        "fluency": "Native speaker",
+        "language": "English"
+      }
+    ],
+    "volunteer": [
+      {
+        "endDate": "2013-01-01",
+        "summary": "Global movement of free coding clubs for young people.",
+        "website": "http://coderdojo.com/",
+        "position": "Teacher",
+        "startDate": "2012-01-01",
+        "highlights": [
+          "Awarded 'Teacher of the Month'"
+        ],
+        "organization": "CoderDojo"
+      }
+    ],
+    "workLabel": "工作经验",
+    "references": [
+      {
+        "name": "Yolanda.Chang",
+        "position": "采撷科技 CEO",
+        "reference": "专业的学术知识，丰富的实践经验，为我们平台快速推向市场起到了决定性作用！"
+      },
+      {
+        "name": "张世清",
+        "position": "安彼教育科技有限公司董事长",
+        "reference": "专业的学术知识，丰富的实践经验，为我们平台快速推向市场起到了决定性作用！"
+      }
+    ],
+    "publications": [
+      {
+        "isbn": "The ISBN of this publication",
+        "name": "Video compression for 3d media",
+        "summary": "Innovative middle-out compression algorithm that changes the way we store data.",
+        "website": "http://en.wikipedia.org/wiki/Silicon_Valley_(TV_series)",
+        "publisher": "Hooli",
+        "releaseDate": "2014-10-01"
+      }
+    ],
+    "additionalWork": [
+      {
+        "company": "力扑网",
+        "endDate": "2014.4",
+        "summary": "力扑网是一个在线教育视频内容网站，以终身教育为指导目标，向公众推出海量高品质视频课程，并配合考试系统，社交圈子系统以及笔记，答疑，支付等功能，让用户真正学到东西，获得知识，通过在网站的学习和交流实现个人价值与需求，让飞跃从此开始！",
+        "website": "http://leap.cn",
+        "position": "架构师",
+        "startDate": "2013.12",
+        "highlights": [
+          "全自主使用python研发的视频网站编转码系统，采用node.js技术做为网站的前端与路由架构，java技术开放后端的各应用系统的api接口，相对复杂的技术架构给团队带来的是丰富的技术氛围，专业的技术攻关。架构中巧妙利用各技术的特点将整个网站打造成容错率高、扩展性强、高效率的网站平台。"
+        ]
+      },
+      {
+        "company": "安彼教育平台",
+        "endDate": "2015",
+        "summary": "安彼教育网是一个在线教育服务网站，专业针对企业、机构、团体提供完善的在线教育平台（e-learning），产品涵盖知识管理体系、组织学习培训管理体系、学习培训跟踪体系、在线测评考试体系、支付体系等。可以在内部提高企业核心竞争力、人员的技能提升，外部提升企业形象、为行业相关企业、事业单位社会公众建立服务、学习的渠道等。",
+        "website": "http://anbiedu.cn",
+        "position": "架构师",
+        "startDate": "2013",
+        "highlights": []
+      },
+      {
+        "company": "智慧校园",
+        "endDate": "2013.2",
+        "summary": "搭建AA100教育平台底层，主要使其拥有IM系统服务支持、多客户端数据权限访问支持（IOS、android、PC），分布式平台设计，外部设备的数据上传等功能。",
+        "website": "http://anbiedu.cn",
+        "position": "架构师",
+        "startDate": "2012.9",
+        "highlights": []
+      },
+      {
+        "company": "嗨学网 CRM 管理系统",
+        "endDate": "2012.8",
+        "summary": "分布式平台部署，多语言协同开发，将现有的“强讯”ＣＲＭ平台对接，针对其中电话的呼入、呼出销售人员数据分析、市场分析、网站数据的导入等功能做成一体化的平台。",
+        "website": "http://haixue.com",
+        "position": "架构师",
+        "startDate": "2012.3",
+        "highlights": []
+      },
+      {
+        "company": "NEDO（招募系）",
+        "endDate": "2011.4",
+        "summary": "此项目为日本NEDO组织与中国政府合做的《新交通信息系统》中的《招募系》招募系主要提供会员招募、设备管理、呼叫中心系统。在这个系统中包含了与日方系统的整合、硬件厂商的接口、公司内部服务人员的管理，工单任务的流转。",
+        "website": "http://haixue.com",
+        "position": "架构师",
+        "startDate": "2010.10",
+        "highlights": [
+          "复杂的ExtJs交互操作界面，复杂的Socket数据接口协议，服务端分布设计，自动处理PND数据上传以及心跳监控、数据推送。"
+        ]
+      }
+    ],
+    "publicationsLabel": "Overrides the template label for the 'publications' section (e.g. 'Publications (Author)')",
+    "additionalWorkLabel": "项目经验",
+    "additionalPublications": [
+      {
+        "isbn": "",
+        "name": "Publications that you would like to group separately (e.g. editor rather than author, academic publications, etc)",
+        "summary": "",
+        "website": "",
+        "publisher": "All fields under this section are the same as for 'publications'",
+        "releaseDate": ""
+      }
+    ],
+    "additionalPublicationsLabel": ""
+  }
+}
+
+

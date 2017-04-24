@@ -1,0 +1,176 @@
+{% extends "./inc/_base.html" %}
+
+{% block content %}
+  <div class="panel panel-flat">
+    <div class="panel-heading">
+      <h5 class="panel-title">搜索内容<a class="heading-elements-toggle"><i class="icon-more"></i></a></h5>
+      <div class="heading-elements">
+        <ul class="icons-list">
+          <li><a data-action="collapse"></a></li>
+          <li><a data-action="close"></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <form action="#" class="main-search">
+        <div class="input-group content-group">
+          <div class="has-feedback has-feedback-left">
+            <input type="text" class="form-control input-xlg" value="在这里搜索内容">
+            <div class="form-control-feedback">
+              <i class="icon-search4 text-muted text-size-base"></i>
+            </div>
+          </div>
+
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-primary btn-xlg">检索</button>
+          </div>
+        </div>
+
+        <div class="row search-option-buttons">
+          <div class="col-sm-6">
+            <ul class="list-inline list-inline-condensed no-margin-bottom">
+              <li class="dropdown">
+                <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                  <i class="icon-stack2 position-left"></i> 全部分类 <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu">
+                  <li><a href="#"><i class="icon-question7"></i> 文章</a></li>
+                  <li><a href="#"><i class="icon-accessibility"></i> 图片</a></li>
+                  <li><a href="#"><i class="icon-reading"></i> 视频</a></li>
+                  <li><a href="#"><i class="icon-gear"></i> 音频</a></li>
+                  <li><a href="#"><i class="icon-graduation"></i> 链接</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#"><i class="icon-mail-read"></i> 全部</a></li>
+                </ul>
+              </li>
+              <li><a href="#" class="btn btn-link"><i class="icon-reload-alt position-left"></i> 重新搜索</a></li>
+            </ul>
+          </div>
+
+          <div class="col-sm-6 text-right">
+            <ul class="list-inline no-margin-bottom">
+              <li><a href="#" class="btn btn-link"><i class="icon-make-group position-left"></i> 浏览全部</a></li>
+                {#<li><a href="#" class="btn btn-link"><i class="icon-menu7 position-left"></i> Advanced search</a></li>#}
+            </ul>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row" data-plugin="masonry">
+
+      {% for _ in list %}
+          {% set nickname = _.uid | get_nickname | truncate(12, true) %}
+
+        <div class="col-lg-6 col-md-12 col-xs-12 masonry-item">
+          <div class="panel panel-flat">
+              {#            <div class="panel-heading">
+                            <h5 class="panel-title text-semibold">
+                              <a href="/read/{{ _.id }}">{{ _.title | truncate(18, true) }}</a>
+
+                            </h5>
+                          </div>#}
+            <div class="panel-body">
+              <div class="content-group">
+                <ul class="list-inline list-inline-separate">
+                  <li><i class="icon-mention text-teal"></i> <a href="#" class="text-muted">{{ nickname }}</a></li>
+                  <li><a href="#" class="text-muted">采撷科技官网</a></li>
+                  <li><a class="text-size-small text-muted"><time datetime="{{ _.update_time }}">{{ _.update_time | moment }}</time></a></li>
+                    {#<li><a href="#">12 comments</a></li>#}
+                    {#<li><a href="#"><i class="icon-heart6 text-size-base text-pink position-left"></i> 281</a></li>#}
+                </ul>
+                  {#<ul class="list-inline">#}
+                  {#<li><a href="#">12 comments</a></li>#}
+                  {#<li><a href="#"><i class="icon-heart6 text-size-base text-pink position-left"></i> 281</a></li>#}
+                  {#</ul>#}
+                <ul class="list-inline list-inline-condensed heading-text">
+                  <li><a href="#"><span class="label bg-slate-300 ">Image</span></a></li>
+                  <li><a href="#"><span class="label bg-slate-300">Blog</span></a></li>
+                  <li><a href="#"><span class="label bg-slate-300">Post</span></a></li>
+                </ul>
+                <h5 class="blog-title text-semibold" style="margin-top: 0; margin-bottom: 5px;">
+                  <a class="text-default" href="/read/{{ _.id }}">{{ _.title | truncate(18, true) }}</a>
+
+                </h5>
+
+              </div>
+
+              <div class="content-group">
+                  {{ _.description }}
+              </div>
+
+              <div class="thumb content-group">
+                  {#<img src="/static/assets/images/demo/blog/1.jpg" alt="" class="img-responsive">#}
+                <div class="caption-overflow">
+										<span>
+											<a href="blog_single.html"
+                                               class="btn btn-flat border-white text-white btn-rounded btn-icon legitRipple"><i
+                                                      class="icon-arrow-right8"></i></a>
+										</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="panel-footer panel-footer-condensed">
+              <div class="heading-elements not-collapsible">
+                <ul class="list-inline list-inline-separate heading-text text-muted">
+
+                    {#<li><i class="text-teal">@</i> <a href="#"#}
+                    {#class="text-muted">{{ nickname }}#}
+                    {#</a></li>#}
+                  <li>
+                    <i class="fa fa-external-link position-left"></i>
+                    <a class="text-muted" href="">访问</a>
+                  </li>
+
+                </ul>
+                <ul class="list-inline list-inline-separate list-inline-condensed heading-text text-muted pull-right">
+                    {#<li><i class="icon-mention text-teal"></i> <a href="#" class="text-muted">{{ nickname }}</a></li>#}
+                    {#<li><time datetime="{{ _.update_time }}">{{ _.update_time | moment }}</time></li>#}
+                  <li><a href="#" class="text-muted">12 评论</a></li>
+                  <li><a href="#" class="text-muted"><i class="icon-star-empty3 text-size-base position-left"></i> 281</a></li>
+                  <li class="dropdown">
+
+                    <a href="#" class="text-default dropdown-toggle"
+                       data-toggle="dropdown"
+                       aria-expanded="false"><i class="icon-menu text-muted"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-right ">
+                      <li><a href="#"><i class="icon-file-download"></i> 内容下载</a></li>
+                      <li class="divider"></li>
+                      <li><a href="#"><i class="icon-link2"></i> 原文</a></li>
+
+                      <li><a href="#"><i class="icon-file-plus"></i> 修改文章</a></li>
+                      <li><a href="#"><i class="icon-cross2 text-danger"></i> 删除文章</a></li>
+                    </ul>
+                  </li>
+
+                </ul>
+
+                  {#<ul class="list-inline list-inline-condensed heading-text pull-right">#}
+                  {##}
+                  {#<li><a href="/read/{{ _.id }}" class="text-default" ><i class="icon-eye8"></i></a></li>#}
+                  {#<li><a href="/read/{{ _.id }}" class="text-default" ><i class="icon-star-empty3"></i> 赞</a></li>#}
+                  {#</ul>#}
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      {% endfor %}
+  </div>
+  <div class="row">
+    <div class="text-center content-group-lg pt-20">
+
+        {{ pagerData | safe }}
+
+    </div>
+
+  </div>
+
+{% endblock %}
