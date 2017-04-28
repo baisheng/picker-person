@@ -687,9 +687,10 @@
                 padding: 5px
             }
 
-            .editor-preview img{
+            .editor-preview img {
                 width: 30%;
             }
+
             .CodeMirror .CodeMirror-code .cm-tag {
                 color: #63a35c
             }
@@ -753,36 +754,113 @@
 
             /* Based on Sublime Text's Monokai theme */
 
-            .CodeMirror .cm-s-inner.CodeMirror { background: #272822; color: #f8f8f2; }
-            .CodeMirror .cm-s-inner div.CodeMirror-selected { background: #49483E; }
-            .CodeMirror .cm-s-inner .CodeMirror-line::selection, .cm-s-inner .CodeMirror-line > span::selection, .cm-s-inner .CodeMirror-line > span > span::selection { background: rgba(73, 72, 62, .99); }
-            .CodeMirror .cm-s-inner .CodeMirror-line::-moz-selection, .cm-s-inner .CodeMirror-line > span::-moz-selection, .cm-s-inner .CodeMirror-line > span > span::-moz-selection { background: rgba(73, 72, 62, .99); }
-            .CodeMirror .cm-s-inner .CodeMirror-gutters { background: #272822; border-right: 0px; }
-            .CodeMirror .cm-s-inner .CodeMirror-guttermarker { color: white; }
-            .CodeMirror .cm-s-inner .CodeMirror-guttermarker-subtle { color: #d0d0d0; }
-            .CodeMirror .cm-s-inner .CodeMirror-linenumber { color: #d0d0d0; }
-            .CodeMirror .cm-s-inner .CodeMirror-cursor { border-left: 1px solid #f8f8f0; }
+            .CodeMirror .cm-s-inner.CodeMirror {
+                background: #272822;
+                color: #f8f8f2;
+            }
 
-            .CodeMirror .cm-s-inner span.cm-comment { color: #75715e; }
-            .CodeMirror .cm-s-inner span.cm-atom { color: #ae81ff; }
-            .CodeMirror .cm-s-inner span.cm-number { color: #ae81ff; }
+            .CodeMirror .cm-s-inner div.CodeMirror-selected {
+                background: #49483E;
+            }
 
-            .CodeMirror .cm-s-inner span.cm-property, .cm-s-inner span.cm-attribute { color: #a6e22e; }
-            .CodeMirror .cm-s-inner span.cm-keyword { color: #f92672; }
-            .CodeMirror .cm-s-inner span.cm-builtin { color: #66d9ef; }
-            .CodeMirror .cm-s-inner span.cm-string { color: #e6db74; }
+            .CodeMirror .cm-s-inner .CodeMirror-line::selection, .cm-s-inner .CodeMirror-line > span::selection, .cm-s-inner .CodeMirror-line > span > span::selection {
+                background: rgba(73, 72, 62, .99);
+            }
 
-            .CodeMirror .cm-s-inner span.cm-variable { color: #f8f8f2; }
-            .CodeMirror .cm-s-inner span.cm-variable-2 { color: #9effff; }
-            .CodeMirror .cm-s-inner span.cm-variable-3 { color: #66d9ef; }
-            .CodeMirror .cm-s-inner span.cm-def { color: #fd971f; }
-            .CodeMirror .cm-s-inner span.cm-bracket { color: #f8f8f2; }
-            .CodeMirror .cm-s-inner span.cm-tag { color: #f92672; }
-            .CodeMirror .cm-s-inner span.cm-header { color: #ae81ff; }
-            .CodeMirror .cm-s-inner span.cm-link { color: #ae81ff; }
-            .CodeMirror .cm-s-inner span.cm-error { background: #f92672; color: #f8f8f0; }
+            .CodeMirror .cm-s-inner .CodeMirror-line::-moz-selection, .cm-s-inner .CodeMirror-line > span::-moz-selection, .cm-s-inner .CodeMirror-line > span > span::-moz-selection {
+                background: rgba(73, 72, 62, .99);
+            }
 
-            .CodeMirror .cm-s-inner .CodeMirror-activeline-background { background: #373831; }
+            .CodeMirror .cm-s-inner .CodeMirror-gutters {
+                background: #272822;
+                border-right: 0px;
+            }
+
+            .CodeMirror .cm-s-inner .CodeMirror-guttermarker {
+                color: white;
+            }
+
+            .CodeMirror .cm-s-inner .CodeMirror-guttermarker-subtle {
+                color: #d0d0d0;
+            }
+
+            .CodeMirror .cm-s-inner .CodeMirror-linenumber {
+                color: #d0d0d0;
+            }
+
+            .CodeMirror .cm-s-inner .CodeMirror-cursor {
+                border-left: 1px solid #f8f8f0;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-comment {
+                color: #75715e;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-atom {
+                color: #ae81ff;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-number {
+                color: #ae81ff;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-property, .cm-s-inner span.cm-attribute {
+                color: #a6e22e;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-keyword {
+                color: #f92672;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-builtin {
+                color: #66d9ef;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-string {
+                color: #e6db74;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-variable {
+                color: #f8f8f2;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-variable-2 {
+                color: #9effff;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-variable-3 {
+                color: #66d9ef;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-def {
+                color: #fd971f;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-bracket {
+                color: #f8f8f2;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-tag {
+                color: #f92672;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-header {
+                color: #ae81ff;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-link {
+                color: #ae81ff;
+            }
+
+            .CodeMirror .cm-s-inner span.cm-error {
+                background: #f92672;
+                color: #f8f8f0;
+            }
+
+            .CodeMirror .cm-s-inner .CodeMirror-activeline-background {
+                background: #373831;
+            }
+
             .CodeMirror .cm-s-inner .CodeMirror-matchingbracket {
                 text-decoration: underline;
                 color: white !important;
@@ -845,13 +923,16 @@
     <!-- Toolbar -->
     <div class="navbar navbar-default navbar-xs navbar-component no-border-radius-top">
         <ul class="nav navbar-nav visible-xs-block">
-            <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+            <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i
+                            class="icon-menu7"></i></a></li>
         </ul>
 
         <div class="navbar-collapse collapse" id="navbar-filter">
             <ul class="nav navbar-nav">
                 <li class=""><a href="/admin/index"><i class="icon-menu7 position-left"></i> 我的动态</a></li>
-                <li class="active"><a href="#settings" data-toggle="tab"><i class="icon-sync text-muted position-left"></i> {{ post.title }} </a></li>
+                <li class="active"><a href="#settings" data-toggle="tab"><i class=" position-left text-muted"
+                                                                            :class="classObject"></i> {{ post.title }}
+                    </a></li>
             </ul>
 
             <div class="navbar-right">
@@ -860,7 +941,13 @@
                     {#<li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>#}
                     <li><a href="#"><i class="icon-images3 position-left"></i> 发图</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span
+                                    class="visible-xs-inline-block position-right"> Options</span> <span
+                                    class="caret"></span></a>
+                        <button class="btn bg-primary btn-block  legitRipple" type="button">
+                        <i class="icon-paperplane"></i>
+                        <span class="text-size-small">发布</span>
+                        </button>
                         <ul class="dropdown-menu dropdown-menu-right">
                             {#<li><a href="#"><i class="icon-image2"></i> Update cover</a></li>#}
                             {#<li><a href="#"><i class="icon-clippy"></i> Update info</a></li>#}
@@ -876,6 +963,9 @@
     </div>
     <!-- /toolbar -->
 {% endblock %}
+    {% block body_style %}sidebar-opposite-visible{% endblock %}
+
+{#{% block body_style %}{% endblock %}#}
 {% block toolbar_ %}
 
     <!-- Second navbar -->
@@ -907,170 +997,173 @@
             </ul>
 
             {#<ul class="nav navbar-nav">#}
-                {#<li>#}
-                    {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
-                        {#<i class="note-icon-bold"></i>#}
-                    {#</a>#}
-                {#</li>#}
-                {#<li>#}
-                    {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
-                        {#<i class="note-icon-bold"></i>#}
-                    {#</a>#}
-                {#</li>#}
-                {#<li>#}
-                    {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
-                        {#<i class="note-icon-bold"></i>#}
-                    {#</a>#}
-                {#</li>#}
-                {#<li>#}
-                    {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
-                        {#<i class="note-icon-bold"></i>#}
-                    {#</a>#}
-                {#</li>#}
+            {#<li>#}
+            {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
+            {#<i class="note-icon-bold"></i>#}
+            {#</a>#}
+            {#</li>#}
+            {#<li>#}
+            {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
+            {#<i class="note-icon-bold"></i>#}
+            {#</a>#}
+            {#</li>#}
+            {#<li>#}
+            {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
+            {#<i class="note-icon-bold"></i>#}
+            {#</a>#}
+            {#</li>#}
+            {#<li>#}
+            {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
+            {#<i class="note-icon-bold"></i>#}
+            {#</a>#}
+            {#</li>#}
 
 
-                {#<li>#}
-                    {#<a href="#">#}
-                        {#<i class="icon-stats-bars"></i>#}
-                        {#<span class="visible-xs-inline-block position-right">My statistics</span>#}
-                    {#</a>#}
-                {#</li>#}
+            {#<li>#}
+            {#<a href="#">#}
+            {#<i class="icon-stats-bars"></i>#}
+            {#<span class="visible-xs-inline-block position-right">My statistics</span>#}
+            {#</a>#}
+            {#</li>#}
             {#</ul>#}
             {#<ul class="nav navbar-nav">#}
-                {#<div class="note-btn-group btn-group note-style">#}
-                    {#<div class="note-btn-group btn-group">#}
-                        {#<button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"#}
-                                {#tabindex="-1" data-toggle="dropdown" title="" data-original-title="样式"><i#}
-                                    {#class="note-icon-magic"></i> <span class="note-icon-caret"></span></button>#}
-                        {#<div class="dropdown-menu dropdown-style">#}
-                            {#<li><a @click="toggleBlockquote" href="#" data-value="blockquote">#}
-                                    {#<blockquote>引用</blockquote>#}
-                                {#</a></li>#}
-                            {#<li><a href="#" data-value="pre">#}
-                                    {#<pre>代码</pre>#}
-                                {#</a></li>#}
-                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h1"><h1>标题 1</h1></a></li>#}
-                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h2"><h2>标题 2</h2></a></li>#}
-                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h3"><h3>标题 3</h3></a></li>#}
-                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h4"><h4>标题 4</h4></a></li>#}
-                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h5"><h5>标题 5</h5></a></li>#}
-                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h6"><h6>标题 6</h6></a></li>#}
-                        {#</div>#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="note-btn-group btn-group note-font">#}
-                    {#<button @click="toggleBold" type="button"#}
-                            {#class="note-btn btn btn-link btn-sm note-btn-bold legitRipple "#}
-                            {#tabindex="-1" title="" data-original-title="粗体 (⌘+B)"><i class="note-icon-bold"></i>#}
-                    {#</button>#}
-                    {#<button @click="toggleItalic" type="button"#}
-                            {#class="note-btn btn btn-link btn-sm note-btn-underline legitRipple"#}
-                            {#tabindex="-1" title="" data-original-title="下划线 (⌘+U)"><i#}
-                                {#class="note-icon-italic"></i></button>#}
+            {#<div class="note-btn-group btn-group note-style">#}
+            {#<div class="note-btn-group btn-group">#}
+            {#<button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"#}
+            {#tabindex="-1" data-toggle="dropdown" title="" data-original-title="样式"><i#}
+            {#class="note-icon-magic"></i> <span class="note-icon-caret"></span></button>#}
+            {#<div class="dropdown-menu dropdown-style">#}
+            {#<li><a @click="toggleBlockquote" href="#" data-value="blockquote">#}
+            {#<blockquote>引用</blockquote>#}
+            {#</a></li>#}
+            {#<li><a href="#" data-value="pre">#}
+            {#<pre>代码</pre>#}
+            {#</a></li>#}
+            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h1"><h1>标题 1</h1></a></li>#}
+            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h2"><h2>标题 2</h2></a></li>#}
+            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h3"><h3>标题 3</h3></a></li>#}
+            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h4"><h4>标题 4</h4></a></li>#}
+            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h5"><h5>标题 5</h5></a></li>#}
+            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h6"><h6>标题 6</h6></a></li>#}
+            {#</div>#}
+            {#</div>#}
+            {#</div>#}
+            {#<div class="note-btn-group btn-group note-font">#}
+            {#<button @click="toggleBold" type="button"#}
+            {#class="note-btn btn btn-link btn-sm note-btn-bold legitRipple "#}
+            {#tabindex="-1" title="" data-original-title="粗体 (⌘+B)"><i class="note-icon-bold"></i>#}
+            {#</button>#}
+            {#<button @click="toggleItalic" type="button"#}
+            {#class="note-btn btn btn-link btn-sm note-btn-underline legitRipple"#}
+            {#tabindex="-1" title="" data-original-title="下划线 (⌘+U)"><i#}
+            {#class="note-icon-italic"></i></button>#}
 
-                    {#<button @click="toggleStrikethrough" type="button"#}
-                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
-                            {#data-original-title="删除线 (⌘+\)"><i class="note-icon-strikethrough"></i></button>#}
+            {#<button @click="toggleStrikethrough" type="button"#}
+            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+            {#data-original-title="删除线 (⌘+\)"><i class="note-icon-strikethrough"></i></button>#}
 
-                    {#<button @click="toggleHeadingSmaller" type="button"#}
-                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
-                            {#data-original-title="段落 (⌘+\)">H#}
-                    {#</button>#}
+            {#<button @click="toggleHeadingSmaller" type="button"#}
+            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+            {#data-original-title="段落 (⌘+\)">H#}
+            {#</button>#}
 
 
-                    {#<button @click="toggleUnorderedList()" type="button"#}
-                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
-                            {#data-original-title="Unordered list (⌘+⇧+NUM7)"><i class="note-icon-unorderedlist"></i>#}
-                    {#</button>#}
-                    {#<button @click="toggleOrderedList()" type="button"#}
-                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
-                            {#data-original-title="Ordered list (⌘+⇧+NUM8)"><i class="note-icon-orderedlist"></i>#}
-                    {#</button>#}
-                    {#<!--#}
-                    {#<div class="note-btn-group btn-group">#}
-                        {#<button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"#}
-                                {#tabindex="-1" data-toggle="dropdown" title="" data-original-title="Paragraph"><i#}
-                                {#class="note-icon-align-left"></i> <span class="note-icon-caret"></span></button>#}
-                        {#<div class="dropdown-menu">#}
-                            {#<div class="note-btn-group btn-group note-align">#}
-                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
-                                        {#tabindex="-1" title="" data-original-title="Align left (⌘+⇧+L)"><i#}
-                                        {#class="note-icon-align-left"></i></button>#}
-                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
-                                        {#tabindex="-1" title="" data-original-title="Align center (⌘+⇧+E)"><i#}
-                                        {#class="note-icon-align-center"></i></button>#}
-                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
-                                        {#tabindex="-1" title="" data-original-title="Align right (⌘+⇧+R)"><i#}
-                                        {#class="note-icon-align-right"></i></button>#}
-                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
-                                        {#tabindex="-1" title="" data-original-title="Justify full (⌘+⇧+J)"><i#}
-                                        {#class="note-icon-align-justify"></i></button>#}
-                            {#</div>#}
-                            {#<div class="note-btn-group btn-group note-list">#}
-                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
-                                        {#tabindex="-1" title="" data-original-title="Outdent (⌘+[)"><i#}
-                                        {#class="note-icon-align-outdent"></i></button>#}
-                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
-                                        {#tabindex="-1" title="" data-original-title="Indent (⌘+])"><i#}
-                                        {#class="note-icon-align-indent"></i></button>#}
-                            {#</div>#}
-                        {#</div>#}
-                    {#</div>#}
-                    {#-->#}
-                    {#<button @click="drawLink" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
-                            {#tabindex="-1" title=""#}
-                            {#data-original-title="链接 (⌘+K)"><i class="note-icon-link"></i></button>#}
-                    {#<button @click="drawImage" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
-                            {#tabindex="-1" title=""#}
-                            {#data-original-title="图片"><i class="note-icon-picture"></i></button>#}
-                    {#<button @click="toggleCodeBlock" type="button"#}
-                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
-                            {#data-original-title="代码"><i class="note-icon-code"></i></button>#}
-                    {#<div class="note-btn-group btn-group">#}
-                        {#<button @click="drawTable" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
-                                {#tabindex="-1" title="" data-original-title="表格"><i#}
-                                    {#class="note-icon-table"></i></button>#}
+            {#<button @click="toggleUnorderedList()" type="button"#}
+            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+            {#data-original-title="Unordered list (⌘+⇧+NUM7)"><i class="note-icon-unorderedlist"></i>#}
+            {#</button>#}
+            {#<button @click="toggleOrderedList()" type="button"#}
+            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+            {#data-original-title="Ordered list (⌘+⇧+NUM8)"><i class="note-icon-orderedlist"></i>#}
+            {#</button>#}
+            {#<!--#}
+            {#<div class="note-btn-group btn-group">#}
+            {#<button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"#}
+            {#tabindex="-1" data-toggle="dropdown" title="" data-original-title="Paragraph"><i#}
+            {#class="note-icon-align-left"></i> <span class="note-icon-caret"></span></button>#}
+            {#<div class="dropdown-menu">#}
+            {#<div class="note-btn-group btn-group note-align">#}
+            {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+            {#tabindex="-1" title="" data-original-title="Align left (⌘+⇧+L)"><i#}
+            {#class="note-icon-align-left"></i></button>#}
+            {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+            {#tabindex="-1" title="" data-original-title="Align center (⌘+⇧+E)"><i#}
+            {#class="note-icon-align-center"></i></button>#}
+            {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+            {#tabindex="-1" title="" data-original-title="Align right (⌘+⇧+R)"><i#}
+            {#class="note-icon-align-right"></i></button>#}
+            {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+            {#tabindex="-1" title="" data-original-title="Justify full (⌘+⇧+J)"><i#}
+            {#class="note-icon-align-justify"></i></button>#}
+            {#</div>#}
+            {#<div class="note-btn-group btn-group note-list">#}
+            {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+            {#tabindex="-1" title="" data-original-title="Outdent (⌘+[)"><i#}
+            {#class="note-icon-align-outdent"></i></button>#}
+            {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+            {#tabindex="-1" title="" data-original-title="Indent (⌘+])"><i#}
+            {#class="note-icon-align-indent"></i></button>#}
+            {#</div>#}
+            {#</div>#}
+            {#</div>#}
+            {#-->#}
+            {#<button @click="drawLink" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+            {#tabindex="-1" title=""#}
+            {#data-original-title="链接 (⌘+K)"><i class="note-icon-link"></i></button>#}
+            {#<button @click="drawImage" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+            {#tabindex="-1" title=""#}
+            {#data-original-title="图片"><i class="note-icon-picture"></i></button>#}
+            {#<button @click="toggleCodeBlock" type="button"#}
+            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+            {#data-original-title="代码"><i class="note-icon-code"></i></button>#}
+            {#<div class="note-btn-group btn-group">#}
+            {#<button @click="drawTable" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+            {#tabindex="-1" title="" data-original-title="表格"><i#}
+            {#class="note-icon-table"></i></button>#}
 
-                        {#<button @click="drawHorizontalRule" type="button"#}
-                                {#class="note-btn btn btn-link btn-sm legitRipple"#}
-                                {#tabindex="-1" title="" data-original-title="分隔线">—#}
-                        {#</button>#}
+            {#<button @click="drawHorizontalRule" type="button"#}
+            {#class="note-btn btn btn-link btn-sm legitRipple"#}
+            {#tabindex="-1" title="" data-original-title="分隔线">—#}
+            {#</button>#}
 
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="note-btn-group btn-group note-undo">#}
-                    {#<button @click="undo" type="button"#}
-                            {#class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"#}
-                            {#tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-undo"></i>#}
-                    {#</button>#}
+            {#</div>#}
+            {#</div>#}
+            {#<div class="note-btn-group btn-group note-undo">#}
+            {#<button @click="undo" type="button"#}
+            {#class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"#}
+            {#tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-undo"></i>#}
+            {#</button>#}
 
-                    {#<button @click="redo" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
-                            {#tabindex="-1" title=""#}
-                            {#data-original-title="帮助"><i class="note-icon-redo"></i></button>#}
-                {#</div>#}
-{##}
-                {#<div class="note-btn-group btn-group note-view">#}
+            {#<button @click="redo" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+            {#tabindex="-1" title=""#}
+            {#data-original-title="帮助"><i class="note-icon-redo"></i></button>#}
+            {#</div>#}
+            {##}
+            {#<div class="note-btn-group btn-group note-view">#}
 
-                    {#<a @click="togglePreview" type="button"#}
-                       {#class="btn btn-link note-btn btn btn-link btn-sm btn-codeview legitRipple"#}
-                       {#tabindex="-1" title="" data-original-title=""><i#}
-                                {#class="fa fa-eye"></i></a>#}
-                    {#<button @click="toggleFullScreen" type="button"#}
-                            {#class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"#}
-                            {#tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-arrows-alt"></i>#}
-                    {#</button>#}
-                    {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
-                            {#data-original-title="帮助"><i class="note-icon-question"></i></button>#}
-                {#</div>#}
-{##}
+            {#<a @click="togglePreview" type="button"#}
+            {#class="btn btn-link note-btn btn btn-link btn-sm btn-codeview legitRipple"#}
+            {#tabindex="-1" title="" data-original-title=""><i#}
+            {#class="fa fa-eye"></i></a>#}
+            {#<button @click="toggleFullScreen" type="button"#}
+            {#class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"#}
+            {#tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-arrows-alt"></i>#}
+            {#</button>#}
+            {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+            {#data-original-title="帮助"><i class="note-icon-question"></i></button>#}
+            {#</div>#}
+            {##}
             {#</ul>#}
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
                     <li><a href="#"><i class="icon-stack-text position-left"></i> 写文章</a></li>
                     {#<li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>#}
                     <li><a href="#"><i class="icon-images3 position-left"></i> 发图</a></li>
+
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span
+                                    class="visible-xs-inline-block position-right"> Options</span> <span
+                                    class="caret"></span></a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             {#<li><a href="#"><i class="icon-image2"></i> Update cover</a></li>#}
                             {#<li><a href="#"><i class="icon-clippy"></i> Update info</a></li>#}
@@ -1080,6 +1173,7 @@
                             <li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
                         </ul>
                     </li>
+
                 </ul>
             </div>
 
@@ -1092,6 +1186,7 @@
                 <li class=""><a class="sidebar-control sidebar-opposite-toggle hidden-xs"><i
                                 class="icon-cog position-left"></i> 文章设置</a></li>
                 <li class="disabled"><a><i class=" icon-paperplane position-left"></i> 发布</a></li>
+
             </ul>
         </div>
     </div>
@@ -1099,9 +1194,12 @@
 {% endblock %}
 
 {% block content %}
+
     {#{{ post.snippets }}#}
     <div class="row">
         <div class="col-md-9">
+            <editor :model="post" v-on:selection="onSelection" v-on:change="onChange"></editor>
+
             <div class="panel panel-white">
                 <div class="profile-cover" style="display: none;">
                     <!--<div id="cover" class="profile-cover-img"-->
@@ -1131,34 +1229,23 @@
                     <div class="panel-body">
                         <div class="content-group snippet--content" v-html="selected.wordHtml"></div>
                     </div>
-                    <div class="panel-footer panel-footer-condensed "><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                    <div class="panel-footer panel-footer-condensed "><a class="heading-elements-toggle"><i
+                                    class="icon-more"></i></a>
                         <div class="heading-elements">
                             <span class="heading-text"><small>选中了 {{ selected.wordCount }} 个字</small></span>
                             <ul class="list-inline list-inline-separate heading-text pull-right">
-                                <li><a @click="clearAndSnippet" class="" data-popup="tooltip" data-placement="top" data-container="body" title="" data-original-title="剪切成碎片"><i class="fa fa-cut"></i></a></li>
-                                <li><a @click="copyAndSnippet" class="" data-popup="tooltip" data-placement="top" data-container="body" title="" data-original-title="复制成碎片"><i class="fa fa-copy"></i></a></li>
+                                <li><a @click="clearAndSnippet" class="" data-popup="tooltip" data-placement="top"
+                                       data-container="body" title="" data-original-title="剪切成碎片"><i
+                                                class="fa fa-cut"></i></a></li>
+                                <li><a @click="copyAndSnippet" class="" data-popup="tooltip" data-placement="top"
+                                       data-container="body" title="" data-original-title="复制成碎片"><i
+                                                class="fa fa-copy"></i></a></li>
                                 <!--<li><a href="#">Generate</a></li>-->
                             </ul>
                         </div>
                     </div>
 
                 </div>
-
-                <div class="table-responsive mail-details-write">
-                    <table class="table">
-                        <tbody>
-                        <tr>
-                            <td colspan="2" class="p-5 no-border">
-                                <input type="text"
-                                       placeholder="无标题"
-                                       name="title"
-                                       class="form-control text-semibold" v-model="post.title"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <editor :model="post" v-on:selection="onSelection" v-on:change="onChange"></editor>
 
             </div>
         </div>
@@ -1179,7 +1266,7 @@
                     </div>
                 </div>
 
-                <div class="panel-body " >
+                <div class="panel-body ">
                     <form action="#">
                         <div class="form-group">
                             {#
@@ -1260,24 +1347,24 @@
 
                 <!-- /sub navigation -->
 
-                    <div class="category-content" >
-                        <code class="position-left" v-if="checkedCates.length > 0">{{ checkedCates.length }} 类别
-                        </code>
-                        <div class="form-group">
+                <div class="category-content">
+                    <code class="position-left" v-if="checkedCates.length > 0">{{ checkedCates.length }} 类别
+                    </code>
+                    <div class="form-group">
 
-                            {#<label class="text-semibold">Left stacked default</label>#}
-                            {#<li v-for="cate in category"><a :href="cate.id">{{ cate.name }}</a></li>#}
+                        {#<label class="text-semibold">Left stacked default</label>#}
+                        {#<li v-for="cate in category"><a :href="cate.id">{{ cate.name }}</a></li>#}
 
-                            <div class="checkbox" v-for="cate in category">
-                                <label>
-                                    <input type="checkbox" :id="cate.id" v-bind:value="cate" v-model="post.terms"
-                                           @click="check(cate)">
-                                    {{ cate.name }}
-                                </label>
-                            </div>
-
+                        <div class="checkbox" v-for="cate in category">
+                            <label>
+                                <input type="checkbox" :id="cate.id" v-bind:value="cate" v-model="post.terms"
+                                       @click="check(cate)">
+                                {{ cate.name }}
+                            </label>
                         </div>
-                        <a class=" btn btn-link btn-xs no-padding"><i class="icon-folder position-left"></i>添加新分类目录</a>
+
+                    </div>
+                    <a class=" btn btn-link btn-xs no-padding"><i class="icon-folder position-left"></i>添加新分类目录</a>
 
                 </div>
             </div>
@@ -1288,8 +1375,1617 @@
 
 {% endblock %}
 
-
 {% block opposite_sidebar %}
+    <div class="sidebar sidebar-opposite sidebar-default">
+<div class="sidebar-content">
+
+    <!-- Sidebar tabs -->
+    <div class="tabbable sortable ui-sortable">
+        <ul class="nav nav-lg nav-tabs nav-tabs-bottom nav-justified  nav-tabs-toolbar">
+            <li class="active">
+                <a href="#components-tab" data-toggle="tab" class="legitRipple">
+                    <i class="icon-grid-alt"></i>
+                    <span class="visible-xs-inline-block position-right">Components</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#forms-tab" data-toggle="tab" class="legitRipple">
+                    <i class="icon-menu6"></i>
+                    <span class="visible-xs-inline-block position-right">Forms</span>
+                </a>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle legitRipple" data-toggle="dropdown">
+                    <i class="icon-grid5"></i>
+                    <span class="visible-xs-inline-block position-right">Other components</span>
+                    <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#other-tab" data-toggle="tab"><i class="icon-task pull-right"></i> Other elements</a></li>
+                    <li><a href="#custom-tab" data-toggle="tab"><i class="icon-googleplus5 pull-right"></i> Custom content</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade in active no-padding" id="components-tab">
+
+
+                <!-- Title -->
+                <div class="category-title h6">
+                    <span>文章设置</span>
+
+                    <ul class="icons-list">
+                        <li><a class="sidebar-control sidebar-opposite-toggle hidden-xs"><i class=" icon-cross2"></i></a>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- /title -->
+
+
+                    <!-- Quick settings -->
+                    <div class="sidebar-category">
+                        <div class="category-title category-collapsed">
+                            <span>状态</span>
+                            <ul class="icons-list">
+                                <li><a href="#" data-action="collapse"></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="category-content " style="display: none;">
+                            <form action="#">
+                                <div class="form-group">
+                                    {#
+                                    <div class="checkbox checkbox-switchery checkbox-right switchery-xs ">
+                                        <label class="display-block">
+                                            <input type="checkbox" class="switchery switchery-primary" >
+                                            固定到头版
+
+                                        </label>
+                                    </div>
+                                    #}
+                                    <div class="checkbox checkbox-switchery checkbox-right switchery-xs ">
+                                        <label class="display-block">
+                                            <input type="checkbox" v-bind:true-value="'pending'" v-bind:false-value="''"
+                                                   class="switchery switchery-primary" v-model="post.status">
+                                            待审核
+
+                                        </label>
+                                    </div>
+
+                                    {#
+                                    <label class="display-block">
+
+                                        <div class="btn-group pull-right">
+                                            <a href="#" class="" data-toggle="dropdown" aria-expanded="false"><i class="icon-eye position-left"></i>公开 </a>
+
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li class="radio ">
+                                                    <label>
+                                                        <input type="radio" name="dropdown-radio" class="styled" v-model="post.status" v-bind:value="'publish'">
+                                                        公开
+                                                    </label></li>
+                                                <li class="radio"><label><input type="radio" name="dropdown-radio" class="styled" v-model="post.status" v-bind:value="'private'"> 私密</label></li>
+                                                <li class="radio"><label><input type="radio" name="dropdown-radio" class="styled" v-model="post.password"> 加密</label></li>
+
+                                            </ul>
+                                        </div>
+                                        可见性
+
+                                    </label>
+                                    #}
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /quick settings -->
+
+                    <!-- /sub navigation -->
+                    <div class="sidebar-category">
+                        <div class="category-title category-collapsed">
+                    <span>类别与标签
+                        <code class="position-left" v-if="checkedCates.length > 0">{{ checkedCates.length }} 类别
+                        </code>
+</span>
+                            {#<label class="text-semibold">Left stacked default</label>#}
+
+                            <ul class="icons-list">
+                                <li><a href="#" data-action="collapse"></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="category-content" style="display: none;">
+
+                            <div class="form-group">
+
+                                {#<label class="text-semibold">Left stacked default</label>#}
+                                {#<li v-for="cate in category"><a :href="cate.id">{{ cate.name }}</a></li>#}
+
+                                <div class="checkbox" v-for="cate in category">
+                                    <label>
+                                        <input type="checkbox" :id="cate.id" v-bind:value="cate" v-model="post.terms"
+                                               @click="check(cate)">
+                                        {{ cate.name }}
+                                    </label>
+                                </div>
+
+                            </div>
+                            <a class=" btn btn-link btn-xs no-padding"><i class="icon-folder position-left"></i>添加新分类目录</a>
+
+                        </div>
+                    </div>
+
+
+                    <div class="sidebar-category">
+                        <div class="category-title category-collapsed">
+                            <span>更多选项</span>
+                            <ul class="icons-list">
+                                <li><a href="#" data-action="collapse"></a></li>
+                            </ul>
+                        </div>
+                        <form action="#" class="category-content" style="display: none;">
+                            {#                    <div class="form-group">
+                                                    <label>别名:</label>
+                                                    <input type="text" class="form-control" placeholder="">
+                                                </div>#}
+                            <div class="form-group">
+                                <div class="checkbox checkbox-switchery checkbox-right switchery-xs ">
+                                    <label class="display-block">
+                                        <input type="checkbox" class="switchery switchery-primary" v-model="autoExcerpt">
+                                        自动摘要
+
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" v-if="!autoExcerpt">
+                                <label>摘要:</label>
+                                <textarea rows="3" cols="3" class="form-control" placeholder="编写摘要..."
+                                          v-html="post.excerpt"></textarea>
+                            </div>
+
+                            {#
+                            <label class="display-block">讨论</label>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <div class="checker"><span><input type="checkbox" class="styled"></span></div>
+                                        允许评论
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <div class="checker"><span class="checked"><input type="checkbox" class="styled" checked="checked"></span></div>
+                                        允许 Pingback 和 Trackback
+                                    </label>
+                                </div>
+
+                            </div>
+                            #}
+                        </form>
+                    </div>
+
+
+
+
+            </div>
+
+            <div class="tab-pane fade no-padding" id="forms-tab">
+
+                <!-- Title -->
+                <div class="category-title h6">
+                    <span>Form components</span>
+                    <ul class="icons-list">
+                        <li><a href="#"><i class="icon-gear"></i></a></li>
+                    </ul>
+                </div>
+                <!-- /title -->
+
+
+                <!-- Sidebar search -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Sidebar search</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="has-feedback has-feedback-left">
+                                <input type="search" class="form-control" placeholder="Search">
+                                <div class="form-control-feedback">
+                                    <i class="icon-search4 text-size-base text-muted"></i>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /sidebar search -->
+
+
+                <!-- Select2 selects -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Select2 selects</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="form-group">
+                                <label>Single Select:</label>
+                                <select class="select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                    <optgroup label="Alaskan/Hawaiian Time Zone">
+                                        <option value="AK">Alaska</option>
+                                        <option value="HI">Hawaii</option>
+                                    </optgroup>
+                                    <optgroup label="Pacific Time Zone">
+                                        <option value="CA">California</option>
+                                        <option value="NV">Nevada</option>
+                                        <option value="OR">Oregon</option>
+                                    </optgroup>
+                                    <optgroup label="Mountain Time Zone">
+                                        <option value="AZ">Arizona</option>
+                                        <option value="CO">Colorado</option>
+                                        <option value="ID">Idaho</option>
+                                    </optgroup>
+                                </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-gq1z-container"><span class="select2-selection__rendered" id="select2-gq1z-container" title="Alaska">Alaska</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Multiple Select:</label>
+                                <select class="select select2-hidden-accessible" multiple="" tabindex="-1" aria-hidden="true">
+                                    <optgroup label="Alaskan/Hawaiian Time Zone">
+                                        <option value="AK">Alaska</option>
+                                        <option value="HI" selected="selected">Hawaii</option>
+                                    </optgroup>
+                                    <optgroup label="Pacific Time Zone">
+                                        <option value="CA">California</option>
+                                        <option value="NV" selected="selected">Nevada</option>
+                                        <option value="OR">Oregon</option>
+                                    </optgroup>
+                                    <optgroup label="Mountain Time Zone">
+                                        <option value="AZ">Arizona</option>
+                                        <option value="CO">Colorado</option>
+                                        <option value="ID">Idaho</option>
+                                    </optgroup>
+                                </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-selection__choice" title="Hawaii"><span class="select2-selection__choice__remove" role="presentation">×</span>Hawaii</li><li class="select2-selection__choice" title="Nevada"><span class="select2-selection__choice__remove" role="presentation">×</span>Nevada</li><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /select2 selects -->
+
+
+                <!-- Multiselect -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Multiselect</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="form-group">
+                                <label>Single select:</label>
+                                <select class="multiselect" style="display: none;">
+                                    <option value="cheese">Cheese</option>
+                                    <option value="tomatoes">Tomatoes</option>
+                                    <option value="mozarella">Mozzarella</option>
+                                    <option value="mushrooms">Mushrooms</option>
+                                    <option value="pepperoni">Pepperoni</option>
+                                    <option value="onions">Onions</option>
+                                </select><div class="btn-group" style="width: 100%;"><button type="button" class="multiselect dropdown-toggle btn btn-default" data-toggle="dropdown" title="Cheese" style="width: 100%; overflow: hidden; text-overflow: ellipsis;"><span class="multiselect-selected-text">Cheese</span> <b class="caret"></b></button><ul class="multiselect-container dropdown-menu"><li class="active"><a tabindex="0"><label class="radio"><div class="choice"><span class="checked"><input type="radio" value="cheese"></span></div> Cheese</label></a></li><li><a tabindex="0"><label class="radio"><div class="choice"><span><input type="radio" value="tomatoes"></span></div> Tomatoes</label></a></li><li><a tabindex="0"><label class="radio"><div class="choice"><span><input type="radio" value="mozarella"></span></div> Mozzarella</label></a></li><li><a tabindex="0"><label class="radio"><div class="choice"><span><input type="radio" value="mushrooms"></span></div> Mushrooms</label></a></li><li><a tabindex="0"><label class="radio"><div class="choice"><span><input type="radio" value="pepperoni"></span></div> Pepperoni</label></a></li><li><a tabindex="0"><label class="radio"><div class="choice"><span><input type="radio" value="onions"></span></div> Onions</label></a></li></ul></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Multiple select:</label>
+                                <select class="multiselect" multiple="multiple" style="display: none;">
+                                    <option value="cheese">Cheese</option>
+                                    <option value="tomatoes">Tomatoes</option>
+                                    <option value="mozarella" selected="selected">Mozzarella</option>
+                                    <option value="mushrooms">Mushrooms</option>
+                                    <option value="pepperoni">Pepperoni</option>
+                                    <option value="onions" selected="selected">Onions</option>
+                                </select><div class="btn-group" style="width: 100%;"><button type="button" class="multiselect dropdown-toggle btn btn-default" data-toggle="dropdown" title="Mozzarella, Onions" style="width: 100%; overflow: hidden; text-overflow: ellipsis;"><span class="multiselect-selected-text">Mozzarella, Onions</span> <b class="caret"></b></button><ul class="multiselect-container dropdown-menu"><li><a tabindex="0"><label class="checkbox"><div class="checker"><span><input type="checkbox" value="cheese"></span></div> Cheese</label></a></li><li><a tabindex="0"><label class="checkbox"><div class="checker"><span><input type="checkbox" value="tomatoes"></span></div> Tomatoes</label></a></li><li class="active"><a tabindex="0"><label class="checkbox"><div class="checker"><span class="checked"><input type="checkbox" value="mozarella"></span></div> Mozzarella</label></a></li><li><a tabindex="0"><label class="checkbox"><div class="checker"><span><input type="checkbox" value="mushrooms"></span></div> Mushrooms</label></a></li><li><a tabindex="0"><label class="checkbox"><div class="checker"><span><input type="checkbox" value="pepperoni"></span></div> Pepperoni</label></a></li><li class="active"><a tabindex="0"><label class="checkbox"><div class="checker"><span class="checked"><input type="checkbox" value="onions"></span></div> Onions</label></a></li></ul></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /multiselect -->
+
+
+                <!-- Other selects -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Other selects</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="form-group">
+                                <label>SelectBoxIt select:</label>
+                                <select class="selectbox" style="display: none;">
+                                    <option value="branch" data-icon="icon-git-branch">Branch</option>
+                                    <option value="commit" data-icon="icon-git-commit">Commit</option>
+                                    <option value="compare" data-icon="icon-git-compare">Compare</option>
+                                    <option value="merge" data-icon="icon-git-merge">Merge</option>
+                                    <option value="request" data-icon="icon-git-pull-request">Pull request</option>
+                                    <option value="forked" data-icon="icon-repo-forked">Repo forked</option>
+                                </select><span id="" class="selectboxit-container selectboxit-container" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" aria-owns=""><span id="" class="selectboxit selectbox selectboxit-enabled selectboxit-btn" name="" tabindex="0" unselectable="on"><span class="selectboxit-option-icon-container"><i id="" class="selectboxit-default-icon selectboxit-option-icon icon-git-branch selectboxit-container" unselectable="on"></i></span><span id="" class="selectboxit-text" unselectable="on" data-val="branch" aria-live="polite" style="max-width: 1404px;">Branch</span><span id="" class="selectboxit-arrow-container" unselectable="on"><i id="" class="selectboxit-arrow selectboxit-default-arrow" unselectable="on"></i></span></span><ul class="selectboxit-options selectboxit-list" tabindex="-1" role="listbox" aria-hidden="true"><li data-id="0" data-val="branch" data-disabled="false" class="selectboxit-option  selectboxit-option-first selectboxit-selected" data-icon="icon-git-branch" role="option"><a href="#" class="selectboxit-option-anchor"><span class="selectboxit-option-icon-container"><i class="selectboxit-option-icon icon-git-branch selectboxit-container"></i></span>Branch</a></li><li data-id="1" data-val="commit" data-disabled="false" class="selectboxit-option" data-icon="icon-git-commit" role="option"><a href="#" class="selectboxit-option-anchor"><span class="selectboxit-option-icon-container"><i class="selectboxit-option-icon icon-git-commit selectboxit-container"></i></span>Commit</a></li><li data-id="2" data-val="compare" data-disabled="false" class="selectboxit-option" data-icon="icon-git-compare" role="option"><a href="#" class="selectboxit-option-anchor"><span class="selectboxit-option-icon-container"><i class="selectboxit-option-icon icon-git-compare selectboxit-container"></i></span>Compare</a></li><li data-id="3" data-val="merge" data-disabled="false" class="selectboxit-option" data-icon="icon-git-merge" role="option"><a href="#" class="selectboxit-option-anchor"><span class="selectboxit-option-icon-container"><i class="selectboxit-option-icon icon-git-merge selectboxit-container"></i></span>Merge</a></li><li data-id="4" data-val="request" data-disabled="false" class="selectboxit-option" data-icon="icon-git-pull-request" role="option"><a href="#" class="selectboxit-option-anchor"><span class="selectboxit-option-icon-container"><i class="selectboxit-option-icon icon-git-pull-request selectboxit-container"></i></span>Pull request</a></li><li data-id="5" data-val="forked" data-disabled="false" class="selectboxit-option  selectboxit-option-last" data-icon="icon-repo-forked" role="option"><a href="#" class="selectboxit-option-anchor"><span class="selectboxit-option-icon-container"><i class="selectboxit-option-icon icon-repo-forked selectboxit-container"></i></span>Repo forked</a></li></ul></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Bootstrap select:</label>
+                                <div class="btn-group bootstrap-select" style="width: 100%;"><button type="button" class="btn dropdown-toggle btn-default" data-toggle="dropdown" role="button" title="Repo forked"><span class="filter-option pull-left"><i class=" icon-repo-forked"></i> Repo forked</span>&nbsp;<span class="bs-caret"><span class="caret"></span></span></button><div class="dropdown-menu open" role="combobox"><ul class="dropdown-menu inner" role="listbox" aria-expanded="false"><li data-original-index="0"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class=" icon-git-branch"></span> <span class="text">Branch</span><span class=" glyphicon-ok check-mark"></span></a></li><li data-original-index="1"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class=" icon-git-commit"></span> <span class="text">Commit</span><span class=" glyphicon-ok check-mark"></span></a></li><li data-original-index="2"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class=" icon-git-compare"></span> <span class="text">Compare</span><span class=" glyphicon-ok check-mark"></span></a></li><li data-original-index="3"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class=" icon-git-merge"></span> <span class="text">Merge</span><span class=" glyphicon-ok check-mark"></span></a></li><li data-original-index="4"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="false"><span class=" icon-git-pull-request"></span> <span class="text">Pull request</span><span class=" glyphicon-ok check-mark"></span></a></li><li data-original-index="5" class="selected"><a tabindex="0" class="" data-tokens="null" role="option" aria-disabled="false" aria-selected="true"><span class=" icon-repo-forked"></span> <span class="text">Repo forked</span><span class=" glyphicon-ok check-mark"></span></a></li></ul></div><select class="bootstrap-select" data-width="100%" tabindex="-98">
+                                        <option value="branch" data-icon="icon-git-branch">Branch</option>
+                                        <option value="commit" data-icon="icon-git-commit">Commit</option>
+                                        <option value="compare" data-icon="icon-git-compare">Compare</option>
+                                        <option value="merge" data-icon="icon-git-merge">Merge</option>
+                                        <option value="request" data-icon="icon-git-pull-request">Pull request</option>
+                                        <option value="forked" data-icon="icon-repo-forked" selected="selected">Repo forked</option>
+                                    </select></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /other selects -->
+
+
+                <!-- Left checkbox group -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Left checkbox group</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <div class="checker"><span><input type="checkbox" class="styled"></span></div>
+                                        Janet Cook
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <div class="checker"><span class="checked"><input type="checkbox" class="styled" checked="checked"></span></div>
+                                        Michelle Brown
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <div class="checker"><span><input type="checkbox" class="styled"></span></div>
+                                        Lauren Wood
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <div class="checker"><span class="checked"><input type="checkbox" class="styled" checked="checked"></span></div>
+                                        Michael Johnson
+                                    </label>
+                                </div>
+
+                                <div class="checkbox">
+                                    <label>
+                                        <div class="checker"><span class="checked"><input type="checkbox" class="styled" checked="checked"></span></div>
+                                        Joseph Dixon
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /left checkbox group -->
+
+
+                <!-- Left radio group -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Left radio group</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="form-group">
+                                <div class="radio">
+                                    <label>
+                                        <div class="choice"><span><input type="radio" name="radio-group" class="styled"></span></div>
+                                        Elise Parkes
+                                    </label>
+                                </div>
+
+                                <div class="radio">
+                                    <label>
+                                        <div class="choice"><span><input type="radio" name="radio-group" class="styled"></span></div>
+                                        Sofia Fuller
+                                    </label>
+                                </div>
+
+                                <div class="radio">
+                                    <label>
+                                        <div class="choice"><span class="checked"><input type="radio" name="radio-group" class="styled" checked="checked"></span></div>
+                                        Nicholas Blackburn
+                                    </label>
+                                </div>
+
+                                <div class="radio">
+                                    <label>
+                                        <div class="choice"><span><input type="radio" name="radio-group" class="styled"></span></div>
+                                        Max Brennan
+                                    </label>
+                                </div>
+
+                                <div class="radio">
+                                    <label>
+                                        <div class="choice"><span><input type="radio" name="radio-group" class="styled"></span></div>
+                                        Cameron Allan
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /left radio group -->
+
+
+                <!-- Right checkbox group -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Right checkbox group</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="form-group">
+                                <div class="checkbox checkbox-right">
+                                    <label>
+                                        <div class="checker"><span class="checked"><input type="checkbox" class="styled" checked="checked"></span></div>
+                                        Chris Wallace
+                                    </label>
+                                </div>
+
+                                <div class="checkbox checkbox-right">
+                                    <label>
+                                        <div class="checker"><span class="checked"><input type="checkbox" class="styled" checked="checked"></span></div>
+                                        Brittany Clark
+                                    </label>
+                                </div>
+
+                                <div class="checkbox checkbox-right">
+                                    <label>
+                                        <div class="checker"><span><input type="checkbox" class="styled"></span></div>
+                                        Michael Langer
+                                    </label>
+                                </div>
+
+                                <div class="checkbox checkbox-right">
+                                    <label>
+                                        <div class="checker"><span class="checked"><input type="checkbox" class="styled" checked="checked"></span></div>
+                                        Jennifer Garcia
+                                    </label>
+                                </div>
+
+                                <div class="checkbox checkbox-right">
+                                    <label>
+                                        <div class="checker"><span><input type="checkbox" class="styled"></span></div>
+                                        Daniel Andersen
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /right checkbox group -->
+
+
+                <!-- Right radio group -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Right radio group</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="form-group">
+                                <div class="radio radio-right">
+                                    <label>
+                                        <div class="choice"><span><input type="radio" name="radio-group" class="styled"></span></div>
+                                        Daisy Moods
+                                    </label>
+                                </div>
+
+                                <div class="radio radio-right">
+                                    <label>
+                                        <div class="choice"><span><input type="radio" name="radio-group" class="styled"></span></div>
+                                        Madeleine Bruce
+                                    </label>
+                                </div>
+
+                                <div class="radio radio-right">
+                                    <label>
+                                        <div class="choice"><span class="checked"><input type="radio" name="radio-group" class="styled" checked="checked"></span></div>
+                                        David Patterson
+                                    </label>
+                                </div>
+
+                                <div class="radio radio-right">
+                                    <label>
+                                        <div class="choice"><span><input type="radio" name="radio-group" class="styled"></span></div>
+                                        Bethany Hold
+                                    </label>
+                                </div>
+
+                                <div class="radio radio-right">
+                                    <label>
+                                        <div class="choice"><span><input type="radio" name="radio-group" class="styled"></span></div>
+                                        Eleanor Charltons
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /right radio group -->
+
+
+                <!-- File inputs -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>File inputs</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="form-group">
+                                <label>Styled file input:</label>
+                                <div class="uploader"><input type="file" class="file-styled"><span class="filename" style="user-select: none;">No file selected</span><span class="action btn bg-warning legitRipple" style="user-select: none;">Choose File</span></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Default file input:</label>
+                                <input type="file" class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /file inputs -->
+
+
+                <!-- Default selects -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Default selects</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="form-group">
+                                <label>Single select:</label>
+                                <select name="select" class="form-control">
+                                    <option value="opt1">Usual select box</option>
+                                    <option value="opt2">Option 2</option>
+                                    <option value="opt3">Option 3</option>
+                                    <option value="opt4">Option 4</option>
+                                    <option value="opt5">Option 5</option>
+                                    <option value="opt6">Option 6</option>
+                                    <option value="opt7">Option 7</option>
+                                    <option value="opt8">Option 8</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Multiple select:</label>
+                                <select multiple="multiple" class="form-control">
+                                    <option selected="selected">Amsterdam</option>
+                                    <option selected="selected">Atlanta</option>
+                                    <option>Baltimore</option>
+                                    <option>Boston</option>
+                                    <option>Buenos Aires</option>
+                                    <option>Calgary</option>
+                                    <option selected="selected">Chicago</option>
+                                    <option>Denver</option>
+                                    <option>Dubai</option>
+                                    <option>Frankfurt</option>
+                                    <option>Hong Kong</option>
+                                    <option>Honolulu</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /default selects -->
+
+
+                <!-- Input groups -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Input groups</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="form-group">
+                                <label>Input group example:</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon-spinner3 spinner"></i></span>
+                                    <input type="text" class="form-control" placeholder="Input group">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default dropdown-toggle btn-icon legitRipple" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">One more separated line</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /input groups -->
+
+
+                <!-- Switchery group -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Switchery group</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="form-group">
+                                <div class="checkbox checkbox-switchery checkbox-right switchery-xs">
+                                    <label class="display-block">
+                                        <input type="checkbox" class="switchery" checked="checked" data-switchery="true" style="display: none;"><span class="switchery switchery-default" style="box-shadow: rgb(223, 223, 223) 0px 0px 0px 0px inset; border-color: rgb(223, 223, 223); background-color: rgb(255, 255, 255); transition: border 0.4s, box-shadow 0.4s;"><small style="left: 0px; transition: background-color 0.4s, left 0.2s;"></small></span>
+                                        Free People
+                                    </label>
+                                </div>
+
+                                <div class="checkbox checkbox-switchery checkbox-right switchery-xs">
+                                    <label class="display-block">
+                                        <input type="checkbox" class="switchery" data-switchery="true" style="display: none;"><span class="switchery switchery-default" style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 0px inset; transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;"><small style="left: 14px; background-color: rgb(255, 255, 255); transition: background-color 0.4s, left 0.2s;"></small></span>
+                                        GAP
+                                    </label>
+                                </div>
+
+                                <div class="checkbox checkbox-switchery checkbox-right switchery-xs">
+                                    <label class="display-block">
+                                        <input type="checkbox" class="switchery" checked="checked" data-switchery="true" style="display: none;"><span class="switchery switchery-default" style="box-shadow: rgb(223, 223, 223) 0px 0px 0px 0px inset; border-color: rgb(223, 223, 223); background-color: rgb(255, 255, 255); transition: border 0.4s, box-shadow 0.4s;"><small style="left: 0px; transition: background-color 0.4s, left 0.2s;"></small></span>
+                                        Lane Bryant
+                                    </label>
+                                </div>
+
+                                <div class="checkbox checkbox-switchery checkbox-right switchery-xs">
+                                    <label class="display-block">
+                                        <input type="checkbox" class="switchery" checked="checked" data-switchery="true" style="display: none;"><span class="switchery switchery-default" style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 0px inset; transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;"><small style="left: 14px; background-color: rgb(255, 255, 255); transition: background-color 0.4s, left 0.2s;"></small></span>
+                                        Ralph Lauren
+                                    </label>
+                                </div>
+
+                                <div class="checkbox checkbox-switchery checkbox-right switchery-xs">
+                                    <label class="display-block">
+                                        <input type="checkbox" class="switchery" data-switchery="true" style="display: none;"><span class="switchery switchery-default" style="background-color: rgb(100, 189, 99); border-color: rgb(100, 189, 99); box-shadow: rgb(100, 189, 99) 0px 0px 0px 0px inset; transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;"><small style="left: 14px; background-color: rgb(255, 255, 255); transition: background-color 0.4s, left 0.2s;"></small></span>
+                                        Liz Claiborne
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /switchery group -->
+
+
+                <!-- Form sample -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Form example</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <form action="#" class="category-content">
+                        <div class="form-group">
+                            <label>Your name:</label>
+                            <input type="text" class="form-control" placeholder="Username">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Your password:</label>
+                            <input type="password" class="form-control" placeholder="Password">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Your message:</label>
+                            <textarea rows="3" cols="3" class="form-control" placeholder="Default textarea"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button type="reset" class="btn btn-danger btn-block legitRipple">Reset</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button type="submit" class="btn btn-info btn-block legitRipple">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /form sample -->
+
+            </div>
+
+            <div class="tab-pane fade no-padding" id="other-tab">
+
+                <!-- Title -->
+                <div class="category-title h6">
+                    <span>Other elements</span>
+                    <ul class="icons-list">
+                        <li><a href="#"><i class="icon-gear"></i></a></li>
+                    </ul>
+                </div>
+                <!-- /title -->
+
+
+                <!-- Closable category -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Closable category</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="close"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <ul class="list">
+                            <li>It wasn't actually a dream</li>
+                            <li>A collection of textile samples</li>
+                            <li>I've got the money together</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /closable category -->
+
+
+                <!-- Sortable category -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Sortable category</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="move" class="ui-sortable-handle"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <ul class="list">
+                            <li>I've got the money together</li>
+                            <li>That's definitely what I'll do</li>
+                            <li>What should he do now?</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /sortable category -->
+
+
+                <!-- Updatable category -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Updatable category</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="reload"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <ul class="list">
+                            <li>A collection of textile samples</li>
+                            <li>I've got the money together</li>
+                            <li>That's definitely what I'll do</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /updatable category -->
+
+
+                <!-- Dual listbox -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Dual listbox</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="bootstrap-duallistbox-container row"> <div class="box1 col-md-6"> <label for="bootstrap-duallistbox-nonselected-list_" style="display: none;"></label> <input class="filter form-control" type="text" placeholder="Filter"> <div class="btn-group buttons"> <button type="button" class="btn moveall btn-default legitRipple" title="Move all"> <i class="icon-arrow-right22"></i> <i class="icon-arrow-right22"></i> </button> <button type="button" class="btn move btn-default legitRipple" title="Move selected"> <i class="icon-arrow-right22"></i> </button> </div> <select multiple="multiple" id="bootstrap-duallistbox-nonselected-list_" class="form-control" name="_helper1" style="height: 200px;"><option value="option1">Option 1</option><option value="option2">Option 2</option><option value="option4">Option 4</option><option value="option5">Option 5</option><option value="option7">Option 7</option><option value="option9">Option 9</option><option value="option10">Option 10</option><option value="option11">Option 11</option><option value="option12">Option 12</option><option value="option13">Option 13</option><option value="option15">Option 15</option><option value="option17">Option 17</option><option value="option19">Option 19</option><option value="option20">Option 20</option></select> <span class="info-container"> <span class="info">Showing all 14</span> <button type="button" class="btn clear1 pull-right btn-default btn-xs legitRipple">show all</button> </span> </div> <div class="box2 col-md-6"> <label for="bootstrap-duallistbox-selected-list_" style="display: none;"></label> <input class="filter form-control" type="text" placeholder="Filter"> <div class="btn-group buttons"> <button type="button" class="btn remove btn-default legitRipple" title="Remove selected"> <i class="icon-arrow-left22"></i> </button> <button type="button" class="btn removeall btn-default legitRipple" title="Remove all"> <i class="icon-arrow-left22"></i> <i class="icon-arrow-left22"></i> </button> </div> <select multiple="multiple" id="bootstrap-duallistbox-selected-list_" class="form-control" name="_helper2" style="height: 200px;"><option value="option8" selected="selected">Option 8</option><option value="option14" selected="selected">Option 14</option><option value="option16" selected="selected">Option 16</option><option value="option18" selected="selected">Option 18</option></select> <span class="info-container"> <span class="info">Showing all 4</span> <button type="button" class="btn clear2 pull-right btn-default btn-xs legitRipple">show all</button> </span> </div></div><select multiple="multiple" class="form-control listbox-no-selection" style="display: none;">
+                                <option value="option1">Option 1</option>
+                                <option value="option2">Option 2</option>
+                                <option value="option4">Option 4</option>
+                                <option value="option5">Option 5</option>
+                                <option value="option7">Option 7</option>
+                                <option value="option8" selected="selected">Option 8</option>
+                                <option value="option9">Option 9</option>
+                                <option value="option10">Option 10</option>
+                                <option value="option11">Option 11</option>
+                                <option value="option12">Option 12</option>
+                                <option value="option13">Option 13</option>
+                                <option value="option14" selected="selected">Option 14</option>
+                                <option value="option15">Option 15</option>
+                                <option value="option16" selected="selected">Option 16</option>
+                                <option value="option17">Option 17</option>
+                                <option value="option18" selected="selected">Option 18</option>
+                                <option value="option19">Option 19</option>
+                                <option value="option20">Option 20</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                <!-- /dual listbox -->
+
+
+                <!-- Progress list -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Progress list</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <ul class="progress-list">
+                            <li>
+                                <label>CPU usage <span>50%</span></label>
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-info" style="width: 50%">
+                                        <span class="sr-only">50% Complete</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <label>RAM usage <span>70%</span></label>
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-danger" style="width: 70%">
+                                        <span class="sr-only">70% Complete</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <label>Disc space <span>80%</span></label>
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-success" style="width: 80%">
+                                        <span class="sr-only">80% Complete</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <label>Bandwidth <span>60%</span></label>
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-primary" style="width: 60%">
+                                        <span class="sr-only">60% Complete</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /progress list -->
+
+
+                <!-- Horizontal sliders -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Horizontal sliders</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <form action="#">
+                            <div class="form-group">
+                                <label class="mb-10">Default slider</label>
+                                <div class="ui-slider-range ui-slider-danger ui-slider-sm ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 16.6667%; width: 66.6667%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 16.6667%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 83.3333%;"></span></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="mb-10">Slider with pips</label>
+                                <div class="ui-slider-labels ui-slider-info ui-slider-sm ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all ui-slider-pips ui-slider-float"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 22.2222%; width: 55.5556%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 22.2222%;"><span class="ui-slider-tip">2</span></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 77.7778%;"><span class="ui-slider-tip">7</span></span><span class="ui-slider-pip ui-slider-pip-first ui-slider-pip-label ui-slider-pip-0" style="left: 0%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="0">0</span></span><span class="ui-slider-pip ui-slider-pip-1" style="left: 11.1111%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="1">1</span></span><span class="ui-slider-pip ui-slider-pip-2 ui-slider-pip-initial-1 ui-slider-pip-selected-1" style="left: 22.2222%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="2">2</span></span><span class="ui-slider-pip ui-slider-pip-3 ui-slider-pip-inrange" style="left: 33.3333%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="3">3</span></span><span class="ui-slider-pip ui-slider-pip-4 ui-slider-pip-inrange" style="left: 44.4444%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="4">4</span></span><span class="ui-slider-pip ui-slider-pip-5 ui-slider-pip-inrange" style="left: 55.5556%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="5">5</span></span><span class="ui-slider-pip ui-slider-pip-6 ui-slider-pip-inrange" style="left: 66.6667%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="6">6</span></span><span class="ui-slider-pip ui-slider-pip-7 ui-slider-pip-initial-2 ui-slider-pip-selected-2" style="left: 77.7778%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="7">7</span></span><span class="ui-slider-pip ui-slider-pip-8" style="left: 88.8889%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="8">8</span></span><span class="ui-slider-pip ui-slider-pip-last ui-slider-pip-label ui-slider-pip-9" style="left: 100%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="9">9</span></span></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /horizontal sliders -->
+
+
+                <!-- Vertical sliders -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Vertical sliders</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content text-center">
+                        <div class="ui-slider-vertical-pips vertical-pips">
+                            <span class="ui-slider-success ui-slider-sm ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all ui-slider-pips"><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="height: 22.2222%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="bottom: 22.2222%;"></span><span class="ui-slider-pip ui-slider-pip-first ui-slider-pip-label ui-slider-pip-0 ui-slider-pip-inrange" style="bottom: 0%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="0">0</span></span><span class="ui-slider-pip ui-slider-pip-1 ui-slider-pip-inrange" style="bottom: 11.1111%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="1">1</span></span><span class="ui-slider-pip ui-slider-pip-2 ui-slider-pip-initial ui-slider-pip-selected" style="bottom: 22.2222%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="2">2</span></span><span class="ui-slider-pip ui-slider-pip-3" style="bottom: 33.3333%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="3">3</span></span><span class="ui-slider-pip ui-slider-pip-4" style="bottom: 44.4444%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="4">4</span></span><span class="ui-slider-pip ui-slider-pip-5" style="bottom: 55.5556%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="5">5</span></span><span class="ui-slider-pip ui-slider-pip-6" style="bottom: 66.6667%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="6">6</span></span><span class="ui-slider-pip ui-slider-pip-7" style="bottom: 77.7778%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="7">7</span></span><span class="ui-slider-pip ui-slider-pip-8" style="bottom: 88.8889%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="8">8</span></span><span class="ui-slider-pip ui-slider-pip-last ui-slider-pip-label ui-slider-pip-9" style="bottom: 100%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="9">9</span></span></span>
+                            <span class="ui-slider-danger ui-slider-sm ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all ui-slider-pips"><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="height: 44.4444%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="bottom: 44.4444%;"></span><span class="ui-slider-pip ui-slider-pip-first ui-slider-pip-label ui-slider-pip-0 ui-slider-pip-inrange" style="bottom: 0%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="0">0</span></span><span class="ui-slider-pip ui-slider-pip-1 ui-slider-pip-inrange" style="bottom: 11.1111%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="1">1</span></span><span class="ui-slider-pip ui-slider-pip-2 ui-slider-pip-inrange" style="bottom: 22.2222%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="2">2</span></span><span class="ui-slider-pip ui-slider-pip-3 ui-slider-pip-inrange" style="bottom: 33.3333%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="3">3</span></span><span class="ui-slider-pip ui-slider-pip-4 ui-slider-pip-initial ui-slider-pip-selected" style="bottom: 44.4444%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="4">4</span></span><span class="ui-slider-pip ui-slider-pip-5" style="bottom: 55.5556%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="5">5</span></span><span class="ui-slider-pip ui-slider-pip-6" style="bottom: 66.6667%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="6">6</span></span><span class="ui-slider-pip ui-slider-pip-7" style="bottom: 77.7778%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="7">7</span></span><span class="ui-slider-pip ui-slider-pip-8" style="bottom: 88.8889%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="8">8</span></span><span class="ui-slider-pip ui-slider-pip-last ui-slider-pip-label ui-slider-pip-9" style="bottom: 100%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="9">9</span></span></span>
+                            <span class="ui-slider-info ui-slider-sm ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all ui-slider-pips"><div class="ui-slider-range ui-widget-header ui-corner-all ui-slider-range-min" style="height: 66.6667%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="bottom: 66.6667%;"></span><span class="ui-slider-pip ui-slider-pip-first ui-slider-pip-label ui-slider-pip-0 ui-slider-pip-inrange" style="bottom: 0%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="0">0</span></span><span class="ui-slider-pip ui-slider-pip-1 ui-slider-pip-inrange" style="bottom: 11.1111%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="1">1</span></span><span class="ui-slider-pip ui-slider-pip-2 ui-slider-pip-inrange" style="bottom: 22.2222%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="2">2</span></span><span class="ui-slider-pip ui-slider-pip-3 ui-slider-pip-inrange" style="bottom: 33.3333%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="3">3</span></span><span class="ui-slider-pip ui-slider-pip-4 ui-slider-pip-inrange" style="bottom: 44.4444%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="4">4</span></span><span class="ui-slider-pip ui-slider-pip-5 ui-slider-pip-inrange" style="bottom: 55.5556%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="5">5</span></span><span class="ui-slider-pip ui-slider-pip-6 ui-slider-pip-initial ui-slider-pip-selected" style="bottom: 66.6667%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="6">6</span></span><span class="ui-slider-pip ui-slider-pip-7" style="bottom: 77.7778%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="7">7</span></span><span class="ui-slider-pip ui-slider-pip-8" style="bottom: 88.8889%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="8">8</span></span><span class="ui-slider-pip ui-slider-pip-last ui-slider-pip-label ui-slider-pip-9" style="bottom: 100%"><span class="ui-slider-line"></span><span class="ui-slider-label" data-value="9">9</span></span></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /vertical sliders -->
+
+
+                <!-- Dynamic tree -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Dynamic tree</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content tree-default">
+                        <ul class="ui-fancytree-source ui-helper-hidden">
+                            <li class="folder expanded">Expanded folder
+                                <ul>
+                                    <li class="expanded">Expanded sub-item
+                                        <ul>
+                                            <li class="active focused">Active sub-item</li>
+                                            <li>Basicmenu item</li>
+                                        </ul>
+                                    </li>
+                                    <li>Collapsed sub-item
+                                        <ul>
+                                            <li>Sub-item 2.2.1</li>
+                                            <li>Sub-item 2.2.2</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>Menu item</li>
+                            <li class="folder">Collapsed folder
+                                <ul>
+                                    <li>Sub-item 1.1</li>
+                                    <li>Sub-item 1.2</li>
+                                </ul>
+                            </li>
+                            <li class="selected">This is a selected item</li>
+                            <li class="expanded">Document with children
+                                <ul>
+                                    <li>Document sub-item</li>
+                                    <li>Another sub-item
+                                        <ul>
+                                            <li>Sub-item 2.1.1</li>
+                                            <li>Sub-item 2.1.2</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="ui-fancytree fancytree-container fancytree-plain" tabindex="0"><li><span class="fancytree-node fancytree-expanded fancytree-folder fancytree-has-children fancytree-exp-e fancytree-ico-ef"><span class="fancytree-expander"></span><span class="fancytree-icon"></span><span class="fancytree-title">Expanded folder</span></span><ul><li><span class="fancytree-node fancytree-expanded fancytree-has-children fancytree-exp-e fancytree-ico-e"><span class="fancytree-expander"></span><span class="fancytree-icon"></span><span class="fancytree-title">Expanded sub-item</span></span><ul><li><span class="fancytree-node fancytree-active focused fancytree-exp-n fancytree-ico-c"><span class="fancytree-expander"></span><span class="fancytree-icon"></span><span class="fancytree-title">Active sub-item</span></span></li><li class="fancytree-lastsib"><span class="fancytree-node fancytree-lastsib fancytree-exp-nl fancytree-ico-c"><span class="fancytree-expander"></span><span class="fancytree-icon"></span><span class="fancytree-title">Basicmenu item</span></span></li></ul></li><li class="fancytree-lastsib"><span class="fancytree-node fancytree-has-children fancytree-lastsib fancytree-exp-cl fancytree-ico-c"><span class="fancytree-expander"></span><span class="fancytree-icon"></span><span class="fancytree-title">Collapsed sub-item</span></span></li></ul></li><li><span class="fancytree-node fancytree-exp-n fancytree-ico-c"><span class="fancytree-expander"></span><span class="fancytree-icon"></span><span class="fancytree-title">Menu item</span></span></li><li><span class="fancytree-node fancytree-folder fancytree-has-children fancytree-exp-c fancytree-ico-cf"><span class="fancytree-expander"></span><span class="fancytree-icon"></span><span class="fancytree-title">Collapsed folder</span></span></li><li><span class="fancytree-node fancytree-selected fancytree-exp-n fancytree-ico-c"><span class="fancytree-expander"></span><span class="fancytree-icon"></span><span class="fancytree-title">This is a selected item</span></span></li><li class="fancytree-lastsib"><span class="fancytree-node fancytree-expanded fancytree-has-children fancytree-lastsib fancytree-exp-el fancytree-ico-e"><span class="fancytree-expander"></span><span class="fancytree-icon"></span><span class="fancytree-title">Document with children</span></span><ul><li><span class="fancytree-node fancytree-exp-n fancytree-ico-c"><span class="fancytree-expander"></span><span class="fancytree-icon"></span><span class="fancytree-title">Document sub-item</span></span></li><li class="fancytree-lastsib"><span class="fancytree-node fancytree-has-children fancytree-lastsib fancytree-exp-cl fancytree-ico-c"><span class="fancytree-expander"></span><span class="fancytree-icon"></span><span class="fancytree-title">Another sub-item</span></span></li></ul></li></ul></div>
+                </div>
+                <!-- /dynamic tree -->
+
+            </div>
+
+            <div class="tab-pane fade no-padding" id="custom-tab">
+
+                <!-- Title -->
+                <div class="category-title h6">
+                    <span>Custom content</span>
+                    <ul class="icons-list">
+                        <li><a href="#"><i class="icon-gear"></i></a></li>
+                    </ul>
+                </div>
+                <!-- /title -->
+
+
+                <!-- User list -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Media list</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <ul class="media-list">
+                            <li class="media">
+                                <a href="#" class="media-left"><img src="assets/images/demo/users/face1.jpg" class="img-sm img-circle" alt=""></a>
+                                <div class="media-body">
+                                    <a href="#" class="media-heading text-semibold">James Alexander</a>
+                                    <span class="text-size-mini text-muted display-block">Santa Ana, CA.</span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <span class="status-mark border-success"></span>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <a href="#" class="media-left"><img src="assets/images/demo/users/face2.jpg" class="img-sm img-circle" alt=""></a>
+                                <div class="media-body">
+                                    <a href="#" class="media-heading text-semibold">Jeremy Victorino</a>
+                                    <span class="text-size-mini text-muted display-block">Dowagiac, MI.</span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <span class="status-mark border-danger"></span>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <a href="#" class="media-left"><img src="assets/images/demo/users/face3.jpg" class="img-sm img-circle" alt=""></a>
+                                <div class="media-body">
+                                    <a href="#" class="media-heading text-semibold">Margo Baker</a>
+                                    <span class="text-size-mini text-muted display-block">Kasaan, AK.</span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <span class="status-mark border-success"></span>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <a href="#" class="media-left"><img src="assets/images/demo/users/face4.jpg" class="img-sm img-circle" alt=""></a>
+                                <div class="media-body">
+                                    <a href="#" class="media-heading text-semibold">Beatrix Diaz</a>
+                                    <span class="text-size-mini text-muted display-block">Neenah, WI.</span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <span class="status-mark border-warning"></span>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <a href="#" class="media-left"><img src="assets/images/demo/users/face5.jpg" class="img-sm img-circle" alt=""></a>
+                                <div class="media-body">
+                                    <a href="#" class="media-heading text-semibold">Richard Vango</a>
+                                    <span class="text-size-mini text-muted display-block">Grapevine, TX.</span>
+                                </div>
+                                <div class="media-right media-middle">
+                                    <span class="status-mark border-grey-400"></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /user list -->
+
+
+                <!-- Linked user list -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Linked user list</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content no-padding">
+                        <ul class="media-list media-list-linked">
+                            <li class="media">
+                                <a href="#" class="media-link">
+                                    <div class="media-left"><img src="assets/images/demo/users/face25.jpg" class="img-sm img-circle" alt=""></div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">Will Baker</span>
+                                        <span class="text-size-mini text-muted display-block">Santa Ana, CA.</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <span class="status-mark bg-success"></span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="media">
+                                <a href="#" class="media-link">
+                                    <div class="media-left"><img src="assets/images/demo/users/face24.jpg" class="img-sm img-circle" alt=""></div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">Joseph Mills</span>
+                                        <span class="text-size-mini text-muted display-block">Dowagiac, MI.</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <span class="status-mark bg-danger"></span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="media">
+                                <a href="#" class="media-link">
+                                    <div class="media-left"><img src="assets/images/demo/users/face23.jpg" class="img-sm img-circle" alt=""></div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">Buzz Brenson</span>
+                                        <span class="text-size-mini text-muted display-block">Kasaan, AK.</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <span class="status-mark bg-success"></span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="media">
+                                <a href="#" class="media-link">
+                                    <div class="media-left"><img src="assets/images/demo/users/face22.jpg" class="img-sm img-circle" alt=""></div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">Zachary Willson</span>
+                                        <span class="text-size-mini text-muted display-block">Neenah, WI.</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <span class="status-mark bg-warning"></span>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="media">
+                                <a href="#" class="media-link">
+                                    <div class="media-left"><img src="assets/images/demo/users/face20.jpg" class="img-sm img-circle" alt=""></div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">Bastian Miller</span>
+                                        <span class="text-size-mini text-muted display-block">Grapevine, TX.</span>
+                                    </div>
+                                    <div class="media-right media-middle">
+                                        <span class="status-mark bg-grey-400"></span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /linked user list -->
+
+
+                <!-- Conversation -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Conversation</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content no-padding">
+                        <ul class="media-list media-list-linked">
+                            <li class="media">
+                                <a href="#" class="media-link">
+                                    <div class="media-left"><img src="assets/images/demo/users/face10.jpg" class="img-sm img-circle" alt=""></div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">Will Samuel</span>
+                                        <span class="text-muted">And he looked over at the alarm clock, ticking..</span>
+                                        <div class="media-annotation mt-5"><i class="icon-check"></i> Just now</div>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="media">
+                                <a href="#" class="media-link">
+                                    <div class="media-left"><img src="assets/images/demo/users/face11.jpg" class="img-sm img-circle" alt=""></div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">Margo Baker</span>
+                                        <span class="text-muted">However hard he threw himself onto..</span>
+                                        <div class="media-annotation mt-5"><i class="icon-check"></i> 6 minutes ago</div>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="media">
+                                <a href="#" class="media-link">
+                                    <div class="media-left"><img src="assets/images/demo/users/face12.jpg" class="img-sm img-circle" alt=""></div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">Monica Smith</span>
+                                        <span class="text-muted">Yes, but was it possible to quietly sleep through..</span>
+                                        <div class="media-annotation mt-5"><i class="icon-check"></i> Yesterday</div>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="media">
+                                <a href="#" class="media-link">
+                                    <div class="media-left"><img src="assets/images/demo/users/face13.jpg" class="img-sm img-circle" alt=""></div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">Jordana Mills</span>
+                                        <span class="text-muted">What should he do now? The next train went at..</span>
+                                        <div class="media-annotation mt-5"><i class="icon-check"></i> Monday</div>
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="media">
+                                <a href="#" class="media-link">
+                                    <div class="media-left"><img src="assets/images/demo/users/face14.jpg" class="img-sm img-circle" alt=""></div>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">John Craving</span>
+                                        <span class="text-muted">Gregor then turned to look out the window..</span>
+                                        <div class="media-annotation mt-5"><i class="icon-check"></i> Jan 24, 14:50</div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /conversation -->
+
+
+                <!-- Action link -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Action links</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <ul class="media-list">
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#"><img src="assets/images/demo/users/face3.jpg" class="img-xs img-circle" alt=""></a>
+                                </div>
+
+                                <div class="media-body media-middle">
+                                    Victoria Mongerini
+                                </div>
+
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list text-nowrap">
+                                        <li>
+                                            <a href="#"><i class="icon-comment-discussion"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img src="assets/images/demo/users/face4.jpg" class="img-xs img-circle" alt="">
+                                        <span class="badge badge-warning media-badge">8</span>
+                                    </a>
+                                </div>
+
+                                <div class="media-body media-middle">
+                                    Sarah Clifferson
+                                </div>
+
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list text-nowrap">
+                                        <li>
+                                            <a href="#"><i class="icon-comment-discussion"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#"><img src="assets/images/demo/users/face5.jpg" class="img-xs img-circle" alt=""></a>
+                                </div>
+
+                                <div class="media-body media-middle">
+                                    Shane Brigger
+                                </div>
+
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list text-nowrap">
+                                        <li>
+                                            <a href="#"><i class="icon-comment-discussion"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#"><img src="assets/images/demo/users/face8.jpg" class="img-xs img-circle" alt=""></a>
+                                </div>
+
+                                <div class="media-body media-middle">
+                                    Aaron Statement
+                                </div>
+
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list text-nowrap">
+                                        <li>
+                                            <a href="#"><i class="icon-comment-discussion"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#"><img src="assets/images/demo/users/face9.jpg" class="img-xs img-circle" alt=""></a>
+                                </div>
+
+                                <div class="media-body media-middle">
+                                    Jeff Stickson
+                                </div>
+
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list text-nowrap">
+                                        <li>
+                                            <a href="#"><i class="icon-comment-discussion"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /action link -->
+
+
+                <!-- Action dropdown -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Action dropdown</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <ul class="media-list">
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img src="assets/images/demo/users/face11.jpg" class="img-xs img-circle" alt="">
+                                        <span class="badge badge-info media-badge">6</span>
+                                    </a>
+                                </div>
+
+                                <div class="media-body media-middle">
+                                    Rebecca Jameson
+                                </div>
+
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list text-nowrap">
+                                        <li>
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-more2"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="#"><i class="icon-comment-discussion pull-right"></i> Start chat</a></li>
+                                                <li><a href="#"><i class="icon-phone2 pull-right"></i> Make a call</a></li>
+                                                <li><a href="#"><i class="icon-mail5 pull-right"></i> Send mail</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#"><i class="icon-statistics pull-right"></i> Statistics</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img src="assets/images/demo/users/face25.jpg" class="img-xs img-circle" alt="">
+                                        <span class="badge badge-info media-badge">9</span>
+                                    </a>
+                                </div>
+
+                                <div class="media-body media-middle">
+                                    Walter Sommers
+                                </div>
+
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list text-nowrap">
+                                        <li>
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-more2"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="#"><i class="icon-comment-discussion pull-right"></i> Start chat</a></li>
+                                                <li><a href="#"><i class="icon-phone2 pull-right"></i> Make a call</a></li>
+                                                <li><a href="#"><i class="icon-mail5 pull-right"></i> Send mail</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#"><i class="icon-statistics pull-right"></i> Statistics</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#"><img src="assets/images/demo/users/face10.jpg" class="img-xs img-circle" alt=""></a>
+                                </div>
+
+                                <div class="media-body media-middle">
+                                    Otto Gerwald
+                                </div>
+
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list text-nowrap">
+                                        <li>
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-more2"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="#"><i class="icon-comment-discussion pull-right"></i> Start chat</a></li>
+                                                <li><a href="#"><i class="icon-phone2 pull-right"></i> Make a call</a></li>
+                                                <li><a href="#"><i class="icon-mail5 pull-right"></i> Send mail</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#"><i class="icon-statistics pull-right"></i> Statistics</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#"><img src="assets/images/demo/users/face14.jpg" class="img-xs img-circle" alt=""></a>
+                                </div>
+
+                                <div class="media-body media-middle">
+                                    Vince Satmann
+                                </div>
+
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list text-nowrap">
+                                        <li>
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-more2"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="#"><i class="icon-comment-discussion pull-right"></i> Start chat</a></li>
+                                                <li><a href="#"><i class="icon-phone2 pull-right"></i> Make a call</a></li>
+                                                <li><a href="#"><i class="icon-mail5 pull-right"></i> Send mail</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#"><i class="icon-statistics pull-right"></i> Statistics</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#"><img src="assets/images/demo/users/face24.jpg" class="img-xs img-circle" alt=""></a>
+                                </div>
+
+                                <div class="media-body media-middle">
+                                    Jason Leroy
+                                </div>
+
+                                <div class="media-right media-middle">
+                                    <ul class="icons-list text-nowrap">
+                                        <li>
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-more2"></i></a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="#"><i class="icon-comment-discussion pull-right"></i> Start chat</a></li>
+                                                <li><a href="#"><i class="icon-phone2 pull-right"></i> Make a call</a></li>
+                                                <li><a href="#"><i class="icon-mail5 pull-right"></i> Send mail</a></li>
+                                                <li class="divider"></li>
+                                                <li><a href="#"><i class="icon-statistics pull-right"></i> Statistics</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /action dropdown -->
+
+
+                <!-- List with flat labels -->
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Flat icon labels</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <ul class="media-list">
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#" class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-sm legitRipple"><i class="icon-git-pull-request"></i></a>
+                                </div>
+
+                                <div class="media-body">
+                                    Drop the IE <a href="#">specific hacks</a> for temporal inputs
+                                    <div class="media-annotation">4 minutes ago</div>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#" class="btn border-warning text-warning btn-flat btn-rounded btn-icon btn-sm legitRipple"><i class="icon-git-commit"></i></a>
+                                </div>
+
+                                <div class="media-body">
+                                    Add full font overrides for popovers and tooltips
+                                    <div class="media-annotation">36 minutes ago</div>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#" class="btn border-info text-info btn-flat btn-rounded btn-icon btn-sm legitRipple"><i class="icon-git-branch"></i></a>
+                                </div>
+
+                                <div class="media-body">
+                                    <a href="#">Chris Arney</a> created a new <span class="text-semibold">Design</span> branch
+                                    <div class="media-annotation">2 hours ago</div>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#" class="btn border-success text-success btn-flat btn-rounded btn-icon btn-sm legitRipple"><i class="icon-git-merge"></i></a>
+                                </div>
+
+                                <div class="media-body">
+                                    <a href="#">Eugene Kopyov</a> merged <span class="text-semibold">Master</span> and <span class="text-semibold">Dev</span> branches
+                                    <div class="media-annotation">Dec 18, 18:36</div>
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#" class="btn border-primary text-primary btn-flat btn-rounded btn-icon btn-sm legitRipple"><i class="icon-git-pull-request"></i></a>
+                                </div>
+
+                                <div class="media-body">
+                                    Have Carousel ignore keyboard events
+                                    <div class="media-annotation">Dec 12, 05:46</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /list with flat labels -->
+
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+{% endblock %}
+
+{% block _opposite_sidebar %}
 
     <div class="sidebar sidebar-opposite sidebar-default">
         <div class="sidebar-content">

@@ -29,7 +29,7 @@
         props: ['cover'],
         data: function () {
             return {
-                loadingText: '首页封面',
+                loadingText: '随机封面',
                 status: 'init'
             }
         },

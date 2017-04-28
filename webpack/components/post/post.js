@@ -73,6 +73,32 @@ new Vue({
     updated: function () {
 
     },
+    computed: {
+        btnStatus: function(){
+            if (this.status === 'loading' ){
+                return 'disabled'
+
+            }else if(this.status === 'success'){
+                return ''
+            }
+            return '';
+        },
+        classObject: function () {
+
+            if (this.status === 'saving'){
+                return 'icon-sync spinner text-primary'
+            }else if (this.status === 'success'){
+                this.loadingText = '更换完成';
+                return 'icon-sync text-success';
+            }else if (this.status === 'error'){
+                this.loadingText = '更换失败';
+                return 'icon-warning22 text-warning'
+            }
+
+            return 'icon-sync';
+
+        }
+    },
     components: {
         Editor,
         // Summernote,

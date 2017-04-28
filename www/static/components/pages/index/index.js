@@ -2088,7 +2088,7 @@ exports.default = {
     props: ['cover'],
     data: function data() {
         return {
-            loadingText: '首页封面',
+            loadingText: '随机封面',
             status: 'init'
         };
     },
