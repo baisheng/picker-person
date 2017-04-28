@@ -1,0 +1,249 @@
+{% extends "./_layout.html" %}
+
+{% block main %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+                    <article>
+                        <div class="article__title text-center">
+                            <h1 class="h2"><$ post.title $></h1>
+                            <span> <$ post.modified $> </span>
+                            <span>
+                                        <a href="#"><$ post.type $></a>
+                                    </span>
+                        </div>
+                        <!--end article title-->
+                        <div class="article__body">
+                            <$ post.content | markdown | safe $>
+                        </div>
+                        <div class="article__share text-center">
+                            <a class="btn bg--facebook btn--icon" href="#">
+                                        <span class="btn__text">
+                                            <i class="socicon socicon-facebook"></i>
+                                            Share on Facebook
+                                        </span>
+                            </a>
+                            <a class="btn bg--twitter btn--icon" href="#">
+                                        <span class="btn__text">
+                                            <i class="socicon socicon-twitter"></i>
+                                            Share on Twitter
+                                        </span>
+                            </a>
+                        </div>
+                    </article>
+                    <!--end item-->
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+    <section class="text-center space--sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                    <div class="boxed boxed--lg bg--dark subscribe-form-1">
+                        <h3>Get our latest content in your inbox</h3>
+                        <h5>Join over 20,000 satisfied customers</h5>
+                        <div class="col-sm-8 col-sm-offset-2 text-left">
+                            <form>
+                                <input type="text" name="name" placeholder="Your Name" />
+                                <input type="email" name="email" placeholder="Email Address" />
+                                <div class="input-checkbox">
+                                    <div class="inner"></div>
+                                    <input type="checkbox" name="agree" />
+                                </div>
+                                <span>I have read and agree to the
+                                            <a href="#">terms and conditions</a>
+                                        </span>
+                                <button type="submit" class="btn btn--primary type--uppercase">Subscribe To Newsletter</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+    <section class="space--sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <hr>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+                    <div class="comments">
+                        <h3>4 Comments</h3>
+                        <ul class="comments__list">
+                            <li>
+                                <div class="comment">
+                                    <div class="comment__avatar">
+                                        <img alt="Image" src="img/avatar-round-1.png" />
+                                    </div>
+                                    <div class="comment__body">
+                                        <h5 class="type--fine-print">Anne Brady</h5>
+                                        <div class="comment__meta">
+                                            <span>10th May 2016</span>
+                                            <a href="#">Reply</a>
+                                        </div>
+                                        <p>
+                                            Affordances food-truck SpaceTeam unicorn disrupt integrate viral pair programming big data pitch deck intuitive intuitive prototype long shadow. Responsive hacker intuitive driven
+                                        </p>
+                                    </div>
+                                </div>
+                                <!--end comment-->
+                                <div class="comment">
+                                    <div class="comment__avatar">
+                                        <img alt="Image" src="img/avatar-round-3.png" />
+                                    </div>
+                                    <div class="comment__body">
+                                        <h5 class="type--fine-print">Jacob Sims</h5>
+                                        <div class="comment__meta">
+                                            <span>10th May 2016</span>
+                                            <a href="#">Reply</a>
+                                        </div>
+                                        <p>
+                                            Prototype intuitive intuitive thought leader personas parallax paradigm long shadow engaging unicorn SpaceTeam fund ideate paradigm.
+                                        </p>
+                                    </div>
+                                </div>
+                                <!--end comment-->
+                            </li>
+                            <li>
+                                <div class="comment">
+                                    <div class="comment__avatar">
+                                        <img alt="Image" src="img/avatar-round-2.png" />
+                                    </div>
+                                    <div class="comment__body">
+                                        <h5 class="type--fine-print">Kelly Dewitt</h5>
+                                        <div class="comment__meta">
+                                            <span>11th May 2016</span>
+                                            <a href="#">Reply</a>
+                                        </div>
+                                        <p>
+                                            Responsive hacker intuitive driven waterfall is so 2000 and late intuitive cortado bootstrapping venture capital. Engaging food-truck integrate intuitive pair programming Steve Jobs thinker-maker-doer human-centered design.
+                                        </p>
+                                        <p>
+                                            Affordances food-truck SpaceTeam unicorn disrupt integrate viral pair programming big data pitch deck intuitive intuitive prototype long shadow. Responsive hacker intuitive driven
+                                        </p>
+                                    </div>
+                                </div>
+                                <!--end comment-->
+                            </li>
+                            <li>
+                                <div class="comment">
+                                    <div class="comment__avatar">
+                                        <img alt="Image" src="img/avatar-round-4.png" />
+                                    </div>
+                                    <div class="comment__body">
+                                        <h5 class="type--fine-print">Luke Smith</h5>
+                                        <div class="comment__meta">
+                                            <span>11th May 2016</span>
+                                            <a href="#">Reply</a>
+                                        </div>
+                                        <p>
+                                            Unicorn disrupt integrate viral pair programming big data pitch deck intuitive intuitive prototype long shadow. Responsive hacker intuitive driven
+                                        </p>
+                                    </div>
+                                </div>
+                                <!--end comment-->
+                            </li>
+                        </ul>
+                    </div>
+                    <!--end comments-->
+                    <div class="comments-form">
+                        <h4>Leave a comment</h4>
+                        <div class="row">
+                            <form>
+                                <div class="col-sm-6">
+                                    <label>Your Name:</label>
+                                    <input type="text" name="Name" placeholder="Type name here" />
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Email Address:</label>
+                                    <input type="email" name="Email" placeholder="you@mailprovider.com" />
+                                </div>
+                                <div class="col-sm-12">
+                                    <label>Comment:</label>
+                                    <textarea rows="4" name="Message" placeholder="Message"></textarea>
+                                </div>
+                                <div class="col-sm-3">
+                                    <button class="btn btn--primary" type="submit">Submit Comment</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!--end row-->
+                    </div>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+    <section class="bg--secondary">
+        <div class="container">
+            <div class="row text-block">
+                <div class="col-sm-12">
+                    <h3>More recent stories</h3>
+                </div>
+            </div>
+            <!--end of row-->
+            <div class="row">
+                <div class="col-sm-4">
+                    <article class="feature feature-1">
+                        <a href="#" class="block">
+                            <img alt="Image" src="img/blog-2.jpg" />
+                        </a>
+                        <div class="feature__body boxed boxed--border">
+                            <span>May 25th 2016</span>
+                            <h5>A day in the life of a professional fitness blogger</h5>
+                            <a href="#">
+                                Read More
+                            </a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-sm-4">
+                    <article class="feature feature-1">
+                        <a href="#" class="block">
+                            <img alt="Image" src="img/blog-3.jpg" />
+                        </a>
+                        <div class="feature__body boxed boxed--border">
+                            <span>May 25th 2016</span>
+                            <h5>Small businesses that expertly leverage their online followings</h5>
+                            <a href="#">
+                                Read More
+                            </a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-sm-4">
+                    <article class="feature feature-1">
+                        <a href="#" class="block">
+                            <img alt="Image" src="img/blog-4.jpg" />
+                        </a>
+                        <div class="feature__body boxed boxed--border">
+                            <span>May 25th 2016</span>
+                            <h5>Designing efficiently in the age of distraction</h5>
+                            <a href="#">
+                                Read More
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!--end of container-->
+    </section>
+{% endblock %}

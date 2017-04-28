@@ -1,4 +1,35 @@
 'use strict';
+
+import markdownIt from 'markdown-it'
+import emoji from 'markdown-it-emoji'
+import subscript from 'markdown-it-sub'
+import superscript from 'markdown-it-sup'
+import footnote from 'markdown-it-footnote'
+// import deflist from 'markdown-it-deflist'
+// import abbreviation from 'markdown-it-abbr'
+// import insert from 'markdown-it-ins'
+import mark from 'markdown-it-mark'
+//import toc from 'markdown-it-toc-and-anchor'
+//import katex from 'markdown-it-katex'
+
+const md = new markdownIt()
+    .use(subscript)
+    .use(superscript)
+    .use(footnote)
+    //                .use(deflist)
+    //                                .use(abbreviation)
+    //                                .use(insert)
+    .use(mark)
+    .use(emoji)
+//                .use(katex, {"throwOnError" : false, "errorColor" : " #cc0000"})
+md.set({
+    html: true,
+    breaks: true,
+    linkify: true,
+    typographer: true,
+    langPrefix: true,
+    quotes: true,
+})
 /**
  * template config
  */
@@ -10,7 +41,7 @@ export default {
     root_path: think.ROOT_PATH + '/view',
     adapter: {
         nunjucks: {
-            tags:{
+            tags: {
                 // blockStart: '<%',
                 // blockEnd: '%>',
                 variableStart: '<$',
@@ -35,7 +66,7 @@ export default {
                  */
                 env.addFilter("dateformat", function (date, extra) {
                     let _extra = extra;
-                    if (think.isEmpty(_extra)){
+                    if (think.isEmpty(_extra)) {
                         _extra = 'Y-m-d H:i:s';
                     }
                     return dateformat(date, _extra);
@@ -67,7 +98,7 @@ export default {
                 /**
                  * {{id|get_pic("m=1,w=200,h=200")}}
                  */
-                env.addFilter('get_pic', async(id, type, callback) => {
+                env.addFilter('get_pic', async (id, type, callback) => {
                     let m, w, h;
                     //console.log(type);
                     let obj = {};
@@ -84,12 +115,12 @@ export default {
                 /**
                  * 获取用户名称
                  */
-                env.addFilter("get_nickname", async(uid, callback) => {
+                env.addFilter("get_nickname", async (uid, callback) => {
                     let data = await get_nickname(uid);
                     callback(null, data);
                 }, true)
 
-                env.addFilter("display_name", async(uid, callback) => {
+                env.addFilter("display_name", async (uid, callback) => {
                     let data = await display_name(uid);
                     callback(null, data);
                 }, true)
@@ -97,12 +128,12 @@ export default {
                  * 根据栏目id获取栏目信息
                  *
                  */
-                env.addFilter('get_cate', async(id, callback) => {
+                env.addFilter('get_cate', async (id, callback) => {
                     let data = await get_cate(id);
                     callback(null, data);
                 }, true)
 
-                env.addFilter('get_team', async(id, callback) => {
+                env.addFilter('get_team', async (id, callback) => {
                     let data = await get_team(id);
                     callback(null, data);
 
@@ -129,18 +160,18 @@ export default {
                     return in_array(str, arr);
                 })
 
-                env.addFilter("get_nav_menu", async(option, callback) => {
+                env.addFilter("get_nav_menu", async (option, callback) => {
                     // let data = await
                     let data = await get_nav_menu(option);
                     callback(null, data);
 
                 }, true)
 
-                env.addFilter("get_thumbnail", async(id, callback) => {
+                env.addFilter("get_thumbnail", async (id, callback) => {
                     // let data = await
                 }, true)
 
-                env.addFilter("language", async(name, callback) => {
+                env.addFilter("language", async (name, callback) => {
 
                     // let lang = await language(name);
                     let lang = require("./locale/" + name).default;
@@ -148,10 +179,20 @@ export default {
                     callback(null, lang);
 
                 }, true)
+
+                /**
+                 * 处理 markdown 格式内容
+                 */
+                env.addFilter("markdown", async (data, callback) => {
+                    let result = md.render(data);
+                    callback(null, result)
+                }, true)
                 // env.addFilter("get_category", async() => {
                 env.addExtension('menus', new menus(), true);
 
                 env.addExtension('stickys', new stickys(), true);
+
+
                 // })
                 // env.addExtension('menus',new menus());
                 // env.addExtension('menus',new menus());

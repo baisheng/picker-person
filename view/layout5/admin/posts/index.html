@@ -1,4 +1,4 @@
-{% extends "../_layout.html" %}
+{% extends "../_layout5.html" %}
 
 {% block style %}
     <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
@@ -230,15 +230,64 @@
 
 
 {% endblock %}
+{% block sidebar_main %}
+    <div class="sidebar sidebar-main sidebar-default sidebar-separate">
+        <div class="sidebar-content">
 
-{#{% block sidebar_main %}#}
+            <!-- Actions -->
+            <div class="sidebar-category">
+                <div class="category-title">
+                    <span>Actions</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
 
-{#{% endblock %}#}
+                <div class="category-content">
+                    <a href="#" class="btn bg-indigo-400 btn-block legitRipple">Compose mail</a>
+                </div>
+            </div>
+            <!-- /actions -->
+
+
+            <!-- Sub navigation -->
+            <div class="sidebar-category">
+                <div class="category-title">
+                    <span>Navigation</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content no-padding">
+                    <ul class="navigation navigation-alt navigation-accordion no-padding-bottom">
+                        <li class="navigation-header">Folders</li>
+                        <li class="active"><a href="#" class="legitRipple"><i class="icon-drawer-in"></i> Inbox <span class="badge badge-success">32</span></a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-drawer3"></i> Drafts</a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-drawer-out"></i> Sent mail</a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-stars"></i> Starred</a></li>
+                        <li class="navigation-divider"></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-spam"></i> Spam <span class="badge badge-danger">99+</span></a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-bin"></i> Trash</a></li>
+                        <li class="navigation-header">Labels</li>
+                        <li><a href="#" class="legitRipple"><span class="status-mark border-primary position-left"></span> Facebook</a></li>
+                        <li><a href="#" class="legitRipple"><span class="status-mark border-success position-left"></span> Spotify</a></li>
+                        <li><a href="#" class="legitRipple"><span class="status-mark border-indigo position-left"></span> Twitter</a></li>
+                        <li><a href="#" class="legitRipple"><span class="status-mark border-danger position-left"></span> Dribbble</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /sub navigation -->
+
+
+        </div>
+    </div>
+{% endblock %}
+
 
 {% block content %}
     <div id="messages"></div>
 
-    <div class="col-md-10">
     <!-- Multiple lines -->
     <div class="panel panel-white">
 
@@ -251,8 +300,7 @@
             </div>
         </div>
 
-
-        <div class="panel-toolbar panel-toolbar-inbox">
+        <div class="panel-toolbar panel-toolbar-inbox navbar-component no-margin-bottom">
             <div class="navbar navbar-default">
                 <ul class="nav navbar-nav visible-xs-block no-border">
                     <li>
@@ -367,7 +415,7 @@
                         </div>
                         <span class="table-inbox-preview">
                             {#<a class="text-muted" :href="'/admin/article/' + _.id">{{ _.excerpt | text | trim }}</a>#}
-                            <a class="text-muted" :href="'/admin/post/' + _.id">{{ _.excerpt | text | trim }}</a>
+                            <a class="text-muted" :href="'/admin/post/' + _.id">{{ _.excerpt | text }}</a>
                             {#<div class="content-group" v-html="_.excerpt">#}
                         </span>
                     </td>
@@ -384,7 +432,6 @@
         </div>
     </div>
     <!-- /multiple lines -->
-    </div>
     {#{% include "../admin/components/data-table.html" %}#}
 {% endblock %}
 

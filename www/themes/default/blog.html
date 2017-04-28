@@ -13,9 +13,8 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="masonry__container">
+                        <div class="masonry__container masonry--active">
                             {% for _ in posts %}
-
                                 <article class="masonry__item" data-masonry-filter="<$ _.type $>">
                                     <div class="article__title text-center">
                                         <a href="#">
@@ -29,13 +28,13 @@
                                     </div>
                                     <!--end article title-->
                                     <div class="article__body">
-                                        <a href="#">
+                                        {#<a href="#">#}
                                             {#<img alt="Image" src="/themes/default/img/blog-4.jpg" />#}
-                                        </a>
+                                        {#</a>#}
                                         <p>
                                             <$ _.excerpt $>
                                         </p>
-                                        <a href="#">全文 &raquo;</a>
+                                        <a href="/article/<$ _.id $>">全文 &raquo;</a>
                                     </div>
                                 </article>
                             <!--end item-->
@@ -45,12 +44,14 @@
                         </div>
                         <!--end of masonry container-->
                         <div class="pagination">
-                            <div class="col-xs-6">
-                                <a class="type--fine-print" href="#">&laquo; Older Posts</a>
-                            </div>
-                            <div class="col-xs-6 text-right">
-                                <a class="type--fine-print" href="#">Newer Posts &raquo;</a>
-                            </div>
+                            <$ pagerData | safe $>
+
+                            {#<div class="col-xs-6">#}
+                                {#<a class="type--fine-print" href="#">&laquo; Older Posts</a>#}
+                            {#</div>#}
+                            {#<div class="col-xs-6 text-right">#}
+                                {#<a class="type--fine-print" href="#">Newer Posts &raquo;</a>#}
+                            {#</div>#}
                         </div>
                     </div>
                     <!--end masonry-->

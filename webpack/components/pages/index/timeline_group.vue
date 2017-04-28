@@ -3,7 +3,6 @@
     <div class="timeline timeline-right content-group">
         <div class="timeline-container">
 
-
             <template v-for="(value, key) in posts">
                 <div class="timeline-row" v-if="key == 'article'" v-for="post in value">
 

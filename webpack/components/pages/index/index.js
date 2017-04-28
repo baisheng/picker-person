@@ -2,13 +2,15 @@ import axios from 'axios'
 Vue.prototype.$http = axios;
 
 import ProfileCover from './profile-cover.vue';
-import Timeline from './timeline.vue';
+// import Timeline from './timeline.vue';
+import Posts from './posts.vue';
 
 new Vue({
     el: "#app",
     components: {
         ProfileCover,
-        Timeline,
+        Posts
+        // Timeline,
         // Select2,
 
         // PageButton

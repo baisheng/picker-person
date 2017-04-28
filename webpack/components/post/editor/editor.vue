@@ -1,7 +1,7 @@
 <template>
     <div class="panel panel-white" :class="{ 'codeview': !isView, 'fullscreen': isFullScreen}">
 
-    <div class="panel-heading">
+        <div class="panel-heading">
             <input type="text"
                    placeholder="无标题"
                    name="title"
@@ -11,8 +11,11 @@
             <div class="heading-elements">
                 <ul class="list-inline list-inline-separate heading-text">
                     <!--<li>Rating: <span class="text-semibold">4.85</span></li>-->
+                    <li class="active">
+                        <i class=" position-left text-muted"
+                           :class="classObject"></i></li>
                     <li>
-                        <i class="icon-star-full2 text-size-base text-warning-300"></i>
+                        <i class="icon-bookmark2 text-size-base text-warning-300"></i>
                         <!--<span class="text-muted position-right">(439)</span>-->
                     </li>
                 </ul>
@@ -96,7 +99,7 @@
 
             <li>
                 <a @click="togglePreview"
-                        title="" data-original-title=""><i
+                   title="" data-original-title=""><i
                         class="fa fa-eye"></i></a>
             </li>
             <li
@@ -108,11 +111,8 @@
             <li
                     data-original-title="帮助"><a><i class="note-icon-question"></i></a></li>
         </ul>
-        <textarea id="_editor"
-                class="note-codable  note-editable"></textarea>
+        <textarea id="_editor" class="note-codable  note-editable"></textarea>
     </div>
-
-
 
 
 </template>
@@ -150,19 +150,19 @@
 
     .snippet--content {
         font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
-        max-height: 300px;
+        max-height: 220px;
         overflow: auto;
     }
 
     .snippet--panel {
-        position: fixed;
-        right: calc(10% - 0px);
-        margin-right: -125px;
-        top: 100px;
-        width: 280px;
+        /*position: relative;*/
+        /*right: calc(10% - 0px);*/
+        /*margin-right: -125px;*/
+        /*top: 100px;*/
+        /*width: 280px;*/
         color: #898989;
         opacity: 1;
-        z-index: 11;
+        /*z-index: 11;*/
         /*z-index: 9999;*/
         background-color: #fafafa;
         /*border-radius: 4px;*/
@@ -172,9 +172,9 @@
 
         transition: all .2s ease-in;
 
-        -ms-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);
-        -o-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);
-        box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);
+        /*-ms-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/
+        /*-o-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/
+        /*box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/
         transition-property: right;
     }
 
@@ -325,6 +325,10 @@
         name: 'Editor',
         md: new markdownIt(),
         props: {
+            status: {
+                type: String,
+                default: 'init'
+            },
             watches: {
                 type: Array,
                 default: () => ['source', 'show', 'toc'],
@@ -628,6 +632,21 @@
             chars: function () {
                 return this.sourceData.length;
             },
+            classObject: function () {
+
+                if (this.status === 'saving') {
+                    return 'icon-sync spinner text-primary'
+                } else if (this.status === 'success') {
+                    this.loadingText = '更换完成';
+                    return 'icon-check text-success';
+                } else if (this.status === 'error') {
+                    this.loadingText = '更换失败';
+                    return 'icon-warning22 text-warning'
+                }
+
+                return 'icon-sync';
+
+            }
 //
 //            lastChar: function () {
 //                return this.sourceData[this.model.text.length - 1];
@@ -1386,7 +1405,7 @@
             },
 
             value(val){
-                if(val === undefined) {
+                if (val === undefined) {
                     return this.editor.codemirror.getValue();
                 } else {
                     this.editor.codemirror.getDoc().setValue(val);

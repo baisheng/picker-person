@@ -1813,23 +1813,30 @@ var _axios = __webpack_require__(53);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _profileCover = __webpack_require__(433);
+var _profileCover = __webpack_require__(434);
 
 var _profileCover2 = _interopRequireDefault(_profileCover);
 
-var _timeline = __webpack_require__(434);
+var _posts = __webpack_require__(433);
 
-var _timeline2 = _interopRequireDefault(_timeline);
+var _posts2 = _interopRequireDefault(_posts);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 Vue.prototype.$http = _axios2.default;
+// import Timeline from './timeline.vue';
+
 
 new Vue({
     el: "#app",
     components: {
         ProfileCover: _profileCover2.default,
-        Timeline: _timeline2.default
+        Posts: _posts2.default
+        // Timeline,
+        // Select2,
+
+        // PageButton
+        // Datepicker
     },
     data: {
         profile_cover: PROFILE_COVER,
@@ -2044,115 +2051,6 @@ module.exports = function isCancel(value) {
 /***/ }),
 
 /***/ 388:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _stringify = __webpack_require__(92);
-
-var _stringify2 = _interopRequireDefault(_stringify);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-    props: ['cover'],
-    data: function data() {
-        return {
-            loadingText: '随机封面',
-            status: 'init'
-        };
-    },
-    mounted: function mounted() {},
-    computed: {
-        btnStatus: function btnStatus() {
-            if (this.status === 'loading') {
-                return 'disabled';
-            } else if (this.status === 'success') {
-                return '';
-            }
-            return '';
-        },
-        classObject: function classObject() {
-
-            if (this.status === 'loading') {
-                this.loadingText = '更换中...';
-
-                return 'icon-sync spinner text-primary';
-            } else if (this.status === 'success') {
-                this.loadingText = '更换完成';
-                return 'icon-sync text-success';
-            } else if (this.status === 'error') {
-                this.loadingText = '更换失败';
-                return 'icon-warning22 text-warning';
-            }
-
-            return 'icon-sync';
-        }
-    },
-    components: {},
-    methods: {
-        fetch: function fetch(category) {
-            this.checked = [];
-            var scope = this;
-            var _url = "/admin/index/cover?category=" + category;
-
-            scope.status = 'loading';
-            this.$http.get(_url).then(function (response) {
-                scope.cover = response.data.data;
-
-                console.log((0, _stringify2.default)(response.data));
-                if (scope.cover.guid) {
-                    scope.status = 'success';
-                }
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else {
-                    console.log('Error', error.message);
-                }
-                scope.status = 'error';
-
-                console.log(error);
-            });
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 389:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2599,30 +2497,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 //    import Article from './article.vue'
 Vue.use(_vueMasonry2.default);
 exports.default = {
-    props: ['posts'],
+    props: ['posts', 'position'],
 
     components: {
         Select2: _select2.default
@@ -2658,7 +2537,6 @@ exports.default = {
         var scope = this;
 
         eventHub.$on("snippet_id", function (id) {
-
             _this.snippet_id = id;
             _this.reLayout();
         });
@@ -2888,6 +2766,115 @@ exports.default = {
             if (item.status === 'pending') {
                 return "text-info-600";
             }
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 389:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _stringify = __webpack_require__(92);
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    props: ['cover'],
+    data: function data() {
+        return {
+            loadingText: '随机封面',
+            status: 'init'
+        };
+    },
+    mounted: function mounted() {},
+    computed: {
+        btnStatus: function btnStatus() {
+            if (this.status === 'loading') {
+                return 'disabled';
+            } else if (this.status === 'success') {
+                return '';
+            }
+            return '';
+        },
+        classObject: function classObject() {
+
+            if (this.status === 'loading') {
+                this.loadingText = '更换中...';
+
+                return 'icon-sync spinner text-primary';
+            } else if (this.status === 'success') {
+                this.loadingText = '更换完成';
+                return 'icon-sync text-success';
+            } else if (this.status === 'error') {
+                this.loadingText = '更换失败';
+                return 'icon-warning22 text-warning';
+            }
+
+            return 'icon-sync';
+        }
+    },
+    components: {},
+    methods: {
+        fetch: function fetch(category) {
+            this.checked = [];
+            var scope = this;
+            var _url = "/admin/index/cover?category=" + category;
+
+            scope.status = 'loading';
+            this.$http.get(_url).then(function (response) {
+                scope.cover = response.data.data;
+
+                console.log((0, _stringify2.default)(response.data));
+                if (scope.cover.guid) {
+                    scope.status = 'success';
+                }
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else {
+                    console.log('Error', error.message);
+                }
+                scope.status = 'error';
+
+                console.log(error);
+            });
         }
     }
 };
@@ -5502,6 +5489,41 @@ var Component = __webpack_require__(18)(
   /* script */
   __webpack_require__(388),
   /* template */
+  __webpack_require__(462),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/bison/__task/19_Caixie/__workspace/picker-resume/webpack/components/pages/index/posts.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] posts.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2d87d1c2", Component.options)
+  } else {
+    hotAPI.reload("data-v-2d87d1c2", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 434:
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(18)(
+  /* script */
+  __webpack_require__(389),
+  /* template */
   __webpack_require__(473),
   /* scopeId */
   null,
@@ -5522,41 +5544,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-81ad04fc", Component.options)
   } else {
     hotAPI.reload("data-v-81ad04fc", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 434:
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(18)(
-  /* script */
-  __webpack_require__(389),
-  /* template */
-  __webpack_require__(459),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/bison/__task/19_Caixie/__workspace/picker-resume/webpack/components/pages/index/timeline.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] timeline.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-192c13bc", Component.options)
-  } else {
-    hotAPI.reload("data-v-192c13bc", Component.options)
   }
 })()}
 
@@ -5622,610 +5609,604 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 459:
+/***/ 462:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "timeline timeline-left content-group"
-  }, [_c('div', {
-    staticClass: "timeline-container"
-  }, [_vm._l((_vm.posts), function(value, key) {
-    return [_vm._l((value), function(post) {
-      return (key == 'article') ? _c('div', {
-        staticClass: "timeline-row"
-      }, [_vm._m(0, true), _vm._v(" "), _c('div', {
-        staticClass: "panel panel-flat timeline-content"
-      }, [_c('div', {
-        staticClass: "panel-heading"
-      }, [_c('h6', {
-        staticClass: "panel-title"
-      }, [_c('a', {
-        attrs: {
-          "href": '/admin/post/' + post.id
-        }
-      }, [_vm._v(_vm._s(post.title))])]), _vm._v(" "), _c('div', {
-        staticClass: "heading-elements"
-      }, [_c('span', {
-        staticClass: "heading-text"
-      }, [_c('i', {
-        staticClass: "icon-checkmark-circle position-left text-success"
-      }), _vm._v(" " + _vm._s(_vm._f("moment")(post.modified)))]), _vm._v(" "), _vm._m(1, true)])]), _vm._v(" "), _c('div', {
-        staticClass: "panel-body"
-      }, [_c('blockquote', [(post.type == 'article') ? _c('p', {
-        domProps: {
-          "innerHTML": _vm._s(post.excerpt)
-        }
-      }) : _vm._e()])], 1), _vm._v(" "), _vm._m(2, true)])]) : _vm._e()
-    }), _vm._v(" "), (key == 'snippet') ? _c('div', {
-      staticClass: "timeline-row"
-    }, [_vm._m(3, true), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "masonry",
+      rawName: "v-masonry"
+    }],
+    staticClass: "row",
+    attrs: {
+      "transition-duration": "0.3s",
+      "item-selector": ".item"
+    }
+  }, _vm._l((_vm.posts), function(_) {
+    return _c('div', {
       directives: [{
-        name: "masonry",
-        rawName: "v-masonry"
+        name: "masonry-tile",
+        rawName: "v-masonry-tile"
       }],
-      staticClass: "row",
+      staticClass: "col-lg-6 col-md-6 col-xs-12 item"
+    }, [(_.type == 'snippet') ? _c('div', {
+      staticClass: "panel panel-default"
+    }, [_c('div', {
+      staticClass: "panel-heading"
+    }, [_c('span', {
+      staticClass: "panel-title"
+    }, [_c('a', {
+      staticClass: "dropdown-toggle",
+      class: _vm.statusStyle(_),
       attrs: {
-        "transition-duration": "0.3s",
-        "item-selector": ".item"
+        "href": "#",
+        "data-toggle": "dropdown",
+        "aria-expanded": "false"
       }
-    }, _vm._l((value), function(_) {
-      return _c('div', {
-        directives: [{
-          name: "masonry-tile",
-          rawName: "v-masonry-tile"
-        }],
-        staticClass: "col-lg-6 col-md-6 col-xs-12 item"
-      }, [_c('div', {
-        staticClass: "panel panel-default"
-      }, [_c('div', {
-        staticClass: "panel-heading"
-      }, [_c('span', {
-        staticClass: "panel-title"
-      }, [_c('a', {
-        staticClass: "dropdown-toggle",
-        class: _vm.statusStyle(_),
-        attrs: {
-          "href": "#",
-          "data-toggle": "dropdown",
-          "aria-expanded": "false"
+    }, [(_.meta['_snippet_type'] === 'quote') ? _c('i', {
+      staticClass: "fa fa-quote-left position-left"
+    }) : (_.meta['_snippet_code']) ? _c('i', {
+      staticClass: "icon-codepen position-left"
+    }) : (_.meta['_snippet_type'] === 'idea') ? _c('i', {
+      staticClass: "fa fa-lightbulb-o position-left"
+    }) : (_.meta['_snippet_type'] === 'comment') ? _c('i', {
+      staticClass: "fa fa-comments-o position-left"
+    }) : (_.meta['_snippet_type'] === 'feed') ? _c('i', {
+      staticClass: "fa fa-history position-left"
+    }) : (_.meta['_snippet_type'] === 'person') ? _c('i', {
+      staticClass: "fa fa-smile-o position-left"
+    }) : _c('i', {
+      staticClass: "fa fa-file-text-o position-left"
+    }), _vm._v("\n                            " + _vm._s(_vm._f("lang")(_.status)) + " "), _c('span', {
+      staticClass: "caret"
+    })]), _vm._v(" "), _c('ul', {
+      staticClass: "dropdown-menu active"
+    }, [_c('li', {
+      class: {
+        active: _.status === 'publish'
+      }
+    }, [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.changeStatus(_, 'publish')
         }
-      }, [(_.meta['_snippet_type'] === 'quote') ? _c('i', {
-        staticClass: "fa fa-quote-left position-left"
-      }) : (_.meta['_snippet_code']) ? _c('i', {
-        staticClass: "icon-codepen position-left"
-      }) : (_.meta['_snippet_type'] === 'idea') ? _c('i', {
-        staticClass: "fa fa-lightbulb-o position-left"
-      }) : (_.meta['_snippet_type'] === 'comment') ? _c('i', {
-        staticClass: "fa fa-comments-o position-left"
-      }) : (_.meta['_snippet_type'] === 'feed') ? _c('i', {
-        staticClass: "fa fa-history position-left"
-      }) : (_.meta['_snippet_type'] === 'person') ? _c('i', {
-        staticClass: "fa fa-smile-o position-left"
-      }) : _c('i', {
-        staticClass: "fa fa-file-text-o position-left"
-      }), _vm._v("\n                                " + _vm._s(_vm._f("lang")(_.status)) + " "), _c('span', {
-        staticClass: "caret"
-      })]), _vm._v(" "), _c('ul', {
-        staticClass: "dropdown-menu active"
-      }, [_c('li', {
-        class: {
-          active: _.status === 'publish'
+      }
+    }, [_c('span', {
+      staticClass: "status-mark position-left bg-success-400"
+    }), _vm._v(" " + _vm._s(_vm._f("lang")('publish')))])]), _vm._v(" "), _c('li', {
+      class: {
+        active: _.status === 'private'
+      }
+    }, [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.changeStatus(_, 'private')
         }
-      }, [_c('a', {
-        on: {
-          "click": function($event) {
-            _vm.changeStatus(_, 'publish')
-          }
+      }
+    }, [_c('span', {
+      staticClass: "status-mark position-left bg-grey-300"
+    }), _vm._v(" " + _vm._s(_vm._f("lang")('private')))])]), _vm._v(" "), _c('li', {
+      class: {
+        active: _.status === 'draft'
+      }
+    }, [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.changeStatus(_, 'draft')
         }
-      }, [_c('span', {
-        staticClass: "status-mark position-left bg-success-400"
-      }), _vm._v(" " + _vm._s(_vm._f("lang")('publish')))])]), _vm._v(" "), _c('li', {
-        class: {
-          active: _.status === 'private'
+      }
+    }, [_c('span', {
+      staticClass: "status-mark position-left bg-indigo-400"
+    }), _vm._v(" " + _vm._s(_vm._f("lang")('draft')))])]), _vm._v(" "), _c('li', {
+      class: {
+        active: _.status === 'pending'
+      }
+    }, [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.changeStatus(_, 'pending')
         }
-      }, [_c('a', {
-        on: {
-          "click": function($event) {
-            _vm.changeStatus(_, 'private')
-          }
+      }
+    }, [_c('span', {
+      staticClass: "status-mark position-left bg-info-400"
+    }), _vm._v(" " + _vm._s(_vm._f("lang")('pending')))])])])]), _vm._v(" "), _c('div', {
+      staticClass: "heading-elements panel-nav"
+    }, [_c('ul', {
+      staticClass: "list-inline list-inline-separate heading-text"
+    }, [(_vm.snippet_id === _.id) ? _c('li', [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.setting(0)
         }
-      }, [_c('span', {
-        staticClass: "status-mark position-left bg-grey-300"
-      }), _vm._v(" " + _vm._s(_vm._f("lang")('private')))])]), _vm._v(" "), _c('li', {
-        class: {
-          active: _.status === 'draft'
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-long-arrow-left position-left"
+    })])]) : _c('li', {}, [_c('a', {
+      attrs: {
+        "aria-expanded": "false"
+      },
+      on: {
+        "click": function($event) {
+          _vm.setting(_.id)
         }
-      }, [_c('a', {
-        on: {
-          "click": function($event) {
-            _vm.changeStatus(_, 'draft')
-          }
-        }
-      }, [_c('span', {
-        staticClass: "status-mark position-left bg-indigo-400"
-      }), _vm._v(" " + _vm._s(_vm._f("lang")('draft')))])]), _vm._v(" "), _c('li', {
-        class: {
-          active: _.status === 'pending'
-        }
-      }, [_c('a', {
-        on: {
-          "click": function($event) {
-            _vm.changeStatus(_, 'pending')
-          }
-        }
-      }, [_c('span', {
-        staticClass: "status-mark position-left bg-info-400"
-      }), _vm._v(" " + _vm._s(_vm._f("lang")('pending')))])])])]), _vm._v(" "), _c('div', {
-        staticClass: "heading-elements panel-nav"
-      }, [_c('ul', {
-        staticClass: "list-inline list-inline-separate heading-text"
-      }, [(_vm.snippet_id === _.id) ? _c('li', [_c('a', {
-        on: {
-          "click": function($event) {
-            _vm.setting(0)
-          }
-        }
-      }, [_c('i', {
-        staticClass: "fa fa-long-arrow-left position-left"
-      })])]) : _c('li', {}, [_c('a', {
-        attrs: {
-          "aria-expanded": "false"
+      }
+    }, [_c('i', {
+      staticClass: " icon-cog5 position-left"
+    })])])])])]), _vm._v(" "), _c('div', {
+      staticClass: "panel-tab-content tab-content"
+    }, [(_vm.snippet_id === _.id) ? _c('div', {
+      staticClass: "tab-pane has-padding active animation fade-in"
+    }, [_vm._m(0, true), _vm._v(" "), _c('div', {
+      staticClass: "form-group"
+    }, [_c('select2', {
+      attrs: {
+        "options": _vm.options
+      },
+      model: {
+        value: (_vm.selected),
+        callback: function($$v) {
+          _vm.selected = $$v
         },
-        on: {
-          "click": function($event) {
-            _vm.setting(_.id)
-          }
-        }
-      }, [_c('i', {
-        staticClass: " icon-cog5 position-left"
-      })])])])])]), _vm._v(" "), _c('div', {
-        staticClass: "panel-tab-content tab-content"
-      }, [(_vm.snippet_id === _.id) ? _c('div', {
-        staticClass: "tab-pane has-padding active animation fade-in"
-      }, [_vm._m(4, true), _vm._v(" "), _c('div', {
-        staticClass: "form-group"
-      }, [_c('select2', {
-        attrs: {
-          "options": _vm.options
+        expression: "selected"
+      }
+    })], 1), _vm._v(" "), (_vm.selected === 'code') ? _c('div', {
+      staticClass: "form-group"
+    }, [_c('p', [_vm._v("选择的程序语言: "), _c('span', {
+      staticClass: "text-primary"
+    }, [_vm._v(_vm._s(_vm.snippet_code_lang))])]), _vm._v(" "), _c('select2', {
+      attrs: {
+        "options": _vm.codelang
+      },
+      model: {
+        value: (_vm.snippet_code_lang),
+        callback: function($$v) {
+          _vm.snippet_code_lang = $$v
         },
-        model: {
-          value: (_vm.selected),
-          callback: function($$v) {
-            _vm.selected = $$v
-          },
-          expression: "selected"
+        expression: "snippet_code_lang"
+      }
+    })], 1) : (_vm.selected === 'status') ? _c('div', {
+      staticClass: "content-group"
+    }, [_c('div', {
+      staticClass: "row row-seamless btn-block-group"
+    }, [_c('div', {
+      staticClass: "col-xs-6"
+    }, [_c('button', {
+      staticClass: "btn btn-default btn-block btn-float btn-float-lg legitRipple",
+      attrs: {
+        "type": "button"
+      }
+    }, [_c('i', {
+      staticClass: " icon-twitter text-info-600"
+    }), _vm._v(" "), _c('span', [_vm._v("Twitter")])]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-default btn-block btn-float btn-float-lg legitRipple",
+      attrs: {
+        "type": "button"
+      }
+    }, [_c('i', {
+      staticClass: "icon-facebook text-blue-800"
+    }), _vm._v(" "), _c('span', [_vm._v("facebook")])])]), _vm._v(" "), _c('div', {
+      staticClass: "col-xs-6"
+    }, [_c('button', {
+      staticClass: "btn btn-default btn-block btn-float btn-float-lg legitRipple",
+      attrs: {
+        "type": "button"
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-weibo text-warning-600"
+    }), _vm._v(" "), _c('span', [_vm._v("微博")])]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-default btn-block btn-float btn-float-lg legitRipple",
+      attrs: {
+        "type": "button"
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-wechat text-success-400"
+    }), _vm._v(" "), _c('span', [_vm._v("微信")])])])])]) : (_vm.selected === 'quote') ? _c('div', {
+      staticClass: "conteng-group"
+    }, [_c('div', {
+      staticClass: "panel panel-body bg-info-300",
+      staticStyle: {
+        "background-image": "url(http://demo.interface.club/limitless/assets/images/bg.png)"
+      }
+    }, [_c('div', {
+      staticClass: "media no-margin"
+    }, [_c('div', {
+      staticClass: "media-left media-middle"
+    }, [_c('i', {
+      staticClass: "icon-quotes-left text-white"
+    })]), _vm._v(" "), _c('div', {
+      staticClass: "media-body text-right"
+    }, [_c('span', {
+      staticClass: "text-muted"
+    }, [_vm._v(_vm._s(_.content))])])])]), _vm._v(" "), _c('div', {
+      staticClass: "panel panel-body"
+    }, [_c('div', {
+      staticClass: "media no-margin stack-media-on-mobile"
+    }, [_c('div', {
+      staticClass: "media-left media-middle"
+    }, [_c('i', {
+      staticClass: "icon-quotes-right2 icon-2x text-muted no-edge-top"
+    })]), _vm._v(" "), _c('div', {
+      staticClass: "media-body"
+    }, [_c('span', {
+      staticClass: "text-muted"
+    }, [_vm._v(_vm._s(_.content))])])])])]) : _vm._e(), _vm._v(" "), (_vm.selected === 'link') ? _c('div', {
+      staticClass: "panel panel-white "
+    }, [_c('div', {
+      staticClass: "panel-body text-center"
+    })]) : _vm._e()]) : _c('div', {
+      staticClass: "tab-pane has-padding active"
+    }, [(_.meta['_snippet_type'] === 'quote') ? _c('blockquote', {
+      staticClass: "no-margin panel panel-body border-left-lg border-left-warning ",
+      domProps: {
+        "innerHTML": _vm._s(_.content)
+      }
+    }) : (_.meta['_snippet_code']) ? _c('pre', {
+      staticClass: "content-group ",
+      class: 'language-' + _.meta['_snippet_code']['lang']
+    }, [_vm._v("\n                            "), _c('code', [_vm._v(_vm._s(_.content))]), _vm._v("\n                        ")]) : (typeof(_.meta['_snippet_link']) != 'undefined') ? _c('div', {
+      staticClass: "panel-body text-center"
+    }, [_c('div', {
+      staticClass: "content-group mt-5"
+    }, [_c('h5', {
+      staticClass: "text-warning"
+    }, [_vm._v(_vm._s(_.meta['_snippet_link']['og:site_name']))])]), _vm._v(" "), _c('h6', {
+      staticClass: "text-semibold"
+    }, [_c('a', {
+      staticClass: "text-default",
+      attrs: {
+        "href": "#"
+      }
+    }, [_vm._v(_vm._s(_.meta['_snippet_link']['title']))])]), _vm._v(" "), _c('p', {
+      staticClass: "mb-15"
+    }, [_vm._v(_vm._s(_.meta['_snippet_link']['og:description']))]), _vm._v(" "), _c('a', {
+      attrs: {
+        "href": _.content,
+        "target": "_blank"
+      }
+    }, [_vm._v("访问链接 →")])]) : (_.meta['_snippet_type'] === 'idea') ? _c('div', {
+      staticClass: "panel panel-body  text-center",
+      staticStyle: {
+        "background-image": "url(http://demo.interface.club/limitless/assets/images/bg.png)"
+      }
+    }, [_c('p', {
+      staticClass: "mt-10 text-primary",
+      domProps: {
+        "innerHTML": _vm._s(_.content)
+      }
+    })]) : (_.meta['_snippet_type'] === 'comment') ? _c('div', {}, [_c('ul', {
+      staticClass: "media-list chat-list content-group"
+    }, [_c('li', {
+      staticClass: "media reversed"
+    }, [_c('div', {
+      staticClass: "media-body"
+    }, [_c('div', {
+      staticClass: "media-content",
+      domProps: {
+        "innerHTML": _vm._s(_.content)
+      }
+    }), _vm._v(" "), _c('span', {
+      staticClass: "media-annotation display-block mt-10"
+    }, [_vm._v(_vm._s(_vm._f("moment")(_.modified)))])]), _vm._v(" "), _c('div', {
+      staticClass: "media-right"
+    }, [_c('a', {
+      attrs: {
+        "href": "/static/assets/images/demo/images/3.png"
+      }
+    }, [_c('img', {
+      staticClass: "img-circle",
+      attrs: {
+        "src": "/static/assets/images/demo/users/face1.jpg",
+        "alt": ""
+      }
+    })])])])]), _vm._v(" "), _c('textarea', {
+      staticClass: "form-control content-group",
+      attrs: {
+        "name": "enter-message",
+        "rows": "3",
+        "cols": "1",
+        "placeholder": "输入你的回复..."
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-xs-6"
+    }, [_c('ul', {
+      staticClass: "icons-list icons-list-extended mt-10"
+    }, [_c('li', [_c('a', {
+      attrs: {
+        "href": "#",
+        "data-popup": "tooltip",
+        "data-container": "body",
+        "title": "",
+        "data-original-title": "Send photo"
+      }
+    }, [_c('i', {
+      staticClass: "icon-file-picture"
+    })])]), _vm._v(" "), _c('li', [_c('a', {
+      attrs: {
+        "href": "#",
+        "data-popup": "tooltip",
+        "data-container": "body",
+        "title": "",
+        "data-original-title": "Send video"
+      }
+    }, [_c('i', {
+      staticClass: "icon-file-video"
+    })])]), _vm._v(" "), _c('li', [_c('a', {
+      attrs: {
+        "href": "#",
+        "data-popup": "tooltip",
+        "data-container": "body",
+        "title": "",
+        "data-original-title": "Send file"
+      }
+    }, [_c('i', {
+      staticClass: "icon-file-plus"
+    })])])])]), _vm._v(" "), _c('div', {
+      staticClass: "col-xs-6 text-right"
+    }, [_c('button', {
+      staticClass: "btn bg-teal-400 btn-labeled btn-labeled-right",
+      attrs: {
+        "type": "button"
+      }
+    }, [_c('b', [_c('i', {
+      staticClass: "icon-circle-right2"
+    })]), _vm._v(" 发送\n                                ")])])])]) : (_.meta['_snippet_type'] === 'feed') ? _c('div', {}, [_c('ul', {
+      staticClass: "list-feed"
+    }, [_c('li', {
+      staticClass: "border-pink-400"
+    }, [_c('div', {
+      staticClass: "text-muted text-size-small mb-5"
+    }, [_vm._v(_vm._s(_vm._f("moment")(_.date)) + "\n                                ")]), _vm._v("\n                                开始\n                            ")]), _vm._v(" "), _c('li', {
+      staticClass: "border-pink-400"
+    }, [_c('div', {
+      staticClass: "text-muted text-size-small mb-5"
+    }, [_vm._v(_vm._s(_vm._f("moment")(_.modified)) + "\n                                ")]), _vm._v(" "), _c('a', {
+      attrs: {
+        "href": "#"
+      }
+    }, [_vm._v(_vm._s(_.author))]), _vm._v(" " + _vm._s(_.content) + "\n                            ")])]), _vm._v(" "), _c('textarea', {
+      staticClass: "form-control content-group mt-10",
+      attrs: {
+        "name": "enter-message",
+        "rows": "1",
+        "cols": "1",
+        "placeholder": "新进程..."
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-xs-6"
+    }, [_c('ul', {
+      staticClass: "icons-list icons-list-extended mt-10"
+    }, [_c('li', [_c('a', {
+      attrs: {
+        "href": "#"
+      }
+    }, [_c('i', {
+      staticClass: "icon-file-plus"
+    })])])])]), _vm._v(" "), _c('div', {
+      staticClass: "col-xs-6 text-right"
+    }, [_c('a', {
+      staticClass: "btn btn-link",
+      attrs: {
+        "type": "button"
+      }
+    }, [_vm._v("补充")]), _vm._v(" "), _c('a', {
+      staticClass: "btn btn-default",
+      attrs: {
+        "type": "button"
+      }
+    }, [_vm._v("结束")])])])]) : (_.meta['_snippet_type'] === 'person') ? _c('div', {}, [_c('div', {
+      staticClass: "media"
+    }, [_c('div', {
+      staticClass: "media-left"
+    }, [_c('a', {
+      attrs: {
+        "href": "/static/assets/images/demo/images/3.png"
+      }
+    }, [_c('img', {
+      staticClass: "img-circle img-lg",
+      attrs: {
+        "src": "/static/assets/images/demo/users/face1.jpg",
+        "alt": ""
+      }
+    })])]), _vm._v(" "), _c('div', {
+      staticClass: "media-body"
+    }, [_c('h6', {
+      staticClass: "media-heading"
+    }, [_vm._v(_vm._s(_.title))]), _vm._v(" "), _c('span', {
+      staticClass: "text-muted"
+    }, [_vm._v(_vm._s(_.content))])]), _vm._v(" "), _c('div', {
+      staticClass: "media-right media-middle"
+    }, [_c('ul', {
+      staticClass: "icons-list"
+    }, [_c('li', {
+      staticClass: "dropdown"
+    }, [_c('a', {
+      staticClass: "dropdown-toggle",
+      attrs: {
+        "href": "#",
+        "data-toggle": "dropdown",
+        "aria-expanded": "true"
+      }
+    }, [_c('i', {
+      staticClass: "icon-menu7"
+    })]), _vm._v(" "), _c('ul', {
+      staticClass: "dropdown-menu dropdown-menu-right"
+    }, [_c('li', [_c('a', {
+      attrs: {
+        "href": "#"
+      }
+    }, [_c('i', {
+      staticClass: "icon-comment-discussion pull-right"
+    }), _vm._v("\n                                                Start\n                                                chat")])]), _vm._v(" "), _c('li', [_c('a', {
+      attrs: {
+        "href": "#"
+      }
+    }, [_c('i', {
+      staticClass: "icon-phone2 pull-right"
+    }), _vm._v("\n                                                Make a call")])]), _vm._v(" "), _c('li', [_c('a', {
+      attrs: {
+        "href": "#"
+      }
+    }, [_c('i', {
+      staticClass: "icon-mail5 pull-right"
+    }), _vm._v("\n                                                Send mail")])]), _vm._v(" "), _c('li', {
+      staticClass: "divider"
+    }), _vm._v(" "), _c('li', [_c('a', {
+      attrs: {
+        "href": "#"
+      }
+    }, [_c('i', {
+      staticClass: "icon-statistics pull-right"
+    }), _vm._v(" 转换")])])])])])])])]) : _c('div', {
+      staticClass: "content-group"
+    }, [_vm._v(_vm._s(_.content))])], 1)]), _vm._v(" "), (_vm.snippet_id === _.id) ? _c('div', {
+      staticClass: "panel-footer text-center no-padding"
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-xs-4"
+    }, [_c('a', {
+      staticClass: "display-block p-10 text-muted",
+      on: {
+        "click": function($event) {
+          _vm.save(_)
         }
-      })], 1), _vm._v(" "), (_vm.selected === 'code') ? _c('div', {
-        staticClass: "form-group"
-      }, [_c('p', [_vm._v("选择的程序语言: "), _c('span', {
-        staticClass: "text-primary"
-      }, [_vm._v(_vm._s(_vm.snippet_code_lang))])]), _vm._v(" "), _c('select2', {
-        attrs: {
-          "options": _vm.codelang
-        },
-        model: {
-          value: (_vm.snippet_code_lang),
-          callback: function($$v) {
-            _vm.snippet_code_lang = $$v
-          },
-          expression: "snippet_code_lang"
-        }
-      })], 1) : (_vm.selected === 'status') ? _c('div', {
-        staticClass: "content-group"
-      }, [_c('div', {
-        staticClass: "row row-seamless btn-block-group"
-      }, [_c('div', {
-        staticClass: "col-xs-6"
-      }, [_c('button', {
-        staticClass: "btn btn-default btn-block btn-float btn-float-lg legitRipple",
-        attrs: {
-          "type": "button"
-        }
-      }, [_c('i', {
-        staticClass: " icon-twitter text-info-600"
-      }), _vm._v(" "), _c('span', [_vm._v("Twitter")])]), _vm._v(" "), _c('button', {
-        staticClass: "btn btn-default btn-block btn-float btn-float-lg legitRipple",
-        attrs: {
-          "type": "button"
-        }
-      }, [_c('i', {
-        staticClass: "icon-facebook text-blue-800"
-      }), _vm._v(" "), _c('span', [_vm._v("facebook")])])]), _vm._v(" "), _c('div', {
-        staticClass: "col-xs-6"
-      }, [_c('button', {
-        staticClass: "btn btn-default btn-block btn-float btn-float-lg legitRipple",
-        attrs: {
-          "type": "button"
-        }
-      }, [_c('i', {
-        staticClass: "fa fa-weibo text-warning-600"
-      }), _vm._v(" "), _c('span', [_vm._v("微博")])]), _vm._v(" "), _c('button', {
-        staticClass: "btn btn-default btn-block btn-float btn-float-lg legitRipple",
-        attrs: {
-          "type": "button"
-        }
-      }, [_c('i', {
-        staticClass: "fa fa-wechat text-success-400"
-      }), _vm._v(" "), _c('span', [_vm._v("微信")])])])])]) : (_vm.selected === 'quote') ? _c('div', {
-        staticClass: "conteng-group"
-      }, [_c('div', {
-        staticClass: "panel panel-body bg-info-300",
-        staticStyle: {
-          "background-image": "url(http://demo.interface.club/limitless/assets/images/bg.png)"
-        }
-      }, [_c('div', {
-        staticClass: "media no-margin"
-      }, [_c('div', {
-        staticClass: "media-left media-middle"
-      }, [_c('i', {
-        staticClass: "icon-quotes-left text-white"
-      })]), _vm._v(" "), _c('div', {
-        staticClass: "media-body text-right"
-      }, [_c('span', {
-        staticClass: "text-muted"
-      }, [_vm._v(_vm._s(_.content))])])])]), _vm._v(" "), _c('div', {
-        staticClass: "panel panel-body"
-      }, [_c('div', {
-        staticClass: "media no-margin stack-media-on-mobile"
-      }, [_c('div', {
-        staticClass: "media-left media-middle"
-      }, [_c('i', {
-        staticClass: "icon-quotes-right2 icon-2x text-muted no-edge-top"
-      })]), _vm._v(" "), _c('div', {
-        staticClass: "media-body"
-      }, [_c('span', {
-        staticClass: "text-muted"
-      }, [_vm._v(_vm._s(_.content))])])])])]) : _vm._e(), _vm._v(" "), (_vm.selected === 'link') ? _c('div', {
-        staticClass: "panel panel-white "
-      }, [_c('div', {
-        staticClass: "panel-body text-center"
-      })]) : _vm._e()]) : _c('div', {
-        staticClass: "tab-pane has-padding active"
-      }, [(_.meta['_snippet_type'] === 'quote') ? _c('blockquote', {
-        staticClass: "no-margin panel panel-body border-left-lg border-left-warning ",
-        domProps: {
-          "innerHTML": _vm._s(_.content)
-        }
-      }) : (_.meta['_snippet_code']) ? _c('pre', {
-        staticClass: "content-group ",
-        class: 'language-' + _.meta['_snippet_code']['lang']
-      }, [_vm._v("\n                                "), _c('code', [_vm._v(_vm._s(_.content))]), _vm._v("\n                            ")]) : (typeof(_.meta['_snippet_link']) != 'undefined') ? _c('div', {
-        staticClass: "panel-body text-center"
-      }, [_c('div', {
-        staticClass: "content-group mt-5"
-      }, [_vm._v("\n                                                {#" + _vm._s(_.meta['_snippet_link']['og:url']) + "#}\n                                                "), _c('h5', {
-        staticClass: "text-warning"
-      }, [_vm._v(_vm._s(_.meta['_snippet_link']['og:site_name']))])]), _vm._v(" "), _c('h6', {
-        staticClass: "text-semibold"
-      }, [_c('a', {
-        staticClass: "text-default",
-        attrs: {
-          "href": "#"
-        }
-      }, [_vm._v(_vm._s(_.meta['_snippet_link']['title']))])]), _vm._v(" "), _c('p', {
-        staticClass: "mb-15"
-      }, [_vm._v(_vm._s(_.meta['_snippet_link']['og:description']))]), _vm._v(" "), _c('a', {
-        attrs: {
-          "href": _.content,
-          "target": "_blank"
-        }
-      }, [_vm._v("访问链接 →")])]) : (_.meta['_snippet_type'] === 'idea') ? _c('div', {
-        staticClass: "panel panel-body  text-center",
-        staticStyle: {
-          "background-image": "url(http://demo.interface.club/limitless/assets/images/bg.png)"
-        }
-      }, [_c('p', {
-        staticClass: "mt-10 text-primary",
-        domProps: {
-          "innerHTML": _vm._s(_.content)
-        }
-      })]) : (_.meta['_snippet_type'] === 'comment') ? _c('div', {}, [_c('ul', {
-        staticClass: "media-list chat-list content-group"
-      }, [_c('li', {
-        staticClass: "media reversed"
-      }, [_c('div', {
-        staticClass: "media-body"
-      }, [_c('div', {
-        staticClass: "media-content",
-        domProps: {
-          "innerHTML": _vm._s(_.content)
-        }
-      }), _vm._v(" "), _c('span', {
-        staticClass: "media-annotation display-block mt-10"
-      }, [_vm._v(_vm._s(_vm._f("moment")(_.modified)))])]), _vm._v(" "), _c('div', {
-        staticClass: "media-right"
-      }, [_c('a', {
-        attrs: {
-          "href": "/static/assets/images/demo/images/3.png"
-        }
-      }, [_c('img', {
-        staticClass: "img-circle",
-        attrs: {
-          "src": "/static/assets/images/demo/users/face1.jpg",
-          "alt": ""
-        }
-      })])])])]), _vm._v(" "), _c('textarea', {
-        staticClass: "form-control content-group",
-        attrs: {
-          "name": "enter-message",
-          "rows": "3",
-          "cols": "1",
-          "placeholder": "输入你的回复..."
-        }
-      }), _vm._v(" "), _c('div', {
-        staticClass: "row"
-      }, [_c('div', {
-        staticClass: "col-xs-6"
-      }, [_c('ul', {
-        staticClass: "icons-list icons-list-extended mt-10"
-      }, [_c('li', [_c('a', {
-        attrs: {
-          "href": "#",
-          "data-popup": "tooltip",
-          "data-container": "body",
-          "title": "",
-          "data-original-title": "Send photo"
-        }
-      }, [_c('i', {
-        staticClass: "icon-file-picture"
-      })])]), _vm._v(" "), _c('li', [_c('a', {
-        attrs: {
-          "href": "#",
-          "data-popup": "tooltip",
-          "data-container": "body",
-          "title": "",
-          "data-original-title": "Send video"
-        }
-      }, [_c('i', {
-        staticClass: "icon-file-video"
-      })])]), _vm._v(" "), _c('li', [_c('a', {
-        attrs: {
-          "href": "#",
-          "data-popup": "tooltip",
-          "data-container": "body",
-          "title": "",
-          "data-original-title": "Send file"
-        }
-      }, [_c('i', {
-        staticClass: "icon-file-plus"
-      })])])])]), _vm._v(" "), _c('div', {
-        staticClass: "col-xs-6 text-right"
-      }, [_c('button', {
-        staticClass: "btn bg-teal-400 btn-labeled btn-labeled-right",
-        attrs: {
-          "type": "button"
-        }
-      }, [_c('b', [_c('i', {
-        staticClass: "icon-circle-right2"
-      })]), _vm._v(" 发送\n                                                    ")])])])]) : (_.meta['_snippet_type'] === 'feed') ? _c('div', {}, [_c('ul', {
-        staticClass: "list-feed"
-      }, [_c('li', {
-        staticClass: "border-pink-400"
-      }, [_c('div', {
-        staticClass: "text-muted text-size-small mb-5"
-      }, [_vm._v(_vm._s(_vm._f("moment")(_.date)) + "\n                                                    ")]), _vm._v("\n                                                    开始\n                                                ")]), _vm._v(" "), _c('li', {
-        staticClass: "border-pink-400"
-      }, [_c('div', {
-        staticClass: "text-muted text-size-small mb-5"
-      }, [_vm._v(_vm._s(_vm._f("moment")(_.modified)) + "\n                                                    ")]), _vm._v(" "), _c('a', {
-        attrs: {
-          "href": "#"
-        }
-      }, [_vm._v(_vm._s(_.author))]), _vm._v(" " + _vm._s(_.content) + "\n                                                ")])]), _vm._v(" "), _c('textarea', {
-        staticClass: "form-control content-group mt-10",
-        attrs: {
-          "name": "enter-message",
-          "rows": "1",
-          "cols": "1",
-          "placeholder": "新进程..."
-        }
-      }), _vm._v(" "), _c('div', {
-        staticClass: "row"
-      }, [_c('div', {
-        staticClass: "col-xs-6"
-      }, [_c('ul', {
-        staticClass: "icons-list icons-list-extended mt-10"
-      }, [_c('li', [_c('a', {
-        attrs: {
-          "href": "#"
-        }
-      }, [_c('i', {
-        staticClass: "icon-file-plus"
-      })])])])]), _vm._v(" "), _c('div', {
-        staticClass: "col-xs-6 text-right"
-      }, [_c('a', {
-        staticClass: "btn btn-link",
-        attrs: {
-          "type": "button"
-        }
-      }, [_vm._v("补充")]), _vm._v(" "), _c('a', {
-        staticClass: "btn btn-default",
-        attrs: {
-          "type": "button"
-        }
-      }, [_vm._v("结束")])])])]) : (_.meta['_snippet_type'] === 'person') ? _c('div', {}, [_c('div', {
-        staticClass: "media"
-      }, [_c('div', {
-        staticClass: "media-left"
-      }, [_c('a', {
-        attrs: {
-          "href": "/static/assets/images/demo/images/3.png"
-        }
-      }, [_c('img', {
-        staticClass: "img-circle img-lg",
-        attrs: {
-          "src": "/static/assets/images/demo/users/face1.jpg",
-          "alt": ""
-        }
-      })])]), _vm._v(" "), _c('div', {
-        staticClass: "media-body"
-      }, [_c('h6', {
-        staticClass: "media-heading"
-      }, [_vm._v(_vm._s(_.title))]), _vm._v(" "), _c('span', {
-        staticClass: "text-muted"
-      }, [_vm._v(_vm._s(_.content))])]), _vm._v(" "), _c('div', {
-        staticClass: "media-right media-middle"
-      }, [_c('ul', {
-        staticClass: "icons-list"
-      }, [_c('li', {
-        staticClass: "dropdown"
-      }, [_c('a', {
-        staticClass: "dropdown-toggle",
-        attrs: {
-          "href": "#",
-          "data-toggle": "dropdown",
-          "aria-expanded": "true"
-        }
-      }, [_c('i', {
-        staticClass: "icon-menu7"
-      })]), _vm._v(" "), _c('ul', {
-        staticClass: "dropdown-menu dropdown-menu-right"
-      }, [_c('li', [_c('a', {
-        attrs: {
-          "href": "#"
-        }
-      }, [_c('i', {
-        staticClass: "icon-comment-discussion pull-right"
-      }), _vm._v("\n                                                                    Start\n                                                                    chat")])]), _vm._v(" "), _c('li', [_c('a', {
-        attrs: {
-          "href": "#"
-        }
-      }, [_c('i', {
-        staticClass: "icon-phone2 pull-right"
-      }), _vm._v("\n                                                                    Make a call")])]), _vm._v(" "), _c('li', [_c('a', {
-        attrs: {
-          "href": "#"
-        }
-      }, [_c('i', {
-        staticClass: "icon-mail5 pull-right"
-      }), _vm._v("\n                                                                    Send mail")])]), _vm._v(" "), _c('li', {
-        staticClass: "divider"
-      }), _vm._v(" "), _c('li', [_c('a', {
-        attrs: {
-          "href": "#"
-        }
-      }, [_c('i', {
-        staticClass: "icon-statistics pull-right"
-      }), _vm._v(" 转换")])])])])])])])]) : _c('div', {
-        staticClass: "content-group"
-      }, [_vm._v(_vm._s(_.content))])], 1)]), _vm._v(" "), (_vm.snippet_id === _.id) ? _c('div', {
-        staticClass: "panel-footer text-center no-padding"
-      }, [_c('div', {
-        staticClass: "row"
-      }, [_c('div', {
-        staticClass: "col-xs-4"
-      }, [_c('a', {
-        staticClass: "display-block p-10 text-muted",
-        on: {
-          "click": function($event) {
-            _vm.save(_)
-          }
-        }
-      }, [(_vm.status === 'saving') ? _c('i', {
-        staticClass: "icon-spinner2 spinner position-left text-primary"
-      }) : (_vm.status === 'success') ? _c('i', {
-        staticClass: "icon-check position-left text-success"
-      }) : (_vm.status === 'error') ? _c('i', {
-        staticClass: " icon-exclamation position-left text-danger"
-      }) : _c('i', {
-        staticClass: "icon-spinner2 position-left text-muted"
-      }), _vm._v("\n                                                保存\n                                            ")])]), _vm._v(" "), _vm._m(5, true), _vm._v(" "), _c('div', {
-        staticClass: "col-xs-4"
-      }, [_c('a', {
-        staticClass: "display-block p-10 text-muted ajax delete",
-        attrs: {
-          "href": '/admin/posts/delete?ids=' + _.id
-        }
-      }, [_c('i', {
-        staticClass: " icon-trash position-left"
-      }), _vm._v(" 回收站")])])])]) : _vm._e()])])
-    }))]) : _vm._e()]
-  })], 2)])
+      }
+    }, [(_vm.status === 'saving') ? _c('i', {
+      staticClass: "icon-spinner2 spinner position-left text-primary"
+    }) : (_vm.status === 'success') ? _c('i', {
+      staticClass: "icon-check position-left text-success"
+    }) : (_vm.status === 'error') ? _c('i', {
+      staticClass: " icon-exclamation position-left text-danger"
+    }) : _c('i', {
+      staticClass: "icon-spinner2 position-left text-muted"
+    }), _vm._v("\n                            保存\n                        ")])]), _vm._v(" "), _vm._m(1, true), _vm._v(" "), _c('div', {
+      staticClass: "col-xs-4"
+    }, [_c('a', {
+      staticClass: "display-block p-10 text-muted ajax delete",
+      attrs: {
+        "href": '/admin/posts/delete?ids=' + _.id
+      }
+    }, [_c('i', {
+      staticClass: " icon-trash position-left"
+    }), _vm._v(" 回收站")])])])]) : _vm._e()]) : (_.type == 'article') ? _c('div', {
+      staticClass: "panel panel-flat"
+    }, [_c('div', {
+      staticClass: "panel-heading"
+    }, [_c('h6', {
+      staticClass: "panel-title"
+    }, [_c('a', {
+      attrs: {
+        "href": '/admin/post/' + _.id
+      }
+    }, [_vm._v(_vm._s(_.title))])]), _vm._v(" "), _c('div', {
+      staticClass: "heading-elements"
+    }, [_c('span', {
+      staticClass: "heading-text"
+    }, [_c('i', {
+      staticClass: "icon-checkmark-circle position-left text-success"
+    }), _vm._v(" " + _vm._s(_vm._f("moment")(_.modified)))]), _vm._v(" "), _c('ul', {
+      staticClass: "icons-list"
+    }, [_c('li', {
+      staticClass: "dropdown"
+    }, [_c('a', {
+      staticClass: "dropdown-toggle",
+      attrs: {
+        "href": "#",
+        "data-toggle": "dropdown"
+      }
+    }, [_c('i', {
+      staticClass: "icon-arrow-down12"
+    })]), _vm._v(" "), _c('ul', {
+      staticClass: "dropdown-menu dropdown-menu-right"
+    }, [_c('li', [_c('a', {
+      attrs: {
+        "href": "#"
+      }
+    }, [_c('i', {
+      staticClass: "icon-user-lock"
+    }), _vm._v(" 私有")])]), _vm._v(" "), _c('li', {
+      staticClass: "divider"
+    }), _vm._v(" "), _c('li', [_c('a', {
+      attrs: {
+        "href": "#"
+      }
+    }, [_c('i', {
+      staticClass: "icon-embed"
+    }), _vm._v(" 删除")])]), _vm._v(" "), _c('li', [_c('a', {
+      attrs: {
+        "href": "#"
+      }
+    }, [_c('i', {
+      staticClass: "icon-blocked"
+    }), _vm._v(" Report this post")])])])])])])]), _vm._v(" "), _c('div', {
+      staticClass: "panel-body"
+    }, [_c('blockquote', [(_.type == 'article') ? _c('p', {
+      domProps: {
+        "innerHTML": _vm._s(_.excerpt)
+      }
+    }) : _vm._e()])], 1), _vm._v(" "), _c('div', {
+      staticClass: "panel-footer text-center no-padding"
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-xs-3"
+    }, [_c('a', {
+      staticClass: "display-block p-10 text-muted",
+      attrs: {
+        "href": '/admin/post/' + _.id,
+        "data-popup": "tooltip",
+        "data-placement": "top",
+        "data-container": "body",
+        "title": "",
+        "data-original-title": "Google Drive"
+      }
+    }, [_c('i', {
+      staticClass: "icon-pencil3 position-left"
+    }), _vm._v("修改")])]), _vm._v(" "), _c('div', {
+      staticClass: "col-xs-3"
+    }, [_c('a', {
+      staticClass: "display-block p-10 text-muted",
+      attrs: {
+        "href": "#",
+        "data-popup": "tooltip",
+        "data-placement": "top",
+        "data-container": "body",
+        "title": "",
+        "data-original-title": "Twitter"
+      }
+    }, [_c('i', {
+      staticClass: "icon-eye position-left"
+    }), _vm._v("查看")])]), _vm._v(" "), _c('div', {
+      staticClass: "col-xs-3"
+    }, [_c('a', {
+      staticClass: "display-block p-10 text-muted",
+      attrs: {
+        "href": "#",
+        "data-popup": "tooltip",
+        "data-placement": "top",
+        "data-container": "body",
+        "title": "",
+        "data-original-title": "Github"
+      }
+    }, [_c('i', {
+      staticClass: "icon-stats-growth2 position-left"
+    }), _vm._v("统计")])]), _vm._v(" "), _c('div', {
+      staticClass: "col-xs-3"
+    }, [_c('a', {
+      staticClass: "display-block p-10 text-muted ajax delete",
+      attrs: {
+        "href": '/admin/posts/delete?ids=' + _.id
+      }
+    }, [_c('i', {
+      staticClass: " icon-trash position-left"
+    }), _vm._v(" 回收站")])])])])]) : _vm._e()])
+  }))
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "timeline-icon"
-  }, [_c('div', {
-    staticClass: "bg-primary-400"
-  }, [_c('i', {
-    staticClass: "icon-file-text2"
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ul', {
-    staticClass: "icons-list"
-  }, [_c('li', {
-    staticClass: "dropdown"
-  }, [_c('a', {
-    staticClass: "dropdown-toggle",
-    attrs: {
-      "href": "#",
-      "data-toggle": "dropdown"
-    }
-  }, [_c('i', {
-    staticClass: "icon-arrow-down12"
-  })]), _vm._v(" "), _c('ul', {
-    staticClass: "dropdown-menu dropdown-menu-right"
-  }, [_c('li', [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_c('i', {
-    staticClass: "icon-user-lock"
-  }), _vm._v(" 私有")])]), _vm._v(" "), _c('li', {
-    staticClass: "divider"
-  }), _vm._v(" "), _c('li', [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_c('i', {
-    staticClass: "icon-embed"
-  }), _vm._v(" 删除")])]), _vm._v(" "), _c('li', [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_c('i', {
-    staticClass: "icon-blocked"
-  }), _vm._v(" Report this post")])])])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "panel-footer panel-footer-transparent"
-  }, [_c('div', {
-    staticClass: "heading-elements"
-  }, [_c('ul', {
-    staticClass: "list-inline list-inline-condensed heading-text"
-  }, [_c('li', [_c('a', {
-    staticClass: "text-default",
-    attrs: {
-      "href": "#"
-    }
-  }, [_c('i', {
-    staticClass: "icon-eye4 position-left"
-  }), _vm._v(" 438")])]), _vm._v(" "), _c('li', [_c('a', {
-    staticClass: "text-default",
-    attrs: {
-      "href": "#"
-    }
-  }, [_c('i', {
-    staticClass: "icon-comment-discussion position-left"
-  }), _vm._v(" 71")])])]), _vm._v(" "), _c('span', {
-    staticClass: "heading-btn pull-right"
-  }, [_c('a', {
-    staticClass: "btn btn-link",
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("更新文章 "), _c('i', {
-    staticClass: "icon-arrow-right14 position-right"
-  })])])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "timeline-icon"
-  }, [_c('div', {
-    staticClass: "bg-indigo-400"
-  }, [_c('i', {
-    staticClass: "icon-versions"
-  })])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "text-center"
   }, [_c('h6', {
@@ -6254,7 +6235,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-192c13bc", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-2d87d1c2", module.exports)
   }
 }
 

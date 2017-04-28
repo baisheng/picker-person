@@ -452,7 +452,7 @@
 
 <body data-spy="scroll" data-target="#resume-section" data-offset="70" class="{% block body_style %}{% endblock %} <$ body_navbar $>">
 {#<body data-spy="scroll" data-target=".sidebar-fixed" class=" {% block body_style %}{% endblock %}">#}
-
+{#
 <!-- Floating menu -->
 <ul class="fab-menu fab-menu-fixed fab-menu-bottom-right" data-fab-toggle="hover">
     <li>
@@ -477,19 +477,12 @@
                     <span class="badge bg-pink-300">5</span>
                 </div>
             </li>
-            {#<li>#}
-            {#<div data-fab-label="">#}
-            {#<a href="#" class="btn bg-pink-400 btn-rounded btn-icon btn-float legitRipple">#}
-            {#<img src="assets/images/demo/users/face23.jpg" class="img-responsive" alt="">#}
-            {#</a>#}
-            {#<span class="status-mark border-pink-400"></span>#}
-            {#</div>#}
-            {#</li>#}
+
         </ul>
     </li>
 </ul>
+#}
 <!-- /floating menu -->
-{#
 <div class="dummy-fixed" id="snippet-bar">
 
     <div class="snippet" :class="isOpen || isOpenSubject ? 'snippet--active': ''">
@@ -508,11 +501,10 @@
                 </span>
             </span>
         </a>
-        <a @click="openOrSave('subject')" class="btn bg-teal-400 btn-icon btn-raised  snippet__button"
-           :class="!isActive ? 'disabled': ''"><!-- Fallback location -->
+        <a href="/admin/post" class="btn bg-teal-400 btn-icon btn-raised  snippet__button" v-if="!isOpen"><!-- Fallback location -->
             <span class="snippet__text">
                 <span class="snippet__text-inner snippet__initial-text ">
-                    <i class=" icon-ampersand"></i>
+                    <i class=" icon-blog"></i>
                 </span>
                 <span class="snippet__text-inner snippet__final-text">
                     <i class="icon-sync spinner" v-if="status == 'saving'" ></i>
@@ -522,45 +514,7 @@
                 </span>
             </span>
         </a>
-        <div class="snippet_content panel panel-body alpha-grey" v-if="isOpenSubject" v-cloak>
-            <div class="snippet_content-inner">
-                <div class="snippet__summary">
-
-                    <form action="#">
-
-
-                            <div class="panel panel-body">
-                                <div class="text-center">
-                                    <h6 class="no-margin text-semibold">新建主题</h6>
-                                    <p class="content-group-sm text-muted">主题可连接碎片或生产独立内容</p>
-                                </div>
-                                <div class="form-group">
-                                    <label>主题名:</label>
-                                    <input type="text" class="form-control" placeholder="这是一个主题名称">
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label class="display-block">主题类别:</label>
-
-                                    <label class="radio-inline">
-                                        <input type="radio" class="styled" name="gender" value="article">
-                                        文章
-                                    </label>
-
-
-                                </div>
-
-                        </div>
-                    </form>
-                </div>
-                <button class="snippet__close snippet__cancel" @click="cancel"><i
-                            class="icon fa fa-fw fa-close"></i>
-                    关闭
-                </button>
-            </div><!-- /snippet_content-inner -->
-        </div><!-- /snippet_content -->
-        <div class="snippet_content panel panel-body alpha-grey" v-else-if="isOpen" v-cloak>
+        <div class="snippet_content panel panel-body alpha-grey" v-if="isOpen" v-cloak>
             <div class="snippet_content-inner">
                 <div class="snippet__summary">
                     <div class="editor">
@@ -579,15 +533,13 @@
         </div><!-- /snippet_content -->
     </div><!-- /snippet -->
 </div>
-#}
 {#<body class="navbar-top  sidebar-opposite-visible ">#}
 <div id="app">
     <div class="page-header page-header-default page-header-xs">
 
-        <!-- Main navbar -->
-        <div class="navbar navbar-inverse navbar-static-top bg-default" id="navbar-main">
+        <div class="navbar navbar-default" id="navbar-main">
             <div class="navbar-header">
-                <a class="navbar-brand" href="index.html"><img src="/static/assets/images/logo_light.png" alt=""></a>
+                <a class="navbar-brand" href="/admin/index"><img src="/static/assets/images/logo_dark.png" alt=""></a>
 
                 <ul class="nav navbar-nav pull-right visible-xs-block">
                     <li><a data-toggle="collapse" data-target="#navbar-mobile" class="legitRipple"><i class="icon-grid3"></i></a></li>
@@ -595,22 +547,193 @@
             </div>
 
             <div class="navbar-collapse collapse" id="navbar-mobile">
-                <ul class="nav navbar-nav navbar-nav-material">
-                    <li class="active"><a href="index.html" class="legitRipple">我的首页</a></li>
 
-                    <li class="dropdown mega-menu mega-menu-wide">
-                        <a href="#" class="dropdown-toggle legitRipple" data-toggle="dropdown">内容存档 </a>
+                <ul class="nav navbar-nav">
+                    <li class="{% if http.controller == 'index' %}active{% endif %}"><a href="/admin/index" class="legitRipple">我的首页</a></li>
 
-                    </li>
-                    <li class="dropdown mega-menu mega-menu-wide">
-                        <a href="#" class="dropdown-toggle legitRipple" data-toggle="dropdown">我的简历 </a>
+                    <li class="{% if http.controller == 'posts' %}active{% endif %}">
+                        <a href="/admin/posts" class="" >内容归档 </a>
 
                     </li>
+                    <li class="{% if http.controller == 'resumes' %}active{% endif %}">
+                        <a href="/admin/resumes" >我的简历 </a>
 
+                    </li>
                 </ul>
 
                 <div class="navbar-right">
                     <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle legitRipple" data-toggle="dropdown">
+                                <i class="icon-bell2"></i>
+                                <span class="visible-xs-inline-block position-right">Activity</span>
+                                <span class="status-mark border-pink-300"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-content">
+                                <div class="dropdown-content-heading">
+                                    Activity
+                                    <ul class="icons-list">
+                                        <li><a href="#"><i class="icon-menu7"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <ul class="media-list dropdown-content-body width-350">
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <a href="#" class="btn bg-success-400 btn-rounded btn-icon btn-xs legitRipple"><i class="icon-mention"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <a href="#">Taylor Swift</a> mentioned you in a post "Angular JS. Tips and tricks"
+                                            <div class="media-annotation">4 minutes ago</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <a href="#" class="btn bg-pink-400 btn-rounded btn-icon btn-xs legitRipple"><i class="icon-paperplane"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            Special offers have been sent to subscribed users by <a href="#">Donna Gordon</a>
+                                            <div class="media-annotation">36 minutes ago</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <a href="#" class="btn bg-blue btn-rounded btn-icon btn-xs legitRipple"><i class="icon-plus3"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <a href="#">Chris Arney</a> created a new <span class="text-semibold">Design</span> branch in <span class="text-semibold">Limitless</span> repository
+                                            <div class="media-annotation">2 hours ago</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <a href="#" class="btn bg-purple-300 btn-rounded btn-icon btn-xs legitRipple"><i class="icon-truck"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            Shipping cost to the Netherlands has been reduced, database updated
+                                            <div class="media-annotation">Feb 8, 11:30</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <a href="#" class="btn bg-warning-400 btn-rounded btn-icon btn-xs legitRipple"><i class="icon-bubble8"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            New review received on <a href="#">Server side integration</a> services
+                                            <div class="media-annotation">Feb 2, 10:20</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <a href="#" class="btn bg-teal-400 btn-rounded btn-icon btn-xs legitRipple"><i class="icon-spinner11"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <strong>January, 2016</strong> - 1320 new users, 3284 orders, $49,390 revenue
+                                            <div class="media-annotation">Feb 1, 05:46</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle legitRipple" data-toggle="dropdown">
+                                <i class="icon-bubble8"></i>
+                                <span class="visible-xs-inline-block position-right">Messages</span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-content width-350">
+                                <div class="dropdown-content-heading">
+                                    Messages
+                                    <ul class="icons-list">
+                                        <li><a href="#"><i class="icon-menu7"></i></a></li>
+                                    </ul>
+                                </div>
+
+                                <ul class="media-list dropdown-content-body">
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <img src="assets/images/demo/users/face10.jpg" class="img-circle img-sm" alt="">
+                                            <span class="badge bg-danger-400 media-badge">5</span>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <a href="#" class="media-heading">
+                                                <span class="text-semibold">James Alexander</span>
+                                                <span class="media-annotation pull-right">04:58</span>
+                                            </a>
+
+                                            <span class="text-muted">who knows, maybe that would be the best thing for me...</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left">
+                                            <img src="assets/images/demo/users/face3.jpg" class="img-circle img-sm" alt="">
+                                            <span class="badge bg-danger-400 media-badge">4</span>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <a href="#" class="media-heading">
+                                                <span class="text-semibold">Margo Baker</span>
+                                                <span class="media-annotation pull-right">12:16</span>
+                                            </a>
+
+                                            <span class="text-muted">That was something he was unable to do because...</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left"><img src="assets/images/demo/users/face24.jpg" class="img-circle img-sm" alt=""></div>
+                                        <div class="media-body">
+                                            <a href="#" class="media-heading">
+                                                <span class="text-semibold">Jeremy Victorino</span>
+                                                <span class="media-annotation pull-right">22:48</span>
+                                            </a>
+
+                                            <span class="text-muted">But that would be extremely strained and suspicious...</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left"><img src="assets/images/demo/users/face4.jpg" class="img-circle img-sm" alt=""></div>
+                                        <div class="media-body">
+                                            <a href="#" class="media-heading">
+                                                <span class="text-semibold">Beatrix Diaz</span>
+                                                <span class="media-annotation pull-right">Tue</span>
+                                            </a>
+
+                                            <span class="text-muted">What a strenuous career it is that I've chosen...</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="media-left"><img src="assets/images/demo/users/face25.jpg" class="img-circle img-sm" alt=""></div>
+                                        <div class="media-body">
+                                            <a href="#" class="media-heading">
+                                                <span class="text-semibold">Richard Vango</span>
+                                                <span class="media-annotation pull-right">Mon</span>
+                                            </a>
+
+                                            <span class="text-muted">Other travelling salesmen live a life of luxury...</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
                         <li class="dropdown dropdown-user">
                             <a class="dropdown-toggle legitRipple" data-toggle="dropdown">
                                 {#<img src="assets/images/demo/users/face11.jpg" alt="">#}
@@ -627,16 +750,19 @@
                                 <li><a href="#"><i class="icon-switch2"></i> 登出</a></li>
                             </ul>
                         </li>
+
                     </ul>
                 </div>
+
             </div>
         </div>
-        <!-- /main navbar -->
-
-
-
-
-
+        <ul class="fab-menu fab-menu-top-left hidden-xs" data-fab-toggle="hover">
+            <li>
+                <a class="fab-menu-btn btn btn-default btn-float btn-rounded btn-icon sidebar-control sidebar-secondary-hide legitRipple">
+                    <i class="icon-indent-decrease"></i>
+                </a>
+            </li>
+        </ul>
     </div>
     <!-- Page container -->
     <div class="page-container">
@@ -644,47 +770,12 @@
         <!-- Page content -->
         <div class="page-content">
 
+            {% block sidebar_main %}{% endblock %}
             <!-- Main content -->
             <div class="content-wrapper">
 
                 {% block cover %}{% endblock %}
 
-                {% block toolbar %}
-                    <!-- Toolbar -->
-                    <div class="navbar navbar-default navbar-xs navbar-component no-border-radius-top">
-                        <ul class="nav navbar-nav visible-xs-block">
-                            <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
-                        </ul>
-
-                        <div class="navbar-collapse collapse" id="navbar-filter">
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a href="#activity" data-toggle="tab"><i class="icon-menu7 position-left"></i> 我的动态</a></li>
-                                {#<li><a href="#schedule" data-toggle="tab"><i class="icon-calendar3 position-left"></i> 日程安排 <span class="badge badge-success badge-inline position-right">32</span></a></li>#}
-                                {#<li><a href="#settings" data-toggle="tab"><i class="icon-cog3 position-left"></i> 系统配置</a></li>#}
-                            </ul>
-
-                            <div class="navbar-right">
-                                <ul class="nav navbar-nav">
-                                    <li><a href="/admin/post"><i class="icon-stack-text position-left"></i> 写文章</a></li>
-                                    {#<li><a href="#"><i class="icon-collaboration position-left"></i> Friends</a></li>#}
-                                    {#<li><a href="#"><i class="icon-images3 position-left"></i> 发图</a></li>#}
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            {#<li><a href="#"><i class="icon-image2"></i> Update cover</a></li>#}
-                                            {#<li><a href="#"><i class="icon-clippy"></i> Update info</a></li>#}
-                                            {#<li><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>#}
-                                            {#<li class="divider"></li>#}
-                                            <li><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>
-                                            <li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /toolbar -->
-                {% endblock %}
 
                 {% block content %}{% endblock %}
 
@@ -780,18 +871,18 @@
         // -------------------------
 
         // Left alignment
-        $('#fab-menu-affixed-demo-left').affix({
-            offset: {
-                top: $('#fab-menu-affixed-demo-left').offset().top - 20
-            }
-        });
+//        $('#fab-menu-affixed-demo-left').affix({
+//            offset: {
+//                top: $('#fab-menu-affixed-demo-left').offset().top - 20
+//            }
+//        });
 
         // Right alignment
-        $('#fab-menu-affixed-demo-right').affix({
-            offset: {
-                top: $('#fab-menu-affixed-demo-right').offset().top - 20
-            }
-        });
+//        $('#fab-menu-affixed-demo-right').affix({
+//            offset: {
+//                top: $('#fab-menu-affixed-demo-right').offset().top - 20
+//            }
+//        });
 
         // Bottom navbar
         function headroomBottom() {

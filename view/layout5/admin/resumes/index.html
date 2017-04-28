@@ -1,4 +1,4 @@
-{% extends "../_layout.html" %}
+{% extends "../_layout5.html" %}
 
 
 {% block style %}
@@ -191,7 +191,99 @@
     {#<li><a href="/admin/posts/resume"><i class="icon-plus2 text-teal"></i> 简历</a></li>#}
 
 {#{% endblock %}#}
+{% block sidebar_main %}
+<div class="sidebar sidebar-main sidebar-default sidebar-separate">
+    <div class="sidebar-content">
 
+        <!-- Categories -->
+        <div class="sidebar-category">
+            <div class="category-title">
+                <span>简历管理</span>
+                <ul class="icons-list">
+                    <li><a href="#" data-action="collapse"></a></li>
+                </ul>
+            </div>
+
+            <div class="category-content no-padding">
+                <ul class="navigation">
+                    <li>
+                        <a href="#" class="legitRipple">
+                            <span class="text-muted text-size-small text-regular pull-right">12</span>
+                            <i class="icon-wordpress"></i>
+                            全部简历
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="legitRipple">
+                            <span class="text-muted text-size-small text-regular pull-right">43</span>
+                            <i class="icon-certificate"></i>
+                            简历卡
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="legitRipple">
+                            <span class="text-muted text-size-small text-regular pull-right">26</span>
+                            <i class="icon-film2"></i>
+                            简历皮肤
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="legitRipple">
+                            <span class="text-muted text-size-small text-regular pull-right">83</span>
+                            <i class="icon-images2"></i>
+                            简历模板
+                        </a>
+                    </li>
+
+
+
+
+                </ul>
+            </div>
+        </div>
+        <!-- /categories -->
+
+
+        <!-- Share -->
+        <div class="sidebar-category">
+            <div class="category-title">
+                <span>Share</span>
+                <ul class="icons-list">
+                    <li><a href="#" data-action="collapse"></a></li>
+                </ul>
+            </div>
+
+            <div class="category-content no-padding-bottom text-center">
+                <ul class="list-inline no-margin">
+                    <li>
+                        <a href="#" class="btn bg-indigo btn-icon content-group legitRipple">
+                            <i class="icon-facebook"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="btn bg-danger btn-icon content-group legitRipple">
+                            <i class="icon-youtube3"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="btn bg-info btn-icon content-group legitRipple">
+                            <i class="icon-twitter"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="btn bg-orange btn-icon content-group legitRipple">
+                            <i class="icon-feed3"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /share -->
+
+    </div>
+</div>
+{% endblock %}
 
 {% block content %}
     <div class="row">

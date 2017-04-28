@@ -1160,7 +1160,7 @@ export default class extends Base {
 
         let type = this.get('type');
         let query = {};
-        // query.type = "article";
+        query.type = "article";
         query.status = ['NOT IN', 'trash']
 
         // query.type = "";
@@ -1327,6 +1327,7 @@ export default class extends Base {
             }
         }
 
+        /*
         let doc_group = {};
 
         for (let i = 0; i < list.data.length; i++) {
@@ -1340,8 +1341,9 @@ export default class extends Base {
                 doc_group[cate] = [doc];
             }
         }
+        */
 
-        console.log(JSON.stringify(doc_group))
+        // console.log(JSON.stringify(doc_group))
 
 
         // 获取内容分类
@@ -1368,7 +1370,8 @@ export default class extends Base {
 
         // list.data = treeList;
 
-        list.data = doc_group;
+        // TODO 待用
+        // list.data = doc_group;
         // console.log(JSON.stringify(list.data))
 
         return this.json(list);
