@@ -1821,6 +1821,10 @@ var _posts = __webpack_require__(433);
 
 var _posts2 = _interopRequireDefault(_posts);
 
+var _pager = __webpack_require__(506);
+
+var _pager2 = _interopRequireDefault(_pager);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 Vue.prototype.$http = _axios2.default;
@@ -1831,7 +1835,8 @@ new Vue({
     el: "#app",
     components: {
         ProfileCover: _profileCover2.default,
-        Posts: _posts2.default
+        Posts: _posts2.default,
+        Pager: _pager2.default
         // Timeline,
         // Select2,
 
@@ -2536,6 +2541,9 @@ exports.default = {
 
         var scope = this;
 
+        eventHub.$on("page", function () {
+            Vue.redrawVueMasonry();
+        });
         eventHub.$on("snippet_id", function (id) {
             _this.snippet_id = id;
             _this.reLayout();
@@ -13152,6 +13160,181 @@ module.exports = __webpack_require__(375);
 
 var core = module.exports = {version: '2.4.0'};
 if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ }),
+
+/***/ 505:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    name: 'pager',
+    data: function data() {
+        return {
+            current: this.page || 1,
+            showItem: 5
+        };
+    },
+    props: ["allpage", "page"],
+    computed: {
+        pages: function pages() {
+            var pag = [];
+            if (this.current < this.showItem) {
+                //如果当前的激活的项 小于要显示的条数
+                //总页数和要显示的条数那个大就显示多少条
+                var i = Math.min(this.showItem, this.allpage);
+                while (i) {
+                    pag.unshift(i--);
+                }
+            } else {
+                //当前页数大于显示页数了
+                var middle = this.current - Math.floor(this.showItem / 2),
+                    //从哪里开始
+                i = this.showItem;
+                if (middle > this.allpage - this.showItem) {
+                    middle = this.allpage - this.showItem + 1;
+                }
+                while (i--) {
+                    pag.push(middle++);
+                }
+            }
+            return pag;
+        }
+    },
+    methods: {
+        goto: function goto(index) {
+
+            if (index == this.current) return;
+            this.current = index;
+            //                    $.event.trigger({
+            //                        type: "message"
+            //                    });
+            this.$emit('increment', index);
+            eventHub.$emit('page', index);
+
+            //这里可以发送ajax请求
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 506:
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(18)(
+  /* script */
+  __webpack_require__(505),
+  /* template */
+  __webpack_require__(507),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/bison/__task/19_Caixie/__workspace/picker-resume/webpack/components/ui/pager.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] pager.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-35c97221", Component.options)
+  } else {
+    hotAPI.reload("data-v-35c97221", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 507:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ul', {
+    staticClass: "pagination pagination-default pagination-xs"
+  }, [_c('li', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.current != 1),
+      expression: "current != 1"
+    }],
+    on: {
+      "click": function($event) {
+        _vm.current-- && _vm.goto(_vm.current)
+      }
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("上一页")])]), _vm._v(" "), _vm._l((_vm.pages), function(index) {
+    return _c('li', {
+      key: index,
+      class: {
+        'active': _vm.current == index
+      },
+      on: {
+        "click": function($event) {
+          _vm.goto(index)
+        }
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0);"
+      }
+    }, [_vm._v(_vm._s(index))])])
+  }), _vm._v(" "), _c('li', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.allpage != _vm.current && _vm.allpage != 0),
+      expression: "allpage != current && allpage != 0 "
+    }],
+    on: {
+      "click": function($event) {
+        _vm.current++ && _vm.goto(_vm.current++)
+      }
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("下一页")])])], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-35c97221", module.exports)
+  }
+}
 
 /***/ }),
 

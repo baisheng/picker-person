@@ -1,0 +1,41 @@
+.pagination-container{
+  margin-top: @base-line-height * 2;
+  text-align: center;
+}
+.pagination{
+  display: inline-block;
+  margin: 0 auto;
+  li{
+    display: inline-block;
+    a{
+      .transition(0.2s,linear);
+      display: inline-block;
+      width: 3.54545454545454em;
+      height: 3.54545454545454em;
+      line-height: 0;
+      padding-top: 8px;
+      text-align: center;
+      border-radius: 50% !important;
+      background: none;
+      border: none;
+      .h6;
+      &:hover{
+        background: darken(@color-bg-secondary,2%);
+        color: @color-dark;
+      }
+    }
+    &.active{
+      a{
+        background: darken(@color-bg-secondary,3%);
+        color: @color-dark;
+        &:hover{
+          background: darken(@color-bg-secondary,5%);
+          color: @color-dark;
+        }
+      }
+    }
+    &:first-child, &:last-child{
+      opacity: .3;
+    }
+  }
+}

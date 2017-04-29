@@ -70,7 +70,7 @@ body {
   line-height: 1.85714286em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif, 'Helvetica', 'Arial', sans-serif;
   color: #666666;
   font-weight: 400;
 }
@@ -86,7 +86,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif, 'Helvetica', 'Arial', sans-serif;
   color: #252525;
   font-weight: 300;
   font-variant-ligatures: common-ligatures;
@@ -212,7 +212,7 @@ a:active {
   text-decoration: underline;
 }
 .type--body-font {
-  font-family: 'Open Sans', 'Helvetica';
+  font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif, 'Helvetica';
 }
 /**! 03. Position **/
 body {
@@ -829,7 +829,7 @@ div[data-overlay] ul {
 }
 /**! 06. Buttons **/
 .btn {
-  font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif, 'Helvetica', 'Arial', sans-serif;
   transition: 0.1s linear;
   -webkit-transition: 0.1s linear;
   -moz-transition: 0.1s linear;
@@ -2965,7 +2965,7 @@ form[action*='createsend.com'] p > label:first-child {
   margin-bottom: 0.92857143em;
 }
 form[action*='list-manage.com'] h2 {
-  font-family: 'Open Sans', 'Helvetica', 'Arial', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif, 'Helvetica', 'Arial', sans-serif;
   color: #252525;
   font-weight: 300;
   font-variant-ligatures: common-ligatures;
@@ -4632,6 +4632,63 @@ section.parallax .row .background-image-holder {
     margin-bottom: 1.85714286em;
   }
 }
+.pagination-container {
+  margin-top: 3.71428571em;
+  text-align: center;
+}
+.pagination {
+  display: inline-block;
+  margin: 0 auto;
+}
+.pagination li {
+  display: inline-block;
+}
+.pagination li a {
+  transition: 0.2s linear;
+  -webkit-transition: 0.2s linear;
+  -moz-transition: 0.2s linear;
+  display: inline-block;
+  width: 3.54545454545454em;
+  height: 3.54545454545454em;
+  line-height: 0;
+  padding-top: 8px;
+  text-align: center;
+  border-radius: 50% !important;
+  background: none;
+  border: none;
+  font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif, 'Helvetica', 'Arial', sans-serif;
+  color: #252525;
+  font-weight: 300;
+  font-variant-ligatures: common-ligatures;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 0.85714286em;
+  line-height: 2.16666667em;
+  font-weight: 700;
+}
+.pagination li a:not(:last-child) {
+  margin-bottom: 2.16666666666667em;
+}
+.pagination li a.type--uppercase {
+  letter-spacing: 1px;
+  margin-right: -1px;
+}
+.pagination li a:hover {
+  background: #f5f5f5;
+  color: #252525;
+}
+.pagination li.active a {
+  background: #f2f2f2;
+  color: #252525;
+}
+.pagination li.active a:hover {
+  background: #ededed;
+  color: #252525;
+}
+.pagination li:first-child,
+.pagination li:last-child {
+  opacity: .3;
+}
 /*! -- Stack Menu Toggle -- */
 .menu-toggle {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -5820,7 +5877,7 @@ p .material-icons:first-child {
   font-weight: 600;
   border-radius: 2px;
   z-index: 2;
-  font-family: 'Open Sans';
+  font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
 }
 [data-tooltip]:not(:hover):after {
   opacity: 0;

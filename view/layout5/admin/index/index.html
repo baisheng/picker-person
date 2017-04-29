@@ -177,6 +177,11 @@
 
                             <posts :posts="pageAll"></posts>
                             {#<posts :list="pageAll"></posts>#}
+                            <div class="row">
+                                <div class="text-center content-group-lg pt-20">
+                                    <pager :allpage="allpage" :page="page" v-on:increment="incrementTotal"></pager>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="schedule">

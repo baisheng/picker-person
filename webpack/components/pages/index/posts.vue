@@ -474,6 +474,10 @@
         mounted: function () {
             let scope = this;
 
+            eventHub.$on("page", () => {
+                Vue.redrawVueMasonry()
+
+            })
             eventHub.$on("snippet_id", (id) => {
                 this.snippet_id = id;
                 this.reLayout();

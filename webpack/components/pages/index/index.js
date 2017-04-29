@@ -4,12 +4,14 @@ Vue.prototype.$http = axios;
 import ProfileCover from './profile-cover.vue';
 // import Timeline from './timeline.vue';
 import Posts from './posts.vue';
+import Pager from '../../ui/pager.vue';
 
 new Vue({
     el: "#app",
     components: {
         ProfileCover,
-        Posts
+        Posts,
+        Pager
         // Timeline,
         // Select2,
 

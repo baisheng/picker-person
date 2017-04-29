@@ -17,7 +17,7 @@
                             {% for _ in posts %}
                                 <article class="masonry__item" data-masonry-filter="<$ _.type $>">
                                     <div class="article__title text-center">
-                                        <a href="#">
+                                        <a href="/article/<$ _.id $>">
                                             <h2><$ _.title | truncate(18, true) $></h2>
 
                                         </a>
@@ -32,7 +32,7 @@
                                             {#<img alt="Image" src="/themes/default/img/blog-4.jpg" />#}
                                         {#</a>#}
                                         <p>
-                                            <$ _.excerpt $>
+                                            <$ _.excerpt | markdown | safe $>
                                         </p>
                                         <a href="/article/<$ _.id $>">全文 &raquo;</a>
                                     </div>

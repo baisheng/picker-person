@@ -7,17 +7,14 @@
     <style>
         .unloaded {
             min-height: 200px;
-        // set a minimum default height for image containers
-        // this prevents too many images from appearing in the viewport
-        // thus causing lazy load to load too many images at once
-        // we will use the lazyload .load() callback to remove this fixed
+        / / set a minimum default height for image containers / / this prevents too many images from appearing in the viewport / / thus causing lazy load to load too many images at once / / we will use the lazyload . load() callback to remove this fixed
         }
     </style>
 {% endblock %}
 {% block main %}
     <section class="cover height-90 imagebg text-center" data-overlay="2" id="home">
         <div class="background-image-holder">
-            <img alt="background" src="<$ options.site.profile_cover.guid $>" />
+            <img alt="background" src="<$ options.site.profile_cover.guid $>"/>
         </div>
         <section class="page-navigator">
             <ul>
@@ -35,7 +32,7 @@
         <div class="container pos-vertical-center">
             <div class="row">
                 <div class="col-sm-8">
-                    <img alt="Image" class="unmarg--bottom" src="/themes/default/img/headline-1.png" />
+                    <img alt="Image" class="unmarg--bottom" src="/themes/default/img/headline-1.png"/>
                     <h3>
                         聪明人塑造自己的命运
                     </h3>
@@ -73,7 +70,8 @@
                 <div class="col-sm-4 col-xs-6">
                     <a href="/portfolio" class="block">
                         <div class="feature feature-7 boxed text-center imagebg" data-overlay="5">
-                            <div class="background-image-holder" style="background: url(&quot;/themes/default/img/recruitment-2.jpg&quot;); opacity: 1;">
+                            <div class="background-image-holder"
+                                 style="background: url(&quot;/themes/default/img/recruitment-2.jpg&quot;); opacity: 1;">
                                 <img alt="background" src="/themes/default/img/recruitment-2.jpg">
                             </div>
                             <h4 class="pos-vertical-center">Portfolio</h4>
@@ -86,7 +84,8 @@
                 <div class="col-sm-4 col-xs-6">
                     <a href="/code" class="block">
                         <div class="feature feature-7 boxed text-center imagebg" data-overlay="3">
-                            <div class="background-image-holder" style="background: url(&quot;/themes/default/img/recruitment-1.jpg&quot;); opacity: 1;">
+                            <div class="background-image-holder"
+                                 style="background: url(&quot;/themes/default/img/recruitment-1.jpg&quot;); opacity: 1;">
                                 <img alt="background" src="/themes/default/img/recruitment-1.jpg">
                             </div>
                             <h4 class="pos-vertical-center">Code</h4>
@@ -98,7 +97,8 @@
                 <div class="col-sm-4 col-xs-6">
                     <a href="#" class="block">
                         <div class="feature feature-7 boxed text-center imagebg" data-overlay="5">
-                            <div class="background-image-holder" style="background: url(&quot;/themes/default/img/cowork-5.jpg&quot;); opacity: 1;">
+                            <div class="background-image-holder"
+                                 style="background: url(&quot;/themes/default/img/cowork-5.jpg&quot;); opacity: 1;">
                                 <img alt="background" src="/themes/default/img/cowork-5.jpg">
                             </div>
                             <h4 class="pos-vertical-center">Design</h4>
@@ -132,9 +132,10 @@
                             <span class="label"><$ item.type $></span>
                             <h5><$ item.title $></h5>
                             <p>
-                                {#<$ item.excerpt $>#}
+                                <$ item.excerpt | markdown | safe $>
                             </p>
-                            <a href="#">
+                            <a href="/article/<$ item.id $>">
+
                                 查看全文
                             </a>
                         </div>
@@ -171,7 +172,7 @@
             <!--end of row-->
         </div>
         <!--end of container-->
-        <infinite-loading  spinner="waveDots" :on-infinite="onInfinite" :distance="distance" ref="infiniteLoading">
+        <infinite-loading spinner="waveDots" :on-infinite="onInfinite" :distance="distance" ref="infiniteLoading">
             <span slot="no-more">
                 <a href="/snippets">更多碎片...</a>
             </span>
