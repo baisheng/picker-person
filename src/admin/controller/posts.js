@@ -1270,6 +1270,7 @@ export default class extends Base {
         fields.push('title');
         fields.push('name');
         fields.push('content');
+        fields.push('content_json');
         fields.push('excerpt');
         fields.push('date');
         fields.push('modified');
@@ -1304,9 +1305,12 @@ export default class extends Base {
         for (let item of list.data) {
             item.terms = await _taxonomy.getTermsByObject(item.id);
 
+            // TODO: resume content_JSON 有问题 @basil 0429
             if (item.type === 'resume'){
-                item.content_json = JSON.parse(item.content_json)
 
+                // console.log(item.content_json  + "-------")
+                item.content_json = JSON.parse(item.content_json)
+            //
             }
 
             if (item.type === 'snippet'){

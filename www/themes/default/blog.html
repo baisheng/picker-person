@@ -1,7 +1,7 @@
 {% extends "./_layout.html" %}
 
 {% block main %}
-    <section class="space--sm">
+    <section class="space--lg">
         <div class="container">
             <div class="row">
                 <div class="col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
@@ -28,9 +28,9 @@
                                     </div>
                                     <!--end article title-->
                                     <div class="article__body">
-                                        {#<a href="#">#}
-                                            {#<img alt="Image" src="/themes/default/img/blog-4.jpg" />#}
-                                        {#</a>#}
+                                        <a href="#">
+                                            <img alt="Image" src="/themes/default/img/blog-4.jpg" />
+                                        </a>
                                         <p>
                                             <$ _.excerpt | markdown | safe $>
                                         </p>

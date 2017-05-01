@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "../static";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 491);
+/******/ 	return __webpack_require__(__webpack_require__.s = 499);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -598,24 +598,6 @@ module.exports = function(it){
 /***/ }),
 
 /***/ 17:
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(8);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function(it, S){
-  if(!isObject(it))return it;
-  var fn, val;
-  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
-  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
-  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-/***/ }),
-
-/***/ 18:
 /***/ (function(module, exports) {
 
 // this module is a runtime utility for cleaner component module output and will
@@ -670,6 +652,24 @@ module.exports = function normalizeComponent (
   }
 }
 
+
+/***/ }),
+
+/***/ 18:
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = __webpack_require__(8);
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function(it, S){
+  if(!isObject(it))return it;
+  var fn, val;
+  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
+  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+  throw TypeError("Can't convert object to primitive value");
+};
 
 /***/ }),
 
@@ -1325,7 +1325,7 @@ module.exports = function(it){
 /***/ 321:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(18)(
+var Component = __webpack_require__(17)(
   /* script */
   __webpack_require__(234),
   /* template */
@@ -1813,15 +1813,15 @@ var _axios = __webpack_require__(53);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _profileCover = __webpack_require__(434);
+var _profileCover = __webpack_require__(438);
 
 var _profileCover2 = _interopRequireDefault(_profileCover);
 
-var _posts = __webpack_require__(433);
+var _posts = __webpack_require__(437);
 
 var _posts2 = _interopRequireDefault(_posts);
 
-var _pager = __webpack_require__(506);
+var _pager = __webpack_require__(460);
 
 var _pager2 = _interopRequireDefault(_pager);
 
@@ -2055,7 +2055,7 @@ module.exports = function isCancel(value) {
 
 /***/ }),
 
-/***/ 388:
+/***/ 389:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2067,7 +2067,7 @@ var _stringify = __webpack_require__(92);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var _vueMasonry = __webpack_require__(478);
+var _vueMasonry = __webpack_require__(486);
 
 var _vueMasonry2 = _interopRequireDefault(_vueMasonry);
 
@@ -2780,7 +2780,32 @@ exports.default = {
 
 /***/ }),
 
-/***/ 389:
+/***/ 39:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(59);
+
+/**
+ * Create an Error with the specified message, config, error code, and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ @ @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, response);
+};
+
+
+/***/ }),
+
+/***/ 390:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2889,31 +2914,6 @@ exports.default = {
 
 /***/ }),
 
-/***/ 39:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var enhanceError = __webpack_require__(59);
-
-/**
- * Create an Error with the specified message, config, error code, and response.
- *
- * @param {string} message The error message.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- @ @param {Object} [response] The response.
- * @returns {Error} The created error.
- */
-module.exports = function createError(message, config, code, response) {
-  var error = new Error(message);
-  return enhanceError(error, config, code, response);
-};
-
-
-/***/ }),
-
 /***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2944,7 +2944,81 @@ module.exports = function(it){
 
 /***/ }),
 
-/***/ 410:
+/***/ 412:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    name: 'pager',
+    data: function data() {
+        return {
+            current: this.page || 1,
+            showItem: 5
+        };
+    },
+    props: ["allpage", "page"],
+    computed: {
+        pages: function pages() {
+            var pag = [];
+            if (this.current < this.showItem) {
+                //如果当前的激活的项 小于要显示的条数
+                //总页数和要显示的条数那个大就显示多少条
+                var i = Math.min(this.showItem, this.allpage);
+                while (i) {
+                    pag.unshift(i--);
+                }
+            } else {
+                //当前页数大于显示页数了
+                var middle = this.current - Math.floor(this.showItem / 2),
+                    //从哪里开始
+                i = this.showItem;
+                if (middle > this.allpage - this.showItem) {
+                    middle = this.allpage - this.showItem + 1;
+                }
+                while (i--) {
+                    pag.push(middle++);
+                }
+            }
+            return pag;
+        }
+    },
+    methods: {
+        goto: function goto(index) {
+
+            if (index == this.current) return;
+            this.current = index;
+            //                    $.event.trigger({
+            //                        type: "message"
+            //                    });
+            this.$emit('increment', index);
+            eventHub.$emit('page', index);
+
+            //这里可以发送ajax请求
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 413:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2953,19 +3027,19 @@ module.exports = function(it){
 exports.__esModule = true;
 exports.VueMasonryPlugin = undefined;
 
-var _keys = __webpack_require__(413);
+var _keys = __webpack_require__(416);
 
 var _keys2 = _interopRequireDefault(_keys);
 
-var _vue = __webpack_require__(481);
+var _vue = __webpack_require__(489);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _masonryLayout = __webpack_require__(428);
+var _masonryLayout = __webpack_require__(432);
 
 var _masonryLayout2 = _interopRequireDefault(_masonryLayout);
 
-var _imagesloaded = __webpack_require__(427);
+var _imagesloaded = __webpack_require__(430);
 
 var _imagesloaded2 = _interopRequireDefault(_imagesloaded);
 
@@ -3052,22 +3126,22 @@ VueMasonryPlugin.install = function (Vue, options) {
 
 /***/ }),
 
-/***/ 413:
+/***/ 416:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(417), __esModule: true };
-
-/***/ }),
-
-/***/ 417:
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(420);
-module.exports = __webpack_require__(5).Object.keys;
+module.exports = { "default": __webpack_require__(420), __esModule: true };
 
 /***/ }),
 
 /***/ 420:
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(423);
+module.exports = __webpack_require__(5).Object.keys;
+
+/***/ }),
+
+/***/ 423:
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
@@ -3082,7 +3156,7 @@ __webpack_require__(181)('keys', function(){
 
 /***/ }),
 
-/***/ 423:
+/***/ 426:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -3146,7 +3220,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
-/***/ 424:
+/***/ 427:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -3163,7 +3237,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
   if ( true ) {
     // AMD
     !(__WEBPACK_AMD_DEFINE_ARRAY__ = [
-      __webpack_require__(423)
+      __webpack_require__(426)
     ], __WEBPACK_AMD_DEFINE_RESULT__ = function( matchesSelector ) {
       return factory( window, matchesSelector );
     }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
@@ -3392,7 +3466,7 @@ return utils;
 
 /***/ }),
 
-/***/ 427:
+/***/ 430:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -3770,7 +3844,7 @@ return ImagesLoaded;
 
 /***/ }),
 
-/***/ 428:
+/***/ 432:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -3787,7 +3861,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
   if ( true ) {
     // AMD
     !(__WEBPACK_AMD_DEFINE_ARRAY__ = [
-        __webpack_require__(430),
+        __webpack_require__(434),
         __webpack_require__(245)
       ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
@@ -3984,7 +4058,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 429:
+/***/ 433:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -4545,7 +4619,7 @@ return Item;
 
 /***/ }),
 
-/***/ 430:
+/***/ 434:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -4563,8 +4637,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
     !(__WEBPACK_AMD_DEFINE_ARRAY__ = [
         __webpack_require__(244),
         __webpack_require__(245),
-        __webpack_require__(424),
-        __webpack_require__(429)
+        __webpack_require__(427),
+        __webpack_require__(433)
       ], __WEBPACK_AMD_DEFINE_RESULT__ = function( EvEmitter, getSize, utils, Item ) {
         return factory( window, EvEmitter, getSize, utils, Item);
       }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
@@ -5490,14 +5564,14 @@ return Outlayer;
 
 /***/ }),
 
-/***/ 433:
+/***/ 437:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(18)(
+var Component = __webpack_require__(17)(
   /* script */
-  __webpack_require__(388),
+  __webpack_require__(389),
   /* template */
-  __webpack_require__(462),
+  __webpack_require__(468),
   /* scopeId */
   null,
   /* cssModules */
@@ -5525,14 +5599,14 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 434:
+/***/ 438:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(18)(
+var Component = __webpack_require__(17)(
   /* script */
-  __webpack_require__(389),
+  __webpack_require__(390),
   /* template */
-  __webpack_require__(473),
+  __webpack_require__(480),
   /* scopeId */
   null,
   /* cssModules */
@@ -5583,12 +5657,47 @@ module.exports = function(object, names){
 
 /***/ }),
 
-/***/ 455:
+/***/ 460:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(18)(
+var Component = __webpack_require__(17)(
   /* script */
-  __webpack_require__(410),
+  __webpack_require__(412),
+  /* template */
+  __webpack_require__(470),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/bison/__task/19_Caixie/__workspace/picker-resume/webpack/components/ui/pager.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] pager.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-35c97221", Component.options)
+  } else {
+    hotAPI.reload("data-v-35c97221", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 461:
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(17)(
+  /* script */
+  __webpack_require__(413),
   /* template */
   null,
   /* scopeId */
@@ -5617,7 +5726,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 462:
+/***/ 468:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -6249,7 +6358,73 @@ if (false) {
 
 /***/ }),
 
-/***/ 473:
+/***/ 470:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ul', {
+    staticClass: "pagination pagination-default pagination-xs"
+  }, [_c('li', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.current != 1),
+      expression: "current != 1"
+    }],
+    on: {
+      "click": function($event) {
+        _vm.current-- && _vm.goto(_vm.current)
+      }
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("上一页")])]), _vm._v(" "), _vm._l((_vm.pages), function(index) {
+    return _c('li', {
+      key: index,
+      class: {
+        'active': _vm.current == index
+      },
+      on: {
+        "click": function($event) {
+          _vm.goto(index)
+        }
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0);"
+      }
+    }, [_vm._v(_vm._s(index))])])
+  }), _vm._v(" "), _c('li', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.allpage != _vm.current && _vm.allpage != 0),
+      expression: "allpage != current && allpage != 0 "
+    }],
+    on: {
+      "click": function($event) {
+        _vm.current++ && _vm.goto(_vm.current++)
+      }
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("下一页")])])], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-35c97221", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 480:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -6291,12 +6466,12 @@ if (false) {
 
 /***/ }),
 
-/***/ 478:
+/***/ 486:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_VueMasonry_vue__ = __webpack_require__(455);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_VueMasonry_vue__ = __webpack_require__(461);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__src_VueMasonry_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__src_VueMasonry_vue__);
 /* harmony reexport (binding) */ if(__webpack_require__.o(__WEBPACK_IMPORTED_MODULE_0__src_VueMasonry_vue__, "VueMasonryPlugin")) __webpack_require__.d(__webpack_exports__, "VueMasonryPlugin", function() { return __WEBPACK_IMPORTED_MODULE_0__src_VueMasonry_vue__["VueMasonryPlugin"]; });
 
@@ -6308,7 +6483,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ 481:
+/***/ 489:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13147,7 +13322,7 @@ setTimeout(function () {
 
 /***/ }),
 
-/***/ 491:
+/***/ 499:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(375);
@@ -13160,181 +13335,6 @@ module.exports = __webpack_require__(375);
 
 var core = module.exports = {version: '2.4.0'};
 if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-
-/***/ }),
-
-/***/ 505:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-    name: 'pager',
-    data: function data() {
-        return {
-            current: this.page || 1,
-            showItem: 5
-        };
-    },
-    props: ["allpage", "page"],
-    computed: {
-        pages: function pages() {
-            var pag = [];
-            if (this.current < this.showItem) {
-                //如果当前的激活的项 小于要显示的条数
-                //总页数和要显示的条数那个大就显示多少条
-                var i = Math.min(this.showItem, this.allpage);
-                while (i) {
-                    pag.unshift(i--);
-                }
-            } else {
-                //当前页数大于显示页数了
-                var middle = this.current - Math.floor(this.showItem / 2),
-                    //从哪里开始
-                i = this.showItem;
-                if (middle > this.allpage - this.showItem) {
-                    middle = this.allpage - this.showItem + 1;
-                }
-                while (i--) {
-                    pag.push(middle++);
-                }
-            }
-            return pag;
-        }
-    },
-    methods: {
-        goto: function goto(index) {
-
-            if (index == this.current) return;
-            this.current = index;
-            //                    $.event.trigger({
-            //                        type: "message"
-            //                    });
-            this.$emit('increment', index);
-            eventHub.$emit('page', index);
-
-            //这里可以发送ajax请求
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 506:
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(18)(
-  /* script */
-  __webpack_require__(505),
-  /* template */
-  __webpack_require__(507),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/bison/__task/19_Caixie/__workspace/picker-resume/webpack/components/ui/pager.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] pager.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-35c97221", Component.options)
-  } else {
-    hotAPI.reload("data-v-35c97221", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 507:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ul', {
-    staticClass: "pagination pagination-default pagination-xs"
-  }, [_c('li', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.current != 1),
-      expression: "current != 1"
-    }],
-    on: {
-      "click": function($event) {
-        _vm.current-- && _vm.goto(_vm.current)
-      }
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("上一页")])]), _vm._v(" "), _vm._l((_vm.pages), function(index) {
-    return _c('li', {
-      key: index,
-      class: {
-        'active': _vm.current == index
-      },
-      on: {
-        "click": function($event) {
-          _vm.goto(index)
-        }
-      }
-    }, [_c('a', {
-      attrs: {
-        "href": "javascript:void(0);"
-      }
-    }, [_vm._v(_vm._s(index))])])
-  }), _vm._v(" "), _c('li', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.allpage != _vm.current && _vm.allpage != 0),
-      expression: "allpage != current && allpage != 0 "
-    }],
-    on: {
-      "click": function($event) {
-        _vm.current++ && _vm.goto(_vm.current++)
-      }
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("下一页")])])], 2)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-35c97221", module.exports)
-  }
-}
 
 /***/ }),
 
@@ -14192,7 +14192,7 @@ module.exports = function parseHeaders(headers) {
 
 var anObject       = __webpack_require__(12)
   , IE8_DOM_DEFINE = __webpack_require__(25)
-  , toPrimitive    = __webpack_require__(17)
+  , toPrimitive    = __webpack_require__(18)
   , dP             = Object.defineProperty;
 
 exports.f = __webpack_require__(2) ? Object.defineProperty : function defineProperty(O, P, Attributes){

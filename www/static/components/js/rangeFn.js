@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "../static";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 488);
+/******/ 	return __webpack_require__(__webpack_require__.s = 496);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -207,7 +207,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 488:
+/***/ 496:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(231);

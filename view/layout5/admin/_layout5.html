@@ -483,6 +483,7 @@
 </ul>
 #}
 <!-- /floating menu -->
+{#
 <div class="dummy-fixed" id="snippet-bar">
 
     <div class="snippet" :class="isOpen || isOpenSubject ? 'snippet--active': ''">
@@ -533,6 +534,7 @@
         </div><!-- /snippet_content -->
     </div><!-- /snippet -->
 </div>
+#}
 {#<body class="navbar-top  sidebar-opposite-visible ">#}
 <div id="app">
     <div class="page-header page-header-default page-header-xs">
@@ -549,14 +551,14 @@
             <div class="navbar-collapse collapse" id="navbar-mobile">
 
                 <ul class="nav navbar-nav">
-                    <li class="{% if http.controller == 'index' %}active{% endif %}"><a href="/admin/index" class="legitRipple">我的首页</a></li>
+                    <li class="{% if http.controller == 'index' %}active{% endif %}"><a href="/admin/index" class="legitRipple">首页</a></li>
 
                     <li class="{% if http.controller == 'posts' %}active{% endif %}">
-                        <a href="/admin/posts" class="" >内容归档 </a>
+                        <a href="/admin/posts" class="" > 内容</a>
 
                     </li>
                     <li class="{% if http.controller == 'resumes' %}active{% endif %}">
-                        <a href="/admin/resumes" >我的简历 </a>
+                        <a href="/admin/resumes" >简历 </a>
 
                     </li>
                 </ul>
@@ -756,13 +758,57 @@
 
             </div>
         </div>
-        <ul class="fab-menu fab-menu-top-left hidden-xs" data-fab-toggle="hover">
+{#        <ul class="fab-menu fab-menu-top-left hidden-xs" data-fab-toggle="click">
+
             <li>
                 <a class="fab-menu-btn btn btn-default btn-float btn-rounded btn-icon sidebar-control sidebar-secondary-hide legitRipple">
                     <i class="icon-indent-decrease"></i>
                 </a>
             </li>
+        </ul>#}
+        <!-- Floating menu -->
+        <ul class="fab-menu fab-menu-top-right" data-fab-toggle="hover">
+            <li>
+                <a class="fab-menu-btn btn bg-primary btn-float btn-rounded btn-icon">
+                    <i class="fab-icon-open icon-plus3"></i>
+                    <i class="fab-icon-close icon-cross2"></i>
+                </a>
+
+                <ul class="fab-menu-inner">
+                    <li>
+                        <div data-fab-label="写文章">
+                            <a href="/admin/post" class="btn btn-default btn-rounded btn-icon btn-float">
+                                <i class="icon-pencil"></i>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div data-fab-label="碎片">
+                            <a href="#" class="btn btn-default btn-rounded btn-icon btn-float">
+                                <i class="icon-versions"></i>
+                            </a>
+                            {#<span class="badge bg-primary-400">5</span>#}
+                        </div>
+                    </li>
+                    <li>
+                        <div data-fab-label="页面">
+                            <a href="#" class="btn btn-default btn-rounded btn-icon btn-float">
+                                <i class="icon-file-empty"></i>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div data-fab-label="简历">
+                            <a href="#" class="btn btn-default btn-rounded btn-icon btn-float">
+                                <i class="icon-versions"></i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
         </ul>
+        <!-- /floating menu -->
+
     </div>
     <!-- Page container -->
     <div class="page-container">
