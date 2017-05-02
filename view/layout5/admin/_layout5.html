@@ -450,7 +450,7 @@
     {% set body_navbar = 'navbar-top' %}
 {% endif %}
 
-<body data-spy="scroll" data-target="#resume-section" data-offset="70" class="{% block body_style %}{% endblock %} <$ body_navbar $>">
+<body data-spy="scroll" data-target="#resume-section" data-offset="70" class="{% block body_style %}{% endblock %} <$ body_navbar $> " >
 {#<body data-spy="scroll" data-target=".sidebar-fixed" class=" {% block body_style %}{% endblock %}">#}
 {#
 <!-- Floating menu -->
@@ -766,6 +766,8 @@
                 </a>
             </li>
         </ul>#}
+
+        {% block navbar2 %}{% endblock %}
         <!-- Floating menu -->
         <ul class="fab-menu fab-menu-top-right" data-fab-toggle="hover">
             <li>

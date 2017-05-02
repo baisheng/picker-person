@@ -1,0 +1,510 @@
+{% extends "./_layout.html" %}
+
+
+{% block style %}
+    <style>
+
+        #resume-preview {
+            min-height: 576px;
+            width: 1024px;
+            position: relative;
+            display: inline-block;
+            background: #fff;
+            max-width: 1024px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+            overflow: hidden;
+            margin-bottom: 24px
+        }
+
+        #resume-preview iframe {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1
+        }
+
+        #resume-preview .share-bar {
+            opacity: 0;
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            margin-left: -168px;
+            width: 336px;
+            height: 48px;
+            background: rgba(24, 97, 242, 0.9);
+            z-index: 2;
+            box-shadow: 0px 16px 24px 0px rgba(0, 0, 0, 0.16), 0px 6px 8px 0px rgba(0, 0, 0, 0.16);
+            -webkit-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            -moz-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            -ms-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            -o-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            display: none
+        }
+
+        #resume-preview:hover .share-bar {
+            opacity: 1
+        }
+
+        #resume-preview .share-bar .bar-item {
+            float: left;
+            width: 112px;
+            height: 100%;
+            cursor: pointer;
+            color: #fff;
+            font-size: 14px;
+            line-height: 50px;
+            text-align: center;
+            font-weight: 500
+        }
+
+        #resume-preview .share-bar .bar-item:hover {
+            background: rgba(0, 0, 0, 0.16)
+        }
+
+        @media screen and (max-width: 1504px) {
+            #resume-preview {
+                width: 100%
+            }
+        }
+
+        /*iframe {*/
+        /*position: fixed;*/
+        /*top: 10vh;*/
+        /*width: 100vw;*/
+        /*height: 90vh;*/
+        /*}*/
+        .frame-wrapper {
+            position: relative;
+            font-size: 0;
+        }
+
+        .frame-wrapper .frame-border {
+            position: absolute;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.13);*/
+            pointer-events: none;
+        }
+
+        .frame-viewer {
+            width: 100%;
+            height: 400px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .frame-viewer img.preview {
+            width: 100%;
+        }
+
+        .frame-viewer iframe {
+
+            width: 1024px;
+            height: 900px;
+            position: fixed;
+            /*top: 10vh;*/
+            /*width: 100vw;*/
+            /*height: 100vh;*/
+
+            /*width: 100%;*/
+            /*height: 100%;*/
+            /*position: relative;*/
+            z-index: 1;
+            border: 0;
+            overflow: hidden;
+            -webkit-transform: scale(0.685);
+            transform: scale(0.825);
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            background-color: white;
+            border: none;
+        }
+
+        .col-md-7 .frame-viewer iframe {
+            -webkit-transform: scale(0.53);
+            transform: scale(0.53);
+        }
+
+        .col-md-6 .frame-viewer iframe {
+            width: 1266px;
+            height: 888px;
+            -webkit-transform: scale(0.45);
+            transform: scale(0.45);
+        }
+
+        .col-md-9 .frame-viewer iframe {
+            width: 1266px;
+            height: 888px;
+            -webkit-transform: scale(0.45);
+            transform: scale(0.45);
+        }
+
+        img.screenshot {
+            width: 100%;
+            box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2), inset 0 2px 0 0 rgba(255, 255, 255, 0.2);
+        }
+
+        a.site-link {
+            display: block;
+            padding: 14px 10px;
+            text-align: center;
+            /*border: 1px solid rgba(43, 50, 57, 0.15);*/
+            border-top: none;
+            background-color: #FDFDFD;
+            /*border-radius: 0 0 3px 3px;*/
+            text-decoration: none;
+        }
+
+        a.site-link i {
+            margin-right: 10px;
+            position: relative;
+            top: 2px;
+        }
+
+        a.site-link:hover {
+            color: #24588a;
+        }
+
+        a.site-link:hover i.icon {
+            -webkit-filter: brightness(70%);
+            filter: brightness(70%);
+        }
+
+        .col-padding {
+            position: relative;
+            min-height: 1px;
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block navbar %}
+
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="#" class="legitRipple" @click="sectionMenu = false">基本信息</a></li>
+        <li><a href="#" class="legitRipple" @click="sectionMenu = true">简历模块 <span class="caret"></span></a></li>
+        <li><a href="#" class="legitRipple">联络方式</a></li>
+        <li><a href="#" class="legitRipple">样式设计</a></li>
+    </ul>
+
+
+{% endblock %}
+{% block page_navbar %}
+    <div class="navbar navbar-default navbar-default-secondary navbar-xs" v-if="sectionMenu == true">
+        <ul class="nav navbar-nav no-border visible-xs-block">
+            <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second"><i
+                            class="icon-circle-down2"></i></a></li>
+        </ul>
+
+        <div class="navbar-collapse collapse" id="navbar-second">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#"><i class="icon-git-branch position-left"></i> 个人履历</a></li>
+                <li><a href="#"><i class="icon-git-merge position-left"></i> 教育背景 <span
+                                class="badge badge-warning badge-inline position-right">81</span></a></li>
+                <li><a href="#"><i class="icon-git-pull-request position-left"></i> 获得奖项</a></li>
+                <li><a href="#"><i class="icon-git-pull-request position-left"></i> 项目经历</a></li>
+                <li><a href="#"><i class="icon-git-pull-request position-left"></i> 个人技能</a></li>
+            </ul>
+
+            <div class="navbar-right">
+                <p class="navbar-text"><i class="icon-user-check position-left"></i> Signed in as <a href="#"
+                                                                                                     class="navbar-link">Victoria</a>
+                </p>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-share4"></i>
+                            <span class="visible-xs-inline-block position-right">Share</span>
+                            <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="#"><i class="icon-dribbble3"></i> Dribbble</a></li>
+                            <li><a href="#"><i class="icon-pinterest2"></i> Pinterest</a></li>
+                            <li><a href="#"><i class="icon-github"></i> Github</a></li>
+                            <li><a href="#"><i class="icon-stackoverflow"></i> Stack Overflow</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebar_main %}
+    <div class="sidebar sidebar-main sidebar-default">
+        <div class="sidebar-content">
+            <div class="category-title bg-grey-50">
+                <span><a href="/admin"><i class="icon-arrow-left8 position-left"></i>返回</a></span>
+                <div class="heading-elements">
+
+                    <span class="heading-text text-size-small">
+                        <p v-if="status == 'saving'" class="text-teal">
+                            <i class="icon-spinner2 spinner position-left"></i>
+                            正在保存
+                        </p>
+                        <p v-if="status == 'success'" class="text-muted">
+                            <i class="icon-check2"></i> 保存成功
+                        </p>
+                        <p v-else-if="status == 'editing'"><a>保存</a></p>
+                        <p v-else-if="status == 'init'" class="text-muted">内容将实时更新</p>
+                    </span>
+
+                </div>
+
+                {#<ul class="icons-list">#}
+                {#<li><a href="#">草稿 <span class="badge badge-flat border-slate text-slate-600">59</span></a></li>#}
+                {#</ul>#}
+            </div>
+
+            <!-- Categories -->
+            <div class="sidebar-category">
+                <div class="category-title text-muted">
+                    <span>菜单管理</span>
+                    <ul class="icons-list">
+                        {#<li><a href="#" data-action="collapse"></a></li>#}
+                        <li><a href="#"><i class="icon-plus22 text-teal"></i></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content no-padding">
+                    <ul class="navigation">
+                        <li><a class="list-group-item">简历管理</a></li>
+                        {#<li><a class="list-group-item">工作机会</a></li>#}
+                        <li><a class="list-group-item">统计信息</a></li>
+                        <li><a class="list-group-item">功能设置</a></li>
+                        {#<li><a class="list-group-item">模块管理</a></li>#}
+                        {#<li><a class="list-group-item">简历设置</a></li>#}
+                        {#<li><a class="list-group-item">我的简历</a></li>#}
+                        {#<li><a class="list-group-item">简历分享/投递</a></li>#}
+                        {#<li><a class="list-group-item">模板管理</a></li>#}
+                        <li v-for="menu in menus" :class="[menu.id == menuID ? 'active' : '']">
+
+                            <a class="list-group-item" @click="setMenu(menu)">
+                                <span class="text-muted text-size-small text-regular pull-right">12</span>
+
+                                {{ menu.name }}
+                            </a>
+
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /categories -->
+
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row" :class="sectionMenu == true ? 'mt-20' : ''">
+        <div class="col-md-4 col-lg-3">
+            <div class="panel no-margin-bottom">
+                <input type="text" class="form-control no-border" placeholder="姓名" v-model="resume.basics.name">
+            </div>
+            <div class="panel mt-5 no-margin-bottom">
+                <input type="text" class="form-control no-border" placeholder="所在城市"
+                       v-model="resume.basics.location.city">
+            </div>
+            <div class="panel mt-5 no-margin-bottom">
+                <input type="text" class="form-control no-border" placeholder="居住地址"
+                       v-model="resume.basics.location.address">
+            </div>
+            <div class="panel mt-5 no-margin-bottom">
+                <textarea rows="4" cols="4" class="form-control no-border" placeholder="个人简介"
+                          v-model="resume.basics.summary"></textarea>
+
+            </div>
+
+            <div class="panel panel-body mt-5">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="/static/assets/images/demo/images/3.png" data-popup="lightbox">
+                            <img src="/static/assets/images/demo/users/face1.jpg" class="img-circle img-lg" alt="">
+                        </a>
+                    </div>
+
+                    <div class="media-body">
+                        <h6 class="media-heading">James Alexander</h6>
+                        <span class="text-muted">Lead developer</span>
+                    </div>
+
+                    <div class="media-right media-middle">
+                        <ul class="icons-list">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                                            class="icon-menu7"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="#"><i class="icon-comment-discussion pull-right"></i> Start chat</a>
+                                    </li>
+                                    <li><a href="#"><i class="icon-phone2 pull-right"></i> Make a call</a></li>
+                                    <li><a href="#"><i class="icon-mail5 pull-right"></i> Send mail</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#"><i class="icon-statistics pull-right"></i> Statistics</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-8 col-lg-9">
+
+            <div class="panel">
+                <div class="frame-viewer">
+                    <div class="frame-border"></div>
+                    {#<div id="preview">#}
+                    <iframe src="http://registry.jsonresume.org/mudassirali" height="100%" width="100%" name="previewframe"
+                            id="previewframe"></iframe>
+                    {#</div>#}
+                    {#<div class="frame-viewer" id="preview">#}
+                    {#<iframe src="/admin/resumes/privew" height="100%" width="100%" name="previewframe" id="previewframe"></iframe>#}
+                    {#<iframe :src="iframe.src" ref="frame" @load="load" v-show="iframe.loaded" id="previewframe"></iframe>#}
+                    {#</div>#}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block components %}
+
+
+{% endblock %}
+<!-- /main content -->
+
+{% block script %}
+
+    {#<script type="text/javascript" src="/static/assets/js/plugins/forms/editable/editable.min.js"></script>#}
+
+
+    <script>
+
+        var main = new Vue({
+            el: "#app",
+            data: {
+                headline: '菜单管理',
+                status: "",
+                resume: [],
+                name: '',
+                menus: [],
+                sectionMenu: false,
+                iframe: {
+                    src: '/admin/resumes/preview',
+                    loaded: false
+                }
+            },
+            mounted: function () {
+                var vue = this;
+                $(document).on("fetch", function () {
+
+                });
+                eventHub.$on("frame_loaded", function () {
+                    console.log("snippet")
+//                    vue.$mount(vue.$refs.frame);
+//                    console.log(JSON.stringify(main.$refs.frame))
+
+                });
+
+                console.log('Main Mounted')
+                this.$nextTick(function () {
+                    console.log('Main nextTick');
+                    // code that assumes this.$el is in-document
+                })
+//                if (this.iframe.loaded){
+//                    Vue.nextTick(function(){
+//                        this.name = "我的名字"
+//                    })
+
+//                    this.$mount(this.$refs.frame)
+
+//                }
+
+            },
+            methods: {
+                load: function () {
+                    this.iframe.loaded = true;
+                    eventHub.$emit("frame_loaded")
+                }
+
+            },
+            watch: {
+                resume: {
+                    handler: function (val, oldVal) {
+                        eventHub.$emit('resume_update', val)
+
+                    },
+                    deep: true
+                },
+                }
+            },
+
+        });
+
+        var preview = new Vue({
+            data: {
+                resume: [],
+                store: {},
+                global: {},
+                local: {},
+                name: 'lalala'
+            },
+            mounted() {
+                console.log('Iframe Mounted')
+
+                this.local = {
+                    content: 'Preview'
+                };
+
+//               this.global = store.state;
+//               this.store  = store;
+
+                this.$nextTick(function () {
+
+                    console.log('Iframe NextTick');
+
+//                   this.name = "lalala"
+                    //onload = load;
+
+                    // code that assumes this.$el is in-document
+                })
+                var vue = this;
+                eventHub.$on("resume_update", function (content) {
+                    vue.resume = content;
+                    this.$nextTick(function () {
+
+//                       vue.name = content;
+
+                        console.log('Iframe NextTick');
+
+//                   this.name = "lalala"
+                        //onload = load;
+
+                        // code that assumes this.$el is in-document
+                    })
+//                   console.log("snippet")
+//                    vue.$mount(vue.$refs.frame);
+//                    console.log(JSON.stringify(main.$refs.frame))
+
+                });
+
+            }
+        });
+        window.frames['previewframe'].window.onload = function () {
+
+//            preview.$mount(document.getElementById('previewframe').contentWindow.document.getElementById('resume'))
+        }
+    </script>
+
+{% endblock %}

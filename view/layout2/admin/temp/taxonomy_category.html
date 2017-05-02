@@ -1,0 +1,97 @@
+{% extends "./inc/_base.html" %}
+
+{% block page_header %}
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title">
+                <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">内容</span> - 分类管理</h4>
+                <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+
+
+        </div>
+
+        <div class="breadcrumb-line breadcrumb-line-component"><a class="breadcrumb-elements-toggle"><i class="icon-menu-open"></i></a>
+            <ul class="breadcrumb">
+                <li><a href="index.html"><i class="icon-home2 position-left"></i> 首页</a></li>
+                <li><a href="navbar_single.html">内容</a></li>
+                <li class="active">分类管理</li>
+            </ul>
+
+{#            <ul class="breadcrumb-elements">
+                <li><a href="#" class="legitRipple"><i class="icon-comment-discussion position-left"></i> Support</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle legitRipple" data-toggle="dropdown">
+                        <i class="icon-gear position-left"></i>
+                        Settings
+                        <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
+                        <li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
+                        <li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="icon-gear"></i> All settings</a></li>
+                    </ul>
+                </li>
+            </ul>#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <div class="panel panel-white ">
+        <div class="table-responsive">
+            <table class="table text-nowrap table-bordered">
+                <thead>
+                <tr>
+                    <th style="">名称</th>
+                    <th style="" >标识名</th>
+                    <th style="" >内容数量</th>
+                    <th  style="width: 220px;"><i class=""></i></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cate in list %}
+
+
+                    <tr>
+                        <td >
+                            <$ cate.name $>
+                        </td>
+                        <td >
+                            <$ cate.slug $>
+                        </td>
+                        <td >
+                            <$ cate.count $>
+                        </td>
+                        <td class="text-center">
+                            <ul class="list-inline list-inline-separate">
+
+                                <li> <a href="#">{% if cate.id == 1 %}<i class="icon-check"></i> {% else %} <i class="icon-blank"></i>{% endif %}默认 </a></li>
+                                {#<li><a href="#" class="text-muted">采撷科技官网</a></li>#}
+                                <li><a class=""> 编辑 </a></li>
+                                <li><a href="#" class="text-danger"> 删除</a></li>
+                            </ul>
+
+                        </td>
+
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="text-center content-group-lg pt-20">
+        <$ pagerData | safe $>
+
+    </div>
+
+
+{% endblock %}
+
+
+

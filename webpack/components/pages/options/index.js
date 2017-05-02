@@ -3,6 +3,7 @@ import JsonEditor from '../../ui/json-editor.vue'
 new Vue({
     el: "#app",
     data: {
+        meta:{},
         options: []
 //                options: <$ options_data | dump | safe  $>
     },
@@ -135,6 +136,11 @@ new Vue({
             });
         },
 
+        selectOption(meta){
+            eventHub.$emit('reload', meta)
+
+            this.meta = meta;
+        },
         fetch: function () {
 
             var vue = this;
@@ -164,8 +170,13 @@ new Vue({
                 }
             }).then(function (json) {
                 vue.options = json;
-
+                // let _meta = JSON.parse(json[0]['key'])
+                // console.log(JSON.stringify(json[0]['key']['meta']))
+                vue.meta = json[2]['meta'];
+                // console.log(JSON.stringify(json))
+                // vue.meta = vue.options['key']
                 eventHub.$emit('fetch')
+
 
             })
 

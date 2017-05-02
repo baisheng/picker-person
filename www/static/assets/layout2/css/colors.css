@@ -29,13 +29,13 @@
 *
 * ---------------------------------------------------------------------------- */
 .bg-primary {
-  background-color: #4680ff;
-  border-color: #4680ff;
+  background-color: #2196F3;
+  border-color: #2196F3;
   color: #fff;
 }
 .bg-primary-300 {
-  background-color: #E2EAFE;
-  border-color: #E2EAFE;
+  background-color: #64B5F6;
+  border-color: #64B5F6;
   color: #fff;
 }
 .bg-primary-400 {
@@ -577,10 +577,10 @@
   border-color: #546E7A;
 }
 .border-primary {
-  border-color: #4680ff;
+  border-color: #2196F3;
 }
 .border-primary-300 {
-  border-color: #E2EAFE;
+  border-color: #64B5F6;
 }
 .border-primary-400 {
   border-color: #42A5F5;
@@ -868,13 +868,13 @@
   border-color: #fff;
 }
 .border-default {
-  border-color: #ddd;
+  border-color: #e0e1e2;
 }
 .border-top-primary {
-  border-top-color: #4680ff;
+  border-top-color: #2196F3;
 }
 .border-top-primary-300 {
-  border-top-color: #E2EAFE;
+  border-top-color: #64B5F6;
 }
 .border-top-primary-400 {
   border-top-color: #42A5F5;
@@ -1162,10 +1162,10 @@
   border-top-color: #fff;
 }
 .border-bottom-primary {
-  border-bottom-color: #4680ff;
+  border-bottom-color: #2196F3;
 }
 .border-bottom-primary-300 {
-  border-bottom-color: #E2EAFE;
+  border-bottom-color: #64B5F6;
 }
 .border-bottom-primary-400 {
   border-bottom-color: #42A5F5;
@@ -1453,10 +1453,10 @@
   border-bottom-color: #fff;
 }
 .border-left-primary {
-  border-left-color: #4680ff;
+  border-left-color: #2196F3;
 }
 .border-left-primary-300 {
-  border-left-color: #E2EAFE;
+  border-left-color: #64B5F6;
 }
 .border-left-primary-400 {
   border-left-color: #42A5F5;
@@ -1744,10 +1744,10 @@
   border-left-color: #fff;
 }
 .border-right-primary {
-  border-right-color: #4680ff;
+  border-right-color: #2196F3;
 }
 .border-right-primary-300 {
-  border-right-color: #E2EAFE;
+  border-right-color: #64B5F6;
 }
 .border-right-primary-400 {
   border-right-color: #42A5F5;
@@ -2037,12 +2037,12 @@
 .text-primary,
 .text-primary:hover,
 .text-primary:focus {
-  color: #4680ff !important;
+  color: #2196F3 !important;
 }
 .text-primary-300,
 .text-primary-300:hover,
 .text-primary-300:focus {
-  color: #4680ff !important;
+  color: #2196F3 !important;
 }
 .text-primary-400,
 .text-primary-400:hover,

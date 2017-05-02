@@ -1,0 +1,877 @@
+{% extends "../_layout.html" %}
+
+{% block body_style %}sidebar-opposite-visible{% endblock %}
+{% block style %}
+
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        .icon-work:before{content:"\ec01";}
+        .icon-education:before{content:"\ea07";}
+        .icon-additionalWork:before{content:"\ecf5";}
+        .icon-skills:before{content:"\eb93";}
+        .icon-interests:before{content:"\ece9";}
+        .icon-languages:before{content:"\ec8e";}
+        .icon-awards:before{content:"\ebb0";}
+        .icon-references:before{content:"\eb49";}
+        .icon-profiles:before{content:"\ea09";}
+        .icon-publications:before{content:"\ea5f";}
+
+    </style>
+    <style>
+
+        li .controls .edit, li .controls .del {
+            display: none
+        }
+
+        li .controls .del {
+            cursor: pointer
+        }
+
+        li:hover .controls .edit, li:hover .controls .del, li:hover .controls .reorder {
+            display: inline-block;
+            /*padding: 10px;*/
+            /*right: 0;*/
+
+        }
+
+        li .controls .reorder {
+            display: none;
+            cursor: move
+        }
+
+        li .controls {
+
+            position: absolute;
+            right: 0;
+            top: 12px
+        }
+
+        li .controls i {
+            margin: 0 0 0 5px
+        }
+
+        li .controls i {
+            display: inline-block
+        }
+
+        .input-box {
+            /*background: #fff;*/
+            /*box-shadow: 0 1px 2px rgba(0,0,0,0.16);*/
+            /*margin-bottom: 8px;*/
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sortable-item .controls {
+            display: none;
+            position: absolute;
+
+            top: 6px;
+            right: 16px;
+            box-shadow: 0 0 4px 4px #fff;
+            background: #fff
+        }
+
+        .sortable-item.one-line .controls, #list ul#listing.contact-links li .controls {
+            top: 16px
+        }
+
+        .sortable-item.skill-item .controls {
+            top: 16px
+        }
+
+        .sortable-item .controls i {
+            cursor: pointer
+        }
+
+        .sortable-item .controls i.reorder {
+            cursor: move;
+            margin: 0 0 0 16px
+        }
+
+        .sortable-item .controls i.del {
+            margin: 0 0 0 16px
+        }
+
+        .sortable-item:hover .controls {
+            display: block;
+            /*display: inline-block*/
+
+        }
+
+    </style>
+
+    <style>
+
+
+        @-webkit-keyframes pulse-light {
+            50% {
+                background-color: #e9eff3;
+            }
+        }
+
+        @keyframes pulse-light {
+            50% {
+                background-color: #e9eff3;
+            }
+        }
+
+        /*.button {*/
+        /*border-radius: 28px;*/
+        /*margin: 10% auto 0 auto;*/
+        /*display: block;*/
+        /*position: relative;*/
+        /*background: #fff;*/
+        /*width: 150px;*/
+        /*box-shadow: 0 2px 6px rgba(170, 185, 200, 0.4);*/
+        /*}*/
+        /*.button svg {*/
+        /*display: none;*/
+        /*position: absolute;*/
+        /*left: 50%;*/
+        /*top: 50%;*/
+        /*margin: -15px 0 0 -15px;*/
+        /*fill: #fff;*/
+        /*}*/
+        .button div {
+            /*height: 4px;*/
+            /*margin: -2px 0 0 0;*/
+            /*position: absolute;*/
+            /*top: 50%;*/
+            /*left: 71px;*/
+            /*right: 25px;*/
+            /*background: #d3d7e0;*/
+            /*display: none;*/
+            /*border-radius: 2px;*/
+        }
+
+        /*.button div span {*/
+        /*position: absolute;*/
+        /*background: #28e470;*/
+        /*height: 4px;*/
+        /*left: 0;*/
+        /*top: 0;*/
+        /*width: 0;*/
+        /*display: block;*/
+        /*border-radius: 2px;*/
+        /*}*/
+        /*.button a {*/
+        /*position: relative;*/
+        /*display: block;*/
+        /*background: #3f82d7;*/
+        /*z-index: 2;*/
+        /*line-height: 56px;*/
+        /*height: 56px;*/
+        /*border-radius: 28px;*/
+        /*width: 100%;*/
+        /*text-align: center;*/
+        /*color: #fff;*/
+        /*box-shadow: 0 2px 6px rgba(170, 185, 200, 0.4);*/
+        /*}*/
+        /*.button a span {*/
+        /*cursor: pointer;*/
+        /*display: block;*/
+        /*}*/
+
+        .upload input {
+            visibility: hidden;
+            position: absolute;
+        }
+
+        .upload .button {
+            /*border-radius: 28px;*/
+            border-radius: 4px;
+            /*display: block;*/
+            position: relative;
+            background: #2e3038;
+            /*background: #f5f5f5;*/
+            padding: 0;
+            height: 36px;
+            /*width: 105px;*/
+            box-shadow: 0 2px 6px rgba(170, 185, 200, 0.4);
+
+            /**/
+            /**/
+            /*border-radius: 28px;*/
+            /*margin: 10% auto 0 auto;*/
+            /*display: block;*/
+            /*position: relative;*/
+            /*background: #fff;*/
+            /*width: 105px;*/
+            /*box-shadow: 0 2px 6px rgba(170, 185, 200, 0.4);*/
+        }
+
+        /*.upload .button   svg {*/
+        /*display: none;*/
+        /*position: absolute;*/
+        /*left: 50%;*/
+        /*top: 50%;*/
+        /*margin: -15px 0 0 -15px;*/
+        /*fill: #fff;*/
+        /*}*/
+        .upload .button a {
+            /*position: relative;*/
+            /*display: block;*/
+            /*background: #3f82d7;*/
+            /*z-index: 2;*/
+            /*line-height: 36px;*/
+            /*height: 36px;*/
+            /*width: 100%;*/
+            /*text-align: center;*/
+            /*color: #fff;*/
+            /*-webkit-border-radius: 4px;*/
+            /*-moz-border-radius: 4px;*/
+            /*border-radius: 4px;*/
+        }
+
+        .upload .button a {
+            position: relative;
+            /*display: block;*/
+            /*background: #3f82d7;*/
+            z-index: 2;
+            /*line-height: 36px;*/
+            height: 36px;
+        }
+
+        .upload .button a span {
+            cursor: pointer;
+            display: block;
+        }
+
+        .upload .button a:hover {
+            /*background: #377dd5;*/
+        }
+
+        .upload .button svg {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -12px 0 0 -12px;
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+
+        .upload .button div {
+            height: 4px;
+            margin: -2px 0 0 0;
+            position: absolute;
+            top: 50%;
+            left: 51px;
+            right: 15px;
+            background: #666978;
+            display: none;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+        }
+
+        .upload .button div span {
+            position: absolute;
+            background: #41da54;
+            height: 4px;
+            left: 0;
+            top: 0;
+            width: 0;
+            display: block;
+            -webkit-transition: all 0.2s ease-in-out;
+            -moz-transition: all 0.2s ease-in-out;
+            -o-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+        }
+
+
+    </style>
+
+
+    <style>
+
+        #resume-preview {
+            min-height: 576px;
+            width: 1024px;
+            position: relative;
+            display: inline-block;
+            background: #fff;
+            max-width: 1024px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+            overflow: hidden;
+            margin-bottom: 24px
+        }
+
+        #resume-preview iframe {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1
+        }
+
+        #resume-preview .share-bar {
+            opacity: 0;
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            margin-left: -168px;
+            width: 336px;
+            height: 48px;
+            background: rgba(24, 97, 242, 0.9);
+            z-index: 2;
+            box-shadow: 0px 16px 24px 0px rgba(0, 0, 0, 0.16), 0px 6px 8px 0px rgba(0, 0, 0, 0.16);
+            -webkit-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            -moz-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            -ms-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            -o-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            display: none
+        }
+
+        #resume-preview:hover .share-bar {
+            opacity: 1
+        }
+
+        #resume-preview .share-bar .bar-item {
+            float: left;
+            width: 112px;
+            height: 100%;
+            cursor: pointer;
+            color: #fff;
+            font-size: 14px;
+            line-height: 50px;
+            text-align: center;
+            font-weight: 500
+        }
+
+        #resume-preview .share-bar .bar-item:hover {
+            background: rgba(0, 0, 0, 0.16)
+        }
+
+        @media screen and (max-width: 1504px) {
+            #resume-preview {
+                width: 100%
+            }
+        }
+
+        /*iframe {*/
+        /*position: fixed;*/
+        /*top: 10vh;*/
+        /*width: 100vw;*/
+        /*height: 90vh;*/
+        /*}*/
+        .frame-wrapper {
+            position: relative;
+            font-size: 0;
+        }
+
+        .frame-wrapper .frame-border {
+            position: absolute;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.13);*/
+            pointer-events: none;
+        }
+
+        .frame-viewer {
+            width: 100%;
+            height: 400px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .frame-viewer img.preview {
+            width: 100%;
+        }
+
+        .frame-viewer iframe {
+
+            width: 1024px;
+            height: 900px;
+            position: fixed;
+            /*top: 10vh;*/
+            /*width: 100vw;*/
+            /*height: 100vh;*/
+
+            /*width: 100%;*/
+            /*height: 100%;*/
+            /*position: relative;*/
+            z-index: 1;
+            border: 0;
+            overflow: hidden;
+            -webkit-transform: scale(0.685);
+            transform: scale(0.825);
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            background-color: white;
+            border: none;
+        }
+
+        .col-md-7 .frame-viewer iframe {
+            -webkit-transform: scale(0.53);
+            transform: scale(0.53);
+        }
+
+        .col-md-6 .frame-viewer iframe {
+            width: 1266px;
+            height: 888px;
+            -webkit-transform: scale(0.45);
+            transform: scale(0.45);
+        }
+
+        .col-md-9 .frame-viewer iframe {
+            width: 1266px;
+            height: 888px;
+            -webkit-transform: scale(0.45);
+            transform: scale(0.45);
+        }
+
+        img.screenshot {
+            width: 100%;
+            box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2), inset 0 2px 0 0 rgba(255, 255, 255, 0.2);
+        }
+
+        a.site-link {
+            display: block;
+            padding: 14px 10px;
+            text-align: center;
+            /*border: 1px solid rgba(43, 50, 57, 0.15);*/
+            border-top: none;
+            background-color: #FDFDFD;
+            /*border-radius: 0 0 3px 3px;*/
+            text-decoration: none;
+        }
+
+        a.site-link i {
+            margin-right: 10px;
+            position: relative;
+            top: 2px;
+        }
+
+        a.site-link:hover {
+            color: #24588a;
+        }
+
+        a.site-link:hover i.icon {
+            -webkit-filter: brightness(70%);
+            filter: brightness(70%);
+        }
+
+        .col-padding {
+            position: relative;
+            min-height: 1px;
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block right_nav %}
+    <li class=""><a class="list-group-item"><i class="icon-magazine"></i>我的简历</a></li>
+    <li><a href="/admin/resumes/themes" class="list-group-item"><i class="icon-bucket "></i>简历主题</a>
+    <li class="disabled"><a href="/admin/resumes/template" class="list-group-item"><i class=" icon-profile"></i>简历内容模板</a></li>
+{% endblock %}
+
+{% block navbar2 %}
+    <!-- Second navbar -->
+    <div class="navbar navbar-default alpha-grey " id="navbar-second" v-cloak>
+        <ul class="nav navbar-nav no-border visible-xs-block ">
+            <li ><a class=" collapsed pull-left" href="../index.html"><i class="icon-arrow-left7"></i></a></li>
+
+            <li><a class=" collapsed pull-right" data-toggle="collapse" data-target="#navbar-second-toggle"><i class="icon-circle-down2"></i></a></li>
+        </ul>
+
+        <div class="navbar-collapse collapse" id="navbar-second-toggle" >
+            <ul class="nav navbar-nav ">
+                <li class="visible-lg-block"><a href="/admin"><i class="text-primary icon-arrow-left7"></i></a></li>
+                <li class="disabled" style="width: 120px;">
+                    {#<a><i class="text-primary-400 icon-sync spinner position-left"></i>内容自动保存</a>#}
+                    <a v-if="status == 'saving'" class="text-teal" v-cloak>
+                        <i class="icon-sync spinner position-left" ></i>
+                        保存中
+                    </a>
+                    <a v-else-if="status == 'success'" class="text-muted"  v-cloak>
+                        已保存
+                    </a>
+                    <a v-else-if="status == 'editing'"  v-cloak>修改中</a>
+                    <a v-else-if="status == 'init'" class="text-muted">内容自动保存</a>
+                </li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="disabled"><a ><i class="icon-eye position-left"></i> 预览</a></li>
+                <li class="disabled"><a ><i class="icon-cog position-left"></i> 简历设置</a></li>
+                <li class="disabled"><a ><i class=" icon-paperplane position-left"></i> 发布</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /second navbar -->
+{% endblock %}
+{% block navbar %}
+    <form class="navbar-form navbar-left" v-if="form == 'basics'">
+        <div class="form-group">
+            <input type="text" class="form-control text-semibold" placeholder="简历名称"
+                   v-model="title">
+        </div>
+        <div class="form-group">
+{#            <multiselect v-model="type" track-by="title" label="title" :options="options" :searchable="false" :close-on-select="true"
+                         :show-labels="false" placeholder="简历类型"></multiselect>#}
+        </div>
+    </form>
+
+    <ul class="nav navbar-nav" v-if="sectionMenu == true">
+        {#<li :class="form == 'works' ? 'active': '' "><a href="#" @click="form = 'works'">工作经历</a></li>#}
+        {#<li :class="form == 'education'? 'active': '' "><a @click="form = 'education'"> 教育背景</a></li>#}
+        {#<li><a href="#"> 获得奖项</a></li>#}
+        {#<li :class="form == 'project' ? 'active' : '' "><a @click="form = 'project'"> 项目经验</a></li>#}
+        {#<li :class="form == 'skills' ? 'active' : '' "><a @click="form = 'skills'"> 擅长技能</a></li>#}
+        {#<li><a href="#"> 个人技能</a></li>#}
+    </ul>
+{% endblock %}
+
+{% block sidebar_main %}
+    <div class="sidebar sidebar-main sidebar-default" v-cloak>
+        <div class="sidebar-fixed affix-top">
+            {#<div class="sidebar-content">#}
+                <!-- Title -->
+                {#<div class="category-title h6">#}
+                    {#<span>Components</span>#}
+                    {#<ul class="icons-list">#}
+                        {#<li><a href="#"><i class="icon-gear"></i></a></li>#}
+                    {#</ul>#}
+                {#</div>#}
+                <!-- /title -->
+                {#<div class="sidebar-category">#}
+            <basics-form :resume="resume" :isImage="isImage" v-if="form == 'basics'" ></basics-form>
+
+                 <div v-for="item, index in section">
+                    <sections-form :resume="resume" :cancel="cancel" :section="item" :form="form" v-if="item.active"></sections-form>
+                </div>
+
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+
+            <div id="messages"></div>
+            <div class="row" id="content-section">
+
+                <div class="col-md-12">
+                    <basics :resume="resume" id="basics"></basics>
+
+                    <div v-for="item, index in section">
+                        <sections :resume="resume" :section="item" v-if="item.active"></sections>
+                    </div>
+
+                    {#
+                    {% if resume %}
+                        {% include "./_resume_preview.html" %}
+                    {% endif %}
+                    #}
+
+                    {#<div class="panel">#}
+                    {#<div class="frame-viewer">#}
+                    {#<div class="frame-border"></div>#}
+                    {#<div id="preview">#}
+                    {#<iframe src="http://registry.jsonresume.org/mudassirali" height="100%" width="100%" name="previewframe"#}
+                    {#id="previewframe"></iframe>#}
+                    {#</div>#}
+                    {#<div class="frame-viewer" id="preview">#}
+                    {#<iframe src="/admin/resumes/privew" height="100%" width="100%" name="previewframe" id="previewframe"></iframe>#}
+                    {#<iframe :src="iframe.src" ref="frame" @load="load" v-show="iframe.loaded" id="previewframe"></iframe>#}
+                    {#</div>#}
+
+                    {#</div>#}
+                    {#</div>#}
+                </div>
+            </div>
+
+
+{% endblock %}
+
+{% block opposite_sidebar %}
+    <div class="sidebar sidebar-opposite sidebar-default" id="resume-section" >
+        <div class="sidebar-fixed affix-top">
+            <div class="sidebar-content">
+
+{#
+                <!-- Support -->
+                <div class="sidebar-category no-margin">
+                    <div class="category-title">
+                        <span>Changelog</span>
+                        <i class="icon-menu7 pull-right"></i>
+                    </div>
+
+                    <div class="category-content">
+                        <a href="http://kopyov.ticksy.com" class="btn bg-danger-400 btn-block legitRipple" target="_blank"><i class="icon-lifebuoy position-left"></i> Item support</a>
+                    </div>
+                </div>
+                <!-- /support -->
+#}
+
+
+                <div class="sidebar-category" v-cloak>
+                    <div class="category-content no-padding">
+
+                        <ul class="nav navigation ">
+                            {#<li class="navigation-divider no-margin-top"></li>#}
+                            <li class="navigation-header"><i class="icon-history pull-right"></i> 简历模块</li>
+                            <li :class="form == 'basics' ? 'active' : '' ">
+                                <a href="#basics" data-section="basics" @click="basics()"><i class=" icon-vcard position-left"></i>基本信息</a>
+                            </li>
+
+                            <li :class="{active: form == item.name ? 'active' : '', disabled: item.active ? '' : 'disabled'}" v-for="item ,index in section" v-dragging="{item: item, list: section}" :key="item.name">
+
+                                <a :data-section="item.name" :href="'#'+item.name" @click="form = item.name">
+                                    <i :class="'icon-'+item.name" class="position-left"></i>
+
+                                    {{ item.name | lang }}
+                                    <div class="controls">
+                                        <div class="edit">
+
+                                            <a> </a>
+                                            <div class="checkbox checkbox-switchery switchery-xs ">
+                                                <label>
+                                                    <input type="checkbox" class="switchery switchery-primary" v-model="item.active">
+
+                                                </label>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="del">
+                                            <i class="mr-20 mb-10 icon-move reorder dragula-handle"></i>
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </li>
+                            {#</draggable>#}
+
+                            <li class="navigation-divider"></li>
+                            <li class="navigation-header"><i class="icon-gear pull-right"></i> Extras</li>
+                            {#<li><a href="http://themeforest.net/user/kopyov" target="_blank" class="legitRipple"><i class="icon-bubbles4 text-slate-400"></i> 联系经</a></li>#}
+                            <li><a href="http://kopyov.ticksy.com" target="_blank" class="legitRipple"><i class="icon-lifebuoy text-slate-400"></i> 帮助</a></li>
+                            <li><a href="http://themeforest.net/user/kopyov/portfolio?ref=Kopyov" target="_blank" class="legitRipple"><i class="icon-rocket text-slate-400"></i> 其它模板</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+                <!-- /navigation -->
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<!-- /main content -->
+
+{% block script %}
+
+    <script>
+        /* ------------------------------------------------------------------------------
+         *
+         *  # Sticky sidebar with native scrollbar
+         *
+         *  Specific JS code additions for layout_sidebar_sticky_native.html blank page
+         *
+         *  Version: 1.0
+         *  Latest update: Aug 1, 2015
+         *
+         * ---------------------------------------------------------------------------- */
+
+        $(function() {
+
+            // 滚动位置触发事件
+            $('body').scrollspy({target: '#resume-section', offset: 75});
+//            $.fn.scrollspy.defaults = {
+//                offset: 500
+//            }
+            $('body').scrollspy({
+                offset: 65
+            });
+            $('#resume-section').on('activate.bs.scrollspy', function () {
+                var section = $("#resume-section .nav li.active > a").data('section');
+
+                eventHub.$emit("section", section);
+            });
+
+//            var offset = 68;
+//
+//            $('#resume-section .nav li a').click(function(event) {
+//                event.preventDefault();
+//                $($(this).attr('href'))[0].scrollIntoView();
+//                scrollBy(0, -offset);
+//            });
+
+
+//            var navOffset = $('#resume-section').height();
+            var navOffset = $('#navbar-second').height() + 18;
+
+            // TODO: 代码来源 https://css-tricks.com/snippets/jquery/smooth-scrolling/
+                $('#resume-section a[href*="#"]:not([href="#"])').click(function() {
+                    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                        var target = $(this.hash);
+                        target = target.length  ? target : $('[name=' + this.hash.slice(1) +']');
+
+                        var navOffset;
+                        navOffset = $('#navbar-second').height() + 18;
+
+                        if (target.length) {
+                            $('html, body').animate({
+                                scrollTop: target.offset().top - navOffset
+                            }, 600);
+                            return false;
+                        }
+                    }
+                });
+
+                // Switchery
+                // ------------------------------
+
+                // Initialize multiple switches
+                if (Array.prototype.forEach) {
+                    var elems = Array.prototype.slice.call(document.querySelectorAll('.switchery'));
+                    elems.forEach(function(html) {
+                        var switchery = new Switchery(html, { color: '#2196F3' });
+                    });
+                }
+                else {
+                    var elems = document.querySelectorAll('.switchery');
+                    for (var i = 0; i < elems.length; i++) {
+                        var switchery = new Switchery(elems[i], { color: '#2196F3' });
+                    }
+                }
+
+            // Affix sidebar
+            // ------------------------------
+
+            // When affixed
+            $('#navbar-second').on('affixed.bs.affix', function() {
+                $(this).next().css('margin-top', $(this).outerHeight());
+                $('body').addClass('navbar-affixed-top');
+            });
+
+            // When on top
+            $('#navbar-second').on('affixed-top.bs.affix', function() {
+                $(this).next().css('margin-top', '');
+                $('body').removeClass('navbar-affixed-top');
+            });
+
+            // Init
+            $('#navbar-second').affix({
+                offset: {
+                    top: $('#navbar-second').offset().top
+                }
+            });
+            // Mini sidebar
+            // -------------------------
+
+            // Setup
+            function miniSidebar() {
+                if ($('body').hasClass('sidebar-xs')) {
+                    $('.sidebar-main .sidebar-fixed .sidebar-content').on('mouseenter', function () {
+                        if ($('body').hasClass('sidebar-xs')) {
+
+                            // Expand fixed navbar
+                            $('body').removeClass('sidebar-xs').addClass('sidebar-fixed-expanded');
+                        }
+                    }).on('mouseleave', function () {
+                        if ($('body').hasClass('sidebar-fixed-expanded')) {
+
+                            // Collapse fixed navbar
+                            $('body').removeClass('sidebar-fixed-expanded').addClass('sidebar-xs');
+                        }
+                    });
+                }
+            }
+
+            // Toggle mini sidebar
+            $('.sidebar-main-toggle').on('click', function (e) {
+
+                // Initialize mini sidebar
+                miniSidebar();
+            });
+
+
+            // Resize sidebar on scroll
+            // ------------------------------
+
+            // Resize detached sidebar vertically when bottom reached
+            function resizeDetached() {
+                $(window).on('scroll load', function() {
+                    if ($(window).scrollTop() > $(document).height() - $(window).height() - 40) {
+                        $('.sidebar-fixed').addClass('fixed-sidebar-space');
+                    }
+                    else {
+                        $('.sidebar-fixed').removeClass('fixed-sidebar-space');
+                    }
+                });
+            }
+
+
+            // Resize sidebar on scroll
+            // ------------------------------
+
+            // Initialize scrollbar when affixed
+            $('.sidebar-fixed').on('affix.bs.affix', function() {
+                resizeDetached();
+            });
+
+            // Init mini sidebar functionality for main sidebar
+            $('.sidebar-main .sidebar-fixed').on('affix.bs.affix', function() {
+                miniSidebar();
+            });
+
+            // Attach BS affix component to the sidebar
+            $('.sidebar-fixed').affix({
+                offset: {
+                    top: $('.sidebar-fixed').offset().top // top offset - computed line height
+                }
+            });
+
+
+            // Remove affix on mobile
+            $(window).on('resize', function() {
+                setTimeout(function() {
+                    if($(window).width() <= 768) {
+
+                        // Remove affix on mobile
+                        $(window).off('.affix')
+                        $('.sidebar-fixed').removeData('affix').removeClass('affix affix-top affix-bottom');
+                    }
+                }, 100);
+            }).resize();
+
+        });
+
+
+    </script>
+
+
+    <script>
+
+
+        var _RESUME_DATA = <$ resume | dump | safe $>;
+
+
+    </script>
+
+    <script>
+        ID = <$ _id $>;
+
+        var TITLE = '<$ _title $>';
+
+        var SECION = <$ _resume_section | dump | safe $>;
+
+    </script>
+    <script type="text/javascript" src="/static/components/resumes/main.js"></script>
+
+{% endblock %}

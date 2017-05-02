@@ -922,7 +922,50 @@
     {% block body_style %}sidebar-opposite-visible{% endblock %}
 
 {#{% block body_style %}{% endblock %}#}
+{% block navbar2 %}
+    <!-- Second navbar -->
+    <div class="navbar navbar-default alpha-grey" id="navbar-second" v-cloak>
+        <ul class="nav navbar-nav no-border visible-xs-block ">
+            <li><a class=" collapsed pull-left" href="/admin/posts"><i class="icon-arrow-left7"></i></a></li>
 
+            <li><a class=" collapsed pull-right" data-toggle="collapse" data-target="#navbar-second-toggle"><i
+                            class="icon-circle-down2"></i></a></li>
+        </ul>
+
+        <div class="navbar-collapse collapse" id="navbar-second-toggle">
+            <ul class="nav navbar-nav ">
+                <li class="visible-lg-block"><a href="/admin/posts"><i class="text-primary icon-arrow-left7"></i></a>
+                </li>
+                <li class="disabled" style="width: 120px;">
+                    {#<a><i class="text-primary-400 icon-sync spinner position-left"></i>内容自动保存</a>#}
+                    <a v-if="status == 'saving'" class="text-teal" v-cloak>
+                        <i class="icon-sync spinner position-left"></i>
+                        保存中
+                    </a>
+                    <a v-else-if="status == 'success'" class="text-muted" v-cloak>
+                        已保存
+                    </a>
+                    <a v-else-if="status == 'editing'" v-cloak>修改中</a>
+                    <a v-else-if="status == 'init'" class="text-muted">内容自动保存</a>
+                </li>
+
+            </ul>
+
+
+            <ul class="nav navbar-nav navbar-right">
+
+                {#<a class="sidebar-control sidebar-opposite-toggle hidden-xs">#}
+                {#<i class="icon-indent-decrease2"></i>#}
+                {#</a>#}
+                <li class="disabled"><a class=""><i class="icon-eye position-left"></i> 预览</a></li>
+                <li class=""><a class="sidebar-control sidebar-opposite-toggle hidden-xs"><i
+                                class="icon-cog position-left"></i> 文章设置</a></li>
+                <li class="disabled"><a><i class=" icon-paperplane position-left"></i> 发布</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /second navbar -->
+{% endblock %}
 
 {% block content %}
 

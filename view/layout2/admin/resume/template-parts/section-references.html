@@ -1,0 +1,16 @@
+<h6 class="content-group text-semibold">
+    友情评价
+</h6>
+<div class="row">
+    {% for ref in resume.references %}
+        <div class="col-md-6">
+            <div class="panel panel-body ">
+                <blockquote class="">
+                    <$ ref.reference $>
+                    <footer><$ ref.name $> <cite title="Source Title"><$ ref.position $></cite></footer>
+                </blockquote>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>

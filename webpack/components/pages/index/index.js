@@ -135,6 +135,8 @@ new Vue({
                 // vue.pageAll = response.data.data;
                 // vue.allpage = response.data.totalPages;
                 // vue.pagedata = response;
+
+                eventHub.$emit("fetch")
             })
                 .catch(function (error) {
                     if (error.response) {
@@ -170,6 +172,10 @@ new Vue({
                     vue.pageAll = response.data.data;
                     vue.allpage = response.data.totalPages;
                     vue.pagedata = response.data;
+
+                    eventHub.$emit("fetch")
+
+
 
                 })
                 .catch(function (error) {

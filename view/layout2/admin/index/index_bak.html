@@ -1,0 +1,580 @@
+{% extends "../_layout2.html" %}
+{% block cover %}
+    <profile-cover :cover="profile_cover"></profile-cover>
+
+{% endblock %}
+    {% block body_style %}sidebar-opposite-visible{% endblock %}
+
+{% block sidebar_main %}
+    <div class="sidebar sidebar-main sidebar-default sidebar-separate">
+        <div class="sidebar-content">
+
+            <!-- Search task -->
+            <div class="sidebar-category">
+                <div class="category-title">
+                    <span>检索</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content">
+                    <form action="#">
+                        <div class="has-feedback has-feedback-left">
+                            <input type="search" class="form-control" placeholder="Type and hit Enter">
+                            <div class="form-control-feedback">
+                                <i class="icon-search4 text-size-base text-muted"></i>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /search task -->
+
+
+            {#
+            <!-- Action buttons -->
+            <div class="sidebar-category">
+                <div class="category-title">
+                    <span>Action buttons</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button class="btn bg-teal-400 btn-block btn-float btn-float-lg text-size-small legitRipple" type="button"><i class="icon-git-branch"></i> <span>Branch</span></button>
+                            <button class="btn bg-purple-300 btn-block btn-float btn-float-lg text-size-small legitRipple" type="button"><i class="icon-mail-read"></i> <span>Messages</span></button>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <button class="btn bg-warning-400 btn-block btn-float btn-float-lg text-size-small legitRipple" type="button"><i class="icon-stats-bars"></i> <span>Statistics</span></button>
+                            <button class="btn bg-blue btn-block btn-float btn-float-lg text-size-small legitRipple" type="button"><i class="icon-people"></i> <span>Users</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /action buttons -->
+            #}
+
+
+            <!-- Task navigation -->
+            <div class="sidebar-category">
+                <div class="category-title">
+                    <span>Navigation</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content no-padding">
+                    <ul class="navigation navigation-alt navigation-accordion">
+                        <li class="navigation-header">操作</li>
+                        <li><a href="#" class="legitRipple"><i class="icon-googleplus5"></i> 页面管理</a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-portfolio"></i> 添加作品</a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-compose"></i> 管理类别</a></li>
+                        {#<li><a href="#" class="legitRipple"><i class="icon-user-plus"></i> Assign users <span class="label label-success">94 online</span></a></li>#}
+                        {#<li><a href="#" class="legitRipple"><i class="icon-collaboration"></i> Create team</a></li>#}
+                        {#<li class="navigation-header">Tasks</li>#}
+                        {#<li><a href="#" class="legitRipple"><i class="icon-files-empty"></i> All tasks</a></li>#}
+                        {#<li><a href="#" class="legitRipple"><i class="icon-file-plus"></i> Active tasks <span class="badge badge-default">28</span></a></li>#}
+                        {#<li><a href="#" class="legitRipple"><i class="icon-file-check"></i> Closed tasks</a></li>#}
+                        <li class="navigation-divider"></li>
+                        <li><a href="/admin/design" class="legitRipple"><i class="icon-reading"></i> 主题皮肤</a></li>
+                        <li><a href="/admin/menus" class="legitRipple"><i class="icon-list"></i> 导航菜单</a></li>
+                        <li><a href="/admin/options" class="legitRipple"><i class="icon-cog3"></i> 系统配置</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /task navigation -->
+
+
+        </div>
+    </div>
+{% endblock %}
+    {% block content %}
+        <!-- Toolbar -->
+        <div class="navbar navbar-default navbar-xs navbar-component no-border-radius-top">
+            <ul class="nav navbar-nav visible-xs-block">
+                <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter"><i class="icon-menu7"></i></a></li>
+            </ul>
+
+            <div class="navbar-collapse collapse" id="navbar-filter">
+                {#                    <ul class="nav navbar-nav">
+                                        <li class="{% if http.controller == 'index' %}active{% endif %}"><a href="#activity" data-toggle="tab"><i class="icon-menu7 position-left"></i> 我的动态</a></li>
+                                        <li><a href="#schedule" data-toggle="tab"><i class="icon-calendar3 position-left"></i> 日程安排 <span class="badge badge-success badge-inline position-right">32</span></a></li>
+                                        <li><a href="#settings" data-toggle="tab"><i class="icon-cog3 position-left"></i> 账户设置</a></li>
+                                    </ul>#}
+                <p class="navbar-text">内容过滤:</p>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort-time-asc position-left"></i> 日期 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Show all</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Today</a></li>
+                            <li><a href="#">Yesterday</a></li>
+                            <li><a href="#">This week</a></li>
+                            <li><a href="#">This month</a></li>
+                            <li><a href="#">This year</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort-amount-desc position-left"></i> 状态 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Show all</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Open</a></li>
+                            <li><a href="#">On hold</a></li>
+                            <li><a href="#">Resolved</a></li>
+                            <li><a href="#">Closed</a></li>
+                            <li><a href="#">Dublicate</a></li>
+                            <li><a href="#">Invalid</a></li>
+                            <li><a href="#">Wontfix</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort-numeric-asc position-left"></i> 类别 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Show all</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Highest</a></li>
+                            <li><a href="#">High</a></li>
+                            <li><a href="#">Normal</a></li>
+                            <li><a href="#">Low</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="navbar-right">
+                    <p class="navbar-text">显示模式:</p>
+                    <form class="navbar-form navbar-left" action="#">
+                        <div class="form-group">
+                            <label class="checkbox-inline switchery-double checkbox-switchery switchery-xs">
+                                列表
+                                <input type="checkbox" class="switch-mode" checked="checked">
+                                表格
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /toolbar -->
+
+        <!-- User profile -->
+        <div class="row">
+
+
+            <div class="col-lg-12">
+                <div class="tabbable">
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="activity">
+                            <!-- Timeline -->
+                            {#<timeline :posts="pageAll"></timeline>#}
+                            <!-- /timeline -->
+
+                            <posts :posts="pageAll"></posts>
+                            {#<posts :list="pageAll"></posts>#}
+                            <div class="row">
+                                <div class="text-center content-group-lg pt-20">
+                                    <pager :allpage="allpage" :page="page" v-on:increment="incrementTotal"></pager>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="schedule">
+
+                            <!-- Available hours -->
+                            <div class="panel panel-flat">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">Available hours</h6>
+                                    <div class="heading-elements">
+                                        <ul class="icons-list">
+                                            <li><a data-action="collapse"></a></li>
+                                            <li><a data-action="reload"></a></li>
+                                            <li><a data-action="close"></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="chart-container">
+                                        <div class="chart has-fixed-height" id="plans"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /available hours -->
+
+
+                            <!-- Calendar -->
+                            <div class="panel panel-flat">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">My schedule</h6>
+                                    <div class="heading-elements">
+                                        <ul class="icons-list">
+                                            <li><a data-action="collapse"></a></li>
+                                            <li><a data-action="reload"></a></li>
+                                            <li><a data-action="close"></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="schedule"></div>
+                                </div>
+                            </div>
+                            <!-- /calendar -->
+
+                        </div>
+
+                        <div class="tab-pane fade" id="settings">
+
+                            <!-- Profile info -->
+                            <div class="panel panel-flat">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">Profile information</h6>
+                                    <div class="heading-elements">
+                                        <ul class="icons-list">
+                                            <li><a data-action="collapse"></a></li>
+                                            <li><a data-action="reload"></a></li>
+                                            <li><a data-action="close"></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="panel-body">
+                                    <form action="#">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Username</label>
+                                                    <input type="text" value="Eugene" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Full name</label>
+                                                    <input type="text" value="Kopyov" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Address line 1</label>
+                                                    <input type="text" value="Ring street 12" class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Address line 2</label>
+                                                    <input type="text" value="building D, flat #67"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label>City</label>
+                                                    <input type="text" value="Munich" class="form-control">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label>State/Province</label>
+                                                    <input type="text" value="Bayern" class="form-control">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label>ZIP code</label>
+                                                    <input type="text" value="1031" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Email</label>
+                                                    <input type="text" readonly="readonly" value="eugene@kopyov.com"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Your country</label>
+                                                    <select class="select">
+                                                        <option value="germany" selected="selected">Germany</option>
+                                                        <option value="france">France</option>
+                                                        <option value="spain">Spain</option>
+                                                        <option value="netherlands">Netherlands</option>
+                                                        <option value="other">...</option>
+                                                        <option value="uk">United Kingdom</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Phone #</label>
+                                                    <input type="text" value="+99-99-9999-9999" class="form-control">
+                                                    <span class="help-block">+99-99-9999-9999</span>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="display-block">Upload profile image</label>
+                                                    <input type="file" class="file-styled">
+                                                    <span class="help-block">Accepted formats: gif, png, jpg. Max file size 2Mb</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-right">
+                                            <button type="submit" class="btn btn-primary">Save <i
+                                                        class="icon-arrow-right14 position-right"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /profile info -->
+
+
+                            <!-- Account settings -->
+                            <div class="panel panel-flat">
+                                <div class="panel-heading">
+                                    <h6 class="panel-title">Account settings</h6>
+                                    <div class="heading-elements">
+                                        <ul class="icons-list">
+                                            <li><a data-action="collapse"></a></li>
+                                            <li><a data-action="reload"></a></li>
+                                            <li><a data-action="close"></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="panel-body">
+                                    <form action="#">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Username</label>
+                                                    <input type="text" value="Kopyov" readonly="readonly"
+                                                           class="form-control">
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label>Current password</label>
+                                                    <input type="password" value="password" readonly="readonly"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>New password</label>
+                                                    <input type="password" placeholder="Enter new password"
+                                                           class="form-control">
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label>Repeat password</label>
+                                                    <input type="password" placeholder="Repeat new password"
+                                                           class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Profile visibility</label>
+
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="visibility" class="styled"
+                                                                   checked="checked">
+                                                            Visible to everyone
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="visibility" class="styled">
+                                                            Visible to friends only
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="visibility" class="styled">
+                                                            Visible to my connections only
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="visibility" class="styled">
+                                                            Visible to my colleagues only
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label>Notifications</label>
+
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" class="styled" checked="checked">
+                                                            Password expiration notification
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" class="styled" checked="checked">
+                                                            New message notification
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" class="styled" checked="checked">
+                                                            New task notification
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" class="styled">
+                                                            New contact request notification
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-right">
+                                            <button type="submit" class="btn btn-primary">Save <i
+                                                        class="icon-arrow-right14 position-right"></i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /account settings -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <!-- /user profile -->
+
+    {% endblock %}
+
+
+{% block opposite_sidebar_ %}
+    <div class="sidebar sidebar-opposite sidebar-default sidebar-separate sidebar-fixed">
+
+        <div class="sidebar-content">
+
+            <!-- Search task -->
+            <div class="sidebar-category">
+                <div class="category-title">
+                    <span>检索</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content">
+                    <form action="#">
+                        <div class="has-feedback has-feedback-left">
+                            <input type="search" class="form-control" placeholder="Type and hit Enter">
+                            <div class="form-control-feedback">
+                                <i class="icon-search4 text-size-base text-muted"></i>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /search task -->
+
+
+            <!-- Action buttons -->
+            <div class="sidebar-category">
+                <div class="category-title">
+                    <span>Action buttons</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <button class="btn bg-teal-400 btn-block btn-float btn-float-lg text-size-small legitRipple" type="button"><i class="icon-git-branch"></i> <span>Branch</span></button>
+                            <button class="btn bg-purple-300 btn-block btn-float btn-float-lg text-size-small legitRipple" type="button"><i class="icon-mail-read"></i> <span>Messages</span></button>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <button class="btn bg-warning-400 btn-block btn-float btn-float-lg text-size-small legitRipple" type="button"><i class="icon-stats-bars"></i> <span>Statistics</span></button>
+                            <button class="btn bg-blue btn-block btn-float btn-float-lg text-size-small legitRipple" type="button"><i class="icon-people"></i> <span>Users</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /action buttons -->
+
+
+            <!-- Task navigation -->
+            <div class="sidebar-category">
+                <div class="category-title">
+                    <span>Navigation</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content no-padding">
+                    <ul class="navigation navigation-alt navigation-accordion">
+                        <li class="navigation-header">操作</li>
+                        <li><a href="#" class="legitRipple"><i class="icon-googleplus5"></i> 页面管理</a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-portfolio"></i> 添加作品</a></li>
+                        <li><a href="#" class="legitRipple"><i class="icon-compose"></i> 管理类别</a></li>
+                        {#<li><a href="#" class="legitRipple"><i class="icon-user-plus"></i> Assign users <span class="label label-success">94 online</span></a></li>#}
+                        {#<li><a href="#" class="legitRipple"><i class="icon-collaboration"></i> Create team</a></li>#}
+                        {#<li class="navigation-header">Tasks</li>#}
+                        {#<li><a href="#" class="legitRipple"><i class="icon-files-empty"></i> All tasks</a></li>#}
+                        {#<li><a href="#" class="legitRipple"><i class="icon-file-plus"></i> Active tasks <span class="badge badge-default">28</span></a></li>#}
+                        {#<li><a href="#" class="legitRipple"><i class="icon-file-check"></i> Closed tasks</a></li>#}
+                        <li class="navigation-divider"></li>
+                        <li><a href="/admin/design" class="legitRipple"><i class="icon-reading"></i> 主题皮肤</a></li>
+                        <li><a href="/admin/menus" class="legitRipple"><i class="icon-list"></i> 导航菜单</a></li>
+                        <li><a href="/admin/options" class="legitRipple"><i class="icon-cog3"></i> 系统配置</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /task navigation -->
+
+
+        </div>
+    </div>
+{% endblock %}
+    {% block script %}
+
+        <script>
+            // @formatter:off
+
+        TERMS = <$ snippet_terms | safe $>;
+
+        // @formatter:on
+        </script>
+        <script type="text/javascript" src="/static/components/pages/index/index.js"></script>
+
+    {% endblock %}

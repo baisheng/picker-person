@@ -1,168 +1,49 @@
 {
-  "work": [
-    {
-      "company": "公司名称",
-      "endDate": "结束时间",
-      "summary": "重点工作介绍",
-      "website": "http://website.com",
-      "position": "所担任职位",
-      "startDate": "开始日期",
-      "highlights": []
-    }
-  ],
-  "awards": [
-    {
-      "date": "2014-11-01",
-      "title": "Digital Compression Pioneer Award",
-      "awarder": "Techcrunch",
-      "summary": "There is no spoon."
-    }
-  ],
-  "basics": {
-    "name": "我的名字",
-    "email": "email@email.com",
-    "label": "Programmer",
-    "phone": "13488689888",
-    "picture": "",
-    "summary": "个人介绍",
-    "website": "http://baisheng.me",
-    "location": {
-      "city": "北京",
-      "region": "丰台区",
-      "address": "",
-      "postalCode": "100086",
-      "countryCode": "ZH"
-    },
-    "profiles": [
-      {
-        "url": "",
-        "network": "twitter",
-        "username": "baisheng"
-      },
-      {
-        "url": "",
-        "network": "github",
-        "username": "baisheng@gmail.com"
-      },
-      {
-        "url": "",
-        "network": "facebook",
-        "username": "baisheng"
-      },
-      {
-        "url": "",
-        "network": "dribbble",
-        "username": "baisheng@gmail.com"
+  "type": "object",
+  "title": "上传服务配置",
+  "properties": {
+    "baidu":{
+      "type": "object",
+      "description": "百度云存储",
+      "additionalProperties": true,
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "空间域名",
+          "default": "data.picker.cc"
+        }
       }
-    ],
-    "highlights": [
-      "如果你不喜欢某个人，要么随他去，要么击垮他，不要只是停留于口头攻击。"
-    ]
-  },
-  "skills": [
-    {
-      "name": "这里输入技能类别如：产品、后端程序开发、UI设计",
-      "level": "person",
-      "keywords": [
-        "Axure",
-        "UI/UE",
-        "SKETCH APP",
-        "PS",
-        "AI",
-        "Affinity"
-      ]
-    }
-  ],
-  "version": "An identifier for the schema verion (currently '1'). If there are future updates to the schema, then ResumeFodder can use this field to recognize outdated files and warn you about it.",
-  "education": [
-    {
-      "gpa": "4.0",
-      "area": "所学专业",
-      "courses": [
-        "DB1101 - Basic SQL",
-        "CS2011 - Java Introduction"
-      ],
-      "endDate": "开始日期",
-      "startDate": "结束日期",
-      "studyType": "学历信息",
-      "institution": "学校名称"
-    }
-  ],
-  "interests": [
-    {
-      "name": "兴趣类别如:阅读、音乐、运动",
-      "keywords": [
-        "文学",
-        "历史",
-        "古典",
-        "哲学"
-      ]
-    }
-  ],
-  "languages": [
-    {
-      "fluency": "Native speaker",
-      "language": "English"
-    }
-  ],
-  "volunteer": [
-    {
-      "endDate": "2013-01-01",
-      "summary": "Global movement of free coding clubs for young people.",
-      "website": "http://coderdojo.com/",
-      "position": "Teacher",
-      "startDate": "2012-01-01",
-      "highlights": [
-        "Awarded 'Teacher of the Month'"
-      ],
-      "organization": "CoderDojo"
-    }
-  ],
-  "workLabel": "工作经验",
-  "references": [
-    {
-      "name": "Yolanda.Chang",
-      "position": "采撷科技 CEO",
-      "reference": "专业的学术知识，丰富的实践经验，为我们平台快速推向市场起到了决定性作用！"
     },
-    {
-      "name": "张世清",
-      "position": "安彼教育科技有限公司董事长",
-      "reference": "专业的学术知识，丰富的实践经验，为我们平台快速推向市场起到了决定性作用！"
+    "qiniu": {
+      "type": "object",
+      "description": "七牛云存储",
+      "additionalProperties": true,
+      "properties": {
+        "ak": {
+          "type": "string",
+          "description": "七牛 AccessKey",
+          "default": "L-_VvKAN8uvcvkg0GNZ9gmVlPgzMdBklNj4QihvX"
+        },
+        "sk": {
+          "type": "string",
+          "description": "密钥 SecretKey",
+          "default": "IvERk4JjWRwTcIEIv93717A1FYQ1r9Xvd_1OEtXm"
+        },
+        "bucket": {
+          "type": "string",
+          "description": "七牛对象存储名",
+          "default": "caixie"
+        },
+        "domain": {
+          "type": "string",
+          "description": "空间域名",
+          "default": "data.picker.cc"
+        }
+      }
     }
-  ],
-  "publications": [
-    {
-      "isbn": "The ISBN of this publication",
-      "name": "Video compression for 3d media",
-      "summary": "Innovative middle-out compression algorithm that changes the way we store data.",
-      "website": "http://en.wikipedia.org/wiki/Silicon_Valley_(TV_series)",
-      "publisher": "Hooli",
-      "releaseDate": "2014-10-01"
-    }
-  ],
-  "additionalWork": [
-    {
-      "company": "项目名称",
-      "endDate": "项目结束时间",
-      "summary": "力扑网是一个在线教育视频内容网站，以终身教育为指导目标，向公众推出海量高品质视频课程，并配合考试系统，社交圈子系统以及笔记，答疑，支付等功能，让用户真正学到东西，获得知识，通过在网站的学习和交流实现个人价值与需求，让飞跃从此开始！",
-      "website": "项目或案例地址",
-      "position": "项目中所担任职位",
-      "startDate": "开始日期",
-      "highlights": []
-    }
-  ],
-  "publicationsLabel": "Overrides the template label for the 'publications' section (e.g. 'Publications (Author)')",
-  "additionalWorkLabel": "项目经验",
-  "additionalPublications": [
-    {
-      "isbn": "",
-      "name": "Publications that you would like to group separately (e.g. editor rather than author, academic publications, etc)",
-      "summary": "",
-      "website": "",
-      "publisher": "All fields under this section are the same as for 'publications'",
-      "releaseDate": ""
-    }
-  ],
-  "additionalPublicationsLabel": "Overrides the template label for the 'additionalPublications' section (e.g. 'Publications (Technical Reviewer)')"
+  },
+  "description": "上传服务配置信息"
 }
+
+
+

@@ -4,7 +4,8 @@ export default class extends think.controller.base {
     init(http) {
         super.init(http);
 
-        http.theme('layout5')
+        // http.theme('layout5')
+        http.theme('layout2')
 
     }
 

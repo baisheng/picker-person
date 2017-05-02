@@ -103,17 +103,41 @@
 
 {#{% block body_style %}sidebar-main-hidden{% endblock %}#}
 
+{% block sidebar_main %}
+    <div class="sidebar sidebar-main sidebar-default sidebar-separate">
+        <div class="sidebar-content">
+
+            <!-- User details -->
+            <div class="content-group">
+                <div class="panel no-border-top no-border-radius-top">
+                    <ul class="navigation">
+                        <li class="navigation-header">配置列表</li>
+                        <li class="" v-for="option in options">
+                            <a @click="selectOption(option.meta)" data-toggle="tab" class="legitRipple" aria-expanded="true"><i class="icon-files-empty"></i> {{ option['key'] | lang }}</a></li>
+
+                        <li class="navigation-divider"></li>
+                        <li><a href="login_advanced.html" class="legitRipple"><i class="icon-plus22"></i> 添加新配置</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /user details -->
+
+
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-flat">
                 <div class="panel-body">
-                    <json-editor></json-editor>
+                    <json-editor :schema="meta"></json-editor>
                 </div>
             </div>
         </div>
     </div>
+    {#
     <div class="row" id="">
 
         <div class="col-md-12">
@@ -123,16 +147,6 @@
                     <h6 class="panel-title">基本信息<a class="heading-elements-toggle"><i
                                     class="icon-more"></i></a></h6>
 
-{#                    <div class="heading-elements">
-                        <form class="heading-form" action="#">
-                            <div class="form-group">
-                                <label class="checkbox-inline checkbox-switchery checkbox-right switchery-xs">
-                                    <input type="checkbox" class="switchery">
-                                    编辑:
-                                </label>
-                            </div>
-                        </form>
-                    </div>#}
                 </div>
                 <div class="table-responsive" id="data">
                     <table class="table table-lg">
@@ -153,6 +167,7 @@
 
         </div>
     </div>
+    #}
 
 {% endblock %}
 

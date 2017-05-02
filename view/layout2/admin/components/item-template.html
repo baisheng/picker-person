@@ -1,0 +1,15 @@
+<script type="text/x-template" id="item-template">
+  <li :data-id="model.id">
+    <div class="entry clear">
+      <div class="info">
+        <span>{{ model.name }}</span>
+        <small>{{ model.pageName }} {{ model.pageURL }}</small>
+      </div>
+      {#<a :href="\''.url::admin('content', ['menus', 'delItem']).'/\' + model.id + \'/\' + model.children.length" class="icon delete ajax icon-ios-trash-outline"></a>#}
+    </div>
+    <ul>
+      <item v-if="model.children" v-for="model in model.children" :model="model"></item>
+    </ul>
+  </li>
+</script>
+

@@ -1,0 +1,28 @@
+<div class="panel panel-body">
+
+    <h6 class=" text-semibold">
+        <$ resume.workLabel $>
+        {#<small class="display-block">介绍我的部分专职工作</small>#}
+    </h6>
+    <ul class="list-feed media-list">
+        {% for work in resume.work %}
+
+        <li class="media border-teal-400">
+            <div class="media-body">
+                <a href="<$ work.website $>"><$ work.company $></a> <strong><$ work.position
+                    $></strong>
+                <p><$ work.summary $></p>
+
+                <ol>
+                    {% for item in work.highlights %}
+                        <li><$ item | safe $></li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+            <div class="media-right text-nowrap text-muted text-size-small"><$ work.startDate $> — <$ work.endDate $></div>
+        </li>
+        {% endfor %}
+    </ul>
+
+</div>

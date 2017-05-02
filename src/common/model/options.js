@@ -30,6 +30,9 @@ export default class extends Base {
 
     async list() {
         let data = await this.select();
+        for(let option of data){
+            option.meta = JSON.parse(option.meta)
+        }
         return data;
     }
 

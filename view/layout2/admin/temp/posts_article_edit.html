@@ -1,0 +1,1039 @@
+{% extends "./inc/_base_detached.html" %}
+    {% block style %}
+        <link rel="stylesheet" href="/static/assets/js/plugins/uploaders/webuploader/webuploader.css">
+        <style>
+            #filelist {
+                /*height: 240px;*/
+                /*width: 240px;*/
+            }
+
+            .site-demo-upload .site-demo-upbar {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin: -18px 0 0 -56px;
+            }
+
+            .site-demo-upload .layui-upload-button {
+                background-color: rgba(0, 0, 0, .2);
+                color: rgba(255, 255, 255, 1);
+            }
+
+            .site-demo-upload .layui-upload-icon i {
+                color: #fff;
+            }
+            .layui-upload-button input {
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 10;
+                /*font-size: 100px;*/
+                width: 100%;
+                height: 100%;
+            }
+            .layui-upload-button input, .layui-upload-file {
+                opacity: .01;
+                filter: Alpha(opacity=1);
+                cursor: pointer;
+            }
+            .async-load {
+                margin: 16px;
+                width: auto;
+            }
+
+            .async-load {
+                background: #cfdbe4;
+                border-radius: 20px;
+                content: '';
+                display: block;
+                height: 8px;
+                width: 80px;
+                margin: 0 16px;
+                -webkit-animation: pulse-light 0.8s ease-in-out infinite;
+                animation: pulse-light 0.8s ease-in-out infinite;
+            }
+
+            /*.note-btn .layui-upload-button {*/
+                /*position: relative;*/
+                /*display: inline-block;*/
+                /*vertical-align: middle;*/
+                /*!* min-width: 60px; *!*/
+                /*!* height: 38px; *!*/
+                /*!* line-height: 38px; *!*/
+                /*!* border: 1px solid #DFDFDF; *!*/
+                /*border-radius: 2px;*/
+                /*overflow: hidden;*/
+                /*!* background-color: #fff; *!*/
+                /*!* color: #666; *!*/
+            /*}*/
+
+            @-webkit-keyframes pulse-light {
+                50% {
+                    background-color: #e9eff3;
+                }
+            }
+
+            @keyframes pulse-light {
+                50% {
+                    background-color: #e9eff3;
+                }
+            }
+            /*.button {*/
+                /*border-radius: 28px;*/
+                /*margin: 10% auto 0 auto;*/
+                /*display: block;*/
+                /*position: relative;*/
+                /*background: #fff;*/
+                /*width: 150px;*/
+                /*box-shadow: 0 2px 6px rgba(170, 185, 200, 0.4);*/
+            /*}*/
+            /*.button svg {*/
+                /*display: none;*/
+                /*position: absolute;*/
+                /*left: 50%;*/
+                /*top: 50%;*/
+                /*margin: -15px 0 0 -15px;*/
+                /*fill: #fff;*/
+            /*}*/
+            .button div {
+                /*height: 4px;*/
+                /*margin: -2px 0 0 0;*/
+                /*position: absolute;*/
+                /*top: 50%;*/
+                /*left: 71px;*/
+                /*right: 25px;*/
+                /*background: #d3d7e0;*/
+                /*display: none;*/
+                /*border-radius: 2px;*/
+            }
+            /*.button div span {*/
+                /*position: absolute;*/
+                /*background: #28e470;*/
+                /*height: 4px;*/
+                /*left: 0;*/
+                /*top: 0;*/
+                /*width: 0;*/
+                /*display: block;*/
+                /*border-radius: 2px;*/
+            /*}*/
+            /*.button a {*/
+                /*position: relative;*/
+                /*display: block;*/
+                /*background: #3f82d7;*/
+                /*z-index: 2;*/
+                /*line-height: 56px;*/
+                /*height: 56px;*/
+                /*border-radius: 28px;*/
+                /*width: 100%;*/
+                /*text-align: center;*/
+                /*color: #fff;*/
+                /*box-shadow: 0 2px 6px rgba(170, 185, 200, 0.4);*/
+            /*}*/
+            /*.button a span {*/
+                /*cursor: pointer;*/
+                /*display: block;*/
+            /*}*/
+
+
+            .upload input {
+                visibility: hidden;
+                position: absolute;
+            }
+            .upload .button {
+                border-radius: 28px;
+                display: block;
+                position: relative;
+                /*background: #2e3038;*/
+                background: #f5f5f5;
+                padding: 0;
+                height: 36px;
+                width: 105px;
+                box-shadow: 0 2px 6px rgba(170, 185, 200, 0.4=);
+
+                /**/
+/**/
+                /*border-radius: 28px;*/
+                /*margin: 10% auto 0 auto;*/
+                /*display: block;*/
+                /*position: relative;*/
+                /*background: #fff;*/
+                /*width: 105px;*/
+                /*box-shadow: 0 2px 6px rgba(170, 185, 200, 0.4);*/
+            }
+            /*.upload .button   svg {*/
+                /*display: none;*/
+                /*position: absolute;*/
+                /*left: 50%;*/
+                /*top: 50%;*/
+                /*margin: -15px 0 0 -15px;*/
+                /*fill: #fff;*/
+            /*}*/
+            .upload .button a {
+                position: relative;
+                display: block;
+                background: #3f82d7;
+                z-index: 2;
+                line-height: 36px;
+                height: 36px;
+                width: 100%;
+                text-align: center;
+                color: #fff;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                border-radius: 4px;
+            }
+            .upload .button a span {
+                cursor: pointer;
+                display: block;
+            }
+            .upload .button a:hover {
+                background: #377dd5;
+            }
+            .upload .button svg {
+                display: none;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin: -12px 0 0 -12px;
+                width: 24px;
+                height: 24px;
+                fill: #fff;
+            }
+            .upload .button div {
+                height: 4px;
+                margin: -2px 0 0 0;
+                position: absolute;
+                top: 50%;
+                left: 51px;
+                right: 15px;
+                background: #666978;
+                display: none;
+                -webkit-border-radius: 2px;
+                -moz-border-radius: 2px;
+                border-radius: 2px;
+            }
+            .upload .button div span {
+                position: absolute;
+                background: #41da54;
+                height: 4px;
+                left: 0;
+                top: 0;
+                width: 0;
+                display: block;
+                -webkit-transition: all 0.2s ease-in-out;
+                -moz-transition: all 0.2s ease-in-out;
+                -o-transition: all 0.2s ease-in-out;
+                transition: all 0.2s ease-in-out;
+                -webkit-border-radius: 2px;
+                -moz-border-radius: 2px;
+                border-radius: 2px;
+            }
+
+
+        </style>
+    {% endblock %}
+{% block theme_script %}
+    {#<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/uniform.min.js"></script>#}
+    <script>
+
+    </script>
+    <script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>
+    <script type="text/javascript" src="/static/assets/js/plugins/forms/tags/tagsinput.min.js"></script>
+
+    <script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/core.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/effects.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
+
+    <script type="text/javascript" src="/static/assets/js/plugins/extensions/cookie.js"></script>
+    {#<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switchery.min.js"></script>#}
+
+
+    <script type="text/javascript" src="/static/assets/js/plugins/trees/fancytree_all.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/plugins/trees/fancytree_childcounter.js"></script>
+
+    <script type="text/javascript" src="/static/assets/js/plugins/uploaders/webuploader/webuploader.js"></script>
+    {#<script type="text/javascript" src="/static/assets/js/pages/mail_list_write.js"></script>#}
+{% endblock %}
+
+{% block script %}
+    <script>
+
+        $(function () {
+
+
+            // Styled form components
+            // ------------------------------
+
+            // Multiple switchery toggles
+            if (Array.prototype.forEach) {
+                var elems = Array.prototype.slice.call(document.querySelectorAll('.switchery'));
+                elems.forEach(function (html) {
+                    var switchery = new Switchery(html);
+                });
+            }
+            else {
+                var elems = document.querySelectorAll('.switchery');
+                for (var i = 0; i < elems.length; i++) {
+                    var switchery = new Switchery(elems[i]);
+                }
+            }
+
+
+//            $('.summernote').on('summernote.change', function(we, contents, $editable) {
+//                console.log('summernote content has changed.');
+//                console.log(contents);
+//                Meteor.call('updateFieldA', Router.current().params._id, contents);
+//        });
+
+            // Related form components
+            // ------------------------------
+
+            // Styled checkboxes/radios
+            $(".link-dialog input[type=checkbox], .note-modal-form input[type=radio]").uniform({
+                radioClass: 'choice'
+            });
+
+            // Styled file input
+            $(".note-image-input").uniform({
+                fileButtonClass: 'action btn bg-warning-400'
+            });
+
+        });
+
+
+        // Select with search
+        $('.select-search').select2();
+
+
+        // Custom results color
+        $('.select-results-color').select2({
+            containerCssClass: 'bg-grey-50',
+            minimumResultsForSearch: Infinity,
+            width: 200
+        });
+
+
+    </script>
+
+    <script type="text/javascript">
+
+        // Display values
+        // Dynamit tree
+
+        // Basic initialization
+        $('.tags-input').tagsinput();
+        //        $(".tree-default").fancytree();
+
+        // Hierarchical select
+        $(".tree-checkbox-hierarchical").fancytree({
+            checkbox: true,
+            selectMode: 3
+        });
+
+        var filelist = $('#filelist'),
+            // 优化retina, 在retina下这个值是2
+            ratio = window.devicePixelRatio || 1,
+            // 缩略图大小
+            thumbnailWidth = 240 * ratio,
+            thumbnailHeight = 240 * ratio;
+
+        // 初始化Web Uploader
+        // 初始化Web Uploader
+        var uploader = WebUploader.create({
+            // 选完文件后，是否自动上传。
+            auto: true,
+            // swf文件路径
+            swf: '/static/js/plugins/uploaders/webuploader/Uploader.swf',
+            // 文件接收服务端。
+            server: '/picker/file/uploadpic',
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: {
+                id: '#filepicker',
+                multiple: false
+            },
+            // 允许的图片类型
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/jpg,image/jpeg,image/png,image/gif,image/bmp'
+            }
+        });
+        // 当有文件添加进来的时候
+        uploader.on('fileQueued', function (file) {
+            var $li = $(
+                    '<div id="' + file.id + '" class="file-item thumbnail">' +
+                    '<img>' +
+                    '<div class="info">' + file.name + '</div>' +
+                    '</div>'
+                ),
+                $img = $li.find('img');
+
+            filelist.html($li);
+
+            // 创建缩略图
+            uploader.makeThumb(file, function (error, src) {
+                if (error) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+
+                $img.attr('src', src);
+            }, thumbnailWidth, thumbnailHeight);
+        });
+
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on('uploadProgress', function (file, percentage) {
+
+            var $li = $('#' + file.id),
+                $percent = $li.find('.progress span');
+
+            // 避免重复创建
+            if (!$percent.length) {
+                $percent = $('<p class="progress"><span></span></p>')
+                    .appendTo($li)
+                    .find('span');
+            }
+
+            $percent.css('width', percentage * 100 + '%');
+        });
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on('uploadSuccess', function (file, res) {
+            $('#' + file.id).addClass('upload-state-done');
+            $('#cover').val(res);
+
+            {#$("#sortid_{{val.option.identifier}}").val(res);#}
+        });
+
+        // 文件上传失败，现实上传出错。
+        uploader.on('uploadError', function (file) {
+            var $li = $('#' + file.id),
+                $error = $li.find('div.error');
+
+            // 避免重复创建
+            if (!$error.length) {
+                $error = $('<div class="error"></div>').appendTo($li);
+            }
+
+            $error.text('上传失败');
+        });
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on('uploadComplete', function (file) {
+            $('#' + file.id).find('.progress').remove();
+        });
+
+
+    </script>
+
+    <script type="text/javascript">
+        // Load JSON data
+
+        // Style checkboxes
+
+        function nowTime() {
+            var time = new Date();
+            // 程序计时的月从0开始取值后+1
+            var m = time.getMonth() + 1;
+            var t = time.getFullYear() + "-" + m + "-"
+                + time.getDate() + " " + time.getHours() + ":"
+                + time.getMinutes() + ":" + time.getSeconds();
+            return t;
+        }
+        // Default initialization
+        $(".styled, .multiselect-container input").uniform({
+            radioClass: 'choice'
+        });
+        $('#_form').submit(function (e) {
+            var content = $('textarea[name="content"]').html($('#summernote').code());
+            alert(content);
+
+            e.preventDefault();
+            if ($(".form-validate").valid()) {
+                new PNotify({
+                    icon: 'icon-check',
+                    text: "开始处理内容...！",
+                    addclass: 'bg-primary',
+                    type: 'primary'
+                })
+                $.post("/post", $(this).serialize()).done(function (data) {
+                    if (data.errno > 0) {
+                        new PNotify({
+                            title: '出错啦',
+                            icon: 'icon-blocked',
+                            text: data.errmsg,
+                            addclass: 'bg-danger',
+                            type: 'danger'
+                        });
+                    } else {
+                        new PNotify({
+                            icon: 'icon-check',
+                            text: "文章添加成功！",
+                            addclass: 'bg-success',
+                            type: 'success'
+                        })
+                        window.location.href = "/special";
+
+                    }
+                }).fail(function () {
+                    new PNotify({
+                        title: '出错啦',
+                        icon: 'icon-blocked',
+                        text: data.errmsg,
+                        addclass: 'bg-danger',
+                        type: 'danger'
+                    });
+                });
+            }
+        });
+
+        var timeout;
+
+        var page_content = new Vue({
+            delimiters: ['${', '}'],
+            el: '#page-content',
+            data: {
+                _id: '',
+                is_cover: false,
+                category: [],
+                title: '',
+                date: '',
+                isTime: true,
+                name: '',
+                content: '',
+                status: 'init',
+                dateId: 'laydate_' + Date.now(),
+            },
+            beforeMount: function () {
+//                console.log(this.$el.id)
+
+            },
+            mounted: function () {
+
+                $(".styled, .multiselect-container input").uniform({
+                    radioClass: 'choice'
+                });
+
+                var me = this;
+                var time = new Date();
+                // 程序计时的月从0开始取值后+1
+                var m = time.getMonth() + 1;
+                var t = time.getFullYear() + "-" + m + "-"
+                    + time.getDate() + " " + time.getHours() + ":"
+                    + time.getMinutes() + ":" + time.getSeconds();
+
+                layui.use('upload', function () {
+
+                    layui.upload({
+                        url: '' //上传接口
+//                        ,unwrap: true
+                        ,success: function(res){ //上传成功后的回调
+                            console.log(res)
+                        }
+                    });
+
+                    layui.upload({
+                        url: '/admin/posts/picture'
+                        , elem: '#test' //指定原始元素，默认直接查找class="layui-upload-file"
+                        , method: 'post' //上传接口的http类型
+                        , success: function (res) {
+                            LAY_demo_upload.src = res.data.guid;
+                            $("#cover").css('background-image', 'url(' + res.data.guid + ')');
+                            me.is_cover = true;
+
+                        }
+                    });
+                });
+                $(".tree-ajax").fancytree({
+                    checkbox: true,
+                    selectMode: 3,
+                    icon: false,
+                    source: {
+                        url: "/admin/taxonomy/tree"
+                    },
+//                    activate:function(event, data){
+//                        console.log(data.node);
+//                    },
+                    select:function(event, data){
+                        // Get a list of all selected nodes, and convert to a key array:
+                        var selKeys = $.map(data.tree.getSelectedNodes(), function(node){
+                            return node.key;
+                        });
+                        me.category = selKeys;
+//                        console.log(me.category);
+                    },
+                    init: function (event, data) {
+                        $('.has-tooltip .fancytree-title').tooltip();
+                    }
+                });
+//                this.date = t;
+                layui.use('laydate');
+
+
+/*
+                // Summernote editor
+                var HelloButton = function (context) {
+                    var ui = $.summernote.ui;
+
+                    // create button
+                    var button = ui.button({
+                        contents: '<input type="file" name="file1" lay-type="file" class="layui-upload-file" lay-title="附件">',
+                        tooltip: 'hello',
+                        click: function () {
+                            // invoke insertText method with 'hello' on editor module.
+//                            context.invoke('editor.insertText', 'hello');
+                        }
+                    });
+
+                    return button.render();   // return button as jquery object
+                }*/
+
+                this.control = $('.summernote');
+                this.control.summernote({
+//                placeholder: "在这里输入内容...",
+                    lang: 'zh-CN',
+                    // airMode: true
+                    height: 600,
+                    styleTags: ['pre', 'h1', 'h2'],
+                    toolbar: [
+//                        ['mybutton', ['hello']],
+                        // [groupName, [list of button]]
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['strikethrough']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph', 'h1', 'h2', 'h3']],
+                        ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+                        ['misc', ['fullscreen', 'undo', 'redo', 'codeview']],
+                    ],
+                    buttons: {
+//                        hello: HelloButton
+                    },
+                    callbacks: {
+                        onInit: function () {
+                            me.control.summernote("code", me.content);
+                        }
+                    }
+                }).on('summernote.change', function (we, contents, $editable) {
+//                    console.log('summernote content has changed.');
+                    me.content = contents;
+                    me.status = 'editing';
+                    me.save();
+
+//                    me.save(contents);
+//                Meteor.call('updateFieldA', Router.current().params._id, contents);
+                });
+
+            },
+            created: function () {
+                this.$watch('title', function (newVal, oldVal) {
+//                    if (newVal !== oldVal) {
+                    this.status = 'editing';
+                    this.save();
+//                        this.save();
+//                    }
+                })
+
+                this.$watch('name', function (newVal, oldVal) {
+//                    console.log(newVal);
+                    this.status = 'editing';
+                    this.save();
+                })
+
+                this.$watch('date', function () {
+                    console.log(this.date);
+                })
+
+            },
+
+            computed: {
+                isActive: function () {
+                    if (this.content.length > 0 || this.title.length > 0) {
+                        return true;
+                    }
+                }
+            },
+            watch: {},
+            methods: {
+                changeDate(dateId){
+                    let self = this;
+                    layui.laydate({
+                        elem: document.getElementById(dateId),
+                        istime: self.isTime || false,
+                        format: self.dateFormat || 'YYYY-MM-DD hh:mm:ss',
+                        choose: function (dates) { //选择好日期的回调
+                            self.date = dates;
+                        }
+                    })
+                },
+//                delayTimer: function(){},
+                cancel: function () {
+//                    console.log("let's cancel")
+//                    $('#post').collapse('hide');
+//                    $('#post').on('hidden.bs.collapse', function () {
+//                        var glass = $('.post-forms-glass');
+//                        glass.css('display', 'none')
+//                        glass.removeClass('post-forms-glass_active active')
+//                    })
+                },
+//                changeData: function (event) {
+//                    this.content = event.srcElement.innerHTML;
+//                    console.log(this.content + "lala")
+//                },
+                save: function () {
+                    if (this.status == 'editing') {
+//                        timeout = setTimeout(function () {
+                        this.post();
+                    }
+//                        }.bind(this), 5000);
+//                        setInterval("this.post()", 5000);
+//                    }else {
+//                        clearTimeout(timeout);
+//                    }
+
+                },
+                post: function () {
+//                    notify("正在提交内容...");
+                    this.status = 'saving';
+
+                    var self = this;
+                    var postData = {
+                        "id": this._id,
+                        "title": this.title,
+                        "name": this.name,
+                        "date": this.date,
+                        "content": this.content
+                    }
+                    fetch('/admin/posts/article/add', {
+//                        credentials: 'include',
+                        method: 'POST',
+//                        mode: 'cors',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(postData)
+
+                    }).then(function (response) {
+                        if (response.ok) {
+//                            notify("添加完成！", "success");
+                            self.status = 'success';
+                            clearTimeout(timeout);
+
+                            return response.json();
+                        } else {
+                            notify(data.errmsg, "danger");
+                            var error = new Error(response.statusText)
+                            error.response = response
+                            throw error
+                        }
+                    }).then(function (json) {
+                        if (json._id != null) {
+                            self._id = json._id;
+                            // 设置页面路径信息，页面刷新后也可以获得当前编辑的信息
+                            History.pushState({state: 1}, "State 1", self._id.toString());
+                        }
+                    })
+                }
+            }
+        });
+
+    </script>
+
+<script>
+</script>
+
+{% endblock %}
+
+{% block sidebar_main %}
+    {#<div class="sidebar sidebar-main sidebar-default sidebar-fixed">#}
+    <div class="sidebar sidebar-main sidebar-default sidebar-fixed">
+
+        <div class="sidebar-content">
+            {#<div class="panel-heading bg-grey-50">#}
+            {#<span><a href="/topic"><i class="icon-arrow-left8 position-left"></i>返回</a></span>#}
+            {##}
+            {#<div class="heading-elements">#}
+            {##}
+            {#<span class="heading-text"> <a href="#">草稿</a> <span class="badge badge-flat border-slate text-slate-600 position-right">59</span></span>#}
+            {#</div>#}
+            {#</div>#}
+            <div class="category-title bg-grey-50">
+                <span><a href="/admin/posts"><i class="icon-arrow-left8 position-left"></i>返回</a></span>
+                <div class="heading-elements">
+
+                    <span class="heading-text text-size-small">
+                        <p v-if="status == 'saving'" class="text-teal">正在保存...</p>
+                        <p v-if="status == 'success'" class="text-muted">保存成功</p>
+                        <p v-else-if="status == 'editing'"><a>保存</a></p>
+                        <p v-else-if="status == 'init'" class="text-muted">内容将实时更新</p>
+                    </span>
+
+                </div>
+
+                {#<ul class="icons-list">#}
+                {#<li><a href="#">草稿 <span class="badge badge-flat border-slate text-slate-600">59</span></a></li>#}
+                {#</ul>#}
+            </div>
+            <!-- Actions -->
+            <!-- /actions -->
+            <div class="sidebar-category">
+                {#<div class="category-title">#}
+                {#<span>新草稿</span>#}
+                {#<div class="heading-elements">#}
+
+                {#<span class="heading-text text-size-small">#}
+                {#<p v-if="status == 'saving'" class="text-teal">正在保存...</p>#}
+                {#<p v-if="status == 'success'" class="text-muted">保存成功</p>#}
+                {#<p v-else-if="status == 'editing'"><a>保存</a></p>#}
+                {#<p v-else-if="status == 'init'" class="text-muted">内容将实时更新</p>#}
+                {#</span>#}
+                {#</div>#}
+
+                {#</div>#}
+
+                <div class="category-content">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-default legitRipple btn-block"
+                                    :class="{disabled: !isActive}">预览
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-primary legitRipple btn-block"
+                                    :class="{disabled: !isActive}"> 发布
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="category-content">
+                    <div class="form-group">
+                        <label>发布日期</label>
+                        <input class="layui-input" :id="dateId" placeholder="发布日期"
+                               onclick="layui.laydate({elem: this, festival:true, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"
+                               v-model="date" @click="changeDate(dateId)">
+                    </div>
+
+                    {#<div class="form-group">#}
+                    {#<label class="label-inline">标签</label>#}
+                    {#<input type="text" value="Amsterdam,Washington,Sydney,Beijing" class="tags-input">#}
+                    {#</div>#}
+                </div>
+
+            </div>
+            <div class="sidebar-category category-collapsed">
+                <div class="category-title">
+                    <span>类别和标签</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+                {#<div class="async-load"></div>#}
+                {#<div class="async-load"></div>#}
+                {#<div class="async-load"></div>#}
+                <div class="category-content tree-ajax">
+
+                    {#<div class="tree-ajax well "></div>#}
+                </div>
+            </div>
+
+            <div class="sidebar-category  category-collapsed">
+                <div class="category-title">
+                    <span>封面图</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content">
+                    <div class="thumbnail">
+                        <div class="thumb">
+                            <div class="site-demo-upload">
+                                {#<img id="LAY_demo_upload" src="http://layer.layui.com/images/tong.jpg">#}
+                                <img id="LAY_demo_upload" src="/static/assets/images/demo/blog/1.jpg" alt="">
+
+                                <div class="site-demo-upbar">
+                                    <input type="file" name="file" class="layui-upload-file" id="test">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {#
+            <!-- Switchery group -->
+            <div class="sidebar-category  category-collapsed">
+                <div class="category-title">
+                    <span>更多选项</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content">
+                    <form action="#">
+                        <div class="form-group">
+                            <div class="checkbox checkbox-switchery checkbox-right switchery-xs">
+                                <label class="display-block">
+                                    <input type="checkbox" class="switchery" checked="checked">
+                                    自动摘要
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-switchery checkbox-right switchery-xs">
+                                <label class="display-block">
+                                    <input type="checkbox" class="switchery" checked="checked">
+                                    应用可见
+                                </label>
+                            </div>
+
+                            <div class="checkbox checkbox-switchery checkbox-right switchery-xs">
+                                <label class="display-block">
+                                    <input type="checkbox" class="switchery" checked="checked">
+                                    成员可见
+                                </label>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /switchery group -->
+            #}
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+
+            {#<form class="form-validate" id="_form">#}
+
+                <!-- Single mail -->
+                <div class="panel panel-white">
+
+                    <div class="profile-cover" v-show="is_cover">
+                        <div id="cover" class="profile-cover-img"
+                             style="background-image: url('/static/assets/images/demo/blog/2.jpg')"></div>
+                        <div class="media">
+                            {#<div class="media-left">#}
+                            {#<a href="#" class="profile-thumb">#}
+                            {#<img src="/static/assets/images/placeholder.jpg" class="img-circle" alt="">#}
+                            {#</a>#}
+                            {#</div>#}
+
+                            <div class="media-body">
+                                <h1>
+                                    ${ title }
+                                    {#<small class="display-block">UX/UI designer</small>#}
+                                </h1>
+                            </div>
+
+                            <div class="media-right media-middle">
+                                <ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
+                                    {#<li><a href="#" class="btn btn-default"><i#}
+                                    {#class="icon-file-picture position-left"></i> 换图</a></li>#}
+                                    {#<button type="button" class="btn btn-primary btn-icon btn-rounded"><i class="icon-menu7"></i></button>#}
+                                    <li>
+                                        <a href="#" class="btn btn-icon btn-xs btn-primary   btn-rounded"><i
+                                                    class=" icon-cross"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% set special = doc.category_id | get_cate %}
+                    <input type="hidden" name="cover" id="cover"/>
+                    <!-- Mail details -->
+
+                    <div class="table-responsive mail-details-write">
+                        <table class="table">
+                            <tbody>
+
+                            <tr>
+                                <td class="p-5 no-border" colspan="2">
+                                    <input type="text" class="form-control text-semibold" placeholder="无标题" name="title"
+                                           v-model="title">
+                                </td>
+                            </tr>
+                            {#
+                            <tr>
+                                <td style="width: 150px" class="text-muted">http://picker.la/</td>
+                                <td class="no-padding"><input name="name" type="text" class="form-control"
+                                                              placeholder="个性化链接地址" v-model="name"></td>
+                                <td style="width: 250px" class="text-right">
+                                    <ul class="list-inline list-inline-separate no-margin">
+                                        <li><a href="#">中文拼音</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            #}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /mail details -->
+
+
+                    <!-- Mail container -->
+                    {#<div class="mail-container-write">#}
+                        <div class="summernote" placeholder="书写是一种乐趣，也是一种生活。">
+                            {{ doc.content }}
+                        </div>
+                    </div>
+                    <!-- /mail container -->
+
+                    {#
+                    <!-- Attachments -->
+                    <div class="mail-attachments-container">
+                        <h6 class="mail-attachments-heading">2 附件</h6>
+
+                        <ul class="mail-attachments">
+                            <li>
+                                                        <span class="mail-attachments-preview">
+                                                            <i class="icon-file-pdf icon-2x"></i>
+                                                        </span>
+
+                                <div class="mail-attachments-content">
+                                    <span class="text-semibold">new_december_offers.pdf</span>
+
+                                    <ul class="list-inline list-inline-condensed no-margin">
+                                        <li class="text-muted">174 KB</li>
+                                        <li><a href="#">查看</a></li>
+                                        <li><a href="#">删除</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li>
+                                                        <span class="mail-attachments-preview">
+                                                            <i class="icon-file-pdf icon-2x"></i>
+                                                        </span>
+
+                                <div class="mail-attachments-content">
+                                    <span class="text-semibold">assignment_letter.pdf</span>
+
+                                    <ul class="list-inline list-inline-condensed no-margin">
+                                        <li class="text-muted">736 KB</li>
+                                        <li><a href="#">查看</a></li>
+                                        <li><a href="#">删除</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /attachments -->
+                    #}
+                </div>
+                <!-- /single mail -->
+            {#</form>#}
+        </div>
+    </div>
+
+{% endblock %}
+

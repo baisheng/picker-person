@@ -1952,6 +1952,8 @@ new Vue({
                 // vue.pageAll = response.data.data;
                 // vue.allpage = response.data.totalPages;
                 // vue.pagedata = response;
+
+                eventHub.$emit("fetch");
             }).catch(function (error) {
                 if (error.response) {
                     // The request was made, but the server responded with a status code
@@ -1983,6 +1985,8 @@ new Vue({
                 vue.pageAll = response.data.data;
                 vue.allpage = response.data.totalPages;
                 vue.pagedata = response.data;
+
+                eventHub.$emit("fetch");
             }).catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);
@@ -2502,6 +2506,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 //    import Article from './article.vue'
 Vue.use(_vueMasonry2.default);
@@ -2539,14 +2544,18 @@ exports.default = {
     mounted: function mounted() {
         var _this = this;
 
-        var scope = this;
+        var me = this;
 
+        eventHub.$on("fetch", function () {
+            me.reLayout();
+        });
         eventHub.$on("page", function () {
-            Vue.redrawVueMasonry();
+            me.reLayout();
+            //                Vue.redrawVueMasonry()
         });
         eventHub.$on("snippet_id", function (id) {
             _this.snippet_id = id;
-            _this.reLayout();
+            me.reLayout();
         });
 
         eventHub.$on("new_snippet", function () {
@@ -2555,8 +2564,9 @@ exports.default = {
 
         Vue.nextTick(function () {
             Prism.highlightAll();
-            //                scope.reLayout();
-            Vue.redrawVueMasonry();
+            me.reLayout();
+            //                Vue.redrawVueMasonry()
+
         });
     },
     methods: {
@@ -2565,13 +2575,30 @@ exports.default = {
             var vue = this;
 
             Vue.nextTick(function () {
-                Vue.redrawVueMasonry();
+                // 渲染 select2 样式
+                //                        vue.renderSelect2();
 
-                //                    vue.render();
+                // vue.render();
                 Prism.highlightAll();
                 // DOM updated
+                var $grid = $('[data-plugin="masonry"]');
+                $grid.masonry();
+                $grid.masonry('reloadItems');
+                $grid.masonry('layout');
             });
         },
+        //            reLayout: function () {
+
+        //                let vue = this;
+
+        //                Vue.nextTick(function () {
+        //                    Vue.redrawVueMasonry()
+
+        //                    vue.render();
+        //                    Prism.highlightAll();
+        // DOM updated
+        //                })
+        //            },
         setting: function setting(id) {
             eventHub.$emit('snippet_id', id);
         },
@@ -5731,14 +5758,9 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    directives: [{
-      name: "masonry",
-      rawName: "v-masonry"
-    }],
     staticClass: "row",
     attrs: {
-      "transition-duration": "0.3s",
-      "item-selector": ".item"
+      "data-plugin": "masonry"
     }
   }, _vm._l((_vm.posts), function(_) {
     return _c('div', {
@@ -5746,7 +5768,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         name: "masonry-tile",
         rawName: "v-masonry-tile"
       }],
-      staticClass: "col-lg-6 col-md-6 col-xs-12 item"
+      staticClass: "col-lg-6 col-md-6 col-xs-12 masonry-item"
     }, [(_.type == 'snippet') ? _c('div', {
       staticClass: "panel panel-default"
     }, [_c('div', {

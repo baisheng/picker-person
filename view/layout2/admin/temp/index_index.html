@@ -1,0 +1,405 @@
+{% extends "./inc/_base.html" %}
+
+{% block script %}
+    <script type="text/javascript" src="/static/assets/js/plugins/forms/editable/editable.min.js"></script>
+    <script src="/static/assets/js/plugins/treetable/jquery.treetable.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $("#category").treetable({expandable: true});
+        jQuery('#category').treetable('expandAll')
+
+        //        $('.select').select2({
+        //            minimumResultsForSearch: Infinity
+        //        });
+
+        var toggleState = document.querySelector('.switchery');
+        var toggleStateInit = new Switchery(toggleState);
+        toggleState.onchange = function() {
+            if(toggleState.checked) {
+                $('.editable').editable('enable');
+            }
+            else {
+                $('.editable').editable('disable');
+            }
+        };
+
+    </script>
+
+
+{% endblock %}
+{% block style %}
+    <link rel="/static/assets/js/plugins/treetable/treetable.css" rel="stylesheet" type="text/css">
+
+    <style>
+
+        .frame-wrapper {
+            position: relative;
+            font-size: 0;
+        }
+
+        .frame-wrapper .frame-border {
+            position: absolute;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.13);*/
+            pointer-events: none;
+        }
+
+        .frame-viewer {
+            width: 100%;
+            height: 400px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .frame-viewer img.preview {
+            width: 100%;
+        }
+
+        .frame-viewer iframe {
+            width: 1280px;
+            height: 800px;
+            border: 0;
+            overflow: hidden;
+            -webkit-transform: scale(0.685);
+            transform: scale(0.685);
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            background-color: white;
+            border: none;
+        }
+
+        .col-md-7 .frame-viewer iframe {
+            -webkit-transform: scale(0.53);
+            transform: scale(0.53);
+        }
+
+        .col-md-6 .frame-viewer iframe {
+            width: 1266px;
+            height: 888px;
+            -webkit-transform: scale(0.45);
+            transform: scale(0.45);
+        }
+
+        img.screenshot {
+            width: 100%;
+            box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2), inset 0 2px 0 0 rgba(255, 255, 255, 0.2);
+        }
+
+        a.site-link {
+            display: block;
+            padding: 14px 10px;
+            text-align: center;
+            /*border: 1px solid rgba(43, 50, 57, 0.15);*/
+            border-top: none;
+            background-color: #FDFDFD;
+            /*border-radius: 0 0 3px 3px;*/
+            text-decoration: none;
+        }
+
+        a.site-link i {
+            margin-right: 10px;
+            position: relative;
+            top: 2px;
+        }
+
+        a.site-link:hover {
+            color: #24588a;
+        }
+
+        a.site-link:hover i.icon {
+            -webkit-filter: brightness(70%);
+            filter: brightness(70%);
+        }
+
+        .col-padding {
+            position: relative;
+            min-height: 1px;
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    </style>
+{% endblock %}
+
+<!-- Main content -->
+
+{#{% block body_style %}sidebar-main-hidden{% endblock %}#}
+
+
+{% block content %}
+        <div class="panel panel-white">
+
+            <div class="panel-heading">
+                <h6 class="panel-title">基本信息<a class="heading-elements-toggle"><i
+                                class="icon-more"></i></a></h6>
+
+                <div class="heading-elements">
+                    <form class="heading-form" action="#">
+                        <div class="form-group">
+                            <label class="checkbox-inline checkbox-switchery checkbox-right switchery-xs">
+                                <input type="checkbox" class="switchery">
+                                编辑:
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {#        <div class="tabbable tab-content-bordered">
+                      <ul class="nav nav-tabs nav-tabs-bottom">
+                          {% for ingredient, amount in app_setup.CONFIG_GROUP_LIST %}
+                            <li {% if id == ingredient %}class="active"{% endif %} ><a
+                                      href="/application/<$ app.name $>/setup/?id=<$ ingredient $>"
+                                      data-groupid="<$ ingredient $>" class="grouplist"> <$ amount $></a></li>
+                          {% endfor %}
+
+                      </ul>
+                    </div>#}
+
+            <div class="table-responsive">
+                <table class="table table-lg">
+                    <tbody>
+                    <tr>
+                        <td style="width: 120px">描述</td>
+                        <td><a href="#" id="text-field" data-type="text" data-inputclass="form-control" data-pk="1"
+                               data-title="<$ options.description $>"
+                               class="editable editable-click"><$ options.description $></a></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 120px">标题</td>
+
+                        <td><a href="#" id="text-field" data-type="text" data-inputclass="form-control" data-pk="1"
+                               data-title="<$ options.title $>"
+                               class="editable editable-click">  <$ options.title $></a></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 120px">域名</td>
+
+                        <td><a href="#" id="text-field-help" data-type="text" data-inputclass="form-control"
+                               data-pk="1" data-title="Help block" class="editable editable-click"
+                               data-original-title="" title=""><i
+                                        class="fa fa-globe position-left"></i><$ options.site_url $></a></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 120px">SEO 关键词</td>
+
+                        <td>
+                            {% set keywords = options.keywords | strToArray %}
+                            {% for key in keywords %}
+                                <span class="label label-primary"><$ key $></span>
+                            {% endfor %}
+                            {#<a href="#" id="input-tags-labels" class="no-border-bottom editable editable-click" data-type="text" data-value="Amsterdam,Washington,Sydney" data-pk="1" data-title="Empty text field"><span class="label label-primary">网站定制</span> <span class="label label-primary">技术服务</span> <span class="label label-primary">产品设计</span></a>#}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 120px">网站备案号</td>
+
+                        <td><a href="#" id="empty-field-validate" data-type="text" data-inputclass="form-control"
+                               data-pk="1" data-title="Required text field"
+                               class="editable editable-click editable-empty"><$ options.icp $></a></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 120px">版权信息</td>
+
+                        <td><a href="#" id="input-group-addon" data-type="text" data-inputclass="form-control"
+                               data-pk="1" data-title="Input group addon" class="editable editable-click"><i
+                                        class="fa fa-copyright position-left"></i><$ options.copyright $></a></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            {#<div class="panel-footer panel-footer-condensed">#}
+            {#<a class="heading-elements-toggle"><i#}
+            {#class="icon-more"></i></a>#}
+            {#<div class="heading-elements">#}
+            {#<span class="heading-text">#}
+            {#<span class="status-mark border-success position-left"></span> <span#}
+            {#class="text-semibold">2016/10/27</span>#}
+            {#</span>#}
+
+            {#<ul class="list-inline list-inline-condensed heading-text pull-right">#}
+            {#<li><a href="#" class="text-default" data-toggle="modal" data-target="#invoice"><i#}
+            {#class="icon-eye8"></i></a></li>#}
+            {#<li class="dropdown">#}
+            {#<a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i#}
+            {#class="icon-menu7"></i> <span class="caret"></span></a>#}
+            {#<ul class="dropdown-menu dropdown-menu-right">#}
+            {#<li><a href="#"><i class="icon-printer"></i> Print invoice</a></li>#}
+            {#<li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>#}
+            {#<li class="divider"></li>#}
+            {#<li><a href="#"><i class="icon-file-plus"></i> Edit invoice</a></li>#}
+            {#<li><a href="#"><i class="icon-cross2"></i> Remove invoice</a></li>#}
+            {#</ul>#}
+            {#</li>#}
+            {#</ul>#}
+            {#</div>#}
+            {#</div>#}
+        </div>
+{#
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="panel panel-flat">
+                <div class="frame-wrapper">
+                    <div class="frame-border"></div>
+                    <div class="frame-viewer" style="">
+                        <iframe sandbox="allow-scripts" src="http://caixie.org"></iframe>
+                    </div>
+                </div>
+                <img src="https://daks2k3a4ib2z.cloudfront.net/img/site-placeholder@2x.png" ng-show="!url"
+                width="100%" class="preview ng-hide" style=""></div>
+                <div class="panel-footer">
+                <a target="_blank" class="text-center" href="http://nelucebotari.webflow.io"><i class="icon link2"></i><span>新页面打开</span></a>
+
+                </div>
+                <div class="panel-footer panel-footer-condensed"><a class="heading-elements-toggle"><i
+                                class="icon-more"></i></a>
+                    <a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                    <div class="heading-elements">
+									<span class="heading-text">
+										<span class="status-mark border-success position-left"></span> <span
+                                                class="text-semibold">2016/10/27</span>
+									</span>
+
+                        <ul class="list-inline list-inline-condensed heading-text pull-right">
+                            <li><a href="#" class="text-default" data-toggle="modal" data-target="#invoice"><i
+                                            class="icon-eye8"></i></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i
+                                            class="icon-menu7"></i> <span class="caret"></span></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="#"><i class="icon-printer"></i> Print invoice</a></li>
+                                    <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#"><i class="icon-file-plus"></i> Edit invoice</a></li>
+                                    <li><a href="#"><i class="icon-cross2"></i> Remove invoice</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-white">
+
+                <div class="panel-heading">
+                    <h6 class="panel-title">基本信息<a class="heading-elements-toggle"><i
+                                    class="icon-more"></i></a></h6>
+
+                    <div class="heading-elements">
+                        <form class="heading-form" action="#">
+                            <div class="form-group">
+                                <label class="checkbox-inline checkbox-switchery checkbox-right switchery-xs">
+                                    <input type="checkbox" class="switchery">
+                                    编辑:
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                       <div class="tabbable tab-content-bordered">
+                          <ul class="nav nav-tabs nav-tabs-bottom">
+                              {% for ingredient, amount in app_setup.CONFIG_GROUP_LIST %}
+                                <li {% if id == ingredient %}class="active"{% endif %} ><a
+                                          href="/application/<$ app.name $>/setup/?id=<$ ingredient $>"
+                                          data-groupid="<$ ingredient $>" class="grouplist"> <$ amount $></a></li>
+                              {% endfor %}
+
+                          </ul>
+                        </div>
+
+                <div class="table-responsive">
+                    <table class="table table-lg">
+                        <tbody>
+                        <tr>
+                            <td style="width: 120px">描述</td>
+                            <td><a href="#" id="text-field" data-type="text" data-inputclass="form-control" data-pk="1"
+                                   data-title="<$ options.description $>"
+                                   class="editable editable-click"><$ options.description $></a></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 120px">标题</td>
+
+                            <td><a href="#" id="text-field" data-type="text" data-inputclass="form-control" data-pk="1"
+                                   data-title="<$ options.title $>"
+                                   class="editable editable-click">  <$ options.title $></a></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 120px">域名</td>
+
+                            <td><a href="#" id="text-field-help" data-type="text" data-inputclass="form-control"
+                                   data-pk="1" data-title="Help block" class="editable editable-click"
+                                   data-original-title="" title=""><i
+                                            class="fa fa-globe position-left"></i><$ options.site_url $></a></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 120px">SEO 关键词</td>
+
+                            <td>
+                                {% set keywords = options.keywords | strToArray %}
+                                {% for key in keywords %}
+                                    <span class="label label-primary"><$ key $></span>
+                                {% endfor %}
+                                <a href="#" id="input-tags-labels" class="no-border-bottom editable editable-click" data-type="text" data-value="Amsterdam,Washington,Sydney" data-pk="1" data-title="Empty text field"><span class="label label-primary">网站定制</span> <span class="label label-primary">技术服务</span> <span class="label label-primary">产品设计</span></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 120px">网站备案号</td>
+
+                            <td><a href="#" id="empty-field-validate" data-type="text" data-inputclass="form-control"
+                                   data-pk="1" data-title="Required text field"
+                                   class="editable editable-click editable-empty"><$ options.icp $></a></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 120px">版权信息</td>
+
+                            <td><a href="#" id="input-group-addon" data-type="text" data-inputclass="form-control"
+                                   data-pk="1" data-title="Input group addon" class="editable editable-click"><i
+                                            class="fa fa-copyright position-left"></i><$ options.copyright $></a></td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel-footer panel-footer-condensed">
+                <a class="heading-elements-toggle"><i
+                class="icon-more"></i></a>
+                <div class="heading-elements">
+                <span class="heading-text">
+                <span class="status-mark border-success position-left"></span> <span
+                class="text-semibold">2016/10/27</span>
+                </span>
+
+                <ul class="list-inline list-inline-condensed heading-text pull-right">
+                <li><a href="#" class="text-default" data-toggle="modal" data-target="#invoice"><i
+                class="icon-eye8"></i></a></li>
+                <li class="dropdown">
+                <a href="#" class="text-default dropdown-toggle" data-toggle="dropdown"><i
+                class="icon-menu7"></i> <span class="caret"></span></a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                <li><a href="#"><i class="icon-printer"></i> Print invoice</a></li>
+                <li><a href="#"><i class="icon-file-download"></i> Download invoice</a></li>
+                <li class="divider"></li>
+                <li><a href="#"><i class="icon-file-plus"></i> Edit invoice</a></li>
+                <li><a href="#"><i class="icon-cross2"></i> Remove invoice</a></li>
+                </ul>
+                </li>
+                </ul>
+                </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+#}
+{% endblock %}
+
+<!-- /main content -->
+
+
+

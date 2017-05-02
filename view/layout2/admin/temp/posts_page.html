@@ -1,0 +1,151 @@
+{% extends "./inc/_base.html" %}
+
+{% block page_header %}
+    <div class="page-header">
+        <div class="page-header-content no-padding-left no-padding-right ">
+            <div class="page-title">
+                {% set special = doc.category_id | get_cate %}
+
+                <h5><i class="icon-arrow-left52 position-left"></i> <span
+                            class="text-semibold">#<a>{{ special.name }}</a></span> -<span
+                            class="text-muted"> {{ doc.title }}</span></h5>
+                <a class="heading-elements-toggle"><i class="icon-more"></i></a></div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <div id="pageList" class="box">
+        <template id="item-template">
+            <li :data-id="model.id">
+                <div class="entry clear">
+                    <div class="info" :data-id="model.id">
+                        <span>{{ model.name }}</span>
+                        <small>{{ model.siteURL }}</small>
+                    </div>
+                    <span v-if="model.home" class="setHome" data-tooltip="'.lang::get('page_home').'"><i class="icon icon-ios-home"></i></span>
+                    <span v-else class="setHome" @click="setHome(model.id)"><i class="inactive icon icon-ios-home-outline"></i></span>
+                    <a :href="\''.url::admin('content', ['index', 'delete']).'/\' + model.id" class="icon delete ajax icon-ios-trash-outline"></a>
+                    <a :href="\''.url::admin('content', ['index', 'edit']).'/\' + model.id" class="icon edit icon-edit"></a>
+                </div>
+                <ul v-if="model.children">
+                    <item v-for="model in model.children" :model="model"></item>
+                </ul>
+            </li>
+        </template>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        Vue.component("item", {
+            template: "#item-template",
+            props: {
+                model: Object
+            },
+            methods: {
+                setHome: function(id) {
+                    eventHub.$emit("setHome", id);
+                }
+            }
+        });
+        new Vue({
+            el: "#app",
+            data: {
+                headline: lang["pages"],
+                addPageModal: false,
+                pageName: "",
+                pageParent: 0,
+                pageGrid: 0,
+                pageParentName: "",
+                pageTree: '.json_encode(PageModel::getAll()).',
+                pageAll: '.json_encode(PageModel::getAllFromDb()).',
+                searchBoxShow: false,
+                searchBox: ""
+            },
+            mounted: function() {
+                var vue = this;
+                $(document).on("fetch", function() {
+                    vue.fetch();
+                });
+                eventHub.$on("setHome", this.setHome);
+                eventHub.$on("setSearchbox", this.setParent);
+                vue.setDrag();
+            },
+            methods: {
+                fetch: function() {
+                    var vue = this;
+                    $.ajax({
+                        method: "POST",
+                        url: "'.url::admin('content', ['index', 'get']).'",
+                        dataType: "json",
+                        success: function(data) {
+                            vue.pageAll = data.all;
+                            vue.pageTree = data.tree;
+                            vue.setDrag();
+                        }
+                    });
+                },
+                setDrag: function() {
+                    var drake = dragula($("#pageList ul").toArray(), {
+                        mirrorContainer: $("#pageList")[0]
+                    });
+                    drake.on("drop", function(el, target, source, sibling) {
+                        $.ajax({
+                            method: "POST",
+                            url: "'.url::admin('content', ['index', 'move']).'",
+                            data: {
+                                array: getChildren("#pageList")
+                            }
+                        });
+                    });
+                },
+                setParent: function(data) {
+                    this.pageParent = data.id;
+                    this.pageParentName = data.name;
+                },
+                addPage: function() {
+                    var vue = this;
+                    $.ajax({
+                        method: "POST",
+                        url: "'.url::admin('content', ['index', 'add']).'",
+                        data: {
+                            name: vue.pageName,
+                            parent: vue.pageParent,
+                            grid: vue.pageGrid
+                        },
+                        success: function(data) {
+                            vue.fetch();
+                            vue.addPageModal = false;
+                            vue.pageName = "";
+                            vue.pageGrid = 0;
+                            eventHub.$emit("setSearchboxEmpty");
+                        }
+                    });
+                },
+                setHome: function(id) {
+                    var vue = this;
+                    $.ajax({
+                        method: "POST",
+                        url: "'.url::admin('content', ['index', 'setHome']).'",
+                        data: {
+                            id: id
+                        },
+                        success: function() {
+                            vue.fetch();
+                        }
+                    });
+                }
+            },
+            computed: {
+                pageTreeLength: function() {
+                    return !jQuery.isEmptyObject(this.pageTree);
+                }
+            }
+        });
+    </script>
+{% endblock %}

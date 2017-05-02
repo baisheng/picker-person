@@ -1,0 +1,30 @@
+<div class="panel panel-flat">
+    <div class="well no-border">
+        <h6 class=" text-semibold">
+            教育信息
+        </h6>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-md">
+            <tbody>
+            {% for edu in resume.education %}
+                <tr>
+                    <th colspan="3" class="text-muted">
+                        <em><$ edu.startDate $> - <$ edu.endDate $></em>
+
+                    </th>
+                </tr>
+                <tr class="text-slate">
+                    <td>
+                        <span><$ edu.institution $></span>
+                    </td>
+                    <td>
+                        <$ edu.area $> ・<$ edu.studyType $>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>

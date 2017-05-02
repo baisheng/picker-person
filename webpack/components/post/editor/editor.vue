@@ -192,7 +192,7 @@
         margin-bottom: 0;
         font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
         line-height: 1.7;
-        font-size: 14px;
+        font-size: 16px;
         color: #333;
         background-color: #fff;
         border: 0;

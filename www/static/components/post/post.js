@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "../static";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 504);
+/******/ 	return __webpack_require__(__webpack_require__.s = 495);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -699,7 +699,7 @@ module.exports = __webpack_require__(2) ? function(object, key, value){
 
 var anObject       = __webpack_require__(12)
   , IE8_DOM_DEFINE = __webpack_require__(25)
-  , toPrimitive    = __webpack_require__(18)
+  , toPrimitive    = __webpack_require__(17)
   , dP             = Object.defineProperty;
 
 exports.f = __webpack_require__(2) ? Object.defineProperty : function defineProperty(O, P, Attributes){
@@ -871,6 +871,23 @@ module.exports = function(it){
 
 /***/ }),
 /* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = __webpack_require__(8);
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function(it, S){
+  if(!isObject(it))return it;
+  var fn, val;
+  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
+  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports) {
 
 // this module is a runtime utility for cleaner component module output and will
@@ -925,23 +942,6 @@ module.exports = function normalizeComponent (
   }
 }
 
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(8);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function(it, S){
-  if(!isObject(it))return it;
-  var fn, val;
-  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
-  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
-  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
-  throw TypeError("Can't convert object to primitive value");
-};
 
 /***/ }),
 /* 19 */
@@ -14646,7 +14646,7 @@ var meta = module.exports = {
 var pIE            = __webpack_require__(73)
   , createDesc     = __webpack_require__(15)
   , toIObject      = __webpack_require__(13)
-  , toPrimitive    = __webpack_require__(18)
+  , toPrimitive    = __webpack_require__(17)
   , has            = __webpack_require__(11)
   , IE8_DOM_DEFINE = __webpack_require__(25)
   , gOPD           = Object.getOwnPropertyDescriptor;
@@ -14719,7 +14719,7 @@ var global         = __webpack_require__(1)
   , isArray        = __webpack_require__(137)
   , anObject       = __webpack_require__(12)
   , toIObject      = __webpack_require__(13)
-  , toPrimitive    = __webpack_require__(18)
+  , toPrimitive    = __webpack_require__(17)
   , createDesc     = __webpack_require__(15)
   , _create        = __webpack_require__(47)
   , gOPNExt        = __webpack_require__(112)
@@ -27567,7 +27567,7 @@ exports = module.exports = __webpack_require__(150)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.shadowBox {*/\n/*position: absolute;*/\n/*background: #ddd;*/\n/*width: 268px;*/\n/*height: 418px;*/\n/*top: 50%;*/\n/*left: 50%;*/\n/*margin-top: -180px;*/\n/*margin-left: -134px;*/\n/*border-radius: 16px;*/\n/*filter: blur(50px);*/\n/*-webkit-filter: blur(50px);*/\n/*}*/\n.shadowBox {\n    background: #999;\n    width: 250px;\n    height: 158px;\n\n    position: fixed;\n    right: calc(10% - 0px);\n    margin-right: -100px;\n    top: 200px;\n    border-radius: 16px;\n    filter: blur(50px);\n    /*z-index: 9998;*/\n    z-index: 10;\n    -webkit-filter: blur(50px);\n}\n.snippet--content {\n    font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n    max-height: 220px;\n    overflow: auto;\n}\n.snippet--panel {\n    /*position: relative;*/\n    /*right: calc(10% - 0px);*/\n    /*margin-right: -125px;*/\n    /*top: 100px;*/\n    /*width: 280px;*/\n    color: #898989;\n    opacity: 1;\n    /*z-index: 11;*/\n    /*z-index: 9999;*/\n    background-color: #fafafa;\n    /*border-radius: 4px;*/\n\n    /*-webkit-border-radius: 4px;*/\n    /*-moz-border-radius: 4px;*/\n\n    transition: all .2s ease-in;\n\n    /*-ms-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/\n    /*-o-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/\n    /*box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/\n    transition-property: right;\n}\n.snippet--panel.fadeout {\n    opacity: 0;\n    transition: all .5s ease-in;\n}\n.note-editor .note-codable {\n    display: none;\n    width: 100%;\n    overflow: auto;\n\n    padding: 20px;\n    margin-bottom: 0;\n    font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n    line-height: 1.7;\n    font-size: 14px;\n    color: #333;\n    background-color: #fff;\n    border: 0;\n    border-radius: 0;\n    resize: none;\n    -webkit-box-shadow: none;\n    box-shadow: none;\n}\n\n/*.doc-comment-box {*/\n/*width: 260px;*/\n/*background: #fff;*/\n/*box-shadow: 0 1px 4px rgba(0, 0, 0, .2);*/\n/*border-radius: 2px;*/\n/*position: absolute;*/\n/*right: 0;*/\n/*bottom: 0;*/\n/*margin-left: 0;*/\n/*cursor: pointer;*/\n/*transition: opacity .3s ease-out, margin-left .3s ease, top .3s ease;*/\n/*}*/\n\n/*.doc-comment-box.active {*/\n/*cursor: default;*/\n/*box-shadow: 0 0 20px #c8c8c8;*/\n/*margin-left: -30px;*/\n/*width: 290px;*/\n/*}*/\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.shadowBox {*/\n/*position: absolute;*/\n/*background: #ddd;*/\n/*width: 268px;*/\n/*height: 418px;*/\n/*top: 50%;*/\n/*left: 50%;*/\n/*margin-top: -180px;*/\n/*margin-left: -134px;*/\n/*border-radius: 16px;*/\n/*filter: blur(50px);*/\n/*-webkit-filter: blur(50px);*/\n/*}*/\n.shadowBox {\n    background: #999;\n    width: 250px;\n    height: 158px;\n\n    position: fixed;\n    right: calc(10% - 0px);\n    margin-right: -100px;\n    top: 200px;\n    border-radius: 16px;\n    filter: blur(50px);\n    /*z-index: 9998;*/\n    z-index: 10;\n    -webkit-filter: blur(50px);\n}\n.snippet--content {\n    font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n    max-height: 220px;\n    overflow: auto;\n}\n.snippet--panel {\n    /*position: relative;*/\n    /*right: calc(10% - 0px);*/\n    /*margin-right: -125px;*/\n    /*top: 100px;*/\n    /*width: 280px;*/\n    color: #898989;\n    opacity: 1;\n    /*z-index: 11;*/\n    /*z-index: 9999;*/\n    background-color: #fafafa;\n    /*border-radius: 4px;*/\n\n    /*-webkit-border-radius: 4px;*/\n    /*-moz-border-radius: 4px;*/\n\n    transition: all .2s ease-in;\n\n    /*-ms-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/\n    /*-o-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/\n    /*box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/\n    transition-property: right;\n}\n.snippet--panel.fadeout {\n    opacity: 0;\n    transition: all .5s ease-in;\n}\n.note-editor .note-codable {\n    display: none;\n    width: 100%;\n    overflow: auto;\n\n    padding: 20px;\n    margin-bottom: 0;\n    font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n    line-height: 1.7;\n    font-size: 16px;\n    color: #333;\n    background-color: #fff;\n    border: 0;\n    border-radius: 0;\n    resize: none;\n    -webkit-box-shadow: none;\n    box-shadow: none;\n}\n\n/*.doc-comment-box {*/\n/*width: 260px;*/\n/*background: #fff;*/\n/*box-shadow: 0 1px 4px rgba(0, 0, 0, .2);*/\n/*border-radius: 2px;*/\n/*position: absolute;*/\n/*right: 0;*/\n/*bottom: 0;*/\n/*margin-left: 0;*/\n/*cursor: pointer;*/\n/*transition: opacity .3s ease-out, margin-left .3s ease, top .3s ease;*/\n/*}*/\n\n/*.doc-comment-box.active {*/\n/*cursor: default;*/\n/*box-shadow: 0 0 20px #c8c8c8;*/\n/*margin-left: -30px;*/\n/*width: 290px;*/\n/*}*/\n\n\n", ""]);
 
 // exports
 
@@ -33932,7 +33932,7 @@ module.exports = function text_collapse(state) {
 /* styles */
 __webpack_require__(370)
 
-var Component = __webpack_require__(17)(
+var Component = __webpack_require__(18)(
   /* script */
   __webpack_require__(233),
   /* template */
@@ -34270,8 +34270,7 @@ if(false) {
 /* 375 */,
 /* 376 */,
 /* 377 */,
-/* 378 */,
-/* 379 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34561,6 +34560,7 @@ new Vue({
 });
 
 /***/ }),
+/* 379 */,
 /* 380 */,
 /* 381 */,
 /* 382 */,
@@ -34676,19 +34676,10 @@ new Vue({
 /* 492 */,
 /* 493 */,
 /* 494 */,
-/* 495 */,
-/* 496 */,
-/* 497 */,
-/* 498 */,
-/* 499 */,
-/* 500 */,
-/* 501 */,
-/* 502 */,
-/* 503 */,
-/* 504 */
+/* 495 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(379);
+module.exports = __webpack_require__(378);
 
 
 /***/ })

@@ -233,21 +233,25 @@
 {% block sidebar_main %}
     <div class="sidebar sidebar-main sidebar-default sidebar-separate">
         <div class="sidebar-content">
-
-            <!-- Actions -->
             <div class="sidebar-category">
                 <div class="category-title">
-                    <span>Actions</span>
+                    <span>内容检索</span>
                     <ul class="icons-list">
                         <li><a href="#" data-action="collapse"></a></li>
                     </ul>
                 </div>
 
                 <div class="category-content">
-                    <a href="#" class="btn bg-indigo-400 btn-block legitRipple">Compose mail</a>
+                    <form action="#">
+                        <div class="has-feedback has-feedback-left">
+                            <input type="search" class="form-control" placeholder="Search">
+                            <div class="form-control-feedback">
+                                <i class="icon-search4 text-size-base text-muted"></i>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <!-- /actions -->
 
 
             <!-- Sub navigation -->

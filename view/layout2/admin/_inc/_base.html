@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><$ options.title $> - <$ options.description $></title>
+    <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
+    {#<link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">#}
+    <!-- Global stylesheets -->
+    {#<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"#}
+    {#type="text/css">#}
+    <link href="/static/assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+    <link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/full/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/core.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/components.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/colors.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/extras/animate.min.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <style>
+        a.delete {
+            z-index: 5;
+            position: relative;
+        }
+
+        a.delete div {
+            width: 76px;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            background: #fefefe;
+            position: absolute;
+            z-index: 5;
+            margin: -20px 0 0 -38px;
+            -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            -moz-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+        }
+
+        a.delete div .confirm,
+        a.delete div .abort {
+            vertical-align: top;
+            line-height: 32px;
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            font-size: 21px !important;
+            top: 4px;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        a.delete div .confirm:before,
+        a.delete div .abort:before {
+            line-height: 32px;
+            display: block;
+        }
+
+        a.delete div .confirm {
+            color: #fff;
+            background: #ef4748;
+            left: 4px;
+        }
+
+        a.delete div .abort {
+            /*color: #858a95;*/
+            /*color: #;*/
+            right: 4px;
+        }
+
+        /* 定制化 */
+        /*html .layer-snippet{background-color:#eee;}*/
+        /*.layer-snippet .layui-layer-title{border:none; background-color:#333; color:#fff;}*/
+
+        /*.runtest {*/
+        /*position: relative;*/
+        /*display: none;*/
+        /*}*/
+
+        .runtest textarea {
+            display: block;
+            /*width: 420px;*/
+            /*height: 200px;*/
+            /*border: 10px solid #F8F8F8;*/
+            /*border-top-width: 0;*/
+            padding: 20px;
+            line-height: 20px;
+            overflow: auto;
+            background-color: #3F3F3F;
+            color: #eee;
+            font-size: 12px;
+            font-family: Courier New;
+        }
+
+        /*.runtest a {*/
+        /*position: absolute;*/
+        /*right: 20px;*/
+        /*bottom: 20px;*/
+        /*}*/
+
+        .layer-photos-demo {
+            margin: 10px 0;
+        }
+
+        .layer-photos-demo img {
+            width: 160px;
+            height: 100px;
+        }
+    </style>
+    <style>
+        #messages {
+            position: fixed;
+            top: 65px;
+            left: 50%;
+            z-index: 110;
+            margin-left: 125px;
+            -webkit-transform: translate(-50%, 0);
+            -moz-transform: translate(-50%, 0);
+            -o-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        #messages .animated {
+            -webkit-animation-duration: 0.2s;
+            animation-duration: 0.2s;
+        }
+
+        @media (max-width: 992px ) {
+            #messages {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #messages {
+                left: 15px;
+                right: 15px;
+                top: 61px;
+                -webkit-transform: translate(0, 0);
+                -moz-transform: translate(0, 0);
+                -o-transform: translate(0, 0);
+                -ms-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        .message {
+            padding: 8px 10px;
+            color: #fff;
+            margin: 0 0 5px 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        .message.success {
+            background: #41da54;
+        }
+
+        .message.info {
+            background: #3f82d7;
+        }
+
+        .message.warning {
+            background: #e4c139;
+        }
+
+        .message.error {
+            background: #ef4748;
+        }
+
+        .message ol {
+            margin: 0;
+            padding: 0 0 0 18px;
+        }
+
+        .message ol li {
+            margin: 4px 0;
+        }
+
+    </style>
+    {% block style %}{% endblock %}
+
+</head>
+
+
+<body class="navbar-top">
+<div id="app">
+
+    <div class="navbar navbar-default header-highlight navbar-fixed-top">
+
+        <div class="navbar-header navbar-inverse bg-slate-800">
+            <ul class="nav navbar-nav navbar-left">
+                <li class="{% if app.name == controller.app_name %}active{% endif %}"><a href="/admin">
+                        <i class="icon-puzzle2 position-left"></i>
+                        我的应用
+                    </a></li>
+
+                <li class=""><a href="/admin/discover" class=""><i class="icon-droplets position-left"></i>发现</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            {% block navbar %}{% endblock %}
+
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+
+                    {% block navbar_right %}
+                        <li><a class="snippet"><i class="icon-stack-plus position-left"></i>碎片</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-plus2 text-teal"></i>
+
+                                <span class="position-right text-semibold">内容</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="/admin/posts/article"><i class="icon-pencil7"></i> 写文章</a></li>
+                                <li><a href="/admin/posts/goods"><i class="icon-bag"></i> 发布作品</a></li>
+                            </ul>
+                        </li>
+                    {% endblock %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+            <!-- Main sidebar -->
+            {% block sidebar_main %}{% endblock %}
+            <!-- /main sidebar -->
+
+            <!-- Secondary sidebar -->
+            {% block sidebar_secondary %}{% endblock %}
+            <!-- /secondary sidebar -->
+
+            <!-- Main content -->
+            <div class="content-wrapper ">
+                {% block fab_menu %}{% endblock %}
+                {% block page_navbar %} {% endblock %}
+                <!-- Page header -->
+                {% block page_header %}{% endblock %}
+                <!-- /page header -->
+
+                <!-- Content area -->
+                <div class="content">
+                    <div id="messages"></div>
+
+                    {% block content %}{% endblock %}
+
+                    <!-- Footer -->
+                    {% block footer %}
+                        <div class="footer text-muted">
+                            &copy; 2017. Power by <a
+                                    href=""
+                                    target="_blank">Picker</a>
+                        </div>
+                    {% endblock %}
+                    <!-- /footer -->
+
+                </div>
+                <!-- /content area -->
+
+            </div>
+            <!-- /main content -->
+
+            <!-- Opposite sidebar -->
+            {% block opposite_sidebar %}{% endblock %}
+            <!-- /opposite sidebar -->
+
+        </div>
+        <!-- /page content -->
+    </div>
+    <!-- /page container -->
+
+</div>
+
+{% block components %}{% endblock %}
+
+<script type="text/javascript">
+    //    <$ controller.lang $>
+    var lang =<$ 'zh-cn' | language | dump | safe $>;
+</script>
+<script type="text/javascript" src="/static/assets/js/fetch.js"></script>
+
+<script type="text/javascript" src="/static/layui/layui.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/plugins/loaders/pace.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/loaders/blockui.min.js"></script>
+<!-- /core JS files -->
+
+<!-- Plugin JS files -->
+<script type="text/javascript" src="/static/assets/js/masonry/masonry.pkgd.min.js"></script>
+
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/selects/select2.min.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/validation/validate.min.js"></script>
+<script type="text/javascript"
+        src="/static/assets/js/plugins/forms/validation/localization/messages_zh.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/dragula/dragula.min.js"></script>
+<!-- /plugin js files -->
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/core.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/effects.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/interactions.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/trees/fancytree_all.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/trees/fancytree_childcounter.js"></script>
+
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/uniform.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/forms/tags/tagsinput.min.js"></script>
+{##}
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/core.min.js"></script>
+<!-- Theme JS files -->
+<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switchery.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switch.min.js"></script>
+
+<script src="/static/assets/js/vue/vue.js"></script>
+<script>
+    Vue.config.debug = true;
+    Vue.config.devtools = true;
+</script>
+
+<script type="text/javascript" src="/static/assets/js/native.history.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/core/app.min.js"></script>
+
+<!-- /theme JS files -->
+<script>
+    jQuery(document).ready(function ($) {
+
+        $(document).on("click", ".delete", function (e) {
+
+            e.preventDefault();
+
+            var _this = $(this);
+
+            if (!_this.hasClass("active")) {
+
+                _this.addClass("active");
+
+                var div = $("<div><i class='icon confirm ion-ios-checkmark-outline'></i><i class='icon abort ion-ios-close-empty'></i></div>");
+                var element = $(this).append(div);
+
+                div.addClass("animated zoomIn");
+
+                div.on("click", ".abort", function () {
+                    div.fadeOut(300, function () {
+                        div.remove();
+                        _this.removeClass("active");
+                    });
+                });
+
+                div.on("click", ".confirm", function () {
+
+                    if (_this.hasClass("ajax")) {
+                        $.ajax({
+                            method: "POST",
+                            url: _this.attr("href"),
+                            success: function () {
+                                div.fadeOut(300, function () {
+                                    div.remove();
+                                    _this.removeClass("active");
+                                });
+                                $.event.trigger({
+                                    type: "fetch"
+                                });
+                            }
+                        });
+                    } else {
+                        window.location = _this.attr("href");
+                    }
+                });
+
+            }
+
+        });
+        var focus;
+
+        $(window).focus(function () {
+            focus = true;
+        }).blur(function () {
+            focus = false;
+        });
+
+        setInterval("getMessages(focus)", 1000);
+
+//            setTabs();
+
+    });
+
+
+    function getMessages(focus) {
+
+        if (focus && document.hasFocus()) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/ajax/messages",
+                data: {
+                    method: "getMessages"
+                },
+                dataType: "json",
+                success: function (message) {
+                    if (!jQuery.isEmptyObject(message)) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/admin/ajax/messages",
+                            data: {
+                                method: "deleteMessage",
+                                index: message.index
+                            },
+                            success: function () {
+
+                                var element = $(message.html).appendTo("#messages");
+
+                                element.addClass("animated fadeInDown");
+
+                                setTimeout(function () {
+                                    element.removeClass("fadeInDown").addClass("fadeOutUp");
+                                    element.one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function () {
+                                        element.remove();
+                                    });
+                                }, 2200);
+
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+    }
+</script>
+{% block script %}{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,1349 @@
+{% extends "../_layout5.html" %}
+    {% block style %}
+
+
+        <style>
+            .CodeMirror {
+                color: #000
+            }
+
+            .CodeMirror-lines {
+                padding: 4px 0
+            }
+
+            .CodeMirror pre {
+                padding: 0 4px
+            }
+
+            .CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler {
+                background-color: #fff
+            }
+
+            .CodeMirror-gutters {
+                border-right: 1px solid #ddd;
+                background-color: #f7f7f7;
+                white-space: nowrap
+            }
+
+            .CodeMirror-linenumber {
+                padding: 0 3px 0 5px;
+                min-width: 20px;
+                text-align: right;
+                color: #999;
+                white-space: nowrap
+            }
+
+            .CodeMirror-guttermarker {
+                color: #000
+            }
+
+            .CodeMirror-guttermarker-subtle {
+                color: #999
+            }
+
+            .CodeMirror-cursor {
+                border-left: 2px solid #4680FF;
+                border-right: none;
+                width: 0
+            }
+
+            .CodeMirror div.CodeMirror-secondarycursor {
+                border-left: 1px solid silver
+            }
+
+            .cm-fat-cursor .CodeMirror-cursor {
+                width: auto;
+                border: 0 !important;
+                background: #7e7
+            }
+
+            .cm-fat-cursor div.CodeMirror-cursors {
+                z-index: 1
+            }
+
+            .cm-animate-fat-cursor {
+                width: auto;
+                border: 0;
+                -webkit-animation: blink 1.06s steps(1) infinite;
+                -moz-animation: blink 1.06s steps(1) infinite;
+                animation: blink 1.06s steps(1) infinite;
+                background-color: #7e7
+            }
+
+            @-moz-keyframes blink {
+                50% {
+                    background-color: transparent
+                }
+            }
+
+            @-webkit-keyframes blink {
+                50% {
+                    background-color: transparent
+                }
+            }
+
+            @keyframes blink {
+                50% {
+                    background-color: transparent
+                }
+            }
+
+            .cm-tab {
+                display: inline-block;
+                text-decoration: inherit
+            }
+
+            .CodeMirror-ruler {
+                border-left: 1px solid #ccc;
+                position: absolute
+            }
+
+            .cm-s-default .cm-header {
+                color: #00f
+            }
+
+            .cm-s-default .cm-quote {
+                color: #090
+            }
+
+            .cm-negative {
+                color: #d44
+            }
+
+            .cm-positive {
+                color: #292
+            }
+
+            .cm-header, .cm-strong {
+                font-weight: 700
+            }
+
+            .cm-em {
+                font-style: italic
+            }
+
+            .cm-link {
+                text-decoration: underline
+            }
+
+            .cm-strikethrough {
+                text-decoration: line-through
+            }
+
+            .cm-s-default .cm-keyword {
+                color: #708
+            }
+
+            .cm-s-default .cm-atom {
+                color: #219
+            }
+
+            .cm-s-default .cm-number {
+                color: #164
+            }
+
+            .cm-s-default .cm-def {
+                color: #00f
+            }
+
+            .cm-s-default .cm-variable-2 {
+                color: #05a
+            }
+
+            .cm-s-default .cm-variable-3 {
+                color: #085
+            }
+
+            .cm-s-default .cm-comment {
+                color: #a50
+            }
+
+            .cm-s-default .cm-string {
+                color: #a11
+            }
+
+            .cm-s-default .cm-string-2 {
+                color: #f50
+            }
+
+            .cm-s-default .cm-meta, .cm-s-default .cm-qualifier {
+                color: #555
+            }
+
+            .cm-s-default .cm-builtin {
+                color: #30a
+            }
+
+            .cm-s-default .cm-bracket {
+                color: #997
+            }
+
+            .cm-s-default .cm-tag {
+                color: #170
+            }
+
+            .cm-s-default .cm-attribute {
+                color: #00c
+            }
+
+            .cm-s-default .cm-hr {
+                color: #999
+            }
+
+            .cm-s-default .cm-link {
+                color: #00c
+            }
+
+            .cm-invalidchar, .cm-s-default .cm-error {
+                color: red
+            }
+
+            .CodeMirror-composing {
+                border-bottom: 2px solid
+            }
+
+            div.CodeMirror span.CodeMirror-matchingbracket {
+                color: #0f0
+            }
+
+            div.CodeMirror span.CodeMirror-nonmatchingbracket {
+                color: #f22
+            }
+
+            .CodeMirror-matchingtag {
+                background: rgba(255, 150, 0, .3)
+            }
+
+            .CodeMirror-activeline-background {
+                background: #e8f2ff
+            }
+
+            .CodeMirror {
+                position: relative;
+                overflow: hidden;
+                background: #fff
+            }
+
+            .CodeMirror-scroll {
+                overflow: scroll !important;
+                margin-bottom: -30px;
+                margin-right: -30px;
+                padding-bottom: 30px;
+                height: 100%;
+                outline: 0;
+                position: relative
+            }
+
+            .CodeMirror-sizer {
+                position: relative;
+                border-right: 30px solid transparent
+            }
+
+            .CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar {
+                position: absolute;
+                z-index: 6;
+                display: none
+            }
+
+            .CodeMirror-vscrollbar {
+                right: 0;
+                top: 0;
+                overflow-x: hidden;
+                overflow-y: scroll
+            }
+
+            .CodeMirror-hscrollbar {
+                bottom: 0;
+                left: 0;
+                overflow-y: hidden;
+                overflow-x: scroll
+            }
+
+            .CodeMirror-scrollbar-filler {
+                right: 0;
+                bottom: 0
+            }
+
+            .CodeMirror-gutter-filler {
+                left: 0;
+                bottom: 0
+            }
+
+            .CodeMirror-gutters {
+                position: absolute;
+                left: 0;
+                top: 0;
+                min-height: 100%;
+                z-index: 3
+            }
+
+            .CodeMirror-gutter {
+                white-space: normal;
+                height: 100%;
+                display: inline-block;
+                vertical-align: top;
+                margin-bottom: -30px
+            }
+
+            .CodeMirror-gutter-wrapper {
+                position: absolute;
+                z-index: 4;
+                background: 0 0 !important;
+                border: none !important;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                user-select: none
+            }
+
+            .CodeMirror-gutter-background {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                z-index: 4
+            }
+
+            .CodeMirror-gutter-elt {
+                position: absolute;
+                cursor: default;
+                z-index: 4
+            }
+
+            .CodeMirror-lines {
+                cursor: text;
+                min-height: 1px
+            }
+
+            .CodeMirror pre {
+                -moz-border-radius: 0;
+                -webkit-border-radius: 0;
+                border-radius: 0;
+                border-width: 0;
+                background: 0 0;
+                font-family: inherit;
+                font-size: inherit;
+                margin: 0;
+                white-space: pre;
+                word-wrap: normal;
+                line-height: inherit;
+                color: inherit;
+                z-index: 2;
+                position: relative;
+                overflow: visible;
+                -webkit-tap-highlight-color: transparent;
+                -webkit-font-variant-ligatures: none;
+                font-variant-ligatures: none
+            }
+
+            .CodeMirror-wrap pre {
+                word-wrap: break-word;
+                white-space: pre-wrap;
+                word-break: normal
+            }
+
+            .CodeMirror-linebackground {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                z-index: 0
+            }
+
+            .CodeMirror-linewidget {
+                position: relative;
+                z-index: 2;
+                overflow: auto
+            }
+
+            .CodeMirror-code {
+                outline: 0
+            }
+
+            .CodeMirror-gutter, .CodeMirror-gutters, .CodeMirror-linenumber, .CodeMirror-scroll, .CodeMirror-sizer {
+                -moz-box-sizing: content-box;
+                box-sizing: content-box
+            }
+
+            .CodeMirror-measure {
+                position: absolute;
+                width: 100%;
+                height: 0;
+                overflow: hidden;
+                visibility: hidden
+            }
+
+            .CodeMirror-cursor {
+                position: absolute
+            }
+
+            .CodeMirror-measure pre {
+                position: static
+            }
+
+            div.CodeMirror-cursors {
+                visibility: hidden;
+                position: relative;
+                z-index: 3
+            }
+
+            .CodeMirror-focused div.CodeMirror-cursors, div.CodeMirror-dragcursors {
+                visibility: visible
+            }
+
+            .CodeMirror-selected {
+                background: #d9d9d9
+            }
+
+            .CodeMirror-focused .CodeMirror-selected, .CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection {
+                background: #d7d4f0
+            }
+
+            .CodeMirror-crosshair {
+                cursor: crosshair
+            }
+
+            .CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection {
+                background: #d7d4f0
+            }
+
+            .cm-searching {
+                background: #ffa;
+                background: rgba(255, 255, 0, .4)
+            }
+
+            .cm-force-border {
+                padding-right: .1px
+            }
+
+            @media print {
+                .CodeMirror div.CodeMirror-cursors {
+                    visibility: hidden
+                }
+            }
+
+            .cm-tab-wrap-hack:after {
+                content: ''
+            }
+
+            span.CodeMirror-selectedtext {
+                background: 0 0
+            }
+
+            .CodeMirror {
+                height: auto;
+                min-height: 300px;
+                /*border: 1px solid #ddd;*/
+                /*border-bottom-left-radius: 4px;*/
+                /*border-bottom-right-radius: 4px;*/
+                padding: 10px 20px;
+
+                font: inherit;
+                z-index: 1
+            }
+
+            .CodeMirror-scroll {
+                min-height: 300px
+            }
+
+            .CodeMirror-fullscreen {
+                background: #fff;
+                position: fixed !important;
+                top: 50px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: auto;
+                z-index: 9
+            }
+
+            .CodeMirror-sided {
+                width: 50% !important
+            }
+
+            .editor-toolbar {
+                position: relative;
+                opacity: .6;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+                padding: 0 10px;
+                border-top: 1px solid #bbb;
+                border-left: 1px solid #bbb;
+                border-right: 1px solid #bbb;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px
+            }
+
+            .editor-toolbar:after, .editor-toolbar:before {
+                display: block;
+                content: ' ';
+                height: 1px
+            }
+
+            .editor-toolbar:before {
+                margin-bottom: 8px
+            }
+
+            .editor-toolbar:after {
+                margin-top: 8px
+            }
+
+            .editor-toolbar:hover, .editor-wrapper input.title:focus, .editor-wrapper input.title:hover {
+                opacity: .8
+            }
+
+            .editor-toolbar.fullscreen {
+                width: 100%;
+                height: 50px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                white-space: nowrap;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                box-sizing: border-box;
+                background: #fff;
+                border: 0;
+                position: fixed;
+                top: 0;
+                left: 0;
+                opacity: 1;
+                z-index: 9
+            }
+
+            .editor-toolbar.fullscreen::before {
+                width: 20px;
+                height: 50px;
+                background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 0) 100%);
+                background: -webkit-gradient(linear, left top, right top, color-stop(0, rgba(255, 255, 255, 1)), color-stop(100%, rgba(255, 255, 255, 0)));
+                background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 0) 100%);
+                background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 0) 100%);
+                background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 0) 100%);
+                background: linear-gradient(to right, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 0) 100%);
+                position: fixed;
+                top: 0;
+                left: 0;
+                margin: 0;
+                padding: 0
+            }
+
+            .editor-toolbar.fullscreen::after {
+                width: 20px;
+                height: 50px;
+                background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 1) 100%);
+                background: -webkit-gradient(linear, left top, right top, color-stop(0, rgba(255, 255, 255, 0)), color-stop(100%, rgba(255, 255, 255, 1)));
+                background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 1) 100%);
+                background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 1) 100%);
+                background: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 1) 100%);
+                background: linear-gradient(to right, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 1) 100%);
+                position: fixed;
+                top: 0;
+                right: 0;
+                margin: 0;
+                padding: 0
+            }
+
+            .editor-toolbar a {
+                display: inline-block;
+                text-align: center;
+                text-decoration: none !important;
+                color: #2c3e50 !important;
+                width: 30px;
+                height: 30px;
+                margin: 0;
+                border: 1px solid transparent;
+                border-radius: 3px;
+                cursor: pointer
+            }
+
+            .editor-toolbar a.active, .editor-toolbar a:hover {
+                background: #fcfcfc;
+                border-color: #95a5a6
+            }
+
+            .editor-toolbar a:before {
+                line-height: 30px
+            }
+
+            .editor-toolbar i.separator {
+                display: inline-block;
+                width: 0;
+                border-left: 1px solid #d9d9d9;
+                border-right: 1px solid #fff;
+                color: transparent;
+                text-indent: -10px;
+                margin: 0 6px
+            }
+
+            .editor-toolbar a.fa-header-x:after {
+                font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+                font-size: 65%;
+                vertical-align: text-bottom;
+                position: relative;
+                top: 2px
+            }
+
+            .editor-toolbar a.fa-header-1:after {
+                content: "1"
+            }
+
+            .editor-toolbar a.fa-header-2:after {
+                content: "2"
+            }
+
+            .editor-toolbar a.fa-header-3:after {
+                content: "3"
+            }
+
+            .editor-toolbar a.fa-header-bigger:after {
+                content: "▲"
+            }
+
+            .editor-toolbar a.fa-header-smaller:after {
+                content: "▼"
+            }
+
+            .editor-toolbar.disabled-for-preview a:not(.no-disable) {
+                pointer-events: none;
+                background: #fff;
+                border-color: transparent;
+                text-shadow: inherit
+            }
+
+            @media only screen and (max-width: 700px) {
+                .editor-toolbar a.no-mobile {
+                    display: none
+                }
+            }
+
+            .editor-statusbar {
+                padding: 8px 10px;
+                font-size: 12px;
+                color: #959694;
+                text-align: right
+            }
+
+            .editor-statusbar span {
+                display: inline-block;
+                min-width: 4em;
+                margin-left: 1em
+            }
+
+            .editor-preview, .editor-preview-side {
+                padding: 10px 20px;
+                background: #fafafa;
+                overflow: auto;
+                display: none;
+                box-sizing: border-box
+            }
+
+            .editor-statusbar .lines:before {
+                content: 'lines: '
+            }
+
+            .editor-statusbar .words:before {
+                content: 'words: '
+            }
+
+            .editor-statusbar .characters:before {
+                content: 'characters: '
+            }
+
+            .editor-preview {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                z-index: 7
+            }
+
+            .editor-preview-side {
+                position: fixed;
+                bottom: 0;
+                width: 50%;
+                top: 50px;
+                right: 0;
+                z-index: 9;
+                border: 1px solid #ddd
+            }
+
+            .editor-preview-active, .editor-preview-active-side {
+                display: block
+            }
+
+            .editor-preview-side > p, .editor-preview > p {
+                margin-top: 0
+            }
+
+            .editor-preview pre, .editor-preview-side pre {
+                background: #eee;
+                margin-bottom: 10px
+            }
+
+            .editor-preview table td, .editor-preview table th, .editor-preview-side table td, .editor-preview-side table th {
+                border: 1px solid #ddd;
+                padding: 5px
+            }
+
+            .editor-preview img{
+                width: 30%;
+            }
+            .CodeMirror .CodeMirror-code .cm-tag {
+                color: #63a35c
+            }
+
+            .CodeMirror .CodeMirror-code .cm-attribute {
+                color: #795da3
+            }
+
+            .CodeMirror .CodeMirror-code .cm-string {
+                color: #183691
+            }
+
+            .CodeMirror .CodeMirror-selected {
+                background: #d9d9d9
+            }
+
+            .CodeMirror .CodeMirror-code .cm-header-1 {
+                font-size: 200%;
+                line-height: 200%
+            }
+
+            .CodeMirror .CodeMirror-code .cm-header-2 {
+                font-size: 160%;
+                line-height: 160%
+            }
+
+            .CodeMirror .CodeMirror-code .cm-header-3 {
+                font-size: 125%;
+                line-height: 125%
+            }
+
+            .CodeMirror .CodeMirror-code .cm-header-4 {
+                font-size: 110%;
+                line-height: 110%
+            }
+
+            .CodeMirror .CodeMirror-code .cm-comment {
+                background: rgba(0, 0, 0, .05);
+                border-radius: 2px
+            }
+
+            .CodeMirror .CodeMirror-code .cm-link {
+                color: #7f8c8d
+            }
+
+            .CodeMirror .CodeMirror-code .cm-url {
+                color: #aab2b3
+            }
+
+            .CodeMirror .CodeMirror-code .cm-strikethrough {
+                text-decoration: line-through
+            }
+
+            .CodeMirror .CodeMirror-placeholder {
+                opacity: .5
+            }
+
+            .CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
+                background: rgba(255, 0, 0, .15)
+            }
+
+            /* Based on Sublime Text's Monokai theme */
+
+            .CodeMirror .cm-s-inner.CodeMirror { background: #272822; color: #f8f8f2; }
+            .CodeMirror .cm-s-inner div.CodeMirror-selected { background: #49483E; }
+            .CodeMirror .cm-s-inner .CodeMirror-line::selection, .cm-s-inner .CodeMirror-line > span::selection, .cm-s-inner .CodeMirror-line > span > span::selection { background: rgba(73, 72, 62, .99); }
+            .CodeMirror .cm-s-inner .CodeMirror-line::-moz-selection, .cm-s-inner .CodeMirror-line > span::-moz-selection, .cm-s-inner .CodeMirror-line > span > span::-moz-selection { background: rgba(73, 72, 62, .99); }
+            .CodeMirror .cm-s-inner .CodeMirror-gutters { background: #272822; border-right: 0px; }
+            .CodeMirror .cm-s-inner .CodeMirror-guttermarker { color: white; }
+            .CodeMirror .cm-s-inner .CodeMirror-guttermarker-subtle { color: #d0d0d0; }
+            .CodeMirror .cm-s-inner .CodeMirror-linenumber { color: #d0d0d0; }
+            .CodeMirror .cm-s-inner .CodeMirror-cursor { border-left: 1px solid #f8f8f0; }
+
+            .CodeMirror .cm-s-inner span.cm-comment { color: #75715e; }
+            .CodeMirror .cm-s-inner span.cm-atom { color: #ae81ff; }
+            .CodeMirror .cm-s-inner span.cm-number { color: #ae81ff; }
+
+            .CodeMirror .cm-s-inner span.cm-property, .cm-s-inner span.cm-attribute { color: #a6e22e; }
+            .CodeMirror .cm-s-inner span.cm-keyword { color: #f92672; }
+            .CodeMirror .cm-s-inner span.cm-builtin { color: #66d9ef; }
+            .CodeMirror .cm-s-inner span.cm-string { color: #e6db74; }
+
+            .CodeMirror .cm-s-inner span.cm-variable { color: #f8f8f2; }
+            .CodeMirror .cm-s-inner span.cm-variable-2 { color: #9effff; }
+            .CodeMirror .cm-s-inner span.cm-variable-3 { color: #66d9ef; }
+            .CodeMirror .cm-s-inner span.cm-def { color: #fd971f; }
+            .CodeMirror .cm-s-inner span.cm-bracket { color: #f8f8f2; }
+            .CodeMirror .cm-s-inner span.cm-tag { color: #f92672; }
+            .CodeMirror .cm-s-inner span.cm-header { color: #ae81ff; }
+            .CodeMirror .cm-s-inner span.cm-link { color: #ae81ff; }
+            .CodeMirror .cm-s-inner span.cm-error { background: #f92672; color: #f8f8f0; }
+
+            .CodeMirror .cm-s-inner .CodeMirror-activeline-background { background: #373831; }
+            .CodeMirror .cm-s-inner .CodeMirror-matchingbracket {
+                text-decoration: underline;
+                color: white !important;
+            }
+
+            /**apply to code fences with plan text**/
+            .CodeMirror.md-fences {
+                background-color: #272822;
+                color: #f8f8f2;
+                border: none;
+            }
+
+            .CodeMirror.md-fences .code-tooltip {
+                background-color: #272822;
+            }
+        </style>
+        <link rel="stylesheet" href="/static/style.css">
+    {% endblock %}
+
+
+{% block right_nav %}
+    <li><a class="" href="/admin/posts/resume"><i class="icon-plus22 position-left"></i>文章</a></li>
+
+{% endblock %}
+{% block navbar2 %}
+    <!-- Second navbar -->
+    <div class="navbar navbar-default" id="navbar-second" v-cloak>
+        <ul class="nav navbar-nav no-border visible-xs-block ">
+            <li><a class=" collapsed pull-left" href="/admin/posts"><i class="icon-arrow-left7"></i></a></li>
+
+            <li><a class=" collapsed pull-right" data-toggle="collapse" data-target="#navbar-second-toggle"><i
+                            class="icon-circle-down2"></i></a></li>
+        </ul>
+
+        <div class="navbar-collapse collapse" id="navbar-second-toggle">
+            <ul class="nav navbar-nav ">
+                <li class="visible-lg-block"><a href="/admin/posts"><i class="text-primary icon-arrow-left7"></i></a>
+                </li>
+                <li class="disabled" style="width: 120px;">
+                    {#<a><i class="text-primary-400 icon-sync spinner position-left"></i>内容自动保存</a>#}
+                    <a v-if="status == 'saving'" class="text-teal" v-cloak>
+                        <i class="icon-sync spinner position-left"></i>
+                        保存中
+                    </a>
+                    <a v-else-if="status == 'success'" class="text-muted" v-cloak>
+                        已保存
+                    </a>
+                    <a v-else-if="status == 'editing'" v-cloak>修改中</a>
+                    <a v-else-if="status == 'init'" class="text-muted">内容自动保存</a>
+                </li>
+
+            </ul>
+
+            {#<ul class="nav navbar-nav">#}
+                {#<li>#}
+                    {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
+                        {#<i class="note-icon-bold"></i>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
+                        {#<i class="note-icon-bold"></i>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
+                        {#<i class="note-icon-bold"></i>#}
+                    {#</a>#}
+                {#</li>#}
+                {#<li>#}
+                    {#<a href="#" class="note-btn note-btn-bold legitRipple">#}
+                        {#<i class="note-icon-bold"></i>#}
+                    {#</a>#}
+                {#</li>#}
+
+
+                {#<li>#}
+                    {#<a href="#">#}
+                        {#<i class="icon-stats-bars"></i>#}
+                        {#<span class="visible-xs-inline-block position-right">My statistics</span>#}
+                    {#</a>#}
+                {#</li>#}
+            {#</ul>#}
+            {#<ul class="nav navbar-nav">#}
+                {#<div class="note-btn-group btn-group note-style">#}
+                    {#<div class="note-btn-group btn-group">#}
+                        {#<button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"#}
+                                {#tabindex="-1" data-toggle="dropdown" title="" data-original-title="样式"><i#}
+                                    {#class="note-icon-magic"></i> <span class="note-icon-caret"></span></button>#}
+                        {#<div class="dropdown-menu dropdown-style">#}
+                            {#<li><a @click="toggleBlockquote" href="#" data-value="blockquote">#}
+                                    {#<blockquote>引用</blockquote>#}
+                                {#</a></li>#}
+                            {#<li><a href="#" data-value="pre">#}
+                                    {#<pre>代码</pre>#}
+                                {#</a></li>#}
+                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h1"><h1>标题 1</h1></a></li>#}
+                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h2"><h2>标题 2</h2></a></li>#}
+                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h3"><h3>标题 3</h3></a></li>#}
+                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h4"><h4>标题 4</h4></a></li>#}
+                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h5"><h5>标题 5</h5></a></li>#}
+                            {#<li><a @click="toggleHeadingSmaller()" href="#" data-value="h6"><h6>标题 6</h6></a></li>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="note-btn-group btn-group note-font">#}
+                    {#<button @click="toggleBold" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm note-btn-bold legitRipple "#}
+                            {#tabindex="-1" title="" data-original-title="粗体 (⌘+B)"><i class="note-icon-bold"></i>#}
+                    {#</button>#}
+                    {#<button @click="toggleItalic" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm note-btn-underline legitRipple"#}
+                            {#tabindex="-1" title="" data-original-title="下划线 (⌘+U)"><i#}
+                                {#class="note-icon-italic"></i></button>#}
+
+                    {#<button @click="toggleStrikethrough" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+                            {#data-original-title="删除线 (⌘+\)"><i class="note-icon-strikethrough"></i></button>#}
+
+                    {#<button @click="toggleHeadingSmaller" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+                            {#data-original-title="段落 (⌘+\)">H#}
+                    {#</button>#}
+
+
+                    {#<button @click="toggleUnorderedList()" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+                            {#data-original-title="Unordered list (⌘+⇧+NUM7)"><i class="note-icon-unorderedlist"></i>#}
+                    {#</button>#}
+                    {#<button @click="toggleOrderedList()" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+                            {#data-original-title="Ordered list (⌘+⇧+NUM8)"><i class="note-icon-orderedlist"></i>#}
+                    {#</button>#}
+                    {#<!--#}
+                    {#<div class="note-btn-group btn-group">#}
+                        {#<button type="button" class="note-btn btn btn-link btn-sm dropdown-toggle legitRipple"#}
+                                {#tabindex="-1" data-toggle="dropdown" title="" data-original-title="Paragraph"><i#}
+                                {#class="note-icon-align-left"></i> <span class="note-icon-caret"></span></button>#}
+                        {#<div class="dropdown-menu">#}
+                            {#<div class="note-btn-group btn-group note-align">#}
+                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                        {#tabindex="-1" title="" data-original-title="Align left (⌘+⇧+L)"><i#}
+                                        {#class="note-icon-align-left"></i></button>#}
+                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                        {#tabindex="-1" title="" data-original-title="Align center (⌘+⇧+E)"><i#}
+                                        {#class="note-icon-align-center"></i></button>#}
+                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                        {#tabindex="-1" title="" data-original-title="Align right (⌘+⇧+R)"><i#}
+                                        {#class="note-icon-align-right"></i></button>#}
+                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                        {#tabindex="-1" title="" data-original-title="Justify full (⌘+⇧+J)"><i#}
+                                        {#class="note-icon-align-justify"></i></button>#}
+                            {#</div>#}
+                            {#<div class="note-btn-group btn-group note-list">#}
+                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                        {#tabindex="-1" title="" data-original-title="Outdent (⌘+[)"><i#}
+                                        {#class="note-icon-align-outdent"></i></button>#}
+                                {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                        {#tabindex="-1" title="" data-original-title="Indent (⌘+])"><i#}
+                                        {#class="note-icon-align-indent"></i></button>#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#-->#}
+                    {#<button @click="drawLink" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                            {#tabindex="-1" title=""#}
+                            {#data-original-title="链接 (⌘+K)"><i class="note-icon-link"></i></button>#}
+                    {#<button @click="drawImage" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                            {#tabindex="-1" title=""#}
+                            {#data-original-title="图片"><i class="note-icon-picture"></i></button>#}
+                    {#<button @click="toggleCodeBlock" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+                            {#data-original-title="代码"><i class="note-icon-code"></i></button>#}
+                    {#<div class="note-btn-group btn-group">#}
+                        {#<button @click="drawTable" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                                {#tabindex="-1" title="" data-original-title="表格"><i#}
+                                    {#class="note-icon-table"></i></button>#}
+
+                        {#<button @click="drawHorizontalRule" type="button"#}
+                                {#class="note-btn btn btn-link btn-sm legitRipple"#}
+                                {#tabindex="-1" title="" data-original-title="分隔线">—#}
+                        {#</button>#}
+
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="note-btn-group btn-group note-undo">#}
+                    {#<button @click="undo" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"#}
+                            {#tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-undo"></i>#}
+                    {#</button>#}
+
+                    {#<button @click="redo" type="button" class="note-btn btn btn-link btn-sm legitRipple"#}
+                            {#tabindex="-1" title=""#}
+                            {#data-original-title="帮助"><i class="note-icon-redo"></i></button>#}
+                {#</div>#}
+{##}
+                {#<div class="note-btn-group btn-group note-view">#}
+
+                    {#<a @click="togglePreview" type="button"#}
+                       {#class="btn btn-link note-btn btn btn-link btn-sm btn-codeview legitRipple"#}
+                       {#tabindex="-1" title="" data-original-title=""><i#}
+                                {#class="fa fa-eye"></i></a>#}
+                    {#<button @click="toggleFullScreen" type="button"#}
+                            {#class="note-btn btn btn-link btn-sm btn-fullscreen legitRipple"#}
+                            {#tabindex="-1" title="" data-original-title="全屏"><i class="note-icon-arrows-alt"></i>#}
+                    {#</button>#}
+                    {#<button type="button" class="note-btn btn btn-link btn-sm legitRipple" tabindex="-1" title=""#}
+                            {#data-original-title="帮助"><i class="note-icon-question"></i></button>#}
+                {#</div>#}
+{##}
+            {#</ul>#}
+            <ul class="nav navbar-nav navbar-right">
+
+                {#<a class="sidebar-control sidebar-opposite-toggle hidden-xs">#}
+                {#<i class="icon-indent-decrease2"></i>#}
+                {#</a>#}
+                {#<li class="disabled"><a class=""><i class="icon-eye position-left"></i> 预览</a></li>#}
+                <li class=""><a class="sidebar-control sidebar-opposite-toggle hidden-xs"><i
+                                class="icon-cog position-left"></i> 文章设置</a></li>
+                <li class="disabled"><a><i class=" icon-paperplane position-left"></i> 发布</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /second navbar -->
+{% endblock %}
+
+{% block sidebar_main %}{% endblock %}
+
+{% block content %}
+    {#{{ post.snippets }}#}
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            {#<Editor :model="editorModel"></Editor>#}
+            {#<Editor :model="editorModel" v-on:selection="onSelection"></Editor>#}
+            {#<post-editor></post-editor>#}
+            {#{{editorModel}}#}
+            {#<vue-editor :model="editorModel" v-on:modelchange="modelChangeEvent"> </vue-editor>#}
+            <!-- Single mail -->
+            <!-- /single mail -->
+            {#</form>#}
+
+            <div class="panel panel-flat">
+
+                <div class="profile-cover" style="display: none;">
+                    <!--<div id="cover" class="profile-cover-img"-->
+                    <!--style="background-image: url(&quot;/static/assets/images/demo/blog/2.jpg&quot;);"></div>-->
+                    <div class="media">
+                        <div class="media-body"><h1>
+                                <!--${ post.title }-->
+                                {{ post.title }}
+                            </h1></div>
+                        <div class="media-right media-middle">
+                            <ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
+                                <li><a href="#" class="btn btn-icon btn-xs btn-primary   btn-rounded legitRipple"><i
+                                                class=" icon-cross"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div class="shadowBox"></div>-->
+                <div class="panel panel-white  snippet--panel" :class="{'fadeout' : selected.wordCount === 0 }">
+                    <div class="panel-heading ">
+                        <mark class="">生成内容碎片？</mark>
+
+                    </div>
+
+
+                    <div class="panel-body">
+                        <div class="content-group snippet--content" v-html="selected.wordHtml"></div>
+                    </div>
+                    <div class="panel-footer panel-footer-condensed "><a class="heading-elements-toggle"><i class="icon-more"></i></a>
+                        <div class="heading-elements">
+                            <span class="heading-text"><small>选中了 {{ selected.wordCount }} 个字</small></span>
+                            <ul class="list-inline list-inline-separate heading-text pull-right">
+                                <li><a @click="clearAndSnippet" class="" data-popup="tooltip" data-placement="top" data-container="body" title="" data-original-title="剪切成碎片"><i class="fa fa-cut"></i></a></li>
+                                <li><a @click="copyAndSnippet" class="" data-popup="tooltip" data-placement="top" data-container="body" title="" data-original-title="复制成碎片"><i class="fa fa-copy"></i></a></li>
+                                <!--<li><a href="#">Generate</a></li>-->
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="table-responsive mail-details-write">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td colspan="2" class="p-5 no-border">
+                                <input type="text"
+                                       placeholder="无标题"
+                                       name="title"
+                                       class="form-control text-semibold" v-model="post.title"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <Editor :model="post" v-on:selection="onSelection" v-on:change="onChange"></Editor>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block opposite_sidebar %}
+
+    <div class="sidebar sidebar-opposite sidebar-default">
+        <div class="sidebar-content">
+
+            <!-- Title -->
+            <div class="category-title h6">
+                <span>文章设置</span>
+
+                <ul class="icons-list">
+                    <li><a class="sidebar-control sidebar-opposite-toggle hidden-xs"><i class=" icon-cross2"></i></a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /title -->
+
+            <!-- Quick settings -->
+            <div class="sidebar-category">
+                <div class="category-title category-collapsed">
+                    <span>状态</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content " style="display: none;">
+                    <form action="#">
+                        <div class="form-group">
+                            {#
+                            <div class="checkbox checkbox-switchery checkbox-right switchery-xs ">
+                                <label class="display-block">
+                                    <input type="checkbox" class="switchery switchery-primary" >
+                                    固定到头版
+
+                                </label>
+                            </div>
+                            #}
+                            <div class="checkbox checkbox-switchery checkbox-right switchery-xs ">
+                                <label class="display-block">
+                                    <input type="checkbox" v-bind:true-value="'pending'" v-bind:false-value="''"
+                                           class="switchery switchery-primary" v-model="post.status">
+                                    待审核
+
+                                </label>
+                            </div>
+
+                            {#
+                            <label class="display-block">
+
+                                <div class="btn-group pull-right">
+                                    <a href="#" class="" data-toggle="dropdown" aria-expanded="false"><i class="icon-eye position-left"></i>公开 </a>
+
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li class="radio ">
+                                            <label>
+                                                <input type="radio" name="dropdown-radio" class="styled" v-model="post.status" v-bind:value="'publish'">
+                                                公开
+                                            </label></li>
+                                        <li class="radio"><label><input type="radio" name="dropdown-radio" class="styled" v-model="post.status" v-bind:value="'private'"> 私密</label></li>
+                                        <li class="radio"><label><input type="radio" name="dropdown-radio" class="styled" v-model="post.password"> 加密</label></li>
+
+                                    </ul>
+                                </div>
+                                可见性
+
+                            </label>
+                            #}
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <!-- /quick settings -->
+
+            <!-- /sub navigation -->
+            <div class="sidebar-category">
+                <div class="category-title category-collapsed">
+                    <span>类别与标签
+                        <code class="position-left" v-if="checkedCates.length > 0">{{ checkedCates.length }} 类别
+                        </code>
+</span>
+                    {#<label class="text-semibold">Left stacked default</label>#}
+
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content" style="display: none;">
+
+                    <div class="form-group">
+
+                        {#<label class="text-semibold">Left stacked default</label>#}
+                        {#<li v-for="cate in category"><a :href="cate.id">{{ cate.name }}</a></li>#}
+
+                        <div class="checkbox" v-for="cate in category">
+                            <label>
+                                <input type="checkbox" :id="cate.id" v-bind:value="cate" v-model="post.terms"
+                                       @click="check(cate)">
+                                {{ cate.name }}
+                            </label>
+                        </div>
+
+                    </div>
+                    <a class=" btn btn-link btn-xs no-padding"><i class="icon-folder position-left"></i>添加新分类目录</a>
+
+                </div>
+            </div>
+
+
+            <div class="sidebar-category">
+                <div class="category-title category-collapsed">
+                    <span>更多选项</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+                <form action="#" class="category-content" style="display: none;">
+                    {#                    <div class="form-group">
+                                            <label>别名:</label>
+                                            <input type="text" class="form-control" placeholder="">
+                                        </div>#}
+                    <div class="form-group">
+                        <div class="checkbox checkbox-switchery checkbox-right switchery-xs ">
+                            <label class="display-block">
+                                <input type="checkbox" class="switchery switchery-primary" v-model="autoExcerpt">
+                                自动摘要
+
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" v-if="!autoExcerpt">
+                        <label>摘要:</label>
+                        <textarea rows="3" cols="3" class="form-control" placeholder="编写摘要..."
+                                  v-html="post.excerpt"></textarea>
+                    </div>
+
+                    {#
+                    <label class="display-block">讨论</label>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <div class="checker"><span><input type="checkbox" class="styled"></span></div>
+                                允许评论
+                            </label>
+                        </div>
+
+                        <div class="checkbox">
+                            <label>
+                                <div class="checker"><span class="checked"><input type="checkbox" class="styled" checked="checked"></span></div>
+                                允许 Pingback 和 Trackback
+                            </label>
+                        </div>
+
+                    </div>
+                    #}
+                </form>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block script %}
+    {#<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/uniform.min.js"></script>#}
+
+    {#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>#}
+    {#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>#}
+
+    <script>
+        //        var currentLocation = document.location.pathname + decodeURIComponent(document.location.search);
+
+        //        console.log(currentLocation)
+        //        if (currentLocation == url) {
+        //            console.log("Refresh");
+        //            $(window).trigger('statechange');
+        //        } else {
+        //            History.pushState(null, title, url);
+        //        }
+        //        var supports_pushState = 'pushState' in history;
+        //        var last_state;
+        //        function handle( state, type ) {
+        //            if ( state !== last_state ) {
+        //                last_state = state;
+        //
+        //                console.log('state: ' + state + ' (' + type + ')')
+        //                // application code here
+        ////                $('#log').append( 'state: ' + state + ' (' + type + ')<br>');
+        //            }
+        //        };
+        //
+        //        $(window)
+        //            .bind( 'popstate', function(e){
+        //                location.search.replace( /^\?/, '' )
+        //                handle( location.search.replace( /^\?/, '' ), e.type );
+        //            })
+        //            .bind( 'hashchange', function(e){
+        ////                location.hash.replace( /^#/, '' )
+        //                handle( location.hash.replace( /^#/, '' ), e.type );
+        //            })
+        //            .trigger( supports_pushState ? 'popstate' : 'hashchange' );
+
+
+        //        TITLE = '<$ post.title | safe $>';
+
+        // @formatter:off
+        POST = <$ post | dump | safe $>;
+        // @formatter:on
+    </script>
+    <script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>
+    {#<script type="text/javascript" src="/static/components/editor/index.js"></script>#}
+    <script type="text/javascript" src="/static/components/post/post.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            // Switchery
+            // ------------------------------
+
+            // Initialize multiple switches
+            if (Array.prototype.forEach) {
+                var elems = Array.prototype.slice.call(document.querySelectorAll('.switchery'));
+                elems.forEach(function (html) {
+                    var switchery = new Switchery(html, {color: '#2196F3'});
+                });
+            }
+            else {
+                var elems = document.querySelectorAll('.switchery');
+                for (var i = 0; i < elems.length; i++) {
+                    var switchery = new Switchery(elems[i], {color: '#2196F3'});
+                }
+            }
+
+        })
+        // Load JSON data
+
+        // Style checkboxes
+
+        //        function nowTime() {
+        //            var time = new Date();
+        //             程序计时的月从0开始取值后+1
+        //            var m = time.getMonth() + 1;
+        //            var t = time.getFullYear() + "-" + m + "-"
+        //                + time.getDate() + " " + time.getHours() + ":"
+        //                + time.getMinutes() + ":" + time.getSeconds();
+        //            return t;
+        //        }
+        // Default initialization
+        //                $(".styled, .multiselect-container input").uniform({
+        //                    radioClass: 'choice'
+        //                });
+
+    </script>
+
+
+{% endblock %}

@@ -1,0 +1,226 @@
+{% block components %}{% endblock %}
+
+<script type="text/javascript">
+    //    <$ controller.lang $>
+    var lang =<$ 'zh-cn' | language | dump | safe $>;
+</script>
+<script type="text/javascript" src="/static/assets/js/fetch.js"></script>
+{#<script type="text/javascript" src="/static/layui/layui.js"></script>#}
+
+<script type="text/javascript" src="/static/assets/js/plugins/loaders/pace.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/core/libraries/bootstrap.min.js"></script>
+{#<script type="text/javascript" src="/static/assets/js/plugins/loaders/blockui.min.js"></script>#}
+<!-- /core JS files -->
+
+<!-- Plugin JS files -->
+<script type="text/javascript" src="/static/assets/js/masonry/masonry.pkgd.min.js"></script>
+
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/selects/select2.min.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
+<!-- /plugin js files -->
+{#<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/core.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/effects.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/interactions.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/trees/fancytree_all.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/trees/fancytree_childcounter.js"></script>#}
+
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/uniform.min.js"></script>
+{#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>#}
+<script type="text/javascript" src="/static/assets/js/plugins/forms/tags/tagsinput.min.js"></script>
+{##}
+{#<script type="text/javascript" src="/static/assets/js/core/libraries/jquery_ui/core.min.js"></script>#}
+<!-- Theme JS files -->
+{#<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switchery.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switch.min.js"></script>#}
+<script type="text/javascript" src="/static/assets/js/pages/animations_css3.js"></script>
+<script src="/static/assets/js/vue/vue.js"></script>
+<script>
+    Vue.config.debug = true;
+    Vue.config.devtools = true;
+</script>
+
+<script type="text/javascript" src="/static/assets/js/native.history.js"></script>
+{#<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>#}
+
+<script type="text/javascript" src="/static/assets/js/core/app.min.js"></script>
+
+<!-- /theme JS files -->
+<script>
+    jQuery(document).ready(function ($) {
+
+        $(document).on("click", ".delete", function (e) {
+
+            e.preventDefault();
+
+            var _this = $(this);
+
+            if (!_this.hasClass("active")) {
+
+                _this.addClass("active");
+
+                var div = $("<div><i class='icon confirm ion-ios-checkmark-outline'></i><i class='icon abort ion-ios-close-empty'></i></div>");
+                var element = $(this).append(div);
+
+                div.addClass("animated zoomIn");
+
+                div.on("click", ".abort", function () {
+                    div.fadeOut(300, function () {
+                        div.remove();
+                        _this.removeClass("active");
+                    });
+                });
+
+                div.on("click", ".confirm", function () {
+
+                    if (_this.hasClass("ajax")) {
+                        $.ajax({
+                            method: "POST",
+                            url: _this.attr("href"),
+                            success: function () {
+                                div.fadeOut(300, function () {
+                                    div.remove();
+                                    _this.removeClass("active");
+                                });
+                                $.event.trigger({
+                                    type: "fetch"
+                                });
+                            }
+                        });
+                    } else {
+                        window.location = _this.attr("href");
+                    }
+                });
+
+            }
+
+        });
+        var focus;
+
+        $(window).focus(function () {
+            focus = true;
+        }).blur(function () {
+            focus = false;
+        });
+
+        setInterval("getMessages(focus)", 1000);
+
+//            setTabs();
+
+    });
+
+
+    function getMessages(focus) {
+
+        if (focus && document.hasFocus()) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/ajax/messages",
+                data: {
+                    method: "getMessages"
+                },
+                dataType: "json",
+                success: function (message) {
+                    if (!jQuery.isEmptyObject(message)) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/admin/ajax/messages",
+                            data: {
+                                method: "deleteMessage",
+                                index: message.index
+                            },
+                            success: function () {
+
+                                var element = $(message.html).appendTo("#messages");
+
+                                element.addClass("animated fadeInDown");
+
+                                setTimeout(function () {
+                                    element.removeClass("fadeInDown").addClass("fadeOutUp");
+                                    element.one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function () {
+                                        element.remove();
+                                    });
+                                }, 2200);
+
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+    }
+</script>
+
+<script>
+    /* ------------------------------------------------------------------------------
+     *
+     *  # Sticky sidebar with native scrollbar
+     *
+     *  Specific JS code additions for layout_sidebar_sticky_native.html blank page
+     *
+     *  Version: 1.0
+     *  Latest update: Aug 1, 2015
+     *
+     * ---------------------------------------------------------------------------- */
+
+    $(function() {
+
+
+        // Resize sidebar on scroll
+        // ------------------------------
+
+        // Resize detached sidebar vertically when bottom reached
+        function resizeDetached() {
+            $(window).on('load scroll', function() {
+                if ($(window).scrollTop() > $(document).height() - $(window).height() - 40) {
+                    $('.sidebar-detached').addClass('fixed-sidebar-space');
+                }
+                else {
+                    $('.sidebar-detached').removeClass('fixed-sidebar-space');
+                }
+            });
+        }
+
+
+        // Affix detached sidebar
+        // ------------------------------
+
+        // Init nicescroll when sidebar affixed
+        $('.sidebar-detached').on('affix.bs.affix', function() {
+            resizeDetached();
+        });
+
+        // Attach BS affix component to the sidebar
+        $('.sidebar-detached').affix({
+            offset: {
+                top: $('.sidebar-detached').offset().top - 20 // top offset - computed line height
+            }
+        });
+
+
+        // Remove affix and scrollbar on mobile
+        $(window).on('resize', function() {
+            setTimeout(function() {
+                if($(window).width() <= 768) {
+
+                    // Remove affix on mobile
+                    $(window).off('.affix')
+                    $('.sidebar-detached').removeData('affix').removeClass('affix affix-top affix-bottom');
+                }
+            }, 100);
+        }).resize();
+
+    });
+
+
+</script>
+{% block script %}{% endblock %}
+
+</body>
+</html>

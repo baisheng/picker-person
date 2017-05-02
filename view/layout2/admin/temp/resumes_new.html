@@ -1,0 +1,2047 @@
+{% extends "./inc/_base.html" %}
+
+
+{% block style %}
+
+    <style>
+        .modal {
+            background: rgba(46, 48, 56, 0.75);
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            z-index: 1050;
+            -webkit-transition: all 0.2s ease-in-out;
+            -moz-transition: all 0.2s ease-in-out;
+            -o-transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .modal .mask {
+            max-width: 420px;
+            position: absolute;
+            left: 15px;
+            right: 15px;
+            margin: auto;
+            top: 8%;
+            padding-bottom: 30px;
+        }
+
+        .modal .mask .inner {
+            padding: 30px 0 0 0;
+            background: #fff;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 4px 10px rgba(46, 48, 56, 0.8);
+            -moz-box-shadow: 0 4px 10px rgba(46, 48, 56, 0.8);
+            box-shadow: 0 4px 10px rgba(46, 48, 56, 0.8);
+        }
+
+        .modal .mask .inner.animated {
+            -webkit-animation-duration: 0.2s;
+            animation-duration: 0.2s;
+        }
+
+        .modal .mask .inner header {
+            position: relative;
+            padding: 0 30px;
+            margin: 0;
+        }
+
+        .modal .mask .inner header h3 {
+            margin: 0;
+            padding: 0;
+        }
+
+        @media (max-width: 768 *1px) {
+            .modal .mask .inner header h3 {
+                font-size: 21px;
+            }
+        }
+
+        .modal .mask .inner header .close {
+            cursor: pointer;
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            -webkit-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            -o-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+        }
+
+        .modal .mask .inner header .close:hover i {
+            color: #858a95;
+        }
+
+        .modal .mask .inner header .close i {
+            font-size: 1em;
+            color: #d0d3d9;
+        }
+
+        @media (max-width: 768 *1px) {
+            .modal .mask .inner header .close {
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 768 *1px) {
+            .modal .mask .inner header {
+                padding: 0 20px;
+            }
+        }
+
+        .modal .mask .inner .content {
+            padding: 20px 30px 30px 30px;
+        }
+
+        @media (max-width: 768 *1px) {
+            .modal .mask .inner .content {
+                padding: 10px 20px 20px 20px;
+            }
+        }
+
+        @media (max-width: 768 *1px) {
+            .modal .mask .inner {
+                padding: 20px 0 0 0;
+            }
+        }
+
+        .modal .mask table.media .file div {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 190px;
+            min-width: 0;
+        }
+
+        .modal .mask.large {
+            max-width: 680px;
+        }
+
+        .modal-enter {
+            -moz-opacity: 0;
+            -khtml-opacity: 0;
+            -webkit-opacity: 0;
+            opacity: 0;
+            -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+            filter: alpha(opacity=0);
+        }
+
+        .modal-leave-active {
+            -moz-opacity: 0;
+            -khtml-opacity: 0;
+            -webkit-opacity: 0;
+            opacity: 0;
+            -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+            filter: alpha(opacity=0);
+        }
+
+        a.delete {
+            z-index: 5;
+            position: relative;
+        }
+
+        a.delete div {
+            width: 76px;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            background: #fefefe;
+            position: absolute;
+            z-index: 5;
+            margin: -20px 0 0 -38px;
+            -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            -moz-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+        }
+
+        a.delete div .confirm,
+        a.delete div .abort {
+            vertical-align: top;
+            line-height: 32px;
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            font-size: 21px !important;
+            top: 4px;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        a.delete div .confirm:before,
+        a.delete div .abort:before {
+            line-height: 32px;
+            display: block;
+        }
+
+        a.delete div .confirm {
+            color: #fff;
+            background: #ef4748;
+            left: 4px;
+        }
+
+        a.delete div .abort {
+            /*color: #858a95;*/
+            /*color: #;*/
+            right: 4px;
+        }
+
+        #menuList li {
+            cursor: move;
+            list-style: none;
+        }
+
+        #menuList li:first-child {
+            padding-top: 10px;
+        }
+
+        #menuList li .entry {
+            position: relative;
+            padding: 10px 15px;
+            background: #fff;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 3px 9px rgba(46, 48, 56, 0.1);
+            -moz-box-shadow: 0 3px 9px rgba(46, 48, 56, 0.1);
+            box-shadow: 0 3px 9px rgba(46, 48, 56, 0.1);
+        }
+
+        #menuList li .entry .info {
+            float: left;
+        }
+
+        #menuList li .entry .info span {
+            display: block;
+        }
+
+        #menuList li .entry .info small {
+            display: block;
+            color: #d0d3d9;
+        }
+
+        #menuList li .entry .delete {
+            display: block;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            color: #d0d3d9;
+            font-size: 21px;
+            -webkit-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            -o-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+        }
+
+        #menuList li .entry .delete:hover {
+            color: #ef4748;
+        }
+
+        #menuList ul {
+            min-height: 10px;
+            padding: 0 0 0 20px;
+            margin: 0;
+        }
+
+        #menuList > ul {
+            padding-left: 0;
+        }
+
+        #menuList > ul > li:first-child {
+            padding-top: 0;
+        }
+    </style>
+    <style>
+
+        #resume-preview {
+            min-height: 576px;
+            width: 1024px;
+            position: relative;
+            display: inline-block;
+            background: #fff;
+            max-width: 1024px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+            overflow: hidden;
+            margin-bottom: 24px
+        }
+
+        #resume-preview iframe {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1
+        }
+
+        #resume-preview .share-bar {
+            opacity: 0;
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            margin-left: -168px;
+            width: 336px;
+            height: 48px;
+            background: rgba(24, 97, 242, 0.9);
+            z-index: 2;
+            box-shadow: 0px 16px 24px 0px rgba(0, 0, 0, 0.16), 0px 6px 8px 0px rgba(0, 0, 0, 0.16);
+            -webkit-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            -moz-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            -ms-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            -o-transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            transition: all 0.4s cubic-bezier(0.32, 0, 0.16, 1);
+            display: none
+        }
+
+        #resume-preview:hover .share-bar {
+            opacity: 1
+        }
+
+        #resume-preview .share-bar .bar-item {
+            float: left;
+            width: 112px;
+            height: 100%;
+            cursor: pointer;
+            color: #fff;
+            font-size: 14px;
+            line-height: 50px;
+            text-align: center;
+            font-weight: 500
+        }
+
+        #resume-preview .share-bar .bar-item:hover {
+            background: rgba(0, 0, 0, 0.16)
+        }
+
+        @media screen and (max-width: 1504px) {
+            #resume-preview {
+                width: 100%
+            }
+        }
+        /*iframe {*/
+            /*position: fixed;*/
+            /*top: 10vh;*/
+            /*width: 100vw;*/
+            /*height: 90vh;*/
+        /*}*/
+        .frame-wrapper {
+            position: relative;
+            font-size: 0;
+        }
+
+        .frame-wrapper .frame-border {
+            position: absolute;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.13);*/
+            pointer-events: none;
+        }
+
+        .frame-viewer {
+            width: 100%;
+            height: 400px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .frame-viewer img.preview {
+            width: 100%;
+        }
+
+        .frame-viewer iframe {
+
+            width: 1024px;
+            height: 900px;
+            position: fixed;
+            /*top: 10vh;*/
+            /*width: 100vw;*/
+            /*height: 100vh;*/
+
+            /*width: 100%;*/
+            /*height: 100%;*/
+            /*position: relative;*/
+            z-index: 1;
+            border: 0;
+            overflow: hidden;
+            -webkit-transform: scale(0.685);
+            transform: scale(0.825);
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            background-color: white;
+            border: none;
+        }
+
+        .col-md-7 .frame-viewer iframe {
+            -webkit-transform: scale(0.53);
+            transform: scale(0.53);
+        }
+
+        .col-md-6 .frame-viewer iframe {
+            width: 1266px;
+            height: 888px;
+            -webkit-transform: scale(0.45);
+            transform: scale(0.45);
+        }
+
+        .col-md-9 .frame-viewer iframe {
+            width: 1266px;
+            height: 888px;
+            -webkit-transform: scale(0.45);
+            transform: scale(0.45);
+        }
+
+        img.screenshot {
+            width: 100%;
+            box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(0, 0, 0, 0.2), inset 0 2px 0 0 rgba(255, 255, 255, 0.2);
+        }
+
+        a.site-link {
+            display: block;
+            padding: 14px 10px;
+            text-align: center;
+            /*border: 1px solid rgba(43, 50, 57, 0.15);*/
+            border-top: none;
+            background-color: #FDFDFD;
+            /*border-radius: 0 0 3px 3px;*/
+            text-decoration: none;
+        }
+
+        a.site-link i {
+            margin-right: 10px;
+            position: relative;
+            top: 2px;
+        }
+
+        a.site-link:hover {
+            color: #24588a;
+        }
+
+        a.site-link:hover i.icon {
+            -webkit-filter: brightness(70%);
+            filter: brightness(70%);
+        }
+
+        .col-padding {
+            position: relative;
+            min-height: 1px;
+            padding-left: 14px;
+            padding-right: 14px;
+        }
+    </style>
+
+    <style type="text/css">
+        @charset "UTF-8";
+        /**
+         * Menus: Mixins
+         */
+        /**
+         * Menus: Empty Content
+         */
+        .manage-menus .empty-content {
+            clear: both;
+        }
+
+        /**
+         * Menus: Placeholders
+         */
+        .menus__pickers .placeholder-text,
+        .menus__menu-header .placeholder-text,
+        .menus__items .placeholder-text {
+            color: transparent;
+            background-color: #e9eff3;
+            animation: loading-fade 1.6s ease-in-out infinite;
+        }
+
+        .menus__picker label .placeholder-text {
+            font-size: 10px;
+        }
+
+        .menus__picker-select-placeholder {
+            display: block;
+            padding: 23px 40px 10px 52px;
+        }
+
+        .menus__picker-select-placeholder .placeholder-text {
+            font-size: 12px;
+        }
+
+        /**
+         * Menus: Pickers
+         */
+        .menus__pickers {
+            background-color: #e9eff3;
+            background-size: cover;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+            padding: 3%;
+            box-shadow: 0 -2px 0 #a8bece inset;
+        }
+
+        @media (max-width: 480px) {
+            .menus__pickers {
+                margin-top: -8px;
+            }
+        }
+
+        .menus__pickers-conjunction {
+            float: left;
+            height: 55px;
+            font-size: 0.8em;
+            line-height: 4.6;
+            width: 10%;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .menus__pickers-conjunction {
+                width: 100%;
+                height: 30px;
+                line-height: 2.3;
+            }
+        }
+
+        .menus__picker {
+            width: 45%;
+            float: left;
+            position: relative;
+            background: white;
+            /* required for -moz-appearance below */;
+        }
+
+        @media (max-width: 480px) {
+            .menus__picker {
+                width: 100%;
+            }
+        }
+
+        .menus__picker label,
+        .menus__picker select {
+            display: block;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .menus__picker label {
+            pointer-events: none;
+            /* click through :D */
+            font-size: 0.8em;
+            color: #87a6bc;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 0px 30px 20px 42px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            width: calc(100% - 20px);
+        }
+
+        .menus__picker label:before {
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            color: #005082;
+        }
+
+        .menus__picker label:after {
+            font-size: 22px;
+            content: "";
+            vertical-align: top;
+            text-align: center;
+            display: inline-block;
+            font-family: Noticons;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            line-height: 1;
+            text-decoration: inherit;
+            text-transform: none;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            speak: none;
+            position: absolute;
+            top: 7px;
+            right: 0;
+            color: #00aadc;
+        }
+
+        .menus__picker.is-location label:before {
+            font-size: 32px;
+            content: "";
+            vertical-align: top;
+            text-align: center;
+            display: inline-block;
+            font-family: Noticons;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            line-height: 1;
+            text-decoration: inherit;
+            text-transform: none;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            speak: none;
+        }
+
+        .menus__picker.is-menu label:before {
+            font-size: 32px;
+            content: "";
+            vertical-align: top;
+            text-align: center;
+            display: inline-block;
+            font-family: Noticons;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            line-height: 1;
+            text-decoration: inherit;
+            text-transform: none;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            speak: none;
+        }
+
+        .menus__picker select {
+            background: white;
+            height: 55px;
+            border: none;
+            border-radius: 0;
+            -webkit-appearance: none;
+            padding: 20px 40px 5px 52px;
+        }
+
+        .menus__picker select::-ms-expand {
+            display: none;
+            /* Remove arrow in IE */;
+        }
+
+        /**
+         * Menu: Header
+         */
+        .menus__menu-header {
+            display: flex;
+            flex-direction: row;
+            margin: 24px 8px 8px 16px;
+        }
+
+        @media (max-width: 480px) {
+            .menus__menu-header {
+                margin: 24px 8px 8px 16px;
+            }
+        }
+
+        .menus__menu-header .menus__menu-name {
+            flex: 1 1 auto;
+            width: 0%;
+            /* Firefox 35 and IE 10 fix */;
+        }
+
+        .menus__menu-header .menus__menu-actions {
+            flex: 0 0 auto;
+            margin-left: auto;
+        }
+
+        .menus__menu-name {
+            font-size: 1.6em;
+            font-weight: 200;
+            float: left;
+        }
+
+        .menus__menu-name span.is-editable span {
+            display: block;
+            float: left;
+            max-width: calc(100% - 20px);
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .menus__menu-name span.is-editable a {
+            margin-left: 4px;
+            cursor: pointer;
+        }
+
+        .menus__menu-name span.is-editable a:before {
+            font-size: 16px;
+            content: "";
+            vertical-align: top;
+            text-align: center;
+            display: inline-block;
+            font-family: Noticons;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            line-height: 1;
+            text-decoration: inherit;
+            text-transform: none;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            speak: none;
+            color: #668eaa;
+            vertical-align: baseline;
+        }
+
+        .menus__menu-name input.is-editable {
+            margin: -20px -30px -20px 0;
+            font-size: inherit;
+            font-weight: inherit;
+            width: calc(100% - 40px);
+            margin-right: 40px;
+        }
+
+        @media (max-width: 480px) {
+            .menus__menu-name input.is-editable {
+                width: 100%;
+            }
+        }
+
+        .menus__menu-actions {
+            float: right;
+        }
+
+        .menus__menu-actions .button {
+            margin-left: 0.7em;
+        }
+
+        .menus__menu-actions .button.noticon:before {
+            line-height: 1.35;
+            color: #2e4453;
+            /* Reset noticon parts overridden by button */
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        @media (max-width: 480px) {
+            .is-editing-title .menus__menu-name {
+                line-height: 41px;
+            }
+
+            .is-editing-title .menus__menu-actions {
+                display: none;
+            }
+        }
+
+        /**
+         * Menu: List
+         */
+        .menus__items {
+            margin: 0;
+            clear: both;
+            list-style-type: none;
+            background-color: #e9eff3;
+        }
+
+        .menus__items ul {
+            padding: 0;
+        }
+
+        .menus__items ul.depth-0 {
+            margin-left: 0;
+        }
+
+        .menus__menu-item {
+            display: flex;
+            flex-direction: row;
+            color: #005082;
+            background-color: white;
+            text-decoration: none;
+            border-bottom: 1px solid #e9eff3;
+            border-left: 1px solid #e9eff3;
+            padding: 17px 20px 16px 16px;
+            font-size: 13px;
+            cursor: default;
+            position: relative;
+            z-index: z-index("root", ".menus__menu-item");
+            /**
+               * Menu item is selected
+               */
+            /**
+               * Menu 3-pronged lander areas
+               */
+            /**
+               * Item target when dragging with mouse
+               */
+            /**
+               * Hide drag 'ghost' image, because it makes the drop
+               * target hard to see
+               */
+            /**
+               * Menu is Empty, show special add icon
+               */
+            /**
+               * Item is to be deleted, pending user confirmation
+               */;
+        }
+
+        .menus__menu-item.depth-1 {
+            margin-left: 2rem;
+        }
+
+        .menus__menu-item.depth-2 {
+            margin-left: 4rem;
+        }
+
+        .menus__menu-item.depth-3 {
+            margin-left: 6rem;
+        }
+
+        .menus__menu-item.depth-4 {
+            margin-left: 8rem;
+        }
+
+        .menus__menu-item.depth-5 {
+            margin-left: 10rem;
+        }
+
+        .menus__menu-item.depth-6 {
+            margin-left: 12rem;
+        }
+
+        .menus__menu-item.depth-7 {
+            margin-left: 14rem;
+        }
+
+        .menus__menu-item .menu-item-name {
+            flex: 1 1 auto;
+            color: #2e4453;
+            font-size: 1.1em;
+            line-height: 1.5em;
+            font-family: inherit;
+            text-align: left;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .menus__menu-item .menu-item-name:before {
+            font-size: 16px;
+            margin-right: 12px;
+            color: #00aadc;
+            vertical-align: -2px;
+        }
+
+        .menus__menu-item .menu-item-name.noticon-placeholder:before {
+            color: transparent;
+            background-color: #e9eff3;
+            animation: loading-fade 1.6s ease-in-out infinite;
+            vertical-align: -4px;
+            font-size: 19px;
+        }
+
+        .menus__menu-item .action-tray {
+            flex: 0 0 auto;
+            float: right;
+            margin-right: -8px;
+            /* compensate buttons padding, more universal */
+            transition: background 200ms ease-in, color 50ms ease-in;
+            /* Buttons */;
+        }
+
+        .menus__menu-item .action-tray button {
+            margin-left: 1em;
+            margin-top: -8px;
+            margin-bottom: -8px;
+            font-size: inherit;
+            line-height: 1.45;
+        }
+
+        .menus__menu-item .action-tray .menu-item-action {
+            float: left;
+            color: #668eaa;
+            margin: -5px 0 -5px;
+            padding: 8px 6px 8px;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            font-weight: 500;
+            vertical-align: top;
+            cursor: pointer;
+            transition: all 200ms ease-out;
+            border-radius: 100%;
+            text-indent: -6666em;
+            width: 22px;
+            /* Fix: Firefox won't respect margins with text-indent on otherwise. */
+            /* Icon Buttons */
+        }
+
+        .menus__menu-item .action-tray .menu-item-action:before {
+            content: "";
+            color: #00aadc;
+            float: left;
+            font-size: 16px;
+            text-indent: 0;
+            width: 22px;
+        }
+
+        .menus__menu-item .action-tray .menu-item-action.edit:before {
+            font-size: 16px;
+            content: "";
+            vertical-align: top;
+            text-align: center;
+            display: inline-block;
+            font-family: Noticons;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            line-height: 1;
+            text-decoration: inherit;
+            text-transform: none;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            speak: none;
+        }
+
+        .menus__menu-item .action-tray .menu-item-action.add:before {
+            font-size: 16px;
+            content: "";
+            vertical-align: top;
+            text-align: center;
+            display: inline-block;
+            font-family: Noticons;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            line-height: 1;
+            text-decoration: inherit;
+            text-transform: none;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            speak: none;
+        }
+
+        .menus__menu-item .action-tray .menu-item-action.cancel:before {
+            font-size: 16px;
+            content: "";
+            vertical-align: top;
+            text-align: center;
+            display: inline-block;
+            font-family: Noticons;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            line-height: 1;
+            text-decoration: inherit;
+            text-transform: none;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            speak: none;
+            font-size: 19px;
+            margin-bottom: -3px;
+            /* Sigh it's smaller... */;
+        }
+
+        .menus__menu-item .action-tray .menu-item-action.move {
+            color: #00aadc;
+            text-indent: 0;
+            width: auto;
+        }
+
+        .menus__menu-item .action-tray .menu-item-action.move:hover {
+            color: #78dcfa;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        .menus__menu-item .action-tray .menu-item-action.move:before {
+            content: none;
+        }
+
+        .menus__menu-item .action-tray .menu-item-action:hover, .menus__menu-item .action-tray .menu-item-action:focus {
+            color: white;
+            background: #00aadc;
+        }
+
+        .menus__menu-item .action-tray .menu-item-action:hover:before, .menus__menu-item .action-tray .menu-item-action:focus:before {
+            color: white;
+        }
+
+        .menus__menu-item.is-selected {
+            background: #00aadc;
+            padding: 6px;
+            border-bottom: 0;
+            /* remove gap */;
+        }
+
+        .menus__menu-item.is-selected .noticon {
+            color: white;
+            padding: 14px 16px 5px 10px;
+        }
+
+        .menus__menu-item.is-selected input {
+            width: calc(100% - 70px);
+            padding: 12px 14px;
+            border: 0;
+            color: #005082;
+            font-size: 14px;
+        }
+
+        .menus__menu-item.is-lander {
+            background: #fafbfc;
+            border-left: 1px solid #e9eff3;
+            z-index: z-index("root", ".menus__menu-item.is-lander");
+        }
+
+        .menus__menu-item.is-lander:hover {
+            background: #00aadc;
+        }
+
+        .menus__menu-item.is-lander:hover span,
+        .menus__menu-item.is-lander:hover span:before {
+            color: white;
+        }
+
+        .menus__menu-item.is-lander span {
+            color: #005082;
+            font-size: 1.1em;
+            line-height: 1.5em;
+            font-family: inherit;
+        }
+
+        .menus__menu-item.is-lander span:before {
+            font-size: 16px;
+            margin-right: 12px;
+            color: #00aadc;
+            vertical-align: -2px;
+        }
+
+        .menus__menu-item.is-dragdrop-target {
+            background: #f3f6f8;
+            border: 1px dashed #c8d7e1;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .menus__menu-item.is-dragdrop-target span {
+            visibility: hidden;
+        }
+
+        .menus__menu-item.is-dragdrop-target .add,
+        .menus__menu-item.is-dragdrop-target .edit {
+            display: none;
+        }
+
+        .menus__menu-item:-webkit-drag {
+            visibility: hidden;
+        }
+
+        .menus__menu-item:-webkit-drag div {
+            display: none;
+        }
+
+        .menus__menu-item.is-empty {
+            margin-left: calc(100% - 61px);
+            padding-left: 13px;
+        }
+
+        .menus__menu-item.is-deleted {
+            background: #f3f6f8;
+        }
+
+        .menus__menu-item.is-deleted .menu-item-name,
+        .menus__menu-item.is-deleted .menu-item-name::before {
+            color: #87a6bc;
+        }
+
+        .menus__menu-item.is-corrupt {
+            border-left: 5px solid #f0b849;
+        }
+
+        /**
+         * Menu: add menu item label
+         */
+        .menus__add-item-footer-label {
+            float: right;
+            padding: 10px 25px 2px 0;
+            color: #87a6bc;
+            font-size: 10px;
+            text-transform: uppercase;
+            animation: menus__fade-from-bottom 1.0s ease-in-out;
+        }
+
+        .menus__add-item-footer-label:after {
+            content: "\2191";
+            /* Up arrow */
+            color: #00aadc;
+            font-size: 16px;
+            padding: 0 0 0 10px;
+        }
+
+        /**
+         * Menu: Edit Item & New Item views
+         */
+        .menus__menu-item-open-container {
+            background: #f3f6f8;
+        }
+
+        @media (max-width: 480px) {
+            .menus__menu-item-open-container.is-panel-left .menu-item-options {
+                display: none !important;
+            }
+
+            .menus__menu-item-open-container.is-panel-right .menu-item-options {
+                width: auto !important;
+                left: 0 !important;
+                border: 0 !important;
+            }
+        }
+
+        .menus__menu-item-open {
+            display: block;
+            color: #005082;
+            background-color: white;
+            text-decoration: none;
+            border-left: 1px solid #e9eff3;
+        }
+
+        .menus__menu-item-open.depth-1 {
+            margin-left: 2rem;
+        }
+
+        .menus__menu-item-open.depth-2 {
+            margin-left: 4rem;
+        }
+
+        .menus__menu-item-open.depth-3 {
+            margin-left: 6rem;
+        }
+
+        .menus__menu-item-open.depth-4 {
+            margin-left: 8rem;
+        }
+
+        .menus__menu-item-open.depth-5 {
+            margin-left: 10rem;
+        }
+
+        .menus__menu-item-open.depth-6 {
+            margin-left: 12rem;
+        }
+
+        .menus__menu-item-open.depth-7 {
+            margin-left: 14rem;
+        }
+
+        .menus__menu-item-open.depth-1 .editable-item-content {
+            margin-left: -2rem;
+        }
+
+        .menus__menu-item-open.depth-2 .editable-item-content {
+            margin-left: -4rem;
+        }
+
+        .menus__menu-item-open.depth-3 .editable-item-content {
+            margin-left: -6rem;
+        }
+
+        .menus__menu-item-open.depth-4 .editable-item-content {
+            margin-left: -8rem;
+        }
+
+        .menus__menu-item-open.depth-5 .editable-item-content {
+            margin-left: -10rem;
+        }
+
+        .menus__menu-item-open.depth-6 .editable-item-content {
+            margin-left: -12rem;
+        }
+
+        .menus__menu-item-open.depth-7 .editable-item-content {
+            margin-left: -14rem;
+        }
+
+        .menus__menu-item-open:before {
+            /* The top arrow */
+            margin-top: -17px;
+            margin-left: 15px;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: rgba(255, 255, 255, 0);
+            border-bottom-color: #ffffff;
+            border-width: 9px;
+            z-index: z-index("root", ".menus__menu-item-open:before");
+        }
+
+        .menus__menu-item-open .editable-item-content {
+            background: white;
+            border-top: 1px solid #e9eff3;
+            border-bottom: 1px solid #e9eff3;
+            /**
+                 * General
+                 */
+            /**
+                 * Menu Item Name
+                 */
+            /**
+                * Menu Item Types
+                */
+            /**
+                 * A notice for unsupported item types
+                 */;
+        }
+
+        .menus__menu-item-open .editable-item-content .separated {
+            border-bottom: 1px solid #e9eff3;
+        }
+
+        .menus__menu-item-open .editable-item-content .separated:after {
+            content: " ";
+            display: block;
+            height: 0;
+            clear: both;
+        }
+
+        .menus__menu-item-open .editable-item-content input:not([type='radio']):not([type='checkbox']) {
+            display: block;
+            font-size: 14px;
+            margin: -1px 0;
+            transition: all 200ms ease-out;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-name {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-name label {
+            flex: 0 0 auto;
+            padding: 9px 12px;
+            display: block;
+            line-height: 2.4;
+            color: #87a6bc;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-name input {
+            flex: 1 1 auto;
+            width: 75%;
+            background: #f3f6f8;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-types {
+            list-style: none;
+            margin: 0;
+            position: relative;
+            width: 136px;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-types:hover {
+            border-top-color: #f3f6f8;
+            border-bottom-color: #f3f6f8;
+        }
+
+        @media (max-width: 480px) {
+            .menus__menu-item-open .editable-item-content .menus__menu-item-form-types {
+                width: 100%;
+            }
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-types li {
+            border: 0;
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+            border-right: 1px solid #e9eff3;
+            transition: all 200ms ease-in-out, color 150ms ease-in-out;
+            /**
+                     * Selected states
+                     */;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-types li > label {
+            font-family: inherit;
+            font-size: 14px;
+            padding: 16px 12px;
+            color: #2e4453;
+            line-height: 1.3;
+            display: block;
+            text-align: left;
+            margin-bottom: -1px;
+            font-weight: 400;
+            transition: all 250ms ease-in-out, color 150ms ease-in-out;
+            cursor: pointer;
+            -webkit-font-smoothing: inherit;
+            /* Fix the noticon change */
+            -moz-osx-font-smoothing: inherit;
+            /* Fix the noticon change */;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-types li > label:before {
+            color: #c8d7e1;
+            font-size: 16px;
+            margin-right: 8px;
+            vertical-align: -3px;
+            transition: all 250ms ease-in-out, color 150ms ease-in-out;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-types li > label:hover {
+            color: #00aadc;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-types li > label:hover:before {
+            color: #00aadc;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-types li.is-selected {
+            border-top-color: #e9eff3;
+            border-bottom-color: #e9eff3;
+            border-right-color: white;
+            color: #2e4453;
+        }
+
+        @media (max-width: 480px) {
+            .menus__menu-item-open .editable-item-content .menus__menu-item-form-types li.is-selected {
+                border-top: 1px solid transparent;
+                border-bottom: 1px solid transparent;
+            }
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-types li.is-selected:first-child {
+            border-top-color: white;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-types li.is-selected:last-child {
+            border-bottom-color: white;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-types li.is-selected > label {
+            color: #00aadc;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__menu-item-form-types li.is-selected > label:before {
+            color: #00aadc;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container {
+            position: relative;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 75%;
+            background: white;
+            font-size: 14px;
+            padding: 10px 13px;
+            overflow: hidden;
+            overflow-y: auto;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options.menu-item-options__term-tree-selector {
+            padding: 10px 0px 10px 13px;
+            overflow-y: hidden;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options.menu-item-options__term-tree-selector .term-tree-selector {
+            border: 0;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options.menu-item-options__term-tree-selector .term-tree-selector__search input {
+            border-width: 1px;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options.menu-item-options__term-tree-selector .term-tree-selector__label {
+            color: #2e4453;
+            font-size: 14px;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options.menu-item-options__term-tree-selector .term-tree-selector__list-item.is-placeholder {
+            width: 85%;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options.menu-item-options__term-tree-selector .term-tree-selector__list-item.is-placeholder .term-tree-selector__label {
+            color: transparent;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .menu-item-tag-container {
+            margin: 10px;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .menu-item-tag-container .menu-item-tag {
+            display: inline-block;
+            padding: 0 3px;
+            background-color: #c8d7e1;
+            color: white;
+            font-size: 10px;
+            border-radius: 3px;
+            margin-left: 5px;
+            text-transform: uppercase;
+            vertical-align: middle;
+            letter-spacing: 0.02em;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .menu-item-tag-container .menu-item-tag:first-of-type {
+            margin-left: 0;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options li.create-new-item input[type=radio] + label {
+            color: #87a6bc;
+            font-style: italic;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .menu-item-back-button {
+            display: none;
+            transition: 200ms all ease-in;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .menu-item-back-button a {
+            display: block;
+            font-family: inherit;
+            font-size: 14px;
+            color: #375163;
+            text-align: left;
+            line-height: 1.3;
+            background: white;
+            padding: 16px 12px 15px;
+            margin: -10px -13px 10px;
+            border-bottom: 1px solid #e9eff3;
+            -webkit-font-smoothing: inherit;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .menu-item-back-button a:before {
+            color: #78dcfa;
+            font-size: 16px;
+            margin-right: 8px;
+            vertical-align: -3px;
+        }
+
+        @media (max-width: 480px) {
+            .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .menu-item-back-button {
+                display: block;
+            }
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .menu-item-form-label {
+            float: none;
+            width: auto;
+            border: 0;
+            display: block;
+            padding: 0 0 10px 0;
+            color: #87a6bc;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .menu-item-form-address {
+            margin-bottom: 1rem;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options input[type='checkbox'] + label {
+            margin-left: 4px;
+            color: #2e4453;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options li {
+            padding: 2px 0;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options li input[type=radio] + label {
+            margin-left: 4px;
+            transition: all 200ms ease-out;
+            color: #2e4453;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options li input[type=radio] + label:hover {
+            color: #00aadc;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options form > label {
+            cursor: pointer;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options input:not([type='radio']):not([type='checkbox']) {
+            width: 95%;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .is-empty-content {
+            color: #87a6bc;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .is-empty-content a {
+            color: #87a6bc;
+            text-decoration: underline;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .search-container {
+            position: relative;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .search-container .gridicon {
+            position: absolute;
+            left: 0;
+            padding: 9px 8px;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options .search-container .search-box {
+            right: 0;
+            width: 100%;
+            height: 35px;
+            margin-bottom: 1rem;
+            padding: 5px 5px 5px 30px;
+            background: white;
+            -webkit-appearance: none;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options::-webkit-scrollbar {
+            width: 9px;
+            height: 9px;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options::-webkit-scrollbar-button:start:decrement, .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options::-webkit-scrollbar-button:end:increment {
+            display: block;
+            height: 0;
+            background-color: transparent;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options::-webkit-scrollbar-track-piece {
+            background-color: transparent;
+            -webkit-border-radius: 0;
+            -webkit-border-bottom-right-radius: 8px;
+            -webkit-border-bottom-left-radius: 8px;
+        }
+
+        .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options::-webkit-scrollbar-thumb:vertical, .menus__menu-item-open .editable-item-content .menus__types-and-options-container .menu-item-options::-webkit-scrollbar-thumb:horizontal {
+            background-color: #c8d7e1;
+            -webkit-border-radius: 8px;
+            border: 1px solid white;
+        }
+
+        .menus__menu-item-open .editable-item-content .unsupported-notice {
+            padding: 1em;
+        }
+
+        .menus__menu-item-open .editable-item-content .unsupported-notice h1 {
+            color: #2e4453;
+            font-size: 16px;
+            margin-bottom: 1em;
+        }
+
+        .menus__menu-item-open .editable-item-content .unsupported-notice p, .menus__menu-item-open .editable-item-content .unsupported-notice small {
+            color: #87a6bc;
+        }
+
+        .menus__menu-item-open .editable-item-content .unsupported-notice p {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        /**
+         * Menu: Item Action Buttons
+         */
+        .menus__menu-item-actions {
+            clear: both;
+            padding: 0.5em;
+            border-top: 1px solid #e9eff3;
+            text-align: right;
+        }
+
+        .menus__menu-item-actions .button {
+            margin-left: 0.5em;
+        }
+
+        .menus__menu-item-actions .button.noticon {
+            font-family: inherit;
+            -webkit-font-smoothing: inherit;
+            color: #6f7a88;
+        }
+
+        .menus__menu-item-actions .button.noticon:hover {
+            color: #324155;
+        }
+
+        .menus__menu-item-actions .button.noticon:before {
+            font-size: 16px;
+            vertical-align: -3px;
+            margin: 0px -3px -1px;
+        }
+
+        /**
+         * Menu: animations, pure CSS fade-ins
+         */
+        @keyframes menus__fade-from-bottom {
+            0% {
+                opacity: 0.0;
+            }
+
+            20% {
+                opacity: 0.0;
+                transform: translateY(10px);
+            }
+
+            70% {
+                opacity: 1.0;
+            }
+
+            100% {
+                opacity: 1.0;
+                transform: none;
+            }
+        }
+
+        .slide-fade-enter-active {
+            transform: translateZ(0);
+            margin-top: -55px;
+            opacity: 0.0;
+            /*transition: all .3s ease;*/
+        }
+
+        .slide-fade-leave-active {
+            /*transition: margin 200ms ease-out, opacity 200ms ease-out;*/
+            /*margin-top: -55px;*/
+            /*opacity: 0.0;*/
+            /*transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);*/
+        }
+
+        .slide-fade-enter, .slide-fade-leave-to
+            /* .slide-fade-leave-active for <2.1.8 */
+        {
+            /*transform: translateX(10px);*/
+            /*opacity: 0;*/
+            /*transform: translateZ(0);*/
+
+            /*transition: margin 200ms ease-out, opacity 200ms ease-out;*/
+
+        }
+
+        /**
+         * Menu: animations, ReactCSSTransitionGroup
+         */
+        .menus__droptarget-slidevertical-enter-active {
+            transform: translateZ(0);
+            /* Turns acceleration on if possible */;
+        }
+
+        .menus__droptarget-slidevertical-leave-active {
+            /* Fix for Safari / Safari Mobile: the transition doesn't work unless it's on the *-active
+                 * Reference:
+                 *    https://github.com/facebook/react/issues/2227
+                 *    https://github.com/facebook/react/issues/2104
+                 */
+            transition: margin 200ms ease-out, opacity 200ms ease-out;
+        }
+
+        .menus__droptarget-slidevertical-enter.is-lander span,
+        .menus__droptarget-slidevertical-leave.is-lander span {
+            opacity: 0.0;
+        }
+
+        .menus__droptarget-slidevertical-enter.is-lander:hover,
+        .menus__droptarget-slidevertical-leave.is-lander:hover {
+            background: inherit;
+            color: inherit;
+        }
+
+        .menus__droptarget-slidevertical-enter {
+            margin-top: -55px;
+            opacity: 0.0;
+        }
+
+        .menus__droptarget-slidevertical-enter.is-position-before {
+            margin-top: 0;
+            margin-bottom: -55px;
+        }
+
+        .menus__droptarget-slidevertical-enter-active {
+            margin-top: 0;
+            opacity: 1.0;
+        }
+
+        .menus__droptarget-slidevertical-enter-active.is-position-before {
+            margin-bottom: 0;
+        }
+
+        .menus__droptarget-slidevertical-leave {
+            margin-top: 0;
+            opacity: 1.0;
+        }
+
+        .menus__droptarget-slidevertical-leave.is-position-before {
+            margin-bottom: 0;
+        }
+
+        .menus__droptarget-slidevertical-leave-active {
+            margin-top: -55px;
+            opacity: 0.0;
+        }
+
+        .menus__droptarget-slidevertical-leave-active.is-position-before {
+            margin-top: 0;
+            margin-bottom: -55px;
+        }
+    </style>
+{% endblock %}
+
+<!-- Main content -->
+
+{% block navbar %}
+
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="#" class="legitRipple" @click="sectionMenu = false">基本信息</a></li>
+        <li><a href="#" class="legitRipple" @click="sectionMenu = true">简历模块 <span class="caret"></span></a></li>
+        <li><a href="#" class="legitRipple">联络方式</a></li>
+        <li><a href="#" class="legitRipple">样式设计</a></li>
+    </ul>
+
+
+{% endblock %}
+{% block page_navbar %}
+        <div class="navbar navbar-default navbar-default-secondary navbar-xs" v-if="sectionMenu == true">
+            <ul class="nav navbar-nav no-border visible-xs-block">
+                <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-second"><i
+                                class="icon-circle-down2"></i></a></li>
+            </ul>
+
+            <div class="navbar-collapse collapse" id="navbar-second">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#"><i class="icon-git-branch position-left"></i> 个人履历</a></li>
+                    <li><a href="#"><i class="icon-git-merge position-left"></i> 教育背景 <span
+                                    class="badge badge-warning badge-inline position-right">81</span></a></li>
+                    <li><a href="#"><i class="icon-git-pull-request position-left"></i> 获得奖项</a></li>
+                    <li><a href="#"><i class="icon-git-pull-request position-left"></i> 项目经历</a></li>
+                    <li><a href="#"><i class="icon-git-pull-request position-left"></i> 个人技能</a></li>
+                </ul>
+
+                <div class="navbar-right">
+                    <p class="navbar-text"><i class="icon-user-check position-left"></i> Signed in as <a href="#"
+                                                                                                         class="navbar-link">Victoria</a>
+                    </p>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-share4"></i>
+                                <span class="visible-xs-inline-block position-right">Share</span>
+                                <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="#"><i class="icon-dribbble3"></i> Dribbble</a></li>
+                                <li><a href="#"><i class="icon-pinterest2"></i> Pinterest</a></li>
+                                <li><a href="#"><i class="icon-github"></i> Github</a></li>
+                                <li><a href="#"><i class="icon-stackoverflow"></i> Stack Overflow</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+{% block sidebar_main %}
+    <div class="sidebar sidebar-main sidebar-default">
+        <div class="sidebar-content">
+            <div class="category-title bg-grey-50">
+                <span><a href="/admin"><i class="icon-arrow-left8 position-left"></i>返回</a></span>
+                <div class="heading-elements">
+
+                    <span class="heading-text text-size-small">
+                        <p v-if="status == 'saving'" class="text-teal">
+                            <i class="icon-spinner2 spinner position-left"></i>
+                            正在保存
+                        </p>
+                        <p v-if="status == 'success'" class="text-muted">
+                            <i class="icon-check2"></i> 保存成功
+                        </p>
+                        <p v-else-if="status == 'editing'"><a>保存</a></p>
+                        <p v-else-if="status == 'init'" class="text-muted">内容将实时更新</p>
+                    </span>
+
+                </div>
+
+                {#<ul class="icons-list">#}
+                {#<li><a href="#">草稿 <span class="badge badge-flat border-slate text-slate-600">59</span></a></li>#}
+                {#</ul>#}
+            </div>
+
+            <!-- Categories -->
+            <div class="sidebar-category">
+                <div class="category-title text-muted">
+                    <span>菜单管理</span>
+                    <ul class="icons-list">
+                        {#<li><a href="#" data-action="collapse"></a></li>#}
+                        <li><a href="#"><i class="icon-plus22 text-teal"></i></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content no-padding">
+                    <ul class="navigation">
+                        <li><a class="list-group-item">简历管理</a></li>
+                        {#<li><a class="list-group-item">工作机会</a></li>#}
+                        <li><a class="list-group-item">统计信息</a></li>
+                        <li><a class="list-group-item">功能设置</a></li>
+                        {#<li><a class="list-group-item">模块管理</a></li>#}
+                        {#<li><a class="list-group-item">简历设置</a></li>#}
+                        {#<li><a class="list-group-item">我的简历</a></li>#}
+                        {#<li><a class="list-group-item">简历分享/投递</a></li>#}
+                        {#<li><a class="list-group-item">模板管理</a></li>#}
+                        <li v-for="menu in menus" :class="[menu.id == menuID ? 'active' : '']">
+
+                            <a class="list-group-item" @click="setMenu(menu)">
+                                <span class="text-muted text-size-small text-regular pull-right">12</span>
+
+                                {{ menu.name }}
+                            </a>
+
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /categories -->
+
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row" :class="sectionMenu == true ? 'mt-20' : ''">
+        <div class="col-md-4 col-lg-3">
+            <div class="panel no-margin-bottom">
+                <input type="text" class="form-control no-border" placeholder="姓名" v-model="resume.basics.name">
+            </div>
+            <div class="panel mt-5 no-margin-bottom">
+                <input type="text" class="form-control no-border" placeholder="所在城市" v-model="resume.basics.location.city">
+            </div>
+            <div class="panel mt-5 no-margin-bottom">
+                <input type="text" class="form-control no-border" placeholder="居住地址" v-model="resume.basics.location.address">
+            </div>
+            <div class="panel mt-5 no-margin-bottom">
+                <textarea rows="4" cols="4" class="form-control no-border" placeholder="个人简介" v-model="resume.basics.summary"></textarea>
+
+            </div>
+
+            <div class="panel panel-body mt-5">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="/static/assets/images/demo/images/3.png" data-popup="lightbox">
+                            <img src="/static/assets/images/demo/users/face1.jpg" class="img-circle img-lg" alt="">
+                        </a>
+                    </div>
+
+                    <div class="media-body">
+                        <h6 class="media-heading">James Alexander</h6>
+                        <span class="text-muted">Lead developer</span>
+                    </div>
+
+                    <div class="media-right media-middle">
+                        <ul class="icons-list">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="#"><i class="icon-comment-discussion pull-right"></i> Start chat</a></li>
+                                    <li><a href="#"><i class="icon-phone2 pull-right"></i> Make a call</a></li>
+                                    <li><a href="#"><i class="icon-mail5 pull-right"></i> Send mail</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#"><i class="icon-statistics pull-right"></i> Statistics</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-8 col-lg-9">
+
+            <div class="panel">
+                <div class="frame-viewer">
+                    <div class="frame-border"></div>
+                    {#<div id="preview">#}
+                        <iframe src="/admin/resumes/preview" height="100%" width="100%" name="previewframe" id="previewframe"></iframe>
+                    {#</div>#}
+                    {#<div class="frame-viewer" id="preview">#}
+                        {#<iframe src="/admin/resumes/privew" height="100%" width="100%" name="previewframe" id="previewframe"></iframe>#}
+                        {#<iframe :src="iframe.src" ref="frame" @load="load" v-show="iframe.loaded" id="previewframe"></iframe>#}
+                    {#</div>#}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block components %}
+
+
+{% endblock %}
+<!-- /main content -->
+
+{% block script %}
+
+    {#<script type="text/javascript" src="/static/assets/js/plugins/forms/editable/editable.min.js"></script>#}
+
+
+    <script>
+
+       var main = new Vue({
+            el: "#app",
+            data: {
+                headline: '菜单管理',
+                resume: <$ resume | dump | safe $>,
+                status: "",
+                menus: [],
+                sectionMenu: false,
+                iframe: {
+                    src: '/admin/resumes/preview',
+                    loaded: false
+                }
+            },
+            mounted: function () {
+                var vue = this;
+                $(document).on("fetch", function () {
+
+                });
+                eventHub.$on("frame_loaded", function () {
+                    console.log("snippet")
+//                    vue.$mount(vue.$refs.frame);
+//                    console.log(JSON.stringify(main.$refs.frame))
+
+                });
+
+                console.log('Main Mounted')
+                this.$nextTick(function () {
+                    console.log('Main nextTick');
+                    // code that assumes this.$el is in-document
+                })
+//                if (this.iframe.loaded){
+//                    Vue.nextTick(function(){
+//                        this.name = "我的名字"
+//                    })
+
+//                    this.$mount(this.$refs.frame)
+
+//                }
+
+            },
+            methods: {
+                load: function(){
+                    this.iframe.loaded = true;
+                    eventHub.$emit("frame_loaded")
+                }
+
+            },
+            watch: {
+                resume: {
+                    handler:function(val,oldVal){
+//                        console.log(JSON.stringify(val))
+                        eventHub.$emit('resume_update', val)
+
+                        //要执行的任务
+                        //这里不知道怎么才能修改到this.data的数据，有知道的麻烦告知
+                        //现在知道的就是通过直接修改Store.state的方式来更新数据，当然效果和修改this.data是一样的
+                    },
+                    deep: true
+                },
+                name: function(val){
+
+                }
+            },
+//           render: function (createElement) {
+////                console.log()
+//               return createElement(
+//                   'h' + this.level,   // tag name 标签名称
+//                   this.$slots.default // 子组件中的阵列
+//               )
+//           }
+
+        });
+
+       var preview = new Vue({
+//           el     : '#preview',
+           // el     : document.getElementById('previewframe').contentWindow.document.getElementById('preview'),
+           data   : {
+               resume: <$ resume | dump | safe $>,
+
+                store  : {},
+               global : {},
+               local  : {},
+               name: 'lalala'
+           },
+           mounted() {
+               console.log('Iframe Mounted')
+
+               this.local = {
+                   content : 'Preview'
+               };
+
+//               this.global = store.state;
+//               this.store  = store;
+
+               this.$nextTick(function () {
+
+                   console.log('Iframe NextTick');
+
+//                   this.name = "lalala"
+                   //onload = load;
+
+                   // code that assumes this.$el is in-document
+               })
+               var vue = this;
+               eventHub.$on("resume_update", function (content) {
+                   vue.resume = content;
+                   this.$nextTick(function () {
+
+//                       vue.name = content;
+
+                       console.log('Iframe NextTick');
+
+//                   this.name = "lalala"
+                       //onload = load;
+
+                       // code that assumes this.$el is in-document
+                   })
+//                   console.log("snippet")
+//                    vue.$mount(vue.$refs.frame);
+//                    console.log(JSON.stringify(main.$refs.frame))
+
+               });
+
+           },
+//           render: function (createElement) {
+////                console.log()
+//               return createElement(
+//                   'h' + this.level,   // tag name 标签名称
+//                   this.$slots.default // 子组件中的阵列
+//               )
+//           }
+//           render : h => h(PreviewWindow)
+       });
+       window.frames['previewframe'].window.onload = function () {
+           // main.$mount('#app')
+
+           console.log('Iframe Window OnLoad');
+
+           preview.$mount(document.getElementById('previewframe').contentWindow.document.getElementById('resume'))
+
+//           console.log(document.getElementById('previewframe').contentWindow.document.getElementById('preview'))
+//           console.log(window.frames['previewframe'].window.document.getElementById('preview'))
+//           main.$mount(window.frames['previewframe'].window.document.getElementById('preview'))
+       }
+    </script>
+
+{% endblock %}

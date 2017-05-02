@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><$ options.site.title $> - <$ options.site.desc $></title>
+    <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/icons/fontawesome/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+
+    <link href="/static/assets/layout4/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/layout4/css/core.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/layout4/css/components.min.css" rel="stylesheet" type="text/css">
+    <link href="/static/assets/layout4/css/colors.min.css" rel="stylesheet" type="text/css">
+
+
+    <link href="/static/assets/css/extras/animate.min.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+
+    <style>
+        .dummy-fixed {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            padding: 15px;
+            width: 100%;
+            height: calc(3em + 30px);
+            /*background: #E2E0D3;*/
+            text-align: center;
+        }
+
+        .editor textarea {
+            border: none;
+            resize: none;
+            outline: none;
+            font-size: 14px;
+            font-family: 'Monaco', courier, monospace;
+            display: inline-block;
+            box-sizing: border-box;
+            height: 42vh !important;;
+            max-height: 350px; /* optional, but recommended */
+            min-height: 350px;
+            overflow-x: hidden; /* for Firefox (issue #5) */
+        }
+
+        .snippet__icon {
+            position: absolute;
+            top: 1.5em;
+            left: 1.5em;
+            fill: #4e4e4f;
+        }
+
+        .snippet {
+            position: absolute;
+            left: 50%;
+            margin: 0 auto;
+            margin-left: -4.5em;
+            width: 9em;
+            height: 3em;
+            font-weight: 400;
+            font-family: 'Maven Pro', sans-serif;
+            -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+            -webkit-transition: -webkit-transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .snippet--active {
+            /* center on screen (padding of parent, half of summary height, half of viewport height) */
+            -webkit-transform: translate3d(0, 15px, 0) translate3d(0, 30vh, 0) translate3d(0, -50vh, 0);
+            transform: translate3d(0, 15px, 0) translate3d(0, 30vh, 0) translate3d(0, -50vh, 0);
+        }
+
+        a.snippet__button {
+            position: relative;
+            z-index: 10;
+            /*display: block;*/
+            /*margin: 0 auto;*/
+            height: 100%;
+            /*border-radius: 10px;*/
+            /*color: #fff;*/
+            /*line-height: 3em;*/
+            -webkit-transition: background-color 0.6s cubic-bezier(0.7, 0, 0.3, 1), -webkit-transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: background-color 0.6s cubic-bezier(0.7, 0, 0.3, 1), transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        a.snippet__button:hover,
+        a.snippet__button:focus {
+            outline: none;
+            color: #fff;
+        }
+
+        .snippet--active a.snippet__button {
+            background-color: #3f3d3d;
+            -webkit-transform: perspective(1000px) translate3d(0, -2.5em, 0);
+            transform: perspective(1000px) translate3d(0, -2.5em, 0);
+        }
+
+        .snippet__text-inner {
+            font-weight: bold;
+        }
+
+        .snippet__final-text,
+        .snippet__initial-text {
+            -webkit-transition: opacity 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: opacity 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .snippet--active .snippet__initial-text {
+            opacity: 0
+        }
+
+        .snippet__final-text {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+        }
+
+        .snippet--active .snippet__final-text {
+            opacity: 1;
+        }
+
+        .snippet_content,
+        .snippet_content::before {
+            position: absolute;
+            bottom: 0%;
+            left: 50%;
+            -webkit-transform: translate3d(-50%, 0%, 0);
+            transform: translate3d(-50%, 0%, 0);
+        }
+
+        .snippet_content {
+            overflow: hidden;
+            min-width: 320px;
+            max-width: 700px;
+            width: 95vw;
+            height: 60vh;
+            text-align: right;
+            pointer-events: none;
+            /*box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);*/
+            box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
+
+        }
+
+        .snippet--active .snippet_content {
+            pointer-events: auto;
+
+        }
+
+        .snippet_content::before {
+            content: '';
+            z-index: 0;
+            width: 9em;
+            height: 3em;
+            border-radius: 10px;
+            /*background: #fafafa;*/
+            /*background: #4e4e4f;*/
+            -webkit-transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .snippet--active .snippet_content::before {
+            width: 100%;
+            height: 100%;
+            -webkit-transition-delay: 0s;
+            transition-delay: 0s;
+        }
+
+        .snippet_content-inner {
+            position: relative;
+            padding: 3em 4em;
+        }
+
+        .snippet__close {
+            position: absolute;
+            top: 1.5em;
+            right: 1.5em;
+            overflow: hidden;
+            width: 20px;
+            height: 20px;
+            border: none;
+            background: transparent;
+            color: transparent;
+            text-indent: 100%;
+            opacity: 0;
+            backface-visibility: hidden;
+        }
+
+        .snippet__close:focus {
+            outline: none;
+        }
+
+        .snippet--active .snippet__close {
+            opacity: 1;
+            -webkit-transition: opacity 0.8s cubic-bezier(0.7, 0, 0.3, 1) 0.015s;
+            transition: opacity 0.8s cubic-bezier(0.7, 0, 0.3, 1) 0.015s;
+        }
+
+        .snippet__close .icon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #444;
+            text-indent: 0;
+        }
+
+        .snippet__close:hover .icon {
+            /*color: #e48895;*/
+            color: #c82e00;
+
+        }
+
+        .snippet__summary {
+            margin: 0.5em 0 0.75em;
+            width: 100%;
+            color: #f5f5f5;
+            text-align: center;
+            font-size: 1.15em;
+            line-height: 1.5;
+            -webkit-transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+            transition: width 0.6s cubic-bezier(0.7, 0, 0.3, 1), height 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .snippet__action {
+            padding: 0;
+            border: none;
+            background: none;
+        }
+
+        .snippet__action:focus {
+            outline: none;
+        }
+
+        .snippet__action .icon {
+            color: #c82e00;
+        }
+
+        @media screen and (max-width: 26em) {
+            .snippet--active {
+                -webkit-transform: translate3d(0, 15px, 0);
+                transform: translate3d(0, 15px, 0);
+            }
+
+            .snippet_content::before {
+                border-radius: 0
+            }
+
+            .snippet__summary {
+                margin-top: 2em
+            }
+
+            .snippet_content-inner {
+                padding: 1em 1.75em
+            }
+
+            .snippet_content {
+                width: 100vw;
+                height: 100vh;
+            }
+
+        }
+    </style>
+
+    <style>
+        a.delete {
+            z-index: 5;
+            position: relative;
+        }
+
+        a.delete div {
+            width: 76px;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            background: #fefefe;
+            position: absolute;
+            z-index: 5;
+            margin: -20px 0 0 -38px;
+            -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            -moz-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+        }
+
+        a.delete div .confirm,
+        a.delete div .abort {
+            vertical-align: top;
+            line-height: 32px;
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            font-size: 21px !important;
+            top: 4px;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        a.delete div .confirm:before,
+        a.delete div .abort:before {
+            line-height: 32px;
+            display: block;
+        }
+
+        a.delete div .confirm {
+            color: #fff;
+            background: #ef4748;
+            left: 4px;
+        }
+
+        a.delete div .abort {
+            color: #858a95;
+            right: 4px;
+        }
+
+        /* 定制化 */
+        /*html .layer-snippet{background-color:#eee;}*/
+        /*.layer-snippet .layui-layer-title{border:none; background-color:#333; color:#fff;}*/
+
+        /*.runtest {*/
+        /*position: relative;*/
+        /*display: none;*/
+        /*}*/
+
+        .runtest textarea {
+            display: block;
+            /*width: 420px;*/
+            /*height: 200px;*/
+            /*border: 10px solid #F8F8F8;*/
+            /*border-top-width: 0;*/
+            padding: 20px;
+            line-height: 20px;
+            overflow: auto;
+            background-color: #3F3F3F;
+            color: #eee;
+            font-size: 12px;
+            font-family: Courier New;
+        }
+
+        /*.runtest a {*/
+        /*position: absolute;*/
+        /*right: 20px;*/
+        /*bottom: 20px;*/
+        /*}*/
+
+        .layer-photos-demo {
+            margin: 10px 0;
+        }
+
+        .layer-photos-demo img {
+            width: 160px;
+            height: 100px;
+        }
+    </style>
+    <style>
+        #messages {
+            position: fixed;
+            top: 65px;
+            left: 50%;
+            z-index: 110;
+            margin-left: 125px;
+            -webkit-transform: translate(-50%, 0);
+            -moz-transform: translate(-50%, 0);
+            -o-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        #messages .animated {
+            -webkit-animation-duration: 0.2s;
+            animation-duration: 0.2s;
+        }
+
+        @media (max-width: 992px ) {
+            #messages {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #messages {
+                left: 15px;
+                right: 15px;
+                top: 61px;
+                -webkit-transform: translate(0, 0);
+                -moz-transform: translate(0, 0);
+                -o-transform: translate(0, 0);
+                -ms-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        .message {
+            padding: 8px 10px;
+            color: #fff;
+            margin: 0 0 5px 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        .message.success {
+            background: #41da54;
+        }
+
+        .message.info {
+            background: #3f82d7;
+        }
+
+        .message.warning {
+            background: #e4c139;
+        }
+
+        .message.error {
+            background: #ef4748;
+        }
+
+        .message ol {
+            margin: 0;
+            padding: 0 0 0 18px;
+        }
+
+        .message ol li {
+            margin: 4px 0;
+        }
+
+    </style>
+    {% block style %}{% endblock %}
+
+</head>
+<body data-spy="scroll" data-target="#resume-section" data-offset="70" class="sidebar-opposite-visible sidebar-xs {% block body_style %}{% endblock %}">
+{#<body data-spy="scroll" data-target=".sidebar-fixed" class=" {% block body_style %}{% endblock %}">#}
+
+{#<body class="navbar-top  sidebar-opposite-visible ">#}
+<div id="app">
+
+    <!-- Multiple navbars wrapper -->
+    {#<div class="navbar-fixed-top">#}
+
+        <!-- Main navbar -->
+        <div class="navbar navbar-inverse bg-primary header-highlight ">
+            <div class="navbar-header navbar-inverse bg-primary">
+                <a class="navbar-brand" href="/admin"><img src="/static/assets/images/logo_light.png" alt=""></a>
+                <ul class="nav navbar-nav">
+                    {#<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-magazine position-left"></i></a></li>#}
+                    <li class="disabled"><a data-toggle="collapse" data-target="#navbar-mobile"><i class=" icon-feed position-left"></i>发现</a></li>
+
+                </ul>
+            </div>
+
+            <div class="navbar-collapse collapse" id="navbar-mobile">
+
+
+                {% block main_nav %}
+
+                {% endblock %}
+                <ul class="nav navbar-nav navbar-right">
+                    {% block right_nav %}
+                        <li class="active"><a class="list-group-item"><i class="icon-magazine"></i>我的简历</a></li>
+                        <li><a href="/admin/resumes/themes" class="list-group-item"><i class="icon-bucket "></i>简历主题</a>
+                        <li class="disabled"><a href="/admin/resumes/template" class="list-group-item"><i class=" icon-profile"></i>简历内容模板</a></li>
+                    <li><a class="" href="/admin/posts/resume"><i class="icon-plus22 position-left"></i>新简历</a></li>
+                    {% endblock %}
+
+                    <li class="dropdown dropdown-user">
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            {#<img src="/static/assets/images/avatar.png" alt="">#}
+                            <span><$ user_info.user_login $></span>
+                            <i class="caret"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class=""><a href="/admin/account"><i class="icon-user-plus"></i> 个人信息</a></li>
+                            {#<li><a href="#"><i class="icon-coins"></i> My balance</a></li>#}
+                            {#<li><a href="#"><span class="badge badge-warning pull-right">58</span> <i class="icon-comment-discussion"></i> Messages</a></li>#}
+                            <li class="divider"></li>
+                            <li class="disabled"><a href="#"><i class="icon-cog5"></i> 账户设置</a></li>
+                            <li><a href="/admin/logout"><i class="icon-switch2"></i> 登出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /main navbar -->
+
+
+        {% block navbar2 %}{% endblock %}
+    {#</div>#}
+    <!-- /multiple navbars wrapper -->
+    <div id="messages"></div>
+
+
+    <!-- Page container -->
+    <div class="page-container">
+
+        <!-- Page content -->
+        <div class="page-content">
+            <!-- Main sidebar -->
+            {% block sidebar_main %}
+                <!-- Main sidebar -->
+                <div class="sidebar sidebar-main sidebar-default sidebar-fixed">
+                    <div class="sidebar-content">
+
+                        <div class="tabbable sortable ui-sortable">
+                            <div class="tab-content">
+
+                                <div class="tab-pane no-padding active" id="app-nav">
+
+                                    <div class="sidebar-category sidebar-category-visible">
+                                        <div class="category-content no-padding">
+
+                                            <ul class="navigation navigation-main navigation-accordion">
+                                                <li class="navigation-header">内容</li>
+                                                <li>
+                                                    <a href="/admin/posts"><i class="icon-files-empty"></i>
+                                                        <span>内容</span></a>
+
+                                                </li>
+                                                <li class=""><a href="/admin/snippets"><i class="icon-stack4"></i><span>碎片内容</span></a></li>
+                                                <li class="{% if http.controller == 'resumes' %}active{% endif %}"><a href="/admin/resumes"><i class="icon-magazine"></i> 简历管理</a></li>
+
+
+
+                                                <li class="navigation-header">个性化</li>
+
+                                                <li class="{% if http.controller == 'design' %}active{% endif %}"><a href="/admin/design"><i class="icon-droplet2"></i> 主题</a>
+                                                </li>
+
+                                                <li class="{% if http.controller == 'menus' %}active{% endif %}"><a href="/admin/menus"><i class=" icon-three-bars"></i> 菜单</a></li>
+
+                                                <li class="navigation-divider"></li>
+                                                <li class="navigation-header">配置</li>
+                                                <li class="{% if http.controller == 'options' %}active{% endif %}"><a href="/admin/options"><i
+                                                                class="icon-wrench3"></i>
+                                                        系统信息</a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane no-padding" id="forms-tab">
+                                    <div class="category-title alpha-grey ">
+                                    <span><a href="#app-nav" data-toggle="tab">返回<i
+                                                    class="icon-arrow-right13 position-right "></i></a>
+                                    </span>
+                                    </div>
+
+                                    <!-- Sidebar search -->
+                                    <div class="sidebar-category">
+                                        <ul class="navigation navigation-alt navigation-accordion">
+                                            <li><a href="extension_blockui.html"><i class="icon-history"></i>
+
+                                                    <span>全部应用</span> <span class="badge bg-slate-400">8</span></a>
+
+                                            </li>
+                                            <li class="list-group-divider"></li>
+
+                                            {% for app in apps %}
+
+                                                <li class="{% if app.name == controller.app_name %}active {% endif %}">
+                                                    <a href="navbar_single.html">
+                                                        <i class="{% if app.type == 'website' %} icon-earth {% elseif app.type == 'wechat' %} fa fa-wechat {% elseif app.type == 'blog' %}  icon-pencil7 {% endif %} position-left"></i>
+                                                        <span><$ app.title $></span>
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+
+                                            <li class="list-group-divider"></li>
+                                            <li>
+                                                <a>
+                                                    <i class="icon-plus22 position-left "></i>
+                                                    <span>添加新应用</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /sidebar search -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /main sidebar -->
+            {% endblock %}
+            <!-- /main sidebar -->
+
+            <!-- Secondary sidebar -->
+            {% block sidebar_secondary %}{% endblock %}
+            <!-- /secondary sidebar -->
+
+            <!-- Main content -->
+            <div class="content-wrapper ">
+
+                {% block fab_menu %}{% endblock %}
+                {% block page_navbar %} {% endblock %}
+                <!-- Page header -->
+                {% block page_header %}{% endblock %}
+                <!-- /page header -->
+
+                <!-- Content area -->
+                <div class="content">
+                    {% block content %}
+
+                    {% endblock %}
+
+
+                </div>
+                <!-- /content area -->
+
+            </div>
+            <!-- /main content -->
+
+
+
+            <!-- Opposite sidebar -->
+            {% block opposite_sidebar %}
+                <div class="sidebar sidebar-main sidebar-default">
+                    <div class="sidebar-content">
+
+                        <!-- Main navigation -->
+                        <div class="sidebar-category sidebar-category-visible">
+                            <div class="category-title h6">
+                                <span>Main sidebar</span>
+                                <ul class="icons-list">
+                                    <li><a href="#" data-action="collapse" class=""></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="category-content sidebar-user" style="display: block;">
+                                <div class="media">
+                                    <a href="#" class="media-left"><img src="assets/images/demo/users/face11.jpg" class="img-circle img-sm" alt=""></a>
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">Victoria Baker</span>
+                                        <div class="text-size-mini text-muted">
+                                            <i class="icon-pin text-size-small"></i> &nbsp;Santa Ana, CA
+                                        </div>
+                                    </div>
+
+                                    <div class="media-right media-middle">
+                                        <ul class="icons-list">
+                                            <li>
+                                                <a href="#"><i class="icon-cog3"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="category-content no-padding" style="display: block;">
+                                <ul class="navigation navigation-main navigation-accordion">
+
+                                    <!-- Main -->
+                                    <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="" data-original-title="Main pages"></i></li>
+                                    <li><a href="index.html" class="legitRipple"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+                                    <li>
+                                        <a href="#" class="has-ul legitRipple"><i class="icon-stack2"></i> <span>Page layouts</span></a>
+                                        <ul class="hidden-ul">
+                                            <li><a href="layout_navbar_fixed.html" class="legitRipple">Fixed navbar</a></li>
+                                            <li><a href="layout_navbar_hideable.html" class="legitRipple">Hideable navbar</a></li>
+                                            <li><a href="layout_sidebar_sticky_custom.html" class="legitRipple">Sticky sidebar (custom scroll)</a></li>
+                                            <li><a href="layout_sidebar_sticky_native.html" class="legitRipple">Sticky sidebar (native scroll)</a></li>
+                                            <li><a href="layout_footer_fixed.html" class="legitRipple">Fixed footer</a></li>
+                                            <li class="navigation-divider"></li>
+                                            <li><a href="boxed_default.html" class="legitRipple">Boxed with default sidebar</a></li>
+                                            <li><a href="boxed_mini.html" class="legitRipple">Boxed with mini sidebar</a></li>
+                                            <li><a href="boxed_full.html" class="legitRipple">Boxed full width</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="has-ul legitRipple"><i class="icon-copy"></i> <span>Layouts</span></a>
+                                        <ul class="hidden-ul">
+                                            <li><a href="../../../layout_1/LTR/default/index.html" id="layout1" class="legitRipple">Layout 1</a></li>
+                                            <li><a href="../../../layout_2/LTR/default/index.html" id="layout2" class="legitRipple">Layout 2</a></li>
+                                            <li><a href="../../../layout_3/LTR/default/index.html" id="layout3" class="legitRipple">Layout 3</a></li>
+                                            <li><a href="index.html" id="layout4" class="legitRipple">Layout 4 <span class="label bg-warning-400">Current</span></a></li>
+                                            <li class="disabled"><a href="../../layout_5/LTR/default/index.html" id="layout5" class="legitRipple">Layout 5 <span class="label bg-slate-800">Coming soon</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="has-ul legitRipple"><i class="icon-stack"></i> <span>Starter kit</span></a>
+                                        <ul class="hidden-ul">
+                                            <li><a href="starters/horizontal_nav.html" class="legitRipple">Horizontal navigation</a></li>
+                                            <li><a href="starters/1_col.html" class="legitRipple">1 column</a></li>
+                                            <li><a href="starters/2_col.html" class="legitRipple">2 columns</a></li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">3 columns</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="starters/3_col_dual.html" class="legitRipple">Dual sidebars</a></li>
+                                                    <li><a href="starters/3_col_double.html" class="legitRipple">Double sidebars</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="starters/4_col.html" class="legitRipple">4 columns</a></li>
+                                            <li><a href="starters/layout_boxed.html" class="legitRipple">Boxed layout</a></li>
+                                            <li class="navigation-divider"></li>
+                                            <li><a href="starters/layout_navbar_fixed_main.html" class="legitRipple">Fixed main navbar</a></li>
+                                            <li><a href="starters/layout_navbar_fixed_secondary.html" class="legitRipple">Fixed secondary navbar</a></li>
+                                            <li><a href="starters/layout_navbar_fixed_both.html" class="legitRipple">Both navbars fixed</a></li>
+                                            <li><a href="starters/layout_sidebar_sticky.html" class="legitRipple">Sticky sidebar</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="changelog.html" class="legitRipple"><i class="icon-list-unordered"></i> <span>Changelog</span></a></li>
+                                    <!-- /main -->
+
+                                    <!-- Layout -->
+                                    <li class="navigation-header"><span>Layout</span> <i class="icon-menu" title="" data-original-title="Layout options"></i></li>
+                                    <li class="active">
+                                        <a href="#" class="has-ul legitRipple"><i class="icon-indent-decrease2"></i> <span>Sidebars</span></a>
+                                        <ul>
+                                            <li><a href="sidebar_default_collapse.html" class="legitRipple">Default collapsible</a></li>
+                                            <li><a href="sidebar_default_hide.html" class="legitRipple">Default hideable</a></li>
+                                            <li><a href="sidebar_mini_collapse.html" class="legitRipple">Mini collapsible</a></li>
+                                            <li><a href="sidebar_mini_hide.html" class="legitRipple">Mini hideable</a></li>
+                                            <li class="active">
+                                                <a href="#" class="has-ul legitRipple">Dual sidebar</a>
+                                                <ul>
+                                                    <li><a href="sidebar_dual.html" class="legitRipple">Dual sidebar</a></li>
+                                                    <li class="active"><a href="sidebar_dual_double_collapse.html" class="legitRipple">Dual double collapse</a></li>
+                                                    <li><a href="sidebar_dual_double_hide.html" class="legitRipple">Dual double hide</a></li>
+                                                    <li><a href="sidebar_dual_swap.html" class="legitRipple">Swap sidebars</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Double sidebar</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="sidebar_double_collapse.html" class="legitRipple">Collapse main sidebar</a></li>
+                                                    <li><a href="sidebar_double_hide.html" class="legitRipple">Hide main sidebar</a></li>
+                                                    <li><a href="sidebar_double_fix_default.html" class="legitRipple">Fix default width</a></li>
+                                                    <li><a href="sidebar_double_fix_mini.html" class="legitRipple">Fix mini width</a></li>
+                                                    <li><a href="sidebar_double_visible.html" class="legitRipple">Opposite sidebar visible</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="sidebar_categories.html" class="legitRipple">Separate categories</a></li>
+                                            <li><a href="sidebar_hidden.html" class="legitRipple">Hidden sidebar</a></li>
+                                            <li><a href="sidebar_dark.html" class="legitRipple">Dark sidebar</a></li>
+                                            <li><a href="sidebar_components.html" class="legitRipple">Sidebar components</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="has-ul legitRipple"><i class="icon-sort"></i> <span>Vertical navigation</span></a>
+                                        <ul class="hidden-ul">
+                                            <li><a href="navigation_vertical_collapsible.html" class="legitRipple">Collapsible menu</a></li>
+                                            <li><a href="navigation_vertical_accordion.html" class="legitRipple">Accordion menu</a></li>
+                                            <li><a href="navigation_vertical_sizing.html" class="legitRipple">Navigation sizing</a></li>
+                                            <li><a href="navigation_vertical_bordered.html" class="legitRipple">Bordered navigation</a></li>
+                                            <li><a href="navigation_vertical_right_icons.html" class="legitRipple">Right icons</a></li>
+                                            <li><a href="navigation_vertical_disabled.html" class="legitRipple">Disabled navigation links</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="has-ul legitRipple"><i class="icon-transmission"></i> <span>Horizontal navigation</span></a>
+                                        <ul class="hidden-ul">
+                                            <li><a href="navigation_horizontal_click.html" class="legitRipple">Submenu on click</a></li>
+                                            <li><a href="navigation_horizontal_hover.html" class="legitRipple">Submenu on hover</a></li>
+                                            <li><a href="navigation_horizontal_elements.html" class="legitRipple">With custom elements</a></li>
+                                            <li><a href="navigation_horizontal_tabs.html" class="legitRipple">Tabbed navigation</a></li>
+                                            <li><a href="navigation_horizontal_disabled.html" class="legitRipple">Disabled navigation links</a></li>
+                                            <li><a href="navigation_horizontal_mega.html" class="legitRipple">Horizontal mega menu</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="has-ul legitRipple"><i class="icon-menu3"></i> <span>Navbars</span></a>
+                                        <ul class="hidden-ul">
+                                            <li><a href="navbar_single.html" class="legitRipple">Single navbar</a></li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Multiple navbars</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="navbar_multiple_navbar_navbar.html" class="legitRipple">Navbar + navbar</a></li>
+                                                    <li><a href="navbar_multiple_header_navbar.html" class="legitRipple">Header + navbar</a></li>
+                                                    <li><a href="navbar_multiple_navbar_content.html" class="legitRipple">Navbar + content</a></li>
+                                                    <li><a href="navbar_multiple_top_bottom.html" class="legitRipple">Top + bottom</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="navbar_colors.html" class="legitRipple">Color options</a></li>
+                                            <li><a href="navbar_sizes.html" class="legitRipple">Sizing options</a></li>
+                                            <li><a href="navbar_hideable.html" class="legitRipple">Hide on scroll</a></li>
+                                            <li><a href="navbar_components.html" class="legitRipple">Navbar components</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="has-ul legitRipple"><i class="icon-tree5"></i> <span>Menu levels</span></a>
+                                        <ul class="hidden-ul">
+                                            <li><a href="#" class="legitRipple"><i class="icon-IE"></i> Second level</a></li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple"><i class="icon-firefox"></i> Second level with child</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="#" class="legitRipple"><i class="icon-android"></i> Third level</a></li>
+                                                    <li>
+                                                        <a href="#" class="has-ul legitRipple"><i class="icon-apple2"></i> Third level with child</a>
+                                                        <ul class="hidden-ul">
+                                                            <li><a href="#" class="legitRipple"><i class="icon-html5"></i> Fourth level</a></li>
+                                                            <li><a href="#" class="legitRipple"><i class="icon-css3"></i> Fourth level</a></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li><a href="#" class="legitRipple"><i class="icon-windows"></i> Third level</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#" class="legitRipple"><i class="icon-chrome"></i> Second level</a></li>
+                                        </ul>
+                                    </li>
+                                    <!-- /layout -->
+
+                                    <!-- Page kits -->
+                                    <li class="navigation-header"><span>Page kits</span> <i class="icon-menu" title="" data-original-title="Page kits"></i></li>
+                                    <li>
+                                        <a href="#" class="has-ul legitRipple"><i class="icon-grid6"></i> <span>General pages</span></a>
+                                        <ul class="hidden-ul">
+                                            <li><a href="general_feed.html" class="legitRipple">Feed</a></li>
+                                            <li><a href="general_widgets_content.html" class="legitRipple">Content widgets</a></li>
+                                            <li class="disabled"><a href="general_widgets_stats.html" class="legitRipple">Statistics widgets <span class="label label-transparent">in 1.6</span></a></li>
+                                            <li><a href="general_embeds.html" class="legitRipple">Embeds</a></li>
+                                            <li><a href="general_faq.html" class="legitRipple">FAQ page</a></li>
+                                            <li><a href="general_knowledgebase.html" class="legitRipple">Knowledgebase</a></li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Blog</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="blog_classic_v.html" class="legitRipple">Classic vertical</a></li>
+                                                    <li><a href="blog_classic_h.html" class="legitRipple">Classic horizontal</a></li>
+                                                    <li><a href="blog_grid.html" class="legitRipple">Grid</a></li>
+                                                    <li><a href="blog_single.html" class="legitRipple">Single post</a></li>
+                                                    <li class="navigation-divider"></li>
+                                                    <li><a href="blog_sidebar_left.html" class="legitRipple">Left sidebar</a></li>
+                                                    <li><a href="blog_sidebar_right.html" class="legitRipple">Right sidebar</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Timelines</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="timelines_left.html" class="legitRipple">Left timeline</a></li>
+                                                    <li><a href="timelines_right.html" class="legitRipple">Right timeline</a></li>
+                                                    <li><a href="timelines_center.html" class="legitRipple">Centered timeline</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Gallery</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="gallery_grid.html" class="legitRipple">Media grid</a></li>
+                                                    <li><a href="gallery_titles.html" class="legitRipple">Media with titles</a></li>
+                                                    <li><a href="gallery_description.html" class="legitRipple">Media with description</a></li>
+                                                    <li><a href="gallery_library.html" class="legitRipple">Media library</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="has-ul legitRipple"><i class="icon-wrench3"></i> <span>Service pages</span></a>
+                                        <ul class="hidden-ul">
+                                            <li><a href="service_sitemap.html" class="legitRipple">Sitemap</a></li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Invoicing</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="invoice_template.html" class="legitRipple">Invoice template</a></li>
+                                                    <li><a href="invoice_grid.html" class="legitRipple">Invoice grid</a></li>
+                                                    <li><a href="invoice_archive.html" class="legitRipple">Invoice archive</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Authentication</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="login_simple.html" class="legitRipple">Simple login</a></li>
+                                                    <li><a href="login_advanced.html" class="legitRipple">More login info</a></li>
+                                                    <li><a href="login_registration.html" class="legitRipple">Simple registration</a></li>
+                                                    <li><a href="login_registration_advanced.html" class="legitRipple">More registration info</a></li>
+                                                    <li><a href="login_unlock.html" class="legitRipple">Unlock user</a></li>
+                                                    <li><a href="login_password_recover.html" class="legitRipple">Reset password</a></li>
+                                                    <li><a href="login_hide_navbar.html" class="legitRipple">Hide navbar</a></li>
+                                                    <li><a href="login_transparent.html" class="legitRipple">Transparent box</a></li>
+                                                    <li><a href="login_background.html" class="legitRipple">Background option</a></li>
+                                                    <li><a href="login_validation.html" class="legitRipple">With validation</a></li>
+                                                    <li><a href="login_tabbed.html" class="legitRipple">Tabbed form</a></li>
+                                                    <li><a href="login_modals.html" class="legitRipple">Inside modals</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Error pages</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="error_403.html" class="legitRipple">Error 403</a></li>
+                                                    <li><a href="error_404.html" class="legitRipple">Error 404</a></li>
+                                                    <li><a href="error_405.html" class="legitRipple">Error 405</a></li>
+                                                    <li><a href="error_500.html" class="legitRipple">Error 500</a></li>
+                                                    <li><a href="error_503.html" class="legitRipple">Error 503</a></li>
+                                                    <li><a href="error_offline.html" class="legitRipple">Offline page</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="has-ul legitRipple"><i class="icon-people"></i> <span>User pages</span></a>
+                                        <ul class="hidden-ul">
+                                            <li><a href="user_pages_list.html" class="legitRipple">User list</a></li>
+                                            <li><a href="user_pages_cards.html" class="legitRipple">User cards</a></li>
+                                            <li><a href="user_pages_profile.html" class="legitRipple">Simple profile</a></li>
+                                            <li><a href="user_pages_profile_tabbed.html" class="legitRipple">Tabbed profile</a></li>
+                                            <li><a href="user_pages_profile_cover.html" class="legitRipple">Profile with cover</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="has-ul legitRipple"><i class="icon-cube3"></i> <span>Application pages</span></a>
+                                        <ul class="hidden-ul">
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Task manager</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="task_manager_grid.html" class="legitRipple">Task grid</a></li>
+                                                    <li><a href="task_manager_list.html" class="legitRipple">Task list</a></li>
+                                                    <li><a href="task_manager_detailed.html" class="legitRipple">Task detailed</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Inbox</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="mail_list.html" class="legitRipple">Mail list</a></li>
+                                                    <li><a href="mail_list_detached.html" class="legitRipple">Mail list (detached)</a></li>
+                                                    <li><a href="mail_read.html" class="legitRipple">Read mail</a></li>
+                                                    <li><a href="mail_write.html" class="legitRipple">Write mail</a></li>
+                                                    <li class="navigation-divider"></li>
+                                                    <li><a href="chat_layouts.html" class="legitRipple">Chat layouts</a></li>
+                                                    <li><a href="chat_options.html" class="legitRipple">Chat options</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Search</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="search_basic.html" class="legitRipple">Basic search results</a></li>
+                                                    <li><a href="search_users.html" class="legitRipple">User search results</a></li>
+                                                    <li><a href="search_images.html" class="legitRipple">Image search results</a></li>
+                                                    <li><a href="search_videos.html" class="legitRipple">Video search results</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Job search</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="job_list_cards.html" class="legitRipple">Cards view</a></li>
+                                                    <li><a href="job_list_panel.html" class="legitRipple">Panel view</a></li>
+                                                    <li><a href="job_detailed.html" class="legitRipple">Job detailed</a></li>
+                                                    <li><a href="job_apply.html" class="legitRipple">Apply</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="has-ul legitRipple">Learning</a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="learning_list.html" class="legitRipple">List view</a></li>
+                                                    <li><a href="learning_grid.html" class="legitRipple">Grid view</a></li>
+                                                    <li><a href="learning_detailed.html" class="legitRipple">Detailed course</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="disabled">
+                                                <a href="#" class="has-ul legitRipple">Ecommerce set <span class="label label-transparent">in 1.6</span></a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="ecommerce_product_list.html" class="legitRipple">Product list</a></li>
+                                                    <li><a href="ecommerce_product_grid.html" class="legitRipple">Product grid</a></li>
+                                                    <li><a href="ecommerce_product_detailed.html" class="legitRipple">Product detailed</a></li>
+                                                    <li><a href="ecommerce_product_new.html" class="legitRipple">New product</a></li>
+                                                    <li><a href="ecommerce_cart.html" class="legitRipple">Shopping cart</a></li>
+                                                    <li><a href="ecommerce_checkout.html" class="legitRipple">Checkout process</a></li>
+                                                    <li><a href="ecommerce_pricing.html" class="legitRipple">Pricing tables</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="disabled">
+                                                <a href="#" class="has-ul legitRipple">Real estate <span class="label label-transparent">in 1.6</span></a>
+                                                <ul class="hidden-ul">
+                                                    <li><a href="properties_list.html" class="legitRipple">Properties list</a></li>
+                                                    <li><a href="properties_grid.html" class="legitRipple">Properties grid</a></li>
+                                                    <li><a href="properties_defailed.html" class="legitRipple">Property detailed</a></li>
+                                                    <li><a href="properties_create.html" class="legitRipple">Create property</a></li>
+                                                    <li><a href="properties_detailed.html" class="legitRipple">Property detailed</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- /page kits -->
+
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /main navigation -->
+
+                    </div>
+                </div>
+            {% endblock %}
+            <!-- /opposite sidebar -->
+
+        </div>
+        <!-- /page content -->
+    </div>
+    <!-- /page container -->
+
+
+</div>
+
+<div class="dummy-fixed" id="snippet-bar">
+    <div class="snippet" :class="isOpen ? 'snippet--active': ''">
+                <a id="snippet__button" class="btn bg-primary btn-icon btn-raised  snippet__button"
+                   @click="open" :class="!isActive ? 'disabled': ''"><!-- Fallback location -->
+                    <span class="snippet__text">
+							<span class="snippet__text-inner snippet__initial-text ">
+                               <i class="icon-versions"></i>
+
+                            </span>
+							<span class="snippet__text-inner snippet__final-text">
+                                <i class=" icon-floppy-disk"></i>
+                            </span>
+						</span>
+                </a>
+                <div class="snippet_content panel panel-body alpha-grey" v-if="isOpen" v-cloak>
+                    <div class="snippet_content-inner">
+                        <div class="snippet__summary">
+                            <div class="editor">
+                                    <textarea class="form-control snippet-editor" placeholder="Remember, be nice!" rows="5" v-model="content">
+				                    </textarea>
+                            </div>
+                        </div>
+                        <button class="snippet__close snippet__cancel" @click="cancel"><i
+                                    class="icon fa fa-fw fa-close"></i>
+                            关闭
+                        </button>
+                    </div><!-- /snippet_content-inner -->
+                </div><!-- /snippet_content -->
+            </div><!-- /snippet -->
+</div>
+
+
+{% block components %}{% endblock %}
+
+<script type="text/javascript">
+    var lang = <$ 'zh-cn' | language | dump | safe $>;
+</script>
+{#<script type="text/javascript" src="/static/assets/js/fetch.js"></script>#}
+
+{#<script type="text/javascript" src="/static/assets/js/plugins/loaders/pace.min.js"></script>#}
+<script type="text/javascript" src="/static/assets/js/core/libraries/jquery.min.js"></script>
+{#<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>#}
+<script type="text/javascript" src="/static/assets/js/core/libraries/bootstrap.min.js"></script>
+{#<!-- /core JS files -->#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>#}
+<!-- Plugin JS files -->
+<script type="text/javascript" src="/static/assets/js/masonry/masonry.pkgd.min.js"></script>
+{#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/summernote.min.js"></script>#}
+{#<script type="text/javascript" src="/static/assets/js/plugins/editors/summernote/lang/summernote-zh-CN.js"></script>#}
+
+
+<script type="text/javascript" src="/static/assets/js/plugins/forms/selects/select2.min.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/moment/moment-with-locales.js"></script>
+<!-- /plugin js files -->
+<script type="text/javascript" src="/static/assets/js/plugins/ui/nicescroll.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/drilldown.js"></script>
+<!-- Theme JS files -->
+<script type="text/javascript" src="/static/assets/js/plugins/forms/styling/switchery.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/pages/animations_css3.js"></script>
+<script src="/static/assets/js/vue/vue.js"></script>
+<script>
+    Vue.config.debug = true;
+    Vue.config.devtools = true;
+</script>
+
+<script type="text/javascript" src="/static/assets/js/native.history.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/prism.min.js"></script>
+
+<script type="text/javascript" src="/static/assets/js/core/app.min.js"></script>
+<script type="text/javascript" src="/static/assets/js/plugins/ui/ripple.min.js"></script>
+<script type="text/javascript"
+        src="/static/assets/js/plugins/textarea-autosize/dist/jquery.textarea_autosize.min.js"></script>
+
+<script type="text/javascript">
+    $('textarea.snippet-editor').textareaAutoSize();
+</script>
+<script type="text/javascript" src="/static/components/snippet/snippet-bar.js"></script>
+
+<!-- /theme JS files -->
+<script>
+    jQuery(document).ready(function ($) {
+
+        $(document).on("click", ".delete", function (e) {
+
+            e.preventDefault();
+
+            var _this = $(this);
+
+            if (!_this.hasClass("active")) {
+
+                _this.addClass("active");
+
+                var div = $("<div><i class='icon confirm ion-ios-checkmark-outline'></i><i class='icon abort ion-ios-close-empty'></i></div>");
+                var element = $(this).append(div);
+
+                div.addClass("animated zoomIn");
+
+                div.on("click", ".abort", function () {
+                    div.fadeOut(300, function () {
+                        div.remove();
+                        _this.removeClass("active");
+                    });
+                });
+
+                div.on("click", ".confirm", function () {
+
+                    if (_this.hasClass("ajax")) {
+                        $.ajax({
+                            method: "POST",
+                            url: _this.attr("href"),
+                            success: function () {
+                                div.fadeOut(300, function () {
+                                    div.remove();
+                                    _this.removeClass("active");
+                                });
+                                eventHub.$emit("fetch");
+                                $.event.trigger({
+                                    type: "fetch"
+                                });
+                            }
+                        });
+                    } else {
+                        window.location = _this.attr("href");
+                    }
+                });
+
+            }
+
+        });
+        var focus;
+
+        $(window).focus(function () {
+            focus = true;
+        }).blur(function () {
+            focus = false;
+        });
+
+        setInterval("getMessages(focus)", 1000);
+
+//            setTabs();
+
+    });
+
+
+    function getMessages(focus) {
+
+        if (focus && document.hasFocus()) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/ajax/messages",
+                data: {
+                    method: "getMessages"
+                },
+                dataType: "json",
+                success: function (message) {
+                    if (!jQuery.isEmptyObject(message)) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/admin/ajax/messages",
+                            data: {
+                                method: "deleteMessage",
+                                index: message.index
+                            },
+                            success: function () {
+
+                                var element = $(message.html).appendTo("#messages");
+
+                                element.addClass("animated fadeInDown");
+
+                                setTimeout(function () {
+                                    element.removeClass("fadeInDown").addClass("fadeOutUp");
+                                    element.one("webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend", function () {
+                                        element.remove();
+                                    });
+                                }, 2200);
+
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+    }
+</script>
+
+{% block script %}{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,866 @@
+{#{% extends "./inc/_base.html" %}#}
+{% extends "../_layout.html" %}
+
+{% block style %}
+    <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
+
+    <style>
+        .post-image {
+            position: relative;
+            width: 100%;
+            margin-top: 16px;
+            background-color: #f3f6f8;
+            text-align: center;
+        }
+
+        .post-image:first-child {
+            margin-top: 0;
+        }
+
+        .post-image.is-placeholder {
+            background-color: #e9eff3;
+            -webkit-animation: loading-fade 1.6s ease-in-out infinite;
+            animation: loading-fade 1.6s ease-in-out infinite;
+        }
+
+        @media (min-width: 481px) {
+            .post-image.is-collapsed, .post-image.is-placeholder {
+                height: 232px;
+            }
+        }
+
+        @-webkit-keyframes loading-fade {
+            0% {
+                opacity: .5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: .5;
+            }
+        }
+
+        @keyframes loading-fade {
+            0% {
+                opacity: .5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: .5;
+            }
+        }
+
+        @-webkit-keyframes appear {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes appear {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes pulse-light {
+            50% {
+                background-color: #e9eff3;
+            }
+        }
+
+        @keyframes pulse-light {
+            50% {
+                background-color: #e9eff3;
+            }
+        }
+
+        @-webkit-keyframes loading-dot-pulse {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes loading-dot-pulse {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+    </style>
+
+    <style>
+
+
+        #messages {
+            position: fixed;
+            top: 65px;
+            left: 50%;
+            z-index: 110;
+            margin-left: 125px;
+            -webkit-transform: translate(-50%, 0);
+            -moz-transform: translate(-50%, 0);
+            -o-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+        #messages .animated {
+            -webkit-animation-duration: 0.2s;
+            animation-duration: 0.2s;
+        }
+        @media (max-width: 992px ) {
+            #messages {
+                margin-left: 0;
+            }
+        }
+        @media (max-width: 768px) {
+            #messages {
+                left: 15px;
+                right: 15px;
+                top: 61px;
+                -webkit-transform: translate(0, 0);
+                -moz-transform: translate(0, 0);
+                -o-transform: translate(0, 0);
+                -ms-transform: translate(0, 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        .message {
+            padding: 8px 10px;
+            color: #fff;
+            margin: 0 0 5px 0;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+        .message.success {
+            background: #41da54;
+        }
+        .message.info {
+            background: #3f82d7;
+        }
+        .message.warning {
+            background: #e4c139;
+        }
+        .message.error {
+            background: #ef4748;
+        }
+        .message ol {
+            margin: 0;
+            padding: 0 0 0 18px;
+        }
+        .message ol li {
+            margin: 4px 0;
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block navbar %}
+
+    <div class="navbar-btn btn-group ">
+        {#<button type="button" class="btn btn-default "><i class="icon-star-empty3"></i></button>#}
+        <a type="button" class="btn btn-default" href="/admin/posts"><i class="icon-files-empty position-left"></i> 全部</a>
+        <a type="button" class="btn btn-default"  @click="fetch('publish')"><i class="icon-check"></i>
+            <span class="hidden-xs position-right">
+                    {{ 'publish' | lang }}
+
+                </span>
+        </a>
+        <a type="button" class="btn btn-default" @click="fetch('pending')"><i class="icon-eye-plus"></i><span
+                    class="hidden-xs position-right">
+                    {{ 'pending' | lang }}
+                </span></a>
+
+        <a type="button" class="btn btn-default " @click="fetch('drafts')"><i class="icon-box"></i> <span
+                    class="hidden-xs position-right" >
+                    {{ 'draft' | lang }}
+                    </span></a>
+
+        <a type="button" class="btn btn-default "  @click="fetch('trashed')"><i class=" icon-bin2"></i> <span
+                    class="hidden-xs position-right">
+                    {{ 'trash' | lang }}
+            </span></a>
+
+
+    </div>
+
+
+{% endblock %}
+
+{% block sidebar_main %}
+
+    <div class="sidebar sidebar-main sidebar-default sidebar-fixed">
+
+        <div class="sidebar-content">
+            <div class="category-title bg-grey-50">
+                <span><a href="/admin/"><i class="icon-arrow-left8 position-left"></i>返回</a></span>
+                <div class="heading-elements">
+
+                    <span class="heading-text text-size-small">
+                        <p v-if="status == 'saving'" class="text-teal">正在保存...</p>
+                        <p v-if="status == 'success'" class="text-muted">保存成功</p>
+                        <p v-else-if="status == 'editing'"><a>保存</a></p>
+                        <p v-else-if="status == 'init'" class="text-muted">内容将实时更新</p>
+                    </span>
+                </div>
+
+            </div>
+            <div class="sidebar-category">
+                <div class="category-content">
+
+                    <form action="#">
+                        <div class="has-feedback has-feedback-left form-group">
+                            <input type="search" class="form-control" placeholder="内容查询">
+                            <div class="form-control-feedback">
+                                <i class="icon-search4 text-size-base text-muted"></i>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <legend class="text-size-mini text-muted no-border no-padding">内容分类</legend>
+
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="snippet-filter" @click="fetch('text')">
+                                    Blog
+                                </label>
+                            </div>
+
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="snippet-filter"  @click="fetch('quote')">
+                                    日记
+                                </label>
+                            </div>
+
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="snippet-filter"  @click="fetch('quote')">
+                                    读书笔记
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <legend class="text-size-mini text-muted no-border no-padding">状态</legend>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="snippet-filter-status" @click="fetch('publish')">
+                                    {{ 'publish' | lang }}
+                                    {#公开#}
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="snippet-filter-status" @click="fetch('private')">
+                                    {{ 'private' | lang }}
+                                    {#私有#}
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="snippet-filter-status" @click="fetch('pending')">
+                                    {{ 'pending' | lang }}
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="snippet-filter-status" @click="fetch('draft')">
+                                    {{ 'draft' | lang }}
+                                </label>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+{% endblock %}
+
+{% block content %}
+    <div id="messages"></div>
+
+    <!-- Multiple lines -->
+    <div class="panel panel-white">
+
+        <div class="panel-heading">
+            <h6 class="panel-title" v-html="headline">我的内容</h6>
+
+            <div class="heading-elements not-collapsible">
+                <a><span class="label bg-slate-400 heading-text">10 待审内容</span></a>
+                <a><span class="label bg-slate-400 heading-text">50 草稿</span></a>
+            </div>
+        </div>
+
+
+        <div class="panel-toolbar panel-toolbar-inbox">
+            <div class="navbar navbar-default">
+                <ul class="nav navbar-nav visible-xs-block no-border">
+                    <li>
+                        <a class="text-center collapsed" data-toggle="collapse"
+                           data-target="#inbox-toolbar-toggle-multiple">
+                            <i class="icon-circle-down2"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
+                    <div class="btn-group navbar-btn">
+                        <button type="button" class="btn btn-default btn-icon btn-checkbox-all">
+                            {#<input type="checkbox" class="styled" v-model='checked' v-on:click='checkedAll'>#}
+                            <input type="checkbox" class="styled" v-model="selectAll">
+                        </button>
+                        {#
+
+                        <button type="button" class="btn btn-default btn-icon dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li><a href="#">选择全部</a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#">Select unread</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Clear selection</a></li>
+                        </ul>
+                        #}
+                    </div>
+
+                    <div class="btn-group navbar-btn" v-show="checked.length > 0">
+                        {#<h1 v-html="headline"></h1>#}
+                        {#<p class="navbar-text" v-html="headline"></p>#}
+
+                        {#<button type="button" class="btn btn-default"><i class="icon-pencil7"></i> <span class="hidden-xs position-right">添加</span></button>#}
+                        <a :href="'/admin/posts/delete?ids=' +checked" type="button"
+                           class="btn btn-default delete ajax"><i class="icon-bin"></i> <span
+                                    class="hidden-xs position-right">删除</span></a>
+                        <!--
+
+                        <a type="button" class="btn btn-default"><i class=" icon-folder2"></i> <span
+                                    class="hidden-xs position-right">移动</span></a>
+                        <a type="button" class="btn btn-default"><i class=" icon-price-tag2"></i> <span
+                                    class="hidden-xs position-right">标签</span></a>
+                                    -->
+                    </div>
+
+                    <div class="navbar-right">
+                        {#<template>#}
+                        <p class="navbar-text">共：<span class="text-semibold">{{pagedata.totalPages}} </span> 页 <span
+                                    class="text-semibold">{{pagedata.count}} 条记录</span></p>
+                        {#<page-button :pagedata="pagedata"></page-button>#}
+                        {##}
+                        <div class="btn-group navbar-left navbar-btn">
+                            <button type="button" class="btn btn-default btn-icon" :class="{disabled: page <= 1}"
+                                    @click="current-- && pageTo(current--)"><i class="icon-arrow-left12"></i></button>
+                            <button type="button" class="btn btn-default btn-icon"
+                                    :class="{disabled: page >= pagedata.totalPages}"
+                                    @click="current++ && pageTo(current++)"><i class="icon-arrow-right13"></i></button>
+                        </div>
+                        {#</template>#}
+                        <div class="btn-group navbar-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-filter3"></i>
+                                <span class="caret"></span>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                {#<li><a href="#"><i class="icon-question7"></i> 文章</a></li>#}
+                                {#<li><a href="#"><i class="icon-accessibility"></i> 图片</a></li>#}
+                                {#<li><a href="#"><i class="icon-reading"></i> 视频</a></li>#}
+                                {#<li><a href="#"><i class="icon-gear"></i> 音频</a></li>#}
+                                {#<li><a href="#"><i class="icon-graduation"></i> 作品</a></li>#}
+                                {#<li class="divider"></li>#}
+                                {#<li><a href="#"><i class="icon-mail-read"></i> 全部</a></li>#}
+
+
+                                <li><a href="#"><i class="icon-question7 position-left"></i> 文章</a></li>
+                                <li><a href="#"><i class="icon-eye-plus position-left"></i> 图片</a></li>
+                                <li><a href="#"><i class="icon-play position-left"></i> 视频</a></li>
+                                <li><a href="#"><i class="icon-portfolio position-left"></i> 作品</a></li>
+                                <li class="divider"></li>
+                                <li class="active"><a href="#"><i class="icon-files-empty position-left"></i> 全部</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover default table-inbox  ">
+                <tbody data-link="row" class="rowlink">
+
+                <tr class="unread" v-for="_ in pageAll">
+
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input :id="'data' + _.id" :value="_.id" type="checkbox" class="styled" v-model='checked'>
+                    </td>
+                    {#
+                    <td class="table-inbox-star rowlink-skip">
+                        <a :href="'/admin/article/'+ _.id + '/star'">
+                            <i class="icon-star-empty3 text-muted"></i>
+                        </a>
+                    </td>
+                    #}
+                    {#
+                    <td class="table-inbox-image">
+                        <span class="btn bg-warning-400 btn-rounded btn-icon btn-xs">
+                            <span class="letter-icon"></span>
+                        </span>
+                        <img src="assets/images/brands/spotify.png" class="img-circle img-xs" alt="">
+                    </td>
+                                        #}
+
+                    <td class="table-inbox-name">
+                        <a class="letter-icon-title  pr-10" v-for="term in _.terms">{{ term.name }}</a>
+                    </td>
+                    <td class="table-inbox-message  rowlink-skip">
+                        <div class="table-inbox-subject">
+                            <a :href="'/admin/article/' + _.id"> {{ _.title }} </a>
+                        </div>
+                        <span class="table-inbox-preview">
+                            <a :href="'/admin/article/' + _.id">{{ _.excerpt | text | trim}}</a>
+                            {#<div class="content-group" v-html="_.excerpt">#}
+                        </span>
+                    </td>
+                    <td class="table-inbox-attachment">
+                        <i class="icon-attachment text-muted"></i>
+                    </td>
+                    <td class="table-inbox-time">
+                        {{ _.modified | moment }}
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /multiple lines -->
+
+    {#{% include "../admin/components/data-table.html" %}#}
+{% endblock %}
+
+
+{% block script %}
+
+    <script type="text/javascript" src="/static/assets/js/core/libraries/jasny_bootstrap.min.js"></script>
+    {#<script type="text/javascript" src="/static/assets/js/pages/mail_list.js"></script>#}
+
+
+    <script>
+        Vue.component("pageButton", {
+//            delimiters: ['${', '}'],
+            template: '<template><p class="navbar-text">共 <span class="text-semibold"> {{pagedata.totalPages }} </span> 页 <span class="text-semibold">{{ pagedata.count }} 条记录</span></p>' +
+            '<div class="btn-group navbar-left navbar-btn">' +
+            '<button type="button" class="btn btn-default btn-icon " :class="disabled: pagedata.currentPage == 1"><i class="icon-arrow-left12"></i></button>' +
+            '<button type="button" class="btn btn-default btn-icon"><i class="icon-arrow-right13"></i></button> ' +
+            '</div></template>',
+            data: function () {
+                return {
+                    current: this.page || 1
+                }
+            },
+            props: [
+//                "count",
+//                "totalpage",
+//                "page",
+                "pagedata"
+            ],
+            computed: {
+                pageIndex: function () {
+                    var num = 5;
+                    var pageIndex = []
+                },
+                pages: function () {
+                    var pag = [];
+                    if (this.current < this.showItem) { //如果当前的激活的项 小于要显示的条数
+                        //总页数和要显示的条数那个大就显示多少条
+                        var i = Math.min(this.showItem, this.allpage);
+                        while (i) {
+                            pag.unshift(i--);
+                        }
+                    } else { //当前页数大于显示页数了
+                        var middle = this.current - Math.floor(this.showItem / 2),//从哪里开始
+                            i = this.showItem;
+                        if (middle > (this.allpage - this.showItem)) {
+                            middle = (this.allpage - this.showItem) + 1
+                        }
+                        while (i--) {
+                            pag.push(middle++);
+                        }
+                    }
+                    return pag
+                }
+            }
+        });
+
+        Vue.component("page", {
+//            delimiters: ['${', '}'],
+//            template:"#page",
+            template: '<ul class="pagination pagination-flat pagination-xs" > <li v-show="current != 1" @click="current-- && goto(current)" ><a href="#">上一页</a></li> <li v-for="index in pages" @click="goto(index)" :class="{\'active\':current == index}" :key="index"> <a href="javascript:;" >{{index}}</a> </li> <li v-show="allpage != current && allpage != 0 " @click="current++ && goto(current++)"><a href="#" >下一页</a></li> </ul>',
+            data: function () {
+                return {
+                    current: this.page || 1,
+                    showItem: 5,
+                }
+            },
+            props: [
+                "allpage",
+                "page"
+            ],
+            computed: {
+                pages: function () {
+                    var pag = [];
+                    if (this.current < this.showItem) { //如果当前的激活的项 小于要显示的条数
+                        //总页数和要显示的条数那个大就显示多少条
+                        var i = Math.min(this.showItem, this.allpage);
+                        while (i) {
+                            pag.unshift(i--);
+                        }
+                    } else { //当前页数大于显示页数了
+                        var middle = this.current - Math.floor(this.showItem / 2),//从哪里开始
+                            i = this.showItem;
+                        if (middle > (this.allpage - this.showItem)) {
+                            middle = (this.allpage - this.showItem) + 1
+                        }
+                        while (i--) {
+                            pag.push(middle++);
+                        }
+                    }
+                    return pag
+                }
+            },
+            methods: {
+                goto: function (index) {
+
+                    if (index == this.current) return;
+                    this.current = index;
+//                    $.event.trigger({
+//                        type: "message"
+//                    });
+                    this.$emit('increment', index)
+                    //这里可以发送ajax请求
+                }
+            }
+        })
+        //只能输入正整数过滤器
+        Vue.filter('onlyNumeric', {
+            // model -> view
+            // 在更新 `<input>` 元素之前格式化值
+            read: function (val) {
+                return val;
+            },
+            // view -> model
+            // 在写回数据之前格式化值
+            write: function (val, oldVal) {
+                var number = +val.replace(/[^\d]/g, '')
+                return isNaN(number) ? 1 : parseFloat(number.toFixed(2))
+            }
+        })
+
+        Vue.filter('text', function (val) {
+            if (val !== null)
+            return val.replace(/<[^>]+>/g, "");//去掉所有的html标记
+
+        });
+
+        Vue.filter('trim', function (val) {
+            var result;
+//            result = val.replace(/(^\s+)|(\s+$)/g,"");
+//            if(is_global.toLowerCase()=="g")
+//            {
+            result = val.replace(/\s/g, "");
+//            }
+            return result;
+
+        })
+
+        //数组删除某项功能
+        Array.prototype.remove = function (dx) {
+            if (isNaN(dx) || dx > this.length) {
+                return false;
+            }
+            for (var i = 0, n = 0; i < this.length; i++) {
+                if (this[i] != this[dx]) {
+                    this[n++] = this[i]
+                }
+            }
+            this.length -= 1
+        }
+
+        new Vue({
+            el: "#app",
+            data: {
+                oldHeadline: '内容管理',
+                headline: '内容管理',
+                {#userInfo: '{{ userInfo | dump}}',#}
+//                headline: lang["pages"],
+                addPageModal: false,
+                pageName: "",
+                pageParent: 0,
+                pageGrid: 0,
+                pageParentName: "",
+                pageAll: '',
+                searchBoxShow: false,
+                searchBox: "",
+                allpage: 0,
+                total: 1,
+                page: 0,
+                status: '',
+                current: this.page || 1,
+                pagedata: {},
+                isActive: true,
+                isToolbar: false,
+                checkboxModel: [],
+                checked: [],
+            },
+            created: function () {
+                var vue = this;
+                eventHub.$on("setHeadline", function (data) {
+                    vue.headline = data.headline;
+//                    vue.showSearch = data.showSearch;
+                });
+
+            },
+            mounted: function () {
+
+                var vue = this;
+                this.page = vue.urlParam("page");
+
+                $(document).on("fetch", function () {
+                    vue.fetch();
+                });
+                $(document).on("message", function () {
+                    vue.message();
+                });
+//                eventHub.$on("snippet", function () {
+//                    console.log("snippet")
+//                });
+                vue.fetch();
+//                $(window).load(function(){ $('[data-plugin="masonry"]').masonry(); });
+
+
+                // Reverse last 3 dropdowns orientation
+                $('.content > .row').slice(-1).find('.dropdown, .btn-group').addClass('dropup');
+
+                // Multiple switchery toggles
+                if (Array.prototype.forEach) {
+                    var elems = Array.prototype.slice.call(document.querySelectorAll('.switch-mode'));
+
+                    elems.forEach(function (html) {
+                        var switchery = new Switchery(html);
+                    });
+                }
+                else {
+                    var elems = document.querySelectorAll('.switch-mode');
+
+                    for (var i = 0; i < elems.length; i++) {
+                        var switchery = new Switchery(elems[i]);
+                    }
+                }
+//                eventHub.$on("snippet", function(){
+//                    console.log('snippet event')
+//                });
+//                eventHub.$on("setSearchbox", this.setParent);
+//                vue.setDrag();
+
+                vue.render();
+
+
+            },
+            methods: {
+//                layout: function(){
+//                    $('[data-plugin="masonry"]').masonry('layout')
+//
+//                },
+                render: function () {
+                    var vue = this;
+                    // Custom code
+                    // ------------------------------
+
+                    // Highlight row when checkbox is checked
+/*                    $('.table-inbox').find('tr > td:first-child').find('input[type=checkbox]').on('change', function () {
+                        if ($(this).is(':checked')) {
+                            $(this).parents('tr').addClass('warning');
+                        }
+                        else {
+                            $(this).parents('tr').removeClass('warning');
+                        }
+                    });*/
+
+
+                    // Grab first letter and insert to the icon
+                    $(".table-inbox tr").each(function (i) {
+
+                        // Title
+                        var $title = $(this).find('.letter-icon-title'),
+                            letter = $title.eq(0).text().charAt(0).toUpperCase();
+
+                        // Icon
+                        var $icon = $(this).find('.letter-icon');
+                        $icon.eq(0).text(letter);
+                    });
+
+
+                    // Plugins
+                    // ------------------------------
+
+                    // Default initialization
+//                    $(".styled, .multiselect-container input").uniform({
+//                        radioClass: 'choice'
+//                    });
+
+                    // Initialize Row link plugin
+                    $('tbody.rowlink').rowlink();
+                },
+                incrementTotal: function (id) {
+                    this.total += 1
+                    History.pushState({state: id}, "State", '?page=' + id.toString());
+                    this.page = id;
+                    this.fetch();
+
+                },
+                pageTo: function (index) {
+                    if (index < 1) {
+                        this.current = 1;
+                        return;
+                    }
+                    if (index > this.pagedata.totalPages) {
+                        this.current = this.pagedata.totalPages;
+                        return;
+                    }
+//                    if (index == this.current) return;
+                    this.current = index;
+                    this.page = index;
+//                    if (num < 1 || num >= this.pagedata.totalPages) return;
+//                    console.log(index);
+
+//                    this.total += 1
+                    History.pushState({state: index}, "State", '?page=' + index.toString());
+//                    this.page = num;
+                    this.fetch();
+
+                },
+
+                fetch: function (type) {
+                    this.checked = [];
+                    var vue = this;
+                    var _url = "/admin/posts/";
+                    if (!type){
+                        _url += 'list'
+                    }
+                    else {
+                        _url += type;
+                    }
+//                    var _url = "/admin/posts/list";
+                    if (this.page != 0 && Number.parseInt(this.page)) {
+                        _url += "?page=" + this.page;
+                    }
+                    $.ajax({
+                        method: "POST",
+                        url: _url,
+                        dataType: "json",
+                        success: function (data) {
+                            vue.pageAll = data.data;
+                            vue.allpage = data.totalPages;
+//                            vue.pageTree = data.tree;
+//                            vue.setDrag();
+//                            delete data.data;
+                            vue.pagedata = data;
+
+                            vue.reLayout();
+                        }
+                    });
+                },
+
+                reLayout: function () {
+                    var _vue = this;
+                    Vue.nextTick(function () {
+                        _vue.render();
+
+                        // DOM updated
+                        var $grid = $('[data-plugin="masonry"]');
+                        $grid.masonry();
+                        $grid.masonry('reloadItems')
+                        $grid.masonry('layout');
+                    })
+                },
+                urlParam: function (name) {
+                    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                    var r = window.location.search.substr(1).match(reg);
+                    // decodeURIComponent() 
+                    if (r != null)return decodeURI(r[2]);
+                    return null;
+                }
+
+            },
+            watch: {//深度 watcher
+                'checked': function () {
+                    if (this.checked.length) {
+                        eventHub.$emit("setHeadline", {
+                            headline: '<span class="text-semibold text-danger">' + this.checked.length + ' 内容被选中</span>',
+//                            headline: this.checked.length + " " + lang["checked"] + "<a href='?delete=" + this.checked + "' class='icon delete ajax icon-ios-trash-outline'></a>",
+//                            showSearch: false
+                        });
+                    } else {
+                        eventHub.$emit("setHeadline", {
+                            headline: this.oldHeadline,
+                            showSearch: true
+                        });
+                    }
+
+                }
+            },
+            computed: {
+                selectAll: {
+                    get: function () {
+
+                        return this.pageAll ? this.checked.length == this.pageAll.length : false;
+                    },
+                    set: function (value) {
+                        var checked = [];
+
+                        if (value) {
+                            this.pageAll.forEach(function (item) {
+                                checked.push(item.id);
+                            });
+                        }
+
+                        this.checked = checked;
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %}

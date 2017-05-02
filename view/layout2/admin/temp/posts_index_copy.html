@@ -1,0 +1,1079 @@
+{% extends "./inc/_base.html" %}
+
+{% block style %}
+    <link href="/static/assets/css/icons/ionicons/css/ionicons.css" rel="stylesheet" type="text/css">
+
+    <style>
+        .post-image {
+            position: relative;
+            width: 100%;
+            margin-top: 16px;
+            background-color: #f3f6f8;
+            text-align: center;
+        }
+
+        .post-image:first-child {
+            margin-top: 0;
+        }
+
+        .post-image.is-placeholder {
+            background-color: #e9eff3;
+            -webkit-animation: loading-fade 1.6s ease-in-out infinite;
+            animation: loading-fade 1.6s ease-in-out infinite;
+        }
+
+        @media (min-width: 481px) {
+            .post-image.is-collapsed, .post-image.is-placeholder {
+                height: 232px;
+            }
+        }
+
+        @-webkit-keyframes loading-fade {
+            0% {
+                opacity: .5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: .5;
+            }
+        }
+
+        @keyframes loading-fade {
+            0% {
+                opacity: .5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: .5;
+            }
+        }
+
+        @-webkit-keyframes appear {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes appear {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes pulse-light {
+            50% {
+                background-color: #e9eff3;
+            }
+        }
+
+        @keyframes pulse-light {
+            50% {
+                background-color: #e9eff3;
+            }
+        }
+
+        @-webkit-keyframes loading-dot-pulse {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes loading-dot-pulse {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+    </style>
+
+    <style>
+        a.delete {
+            z-index: 5;
+            position: relative;
+        }
+
+        a.delete div {
+            width: 76px;
+            height: 40px;
+            top: 50%;
+            left: 50%;
+            background: #fefefe;
+            position: absolute;
+            z-index: 5;
+            margin: -20px 0 0 -38px;
+            -webkit-animation-duration: 0.4s;
+            animation-duration: 0.4s;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            -moz-box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+            box-shadow: 0 0 6px rgba(46, 48, 56, 0.3);
+        }
+
+        a.delete div .confirm,
+        a.delete div .abort {
+            vertical-align: top;
+            line-height: 32px;
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            margin: 0;
+            font-size: 21px !important;
+            top: 4px;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        a.delete div .confirm:before,
+        a.delete div .abort:before {
+            line-height: 32px;
+            display: block;
+        }
+
+        a.delete div .confirm {
+            color: #fff;
+            background: #ef4748;
+            left: 4px;
+        }
+
+        a.delete div .abort {
+            /*color: #858a95;*/
+            /*color: #;*/
+            right: 4px;
+        }
+
+
+    </style>
+{% endblock %}
+{% block content %}
+    <!-- Multiple lines -->
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <h6 class="panel-title">我的内容</h6>
+
+            <div class="heading-elements not-collapsible">
+                <span class="label bg-blue heading-text">10 待审内容</span>
+            </div>
+        </div>
+
+        <div class="panel-toolbar panel-toolbar-inbox">
+            <div class="navbar navbar-default">
+                <ul class="nav navbar-nav visible-xs-block no-border">
+                    <li>
+                        <a class="text-center collapsed" data-toggle="collapse" data-target="#inbox-toolbar-toggle-multiple">
+                            <i class="icon-circle-down2"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="navbar-collapse collapse" id="inbox-toolbar-toggle-multiple">
+                    <div class="btn-group navbar-btn">
+                        <button type="button" class="btn btn-default btn-icon btn-checkbox-all">
+                            <input type="checkbox" class="styled">
+                        </button>
+
+                        <button type="button" class="btn btn-default btn-icon dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Select all</a></li>
+                            <li><a href="#">Select read</a></li>
+                            <li><a href="#">Select unread</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Clear selection</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="btn-group navbar-btn">
+                        <button type="button" class="btn btn-default"><i class="icon-pencil7"></i> <span class="hidden-xs position-right">Compose</span></button>
+                        <button type="button" class="btn btn-default"><i class="icon-bin"></i> <span class="hidden-xs position-right">Delete</span></button>
+                        <button type="button" class="btn btn-default"><i class="icon-spam"></i> <span class="hidden-xs position-right">Spam</span></button>
+                    </div>
+
+                    <div class="navbar-right">
+                        <p class="navbar-text"><span class="text-semibold">1-50</span> of <span class="text-semibold">528</span></p>
+
+                        <div class="btn-group navbar-left navbar-btn">
+                            <button type="button" class="btn btn-default btn-icon disabled"><i class="icon-arrow-left12"></i></button>
+                            <button type="button" class="btn btn-default btn-icon"><i class="icon-arrow-right13"></i></button>
+                        </div>
+
+                        <div class="btn-group navbar-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-cog3"></i>
+                                <span class="caret"></span>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li><a href="#">One more line</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-inbox">
+                <tbody data-link="row" class="rowlink">
+                <tr class="unread">
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-empty3 text-muted"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+                        <img src="assets/images/brands/spotify.png" class="img-circle img-xs" alt="">
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Spotify</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject">On Tower-hill, as you go down</div>
+                        <span class="table-inbox-preview">To the London docks, you may have seen a crippled beggar (or KEDGER, as the sailors say) holding a painted board before him, representing the tragic scene in which he lost his leg</span>
+                    </td>
+                    <td class="table-inbox-attachment">
+                        <i class="icon-attachment text-muted"></i>
+                    </td>
+                    <td class="table-inbox-time">
+                        11:09 pm
+                    </td>
+                </tr>
+
+                <tr class="unread">
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-empty3 text-muted"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+											<span class="btn bg-warning-400 btn-rounded btn-icon btn-xs">
+												<span class="letter-icon"></span>
+											</span>
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">James Alexander</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject"><span class="label bg-success position-left">Promo</span> There are three whales and three boats</div>
+                        <span class="table-inbox-preview">And one of the boats (presumed to contain the missing leg in all its original integrity) is being crunched by the jaws of the foremost whale</span>
+                    </td>
+                    <td class="table-inbox-attachment">
+                        <i class="icon-attachment text-muted"></i>
+                    </td>
+                    <td class="table-inbox-time">
+                        10:21 pm
+                    </td>
+                </tr>
+
+                <tr class="unread">
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-full2 text-warning-300"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+                        <img src="assets/images/placeholder.jpg" class="img-circle img-xs" alt="">
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Nathan Jacobson</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject">Any time these ten years, they tell me, has that man held up</div>
+                        <span class="table-inbox-preview">That picture, and exhibited that stump to an incredulous world. But the time of his justification has now come. His three whales are as good whales as were ever published in Wapping, at any rate; and his stump</span>
+                    </td>
+                    <td class="table-inbox-attachment"></td>
+                    <td class="table-inbox-time">
+                        8:37 pm
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-full2 text-warning-300"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+											<span class="btn bg-indigo-400 btn-rounded btn-icon btn-xs">
+												<span class="letter-icon"></span>
+											</span>
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Margo Baker</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject">Throughout the Pacific, and also in Nantucket, and New Bedford</div>
+                        <span class="table-inbox-preview">and Sag Harbor, you will come across lively sketches of whales and whaling-scenes, graven by the fishermen themselves on Sperm Whale-teeth, or ladies' busks wrought out of the Right Whale-bone</span>
+                    </td>
+                    <td class="table-inbox-attachment"></td>
+                    <td class="table-inbox-time">
+                        4:28 am
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-empty3 text-muted"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+                        <img src="assets/images/brands/dribbble.png" class="img-circle img-xs" alt="">
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Dribbble</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject">The whalemen call the numerous little ingenious contrivances</div>
+                        <span class="table-inbox-preview">They elaborately carve out of the rough material, in their hours of ocean leisure. Some of them have little boxes of dentistical-looking implements</span>
+                    </td>
+                    <td class="table-inbox-attachment"></td>
+                    <td class="table-inbox-time">
+                        Dec 5
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-empty3 text-muted"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+											<span class="btn bg-brown-400 btn-rounded btn-icon btn-xs">
+												<span class="letter-icon"></span>
+											</span>
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Hanna Dorman</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject">Some of them have little boxes of dentistical-looking implements</div>
+                        <span class="table-inbox-preview">Specially intended for the skrimshandering business. But, in general, they toil with their jack-knives alone; and, with that almost omnipotent tool of the sailor</span>
+                    </td>
+                    <td class="table-inbox-attachment">
+                        <i class="icon-attachment text-muted"></i>
+                    </td>
+                    <td class="table-inbox-time">
+                        Dec 5
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-empty3 text-muted"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+                        <img src="assets/images/brands/twitter.png" class="img-circle img-xs" alt="">
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Twitter</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject"><span class="label bg-indigo-400 position-left">Order</span> Long exile from Christendom</div>
+                        <span class="table-inbox-preview">And civilization inevitably restores a man to that condition in which God placed him, i.e. what is called savagery</span>
+                    </td>
+                    <td class="table-inbox-attachment"></td>
+                    <td class="table-inbox-time">
+                        Dec 4
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-full2 text-warning-300"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+											<span class="btn bg-pink-400 btn-rounded btn-icon btn-xs">
+												<span class="letter-icon"></span>
+											</span>
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Vanessa Aurelius</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject">Your true whale-hunter is as much a savage as an Iroquois</div>
+                        <span class="table-inbox-preview">I myself am a savage, owning no allegiance but to the King of the Cannibals; and ready at any moment to rebel against him. Now, one of the peculiar characteristics of the savage in his domestic hours</span>
+                    </td>
+                    <td class="table-inbox-attachment">
+                        <i class="icon-attachment text-muted"></i>
+                    </td>
+                    <td class="table-inbox-time">
+                        Dec 4
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-empty3 text-muted"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+                        <img src="assets/images/placeholder.jpg" class="img-circle img-xs" alt="">
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">William Brenson</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject">An ancient Hawaiian war-club or spear-paddle</div>
+                        <span class="table-inbox-preview">In its full multiplicity and elaboration of carving, is as great a trophy of human perseverance as a Latin lexicon. For, with but a bit of broken sea-shell or a shark's tooth</span>
+                    </td>
+                    <td class="table-inbox-attachment">
+                        <i class="icon-attachment text-muted"></i>
+                    </td>
+                    <td class="table-inbox-time">
+                        Dec 4
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-empty3 text-muted"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+                        <img src="assets/images/brands/facebook.png" class="img-circle img-xs" alt="">
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Facebook</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject">As with the Hawaiian savage, so with the white sailor-savage</div>
+                        <span class="table-inbox-preview">With the same marvellous patience, and with the same single shark's tooth, of his one poor jack-knife, he will carve you a bit of bone sculpture, not quite as workmanlike</span>
+                    </td>
+                    <td class="table-inbox-attachment"></td>
+                    <td class="table-inbox-time">
+                        Dec 3
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-full2 text-warning-300"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+                        <img src="assets/images/placeholder.jpg" class="img-circle img-xs" alt="">
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Vicky Barna</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject"><span class="label bg-pink-400 position-left">Track</span> Achilles's shield</div>
+                        <span class="table-inbox-preview">Wooden whales, or whales cut in profile out of the small dark slabs of the noble South Sea war-wood, are frequently met with in the forecastles of American whalers. Some of them are done with much accuracy</span>
+                    </td>
+                    <td class="table-inbox-attachment"></td>
+                    <td class="table-inbox-time">
+                        Dec 2
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-empty3 text-muted"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+                        <img src="assets/images/brands/youtube.png" class="img-circle img-xs" alt="">
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Youtube</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject">At some old gable-roofed country houses</div>
+                        <span class="table-inbox-preview">You will see brass whales hung by the tail for knockers to the road-side door. When the porter is sleepy, the anvil-headed whale would be best. But these knocking whales are seldom remarkable as faithful essays</span>
+                    </td>
+                    <td class="table-inbox-attachment">
+                        <i class="icon-attachment text-muted"></i>
+                    </td>
+                    <td class="table-inbox-time">
+                        Nov 30
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-empty3 text-muted"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+                        <img src="assets/images/placeholder.jpg" class="img-circle img-xs" alt="">
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Tony Gurrano</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject">On the spires of some old-fashioned churches</div>
+                        <span class="table-inbox-preview">You will see sheet-iron whales placed there for weather-cocks; but they are so elevated, and besides that are to all intents and purposes so labelled with "HANDS OFF!" you cannot examine them</span>
+                    </td>
+                    <td class="table-inbox-attachment"></td>
+                    <td class="table-inbox-time">
+                        Nov 28
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-empty3 text-muted"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+											<span class="btn bg-danger-400 btn-rounded btn-icon btn-xs">
+												<span class="letter-icon"></span>
+											</span>
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Barbara Walden</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject">In bony, ribby regions of the earth</div>
+                        <span class="table-inbox-preview">Where at the base of high broken cliffs masses of rock lie strewn in fantastic groupings upon the plain, you will often discover images as of the petrified forms</span>
+                    </td>
+                    <td class="table-inbox-attachment"></td>
+                    <td class="table-inbox-time">
+                        Nov 28
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-inbox-checkbox rowlink-skip">
+                        <input type="checkbox" class="styled">
+                    </td>
+                    <td class="table-inbox-star rowlink-skip">
+                        <a href="mail_read.html">
+                            <i class="icon-star-full2 text-warning-300"></i>
+                        </a>
+                    </td>
+                    <td class="table-inbox-image">
+                        <img src="assets/images/brands/amazon.png" class="img-circle img-xs" alt="">
+                    </td>
+                    <td class="table-inbox-name">
+                        <a href="#">
+                            <div class="letter-icon-title text-default">Amazon</div>
+                        </a>
+                    </td>
+                    <td class="table-inbox-message">
+                        <div class="table-inbox-subject">Here and there from some lucky point of view</div>
+                        <span class="table-inbox-preview">You will catch passing glimpses of the profiles of whales defined along the undulating ridges. But you must be a thorough whaleman, to see these sights; and not only that, but if you wish to return to such a sight again</span>
+                    </td>
+                    <td class="table-inbox-attachment">
+                        <i class="icon-attachment text-muted"></i>
+                    </td>
+                    <td class="table-inbox-time">
+                        Nov 27
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /multiple lines -->
+
+    <div class="navbar navbar-default navbar-xs navbar-component">
+        <ul class="nav navbar-nav no-border visible-xs-block">
+            <li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-filter"><i
+                            class="icon-menu7"></i></a></li>
+        </ul>
+
+        <div class="navbar-collapse collapse" id="navbar-filter">
+            <p class="navbar-text"><a><i class="icon-search4 text-muted text-size-base"></i></a></p>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-stack2 position-left"></i> 内容类别 <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="icon-question7"></i> 文章</a></li>
+                        <li><a href="#"><i class="icon-accessibility"></i> 图片</a></li>
+                        <li><a href="#"><i class="icon-reading"></i> 视频</a></li>
+                        <li><a href="#"><i class="icon-gear"></i> 音频</a></li>
+                        <li><a href="#"><i class="icon-graduation"></i> 链接</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="icon-mail-read"></i> 全部</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" class="btn btn-link"><i class=" position-left"></i> 已发布</a></li>
+                <li><a href="#" class="btn btn-link"><i class=" position-left"></i> 待审</a></li>
+                <li><a href="#" class="btn btn-link"><i class=" position-left"></i> 草稿</a></li>
+                {#<li><a href="#" class="btn btn-link"><i class=" position-left"></i> </a></li>#}
+            </ul>
+
+            <div class="navbar-right">
+                {#<p class="navbar-text">View mode:</p>#}
+                <form class="navbar-form navbar-left" action="#">
+                    <div class="form-group">
+                        <label class="checkbox-inline switchery-double checkbox-switchery switchery-xs">
+                            列表
+                            <input type="checkbox" class="switch-mode" checked="checked">
+                            表格
+                        </label>
+                    </div>
+                </form>
+                <ul class="nav navbar-nav">
+                    <li><a href="/admin/posts/list" class="btn btn-link"><i class="icon-trash-alt position-left"></i>
+                            回收站 {#<span class="badge bg-teal-400">9</span>#}</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" data-plugin="masonry">
+
+
+        <div class="col-lg-6 col-md-12 col-xs-12 masonry-item" v-for="_ in pageAll">
+            <div class="panel panel-flat">
+                {#            <div class="panel-heading">
+                              <h5 class="panel-title text-semibold">
+                                <a href="/read/{{ _.id }}">{{ _.title | truncate(18, true) }}</a>
+
+                              </h5>
+                            </div>#}
+                <div class="panel-body">
+
+                    <div class="thumb content-group ">
+                        {#<img src="/static/assets/images/demo/blog/3.jpg" alt="" class="img-responsive">#}
+                        <div class="post-image is-placeholder"></div>
+                        <div class="caption-overflow">
+										<span>
+											<a href="blog_single.html"
+                                               class="btn btn-flat border-white text-white btn-rounded btn-icon legitRipple"><i
+                                                        class="icon-arrow-right8"></i></a>
+										</span>
+                        </div>
+                    </div>
+
+
+                    <div class="content-group">
+
+                        <h5 class="blog-title text-semibold" style="margin-top: 0; margin-bottom: 5px;">
+                            <a class="text-default" :href="'/read/'+  _.id">${ _.title }</a>
+
+                        </h5>
+                        <ul class="list-inline list-inline-separate">
+                            <li><i class=" icon-watch2 text-muted"></i></li>
+                            {#<li><a href="#" class="text-muted">采撷科技官网</a></li>#}
+                            <li><a class="text-size-small text-muted">
+                                    <time :datetime="_.modified">${ _.modified | moment}</time>
+                                </a></li>
+                            <li><a href="#" class="text-muted">image</a>, <a href="#" class="text-muted">blog</a>, <a
+                                        href="#" class="text-muted">post</a></li>
+                        </ul>
+
+                    </div>
+
+                    <div class="content-group" v-html="_.excerpt">
+                        {#${ _.excerpt}#}
+                    </div>
+
+                    <div class="thumb content-group">
+                        {#<img src="/static/assets/images/demo/blog/1.jpg" alt="" class="img-responsive">#}
+                        <div class="caption-overflow">
+										<span>
+											<a href="blog_single.html"
+                                               class="btn btn-flat border-white text-white btn-rounded btn-icon legitRipple"><i
+                                                        class="icon-arrow-right8"></i></a>
+										</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="panel-footer text-center no-padding">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <a :href="'/admin/posts/'+ _.id + '/edit'" class="display-block p-10 text-muted"><i class="icon-pencil position-left"></i>编辑</a>
+                        </div>
+
+                        <div class="col-xs-3">
+                            <a href="#" class="display-block p-10 text-muted"><i
+                                        class="icon-eye position-left"></i>查看</a>
+                        </div>
+
+                        <div class="col-xs-3">
+                            <a href="#" class="display-block p-10 text-muted" data-popup="tooltip" data-placement="top"
+                               data-container="body" title="" data-original-title="下在成 MD 文件"><i
+                                        class="icon-file-download position-left"></i>下载</a>
+                        </div>
+
+                        <div class="col-xs-3">
+                            {#<a href="#" class="display-block p-10 text-muted ajax delete" ><i class=" icon-trash position-left"></i> 回收站</a>#}
+                            <a :href="'/admin/posts/'+ _.id+'/delete'"
+                               class="display-block p-10 text-muted ajax delete"><i
+                                        class=" icon-trash position-left"></i> 回收站</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="text-center content-group-lg pt-20">
+            <page :allpage="allpage" :page="page" v-on:increment="incrementTotal"></page>
+        </div>
+    </div>
+
+    {#{% include "../admin/components/data-table.html" %}#}
+{% endblock %}
+
+
+{% block script %}
+    <script type="text/javascript" src="/static/assets/js/core/libraries/jasny_bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/pages/mail_list.js"></script>
+    <script>
+        $(document).on("click", ".delete", function (e) {
+
+            e.preventDefault();
+
+            var _this = $(this);
+
+            if (!_this.hasClass("active")) {
+
+                _this.addClass("active");
+
+                var div = $("<div><i class='icon confirm ion-ios-checkmark-outline'></i><i class='icon abort ion-ios-close-empty'></i></div>");
+                var element = $(this).append(div);
+
+                div.addClass("animated zoomIn");
+
+                div.on("click", ".abort", function () {
+                    div.fadeOut(300, function () {
+                        div.remove();
+                        _this.removeClass("active");
+                    });
+                });
+
+                div.on("click", ".confirm", function () {
+                    if (_this.hasClass("ajax")) {
+                        $.ajax({
+                            method: "POST",
+                            url: _this.attr("href"),
+                            success: function () {
+                                div.fadeOut(300, function () {
+                                    div.remove();
+                                    _this.removeClass("active");
+                                });
+                                $.event.trigger({
+                                    type: "fetch"
+                                });
+                            }
+                        });
+                    } else {
+                        window.location = _this.attr("href");
+                    }
+                });
+
+            }
+
+        });
+    </script>
+
+
+    <script>
+        Vue.component("page", {
+            delimiters: ['${', '}'],
+//            template:"#page",
+            template: '<ul class="pagination pagination-flat pagination-xs" > <li v-show="current != 1" @click="current-- && goto(current)" ><a href="#">上一页</a></li> <li v-for="index in pages" @click="goto(index)" :class="{\'active\':current == index}" :key="index"> <a href="javascript:;" >${index}</a> </li> <li v-show="allpage != current && allpage != 0 " @click="current++ && goto(current++)"><a href="#" >下一页</a></li> </ul>',
+            data: function () {
+                return {
+                    current: this.page || 1,
+                    showItem: 5,
+                }
+            },
+            props: [
+                "allpage",
+                "page"
+            ],
+            computed: {
+                pages: function () {
+                    var pag = [];
+                    if (this.current < this.showItem) { //如果当前的激活的项 小于要显示的条数
+                        //总页数和要显示的条数那个大就显示多少条
+                        var i = Math.min(this.showItem, this.allpage);
+                        while (i) {
+                            pag.unshift(i--);
+                        }
+                    } else { //当前页数大于显示页数了
+                        var middle = this.current - Math.floor(this.showItem / 2),//从哪里开始
+                            i = this.showItem;
+                        if (middle > (this.allpage - this.showItem)) {
+                            middle = (this.allpage - this.showItem) + 1
+                        }
+                        while (i--) {
+                            pag.push(middle++);
+                        }
+                    }
+                    return pag
+                }
+            },
+            methods: {
+                goto: function (index) {
+                    if (index == this.current) return;
+                    this.current = index;
+//                    $.event.trigger({
+//                        type: "message"
+//                    });
+                    this.$emit('increment', index)
+                    //这里可以发送ajax请求
+                }
+            }
+        })
+        //只能输入正整数过滤器
+        Vue.filter('onlyNumeric', {
+            // model -> view
+            // 在更新 `<input>` 元素之前格式化值
+            read: function (val) {
+                return val;
+            },
+            // view -> model
+            // 在写回数据之前格式化值
+            write: function (val, oldVal) {
+                var number = +val.replace(/[^\d]/g, '')
+                return isNaN(number) ? 1 : parseFloat(number.toFixed(2))
+            }
+        })
+
+        //数组删除某项功能
+        Array.prototype.remove = function (dx) {
+            if (isNaN(dx) || dx > this.length) {
+                return false;
+            }
+            for (var i = 0, n = 0; i < this.length; i++) {
+                if (this[i] != this[dx]) {
+                    this[n++] = this[i]
+                }
+            }
+            this.length -= 1
+        }
+
+        new Vue({
+            delimiters: ['${', '}'],
+            el: "#app",
+            data: {
+                {#userInfo: '{{ userInfo | dump}}',#}
+//                headline: lang["pages"],
+                addPageModal: false,
+                pageName: "",
+                pageParent: 0,
+                pageGrid: 0,
+                pageParentName: "",
+                pageAll: '',
+                searchBoxShow: false,
+                searchBox: "",
+                allpage: 0,
+                total: 1,
+                page: 0,
+            },
+            components: {},
+            mounted: function () {
+
+                var vue = this;
+                this.page = vue.urlParam("page");
+
+                $(document).on("fetch", function () {
+                    vue.fetch();
+                });
+                $(document).on("message", function () {
+                    vue.message();
+                });
+                vue.fetch();
+//                $(window).load(function(){ $('[data-plugin="masonry"]').masonry(); });
+
+                // Reverse last 3 dropdowns orientation
+                $('.content > .row').slice(-1).find('.dropdown, .btn-group').addClass('dropup');
+
+
+                // Multiple switchery toggles
+                if (Array.prototype.forEach) {
+                    var elems = Array.prototype.slice.call(document.querySelectorAll('.switch-mode'));
+
+                    elems.forEach(function (html) {
+                        var switchery = new Switchery(html);
+                    });
+                }
+                else {
+                    var elems = document.querySelectorAll('.switch-mode');
+
+                    for (var i = 0; i < elems.length; i++) {
+                        var switchery = new Switchery(elems[i]);
+                    }
+                }
+//                eventHub.$on("setHome", this.setHome);
+//                eventHub.$on("setSearchbox", this.setParent);
+//                vue.setDrag();
+            },
+            methods: {
+//                layout: function(){
+//                    $('[data-plugin="masonry"]').masonry('layout')
+//
+//                },
+                incrementTotal: function (id) {
+                    this.total += 1
+                    History.pushState({state: id}, "State", '?page=' + id.toString());
+                    this.page = id;
+                    this.fetch();
+
+                },
+                fetch: function () {
+                    var vue = this;
+                    var _url = "/admin/posts/list";
+                    if (this.page != 0 && Number.parseInt(this.page)) {
+                        _url += "?page=" + this.page;
+                    }
+                    $.ajax({
+                        method: "POST",
+                        url: _url,
+                        dataType: "json",
+                        success: function (data) {
+                            vue.pageAll = data.data;
+                            vue.allpage = data.totalPages;
+                            vue.pageTree = data.tree;
+//                            vue.setDrag();
+
+                            vue.reLayout();
+                        }
+                    });
+                },
+
+                reLayout: function () {
+                    Vue.nextTick(function () {
+                        // DOM updated
+                        var $grid = $('[data-plugin="masonry"]');
+                        $grid.masonry();
+                        $grid.masonry('reloadItems')
+                        $grid.masonry('layout');
+                    })
+                },
+                urlParam: function (name) {
+                    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                    var r = window.location.search.substr(1).match(reg);
+                    // decodeURIComponent() 
+                    if (r != null)return decodeURI(r[2]);
+                    return null;
+                }
+
+            },
+            computed: {
+                pageTreeLength: function () {
+                    return !jQuery.isEmptyObject(this.pageTree);
+                },
+
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,8 +1,9 @@
 <template>
-    <div class="row" v-masonry transition-duration="0.3s" item-selector=".item">
+    <!--<div class="row" v-masonry transition-duration="0.3s" item-selector=".item" >-->
+        <div class="row" data-plugin="masonry">
 
 
-        <div class="col-lg-6 col-md-6 col-xs-12 item" v-masonry-tile v-for="_ in posts">
+        <div class="col-lg-6 col-md-6 col-xs-12 masonry-item" v-masonry-tile v-for="_ in posts">
 
             <div class="panel panel-default" v-if="_.type == 'snippet'">
 
@@ -472,15 +473,20 @@
             }
         },
         mounted: function () {
-            let scope = this;
+            let me = this;
 
+            eventHub.$on("fetch", () => {
+                me.reLayout();
+
+            })
             eventHub.$on("page", () => {
-                Vue.redrawVueMasonry()
+                me.reLayout()
+//                Vue.redrawVueMasonry()
 
             })
             eventHub.$on("snippet_id", (id) => {
                 this.snippet_id = id;
-                this.reLayout();
+                me.reLayout();
 
             });
 
@@ -490,8 +496,8 @@
 
             Vue.nextTick(function () {
                 Prism.highlightAll();
-//                scope.reLayout();
-                Vue.redrawVueMasonry()
+                me.reLayout();
+//                Vue.redrawVueMasonry()
 
 
             })
@@ -502,13 +508,30 @@
                 let vue = this;
 
                 Vue.nextTick(function () {
-                    Vue.redrawVueMasonry()
+                    // 渲染 select2 样式
+//                        vue.renderSelect2();
 
-//                    vue.render();
+                    // vue.render();
                     Prism.highlightAll();
                     // DOM updated
+                    let $grid = $('[data-plugin="masonry"]');
+                    $grid.masonry();
+                    $grid.masonry('reloadItems')
+                    $grid.masonry('layout');
                 })
             },
+//            reLayout: function () {
+
+//                let vue = this;
+
+//                Vue.nextTick(function () {
+//                    Vue.redrawVueMasonry()
+
+//                    vue.render();
+//                    Prism.highlightAll();
+                    // DOM updated
+//                })
+//            },
             setting: function (id) {
                 eventHub.$emit('snippet_id', id)
             },
