@@ -765,7 +765,7 @@ module.exports = function(it, key){
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = __webpack_require__(82)
-  , defined = __webpack_require__(17);
+  , defined = __webpack_require__(18);
 module.exports = function(it){
   return IObject(defined(it));
 };
@@ -10201,16 +10201,6 @@ module.exports = $export;
 /* 17 */
 /***/ (function(module, exports) {
 
-// 7.2.1 RequireObjectCoercible(argument)
-module.exports = function(it){
-  if(it == undefined)throw TypeError("Can't call method on  " + it);
-  return it;
-};
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
 // this module is a runtime utility for cleaner component module output and will
 // be included in the final webpack user bundle
 
@@ -10263,6 +10253,16 @@ module.exports = function normalizeComponent (
   }
 }
 
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function(it){
+  if(it == undefined)throw TypeError("Can't call method on  " + it);
+  return it;
+};
 
 /***/ }),
 /* 19 */
@@ -11249,7 +11249,7 @@ module.exports = Object.getPrototypeOf || function(O){
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(17);
+var defined = __webpack_require__(18);
 module.exports = function(it){
   return Object(defined(it));
 };
@@ -12220,7 +12220,7 @@ module.exports = __webpack_require__(3) ? Object.defineProperties : function def
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(25)
-  , defined   = __webpack_require__(17);
+  , defined   = __webpack_require__(18);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function(TO_STRING){
@@ -23147,7 +23147,7 @@ var _codemirror = __webpack_require__(14);
 
 var _codemirror2 = _interopRequireDefault(_codemirror);
 
-var _markdownIt = __webpack_require__(239);
+var _markdownIt = __webpack_require__(240);
 
 var _markdownIt2 = _interopRequireDefault(_markdownIt);
 
@@ -23163,7 +23163,7 @@ var _markdownItSup = __webpack_require__(148);
 
 var _markdownItSup2 = _interopRequireDefault(_markdownItSup);
 
-var _markdownItFootnote = __webpack_require__(238);
+var _markdownItFootnote = __webpack_require__(239);
 
 var _markdownItFootnote2 = _interopRequireDefault(_markdownItFootnote);
 
@@ -23177,56 +23177,7 @@ var _markdownItMark2 = _interopRequireDefault(_markdownItMark);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-__webpack_require__(188); //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+__webpack_require__(189); //
 //
 //
 //
@@ -23406,16 +23357,16 @@ __webpack_require__(188); //
 //
 
 __webpack_require__(174);
-__webpack_require__(186);
+__webpack_require__(187);
 __webpack_require__(161);
+__webpack_require__(192);
 __webpack_require__(191);
-__webpack_require__(190);
-__webpack_require__(193);
+__webpack_require__(194);
 __webpack_require__(162);
 __webpack_require__(160);
-__webpack_require__(187);
-__webpack_require__(189);
-__webpack_require__(192);
+__webpack_require__(188);
+__webpack_require__(190);
+__webpack_require__(193);
 __webpack_require__(163);
 //import abbreviation from 'markdown-it-abbr'
 //import insert from 'markdown-it-ins'
@@ -24643,7 +24594,8 @@ exports.default = {
 };
 
 /***/ }),
-/* 186 */
+/* 186 */,
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
@@ -24690,7 +24642,7 @@ exports.default = {
 
 
 /***/ }),
-/* 187 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
@@ -24758,7 +24710,7 @@ exports.default = {
 
 
 /***/ }),
-/* 188 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
@@ -24815,7 +24767,7 @@ exports.default = {
 
 
 /***/ }),
-/* 189 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
@@ -24940,7 +24892,7 @@ exports.default = {
 
 
 /***/ }),
-/* 190 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
@@ -25735,7 +25687,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
 
 
 /***/ }),
-/* 191 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
@@ -26572,7 +26524,7 @@ CodeMirror.defineMode("css", function(config, parserConfig) {
 
 
 /***/ }),
-/* 192 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
@@ -26707,7 +26659,7 @@ CodeMirror.defineMode("gfm", function(config, modeConfig) {
 
 
 /***/ }),
-/* 193 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
@@ -27518,7 +27470,7 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 
 
 /***/ }),
-/* 194 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(134)(undefined);
@@ -27526,13 +27478,12 @@ exports = module.exports = __webpack_require__(134)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.shadowBox {*/\n/*position: absolute;*/\n/*background: #ddd;*/\n/*width: 268px;*/\n/*height: 418px;*/\n/*top: 50%;*/\n/*left: 50%;*/\n/*margin-top: -180px;*/\n/*margin-left: -134px;*/\n/*border-radius: 16px;*/\n/*filter: blur(50px);*/\n/*-webkit-filter: blur(50px);*/\n/*}*/\n.shadowBox {\n    background: #999;\n    width: 250px;\n    height: 158px;\n\n    position: fixed;\n    right: calc(10% - 0px);\n    margin-right: -100px;\n    top: 200px;\n    border-radius: 16px;\n    filter: blur(50px);\n    /*z-index: 9998;*/\n    z-index: 10;\n    -webkit-filter: blur(50px);\n}\n.snippet--content {\n    font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n    max-height: 220px;\n    overflow: auto;\n}\n.snippet--panel {\n    /*position: relative;*/\n    /*right: calc(10% - 0px);*/\n    /*margin-right: -125px;*/\n    /*top: 100px;*/\n    /*width: 280px;*/\n    color: #898989;\n    opacity: 1;\n    /*z-index: 11;*/\n    /*z-index: 9999;*/\n    background-color: #fafafa;\n    /*border-radius: 4px;*/\n\n    /*-webkit-border-radius: 4px;*/\n    /*-moz-border-radius: 4px;*/\n\n    transition: all .2s ease-in;\n\n    /*-ms-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/\n    /*-o-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/\n    /*box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/\n    transition-property: right;\n}\n.snippet--panel.fadeout {\n    opacity: 0;\n    transition: all .5s ease-in;\n}\n.note-editor .note-codable {\n    display: none;\n    width: 100%;\n    overflow: auto;\n\n    padding: 20px;\n    margin-bottom: 0;\n    font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n    line-height: 1.7;\n    font-size: 16px;\n    color: #333;\n    background-color: #fff;\n    border: 0;\n    border-radius: 0;\n    resize: none;\n    -webkit-box-shadow: none;\n    box-shadow: none;\n}\n\n/*.doc-comment-box {*/\n/*width: 260px;*/\n/*background: #fff;*/\n/*box-shadow: 0 1px 4px rgba(0, 0, 0, .2);*/\n/*border-radius: 2px;*/\n/*position: absolute;*/\n/*right: 0;*/\n/*bottom: 0;*/\n/*margin-left: 0;*/\n/*cursor: pointer;*/\n/*transition: opacity .3s ease-out, margin-left .3s ease, top .3s ease;*/\n/*}*/\n\n/*.doc-comment-box.active {*/\n/*cursor: default;*/\n/*box-shadow: 0 0 20px #c8c8c8;*/\n/*margin-left: -30px;*/\n/*width: 290px;*/\n/*}*/\n\n\n", ""]);
+exports.push([module.i, "\n.snippet--content {\n    font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n    max-height: 220px;\n    overflow: auto;\n}\n.snippet--panel {\n    /*position: relative;*/\n    /*right: calc(10% - 0px);*/\n    /*margin-right: -125px;*/\n    /*top: 100px;*/\n    /*width: 280px;*/\n    color: #898989;\n    opacity: 1;\n    /*z-index: 11;*/\n    /*z-index: 9999;*/\n    background-color: #fafafa;\n    /*border-radius: 4px;*/\n\n    /*-webkit-border-radius: 4px;*/\n    /*-moz-border-radius: 4px;*/\n\n    transition: all .2s ease-in;\n\n    /*-ms-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/\n    /*-o-box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/\n    /*box-shadow: 0 2px 8px hsla(0, 0%, 50%, .8);*/\n    transition-property: right;\n}\n.snippet--panel.fadeout {\n    opacity: 0;\n    transition: all .5s ease-in;\n}\n.note-editor .note-codable {\n    display: none;\n    width: 100%;\n    overflow: auto;\n\n    padding: 20px;\n    margin-bottom: 0;\n    font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, \"Hiragino Sans GB\", \"Microsoft YaHei\", \"\\5FAE\\8F6F\\96C5\\9ED1\", SimSun, \"\\5B8B\\4F53\", Heiti, \"\\9ED1\\4F53\", sans-serif;\n    line-height: 1.7;\n    font-size: 16px;\n    color: #333;\n    background-color: #fff;\n    border: 0;\n    border-radius: 0;\n    resize: none;\n    -webkit-box-shadow: none;\n    box-shadow: none;\n}\n\n\n\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 195 */,
 /* 196 */,
 /* 197 */,
 /* 198 */,
@@ -27573,7 +27524,8 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /* 233 */,
 /* 234 */,
 /* 235 */,
-/* 236 */
+/* 236 */,
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27729,7 +27681,7 @@ function createNormalizer() {
 function compile(self) {
 
   // Load & clone RE patterns.
-  var re = self.re = __webpack_require__(237)(self.__opts__);
+  var re = self.re = __webpack_require__(238)(self.__opts__);
 
   // Define dynamic patterns
   var tlds = self.__tlds__.slice();
@@ -28217,7 +28169,7 @@ module.exports = LinkifyIt;
 
 
 /***/ }),
-/* 237 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28401,7 +28353,7 @@ module.exports = function (opts) {
 
 
 /***/ }),
-/* 238 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28772,18 +28724,18 @@ module.exports = function footnote_plugin(md) {
 
 
 /***/ }),
-/* 239 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 
-module.exports = __webpack_require__(245);
+module.exports = __webpack_require__(246);
 
 
 /***/ }),
-/* 240 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28863,7 +28815,7 @@ module.exports = [
 
 
 /***/ }),
-/* 241 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28871,13 +28823,13 @@ module.exports = [
 
 
 
-exports.parseLinkLabel       = __webpack_require__(243);
-exports.parseLinkDestination = __webpack_require__(242);
-exports.parseLinkTitle       = __webpack_require__(244);
+exports.parseLinkLabel       = __webpack_require__(244);
+exports.parseLinkDestination = __webpack_require__(243);
+exports.parseLinkTitle       = __webpack_require__(245);
 
 
 /***/ }),
-/* 242 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28964,7 +28916,7 @@ module.exports = function parseLinkDestination(str, pos, max) {
 
 
 /***/ }),
-/* 243 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29019,7 +28971,7 @@ module.exports = function parseLinkLabel(state, start, disableNested) {
 
 
 /***/ }),
-/* 244 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29079,7 +29031,7 @@ module.exports = function parseLinkTitle(str, pos, max) {
 
 
 /***/ }),
-/* 245 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29089,20 +29041,20 @@ module.exports = function parseLinkTitle(str, pos, max) {
 
 
 var utils        = __webpack_require__(1);
-var helpers      = __webpack_require__(241);
-var Renderer     = __webpack_require__(252);
-var ParserCore   = __webpack_require__(247);
-var ParserBlock  = __webpack_require__(246);
-var ParserInline = __webpack_require__(248);
-var LinkifyIt    = __webpack_require__(236);
+var helpers      = __webpack_require__(242);
+var Renderer     = __webpack_require__(253);
+var ParserCore   = __webpack_require__(248);
+var ParserBlock  = __webpack_require__(247);
+var ParserInline = __webpack_require__(249);
+var LinkifyIt    = __webpack_require__(237);
 var mdurl        = __webpack_require__(93);
 var punycode     = __webpack_require__(153);
 
 
 var config = {
-  'default': __webpack_require__(250),
-  zero: __webpack_require__(251),
-  commonmark: __webpack_require__(249)
+  'default': __webpack_require__(251),
+  zero: __webpack_require__(252),
+  commonmark: __webpack_require__(250)
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -29667,7 +29619,7 @@ module.exports = MarkdownIt;
 
 
 /***/ }),
-/* 246 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29685,17 +29637,17 @@ var Ruler           = __webpack_require__(115);
 var _rules = [
   // First 2 params - rule name & source. Secondary array - list of rules,
   // which can be terminated by this one.
-  [ 'table',      __webpack_require__(264),      [ 'paragraph', 'reference' ] ],
-  [ 'code',       __webpack_require__(254) ],
-  [ 'fence',      __webpack_require__(255),      [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
-  [ 'blockquote', __webpack_require__(253), [ 'paragraph', 'reference', 'list' ] ],
-  [ 'hr',         __webpack_require__(257),         [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
-  [ 'list',       __webpack_require__(260),       [ 'paragraph', 'reference', 'blockquote' ] ],
-  [ 'reference',  __webpack_require__(262) ],
-  [ 'heading',    __webpack_require__(256),    [ 'paragraph', 'reference', 'blockquote' ] ],
-  [ 'lheading',   __webpack_require__(259) ],
-  [ 'html_block', __webpack_require__(258), [ 'paragraph', 'reference', 'blockquote' ] ],
-  [ 'paragraph',  __webpack_require__(261) ]
+  [ 'table',      __webpack_require__(265),      [ 'paragraph', 'reference' ] ],
+  [ 'code',       __webpack_require__(255) ],
+  [ 'fence',      __webpack_require__(256),      [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
+  [ 'blockquote', __webpack_require__(254), [ 'paragraph', 'reference', 'list' ] ],
+  [ 'hr',         __webpack_require__(258),         [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
+  [ 'list',       __webpack_require__(261),       [ 'paragraph', 'reference', 'blockquote' ] ],
+  [ 'reference',  __webpack_require__(263) ],
+  [ 'heading',    __webpack_require__(257),    [ 'paragraph', 'reference', 'blockquote' ] ],
+  [ 'lheading',   __webpack_require__(260) ],
+  [ 'html_block', __webpack_require__(259), [ 'paragraph', 'reference', 'blockquote' ] ],
+  [ 'paragraph',  __webpack_require__(262) ]
 ];
 
 
@@ -29789,14 +29741,14 @@ ParserBlock.prototype.parse = function (src, md, env, outTokens) {
 };
 
 
-ParserBlock.prototype.State = __webpack_require__(263);
+ParserBlock.prototype.State = __webpack_require__(264);
 
 
 module.exports = ParserBlock;
 
 
 /***/ }),
-/* 247 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29813,12 +29765,12 @@ var Ruler  = __webpack_require__(115);
 
 
 var _rules = [
-  [ 'normalize',      __webpack_require__(268)      ],
-  [ 'block',          __webpack_require__(265)          ],
-  [ 'inline',         __webpack_require__(266)         ],
-  [ 'linkify',        __webpack_require__(267)        ],
-  [ 'replacements',   __webpack_require__(269)   ],
-  [ 'smartquotes',    __webpack_require__(270)    ]
+  [ 'normalize',      __webpack_require__(269)      ],
+  [ 'block',          __webpack_require__(266)          ],
+  [ 'inline',         __webpack_require__(267)         ],
+  [ 'linkify',        __webpack_require__(268)        ],
+  [ 'replacements',   __webpack_require__(270)   ],
+  [ 'smartquotes',    __webpack_require__(271)    ]
 ];
 
 
@@ -29854,14 +29806,14 @@ Core.prototype.process = function (state) {
   }
 };
 
-Core.prototype.State = __webpack_require__(271);
+Core.prototype.State = __webpack_require__(272);
 
 
 module.exports = Core;
 
 
 /***/ }),
-/* 248 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29880,24 +29832,24 @@ var Ruler           = __webpack_require__(115);
 // Parser rules
 
 var _rules = [
-  [ 'text',            __webpack_require__(282) ],
-  [ 'newline',         __webpack_require__(280) ],
-  [ 'escape',          __webpack_require__(276) ],
-  [ 'backticks',       __webpack_require__(273) ],
+  [ 'text',            __webpack_require__(283) ],
+  [ 'newline',         __webpack_require__(281) ],
+  [ 'escape',          __webpack_require__(277) ],
+  [ 'backticks',       __webpack_require__(274) ],
   [ 'strikethrough',   __webpack_require__(173).tokenize ],
   [ 'emphasis',        __webpack_require__(172).tokenize ],
-  [ 'link',            __webpack_require__(279) ],
-  [ 'image',           __webpack_require__(278) ],
-  [ 'autolink',        __webpack_require__(272) ],
-  [ 'html_inline',     __webpack_require__(277) ],
-  [ 'entity',          __webpack_require__(275) ]
+  [ 'link',            __webpack_require__(280) ],
+  [ 'image',           __webpack_require__(279) ],
+  [ 'autolink',        __webpack_require__(273) ],
+  [ 'html_inline',     __webpack_require__(278) ],
+  [ 'entity',          __webpack_require__(276) ]
 ];
 
 var _rules2 = [
-  [ 'balance_pairs',   __webpack_require__(274) ],
+  [ 'balance_pairs',   __webpack_require__(275) ],
   [ 'strikethrough',   __webpack_require__(173).postProcess ],
   [ 'emphasis',        __webpack_require__(172).postProcess ],
-  [ 'text_collapse',   __webpack_require__(283) ]
+  [ 'text_collapse',   __webpack_require__(284) ]
 ];
 
 
@@ -30038,14 +29990,14 @@ ParserInline.prototype.parse = function (str, md, env, outTokens) {
 };
 
 
-ParserInline.prototype.State = __webpack_require__(281);
+ParserInline.prototype.State = __webpack_require__(282);
 
 
 module.exports = ParserInline;
 
 
 /***/ }),
-/* 249 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30132,7 +30084,7 @@ module.exports = {
 
 
 /***/ }),
-/* 250 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30180,7 +30132,7 @@ module.exports = {
 
 
 /***/ }),
-/* 251 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30249,7 +30201,7 @@ module.exports = {
 
 
 /***/ }),
-/* 252 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30591,7 +30543,7 @@ module.exports = Renderer;
 
 
 /***/ }),
-/* 253 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30884,7 +30836,7 @@ module.exports = function blockquote(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 254 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30925,7 +30877,7 @@ module.exports = function code(state, startLine, endLine/*, silent*/) {
 
 
 /***/ }),
-/* 255 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31026,7 +30978,7 @@ module.exports = function fence(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 256 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31088,7 +31040,7 @@ module.exports = function heading(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 257 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31140,7 +31092,7 @@ module.exports = function hr(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 258 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31149,7 +31101,7 @@ module.exports = function hr(state, startLine, endLine, silent) {
 
 
 
-var block_names = __webpack_require__(240);
+var block_names = __webpack_require__(241);
 var HTML_OPEN_CLOSE_TAG_RE = __webpack_require__(171).HTML_OPEN_CLOSE_TAG_RE;
 
 // An array of opening and corresponding closing sequences for html tags,
@@ -31221,7 +31173,7 @@ module.exports = function html_block(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 259 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31311,7 +31263,7 @@ module.exports = function lheading(state, startLine, endLine/*, silent*/) {
 
 
 /***/ }),
-/* 260 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31656,7 +31608,7 @@ module.exports = function list(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 261 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31715,7 +31667,7 @@ module.exports = function paragraph(state, startLine/*, endLine*/) {
 
 
 /***/ }),
-/* 262 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31920,7 +31872,7 @@ module.exports = function reference(state, startLine, _endLine, silent) {
 
 
 /***/ }),
-/* 263 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32157,7 +32109,7 @@ module.exports = StateBlock;
 
 
 /***/ }),
-/* 264 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32360,7 +32312,7 @@ module.exports = function table(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 265 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32383,7 +32335,7 @@ module.exports = function block(state) {
 
 
 /***/ }),
-/* 266 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32403,7 +32355,7 @@ module.exports = function inline(state) {
 
 
 /***/ }),
-/* 267 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32543,7 +32495,7 @@ module.exports = function linkify(state) {
 
 
 /***/ }),
-/* 268 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32570,7 +32522,7 @@ module.exports = function inline(state) {
 
 
 /***/ }),
-/* 269 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32684,7 +32636,7 @@ module.exports = function replace(state) {
 
 
 /***/ }),
-/* 270 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32884,7 +32836,7 @@ module.exports = function smartquotes(state) {
 
 
 /***/ }),
-/* 271 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32911,7 +32863,7 @@ module.exports = StateCore;
 
 
 /***/ }),
-/* 272 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32990,7 +32942,7 @@ module.exports = function autolink(state, silent) {
 
 
 /***/ }),
-/* 273 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33040,7 +32992,7 @@ module.exports = function backtick(state, silent) {
 
 
 /***/ }),
-/* 274 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33091,7 +33043,7 @@ module.exports = function link_pairs(state) {
 
 
 /***/ }),
-/* 275 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33146,7 +33098,7 @@ module.exports = function entity(state, silent) {
 
 
 /***/ }),
-/* 276 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33205,7 +33157,7 @@ module.exports = function escape(state, silent) {
 
 
 /***/ }),
-/* 277 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33259,7 +33211,7 @@ module.exports = function html_inline(state, silent) {
 
 
 /***/ }),
-/* 278 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33418,7 +33370,7 @@ module.exports = function image(state, silent) {
 
 
 /***/ }),
-/* 279 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33575,7 +33527,7 @@ module.exports = function link(state, silent) {
 
 
 /***/ }),
-/* 280 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33624,7 +33576,7 @@ module.exports = function newline(state, silent) {
 
 
 /***/ }),
-/* 281 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33761,7 +33713,7 @@ module.exports = StateInline;
 
 
 /***/ }),
-/* 282 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33857,7 +33809,7 @@ module.exports = function text(state, silent) {
 
 
 /***/ }),
-/* 283 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33897,18 +33849,18 @@ module.exports = function text_collapse(state) {
 
 
 /***/ }),
-/* 284 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(290)
+__webpack_require__(293)
 
-var Component = __webpack_require__(18)(
+var Component = __webpack_require__(17)(
   /* script */
   __webpack_require__(185),
   /* template */
-  __webpack_require__(285),
+  __webpack_require__(287),
   /* scopeId */
   null,
   /* cssModules */
@@ -33935,12 +33887,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 285 */
+/* 286 */,
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "panel panel-white",
+    staticClass: "panel panel-default note-editor",
     class: {
       'codeview': !_vm.isView, 'fullscreen': _vm.isFullScreen
     }
@@ -34134,7 +34087,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "note-icon-arrows-alt"
   })])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('textarea', {
-    staticClass: "note-codable  note-editable",
+    staticClass: "note-codable  ",
     attrs: {
       "id": "_editor"
     }
@@ -34161,17 +34114,18 @@ if (false) {
 }
 
 /***/ }),
-/* 286 */,
-/* 287 */,
 /* 288 */,
 /* 289 */,
-/* 290 */
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(194);
+var content = __webpack_require__(195);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -34191,9 +34145,6 @@ if(false) {
 }
 
 /***/ }),
-/* 291 */,
-/* 292 */,
-/* 293 */,
 /* 294 */,
 /* 295 */,
 /* 296 */,
@@ -34277,7 +34228,10 @@ if(false) {
 /* 374 */,
 /* 375 */,
 /* 376 */,
-/* 377 */
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34291,7 +34245,7 @@ var _axios = __webpack_require__(61);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _editor = __webpack_require__(284);
+var _editor = __webpack_require__(285);
 
 var _editor2 = _interopRequireDefault(_editor);
 
@@ -34567,9 +34521,6 @@ new Vue({
 });
 
 /***/ }),
-/* 378 */,
-/* 379 */,
-/* 380 */,
 /* 381 */,
 /* 382 */,
 /* 383 */,
@@ -34684,7 +34635,7 @@ new Vue({
 /* 492 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(377);
+module.exports = __webpack_require__(380);
 
 
 /***/ })

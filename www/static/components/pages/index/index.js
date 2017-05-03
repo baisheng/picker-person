@@ -502,47 +502,6 @@ module.exports = $export;
 /***/ 17:
 /***/ (function(module, exports) {
 
-// 7.2.1 RequireObjectCoercible(argument)
-module.exports = function(it){
-  if(it == undefined)throw TypeError("Can't call method on  " + it);
-  return it;
-};
-
-/***/ }),
-
-/***/ 175:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(178), __esModule: true };
-
-/***/ }),
-
-/***/ 178:
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(181);
-module.exports = parseInt;
-
-/***/ }),
-
-/***/ 179:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $parseInt = __webpack_require__(2).parseInt
-  , $trim     = __webpack_require__(180).trim
-  , ws        = __webpack_require__(106)
-  , hex       = /^[\-+]?0[xX]/;
-
-module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? function parseInt(str, radix){
-  var string = $trim(String(str), 3);
-  return $parseInt(string, (radix >>> 0) || (hex.test(string) ? 16 : 10));
-} : $parseInt;
-
-/***/ }),
-
-/***/ 18:
-/***/ (function(module, exports) {
-
 // this module is a runtime utility for cleaner component module output and will
 // be included in the final webpack user bundle
 
@@ -598,11 +557,52 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ 175:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(178), __esModule: true };
+
+/***/ }),
+
+/***/ 178:
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(181);
+module.exports = parseInt;
+
+/***/ }),
+
+/***/ 179:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $parseInt = __webpack_require__(2).parseInt
+  , $trim     = __webpack_require__(180).trim
+  , ws        = __webpack_require__(106)
+  , hex       = /^[\-+]?0[xX]/;
+
+module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? function parseInt(str, radix){
+  var string = $trim(String(str), 3);
+  return $parseInt(string, (radix >>> 0) || (hex.test(string) ? 16 : 10));
+} : $parseInt;
+
+/***/ }),
+
+/***/ 18:
+/***/ (function(module, exports) {
+
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function(it){
+  if(it == undefined)throw TypeError("Can't call method on  " + it);
+  return it;
+};
+
+/***/ }),
+
 /***/ 180:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(16)
-  , defined = __webpack_require__(17)
+  , defined = __webpack_require__(18)
   , fails   = __webpack_require__(10)
   , spaces  = __webpack_require__(106)
   , space   = '[' + spaces + ']'
@@ -641,6 +641,89 @@ var $export   = __webpack_require__(16)
   , $parseInt = __webpack_require__(179);
 // 20.1.2.13 Number.parseInt(string, radix)
 $export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', {parseInt: $parseInt});
+
+/***/ }),
+
+/***/ 186:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+//
+//
+//
+//
+//
+//
+//
+
+
+exports.default = {
+    props: ['options', 'value'],
+    mounted: function mounted() {
+        var vm = this;
+        var select_option = {
+            data: this.idFormat(this.options.data),
+            //            placeholder: 'Select an optio'
+            placeholder: this.options.placeholder == null ? "请选择一个选项" : this.options.placeholder
+        };
+        if (this.options.icon == true) {
+            select_option.templateResult = vm.iconFormat, select_option.minimumResultsForSearch = Infinity, select_option.templateSelection = vm.iconFormat, select_option.escapeMarkup = function (m) {
+                return m;
+            };
+        }
+        $(this.$el).val(this.value)
+        // init select2
+        .select2(select_option)
+        // emit event on change.
+        .on('change', function () {
+            vm.$emit('input', this.value);
+        });
+    },
+    methods: {
+        iconFormat: function iconFormat(item) {
+            var originalOption = item.element;
+
+            if (!item.id) {
+                return item.text;
+            }
+            var $icon = item.text;
+            if (item.icon != null && item.icon != undefined) {
+                $icon = "<i class='icon-" + item.icon + "'></i>" + item.text;
+            }
+            return $icon;
+        },
+        dataFormat: function dataFormat(data) {
+            return $.map(data, function (obj) {
+                obj.text = obj.text || obj.name; // replace name with the property used for the text
+
+                return obj;
+            });
+        },
+        idFormat: function idFormat(data) {
+            return $.map(data, function (obj) {
+                obj.id = obj.id || obj.slug; // replace pk with your identifier
+
+                return obj;
+            });
+        }
+    },
+    watch: {
+        value: function value(_value) {
+            // update value
+            $(this.$el).val(_value);
+        },
+        options: function options(_options) {
+            // update options
+            $(this.$el).select2({ data: _options });
+        }
+    },
+    destroyed: function destroyed() {
+        $(this.$el).off().select2('destroy');
+    }
+};
 
 /***/ }),
 
@@ -796,107 +879,14 @@ module.exports = !__webpack_require__(3) && !__webpack_require__(10)(function(){
 
 /***/ }),
 
-/***/ 293:
+/***/ 286:
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-exports.__esModule = true;
-//
-//
-//
-//
-//
-//
-//
-
-
-exports.default = {
-    props: ['options', 'value'],
-    mounted: function mounted() {
-        var vm = this;
-        var select_option = {
-            data: this.idFormat(this.options.data),
-            //            placeholder: 'Select an optio'
-            placeholder: this.options.placeholder == null ? "请选择一个选项" : this.options.placeholder
-        };
-        if (this.options.icon == true) {
-            select_option.templateResult = vm.iconFormat, select_option.minimumResultsForSearch = Infinity, select_option.templateSelection = vm.iconFormat, select_option.escapeMarkup = function (m) {
-                return m;
-            };
-        }
-        $(this.$el).val(this.value)
-        // init select2
-        .select2(select_option)
-        // emit event on change.
-        .on('change', function () {
-            vm.$emit('input', this.value);
-        });
-    },
-    methods: {
-        iconFormat: function iconFormat(item) {
-            var originalOption = item.element;
-
-            if (!item.id) {
-                return item.text;
-            }
-            var $icon = item.text;
-            if (item.icon != null && item.icon != undefined) {
-                $icon = "<i class='icon-" + item.icon + "'></i>" + item.text;
-            }
-            return $icon;
-        },
-        dataFormat: function dataFormat(data) {
-            return $.map(data, function (obj) {
-                obj.text = obj.text || obj.name; // replace name with the property used for the text
-
-                return obj;
-            });
-        },
-        idFormat: function idFormat(data) {
-            return $.map(data, function (obj) {
-                obj.id = obj.id || obj.slug; // replace pk with your identifier
-
-                return obj;
-            });
-        }
-    },
-    watch: {
-        value: function value(_value) {
-            // update value
-            $(this.$el).val(_value);
-        },
-        options: function options(_options) {
-            // update options
-            $(this.$el).select2({ data: _options });
-        }
-    },
-    destroyed: function destroyed() {
-        $(this.$el).off().select2('destroy');
-    }
-};
-
-/***/ }),
-
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(10)(function(){
-  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
-});
-
-/***/ }),
-
-/***/ 321:
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(18)(
+var Component = __webpack_require__(17)(
   /* script */
-  __webpack_require__(293),
+  __webpack_require__(186),
   /* template */
-  __webpack_require__(322),
+  __webpack_require__(288),
   /* scopeId */
   null,
   /* cssModules */
@@ -924,7 +914,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 322:
+/***/ 288:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -935,6 +925,191 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-8f11fbd8", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 296:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    name: 'pager',
+    data: function data() {
+        return {
+            current: this.page || 1,
+            showItem: 5
+        };
+    },
+    props: ["allpage", "page"],
+    computed: {
+        pages: function pages() {
+            var pag = [];
+            if (this.current < this.showItem) {
+                //如果当前的激活的项 小于要显示的条数
+                //总页数和要显示的条数那个大就显示多少条
+                var i = Math.min(this.showItem, this.allpage);
+                while (i) {
+                    pag.unshift(i--);
+                }
+            } else {
+                //当前页数大于显示页数了
+                var middle = this.current - Math.floor(this.showItem / 2),
+                    //从哪里开始
+                i = this.showItem;
+                if (middle > this.allpage - this.showItem) {
+                    middle = this.allpage - this.showItem + 1;
+                }
+                while (i--) {
+                    pag.push(middle++);
+                }
+            }
+            return pag;
+        }
+    },
+    methods: {
+        goto: function goto(index) {
+
+            if (index == this.current) return;
+            this.current = index;
+            //                    $.event.trigger({
+            //                        type: "message"
+            //                    });
+            this.$emit('increment', index);
+            eventHub.$emit('page', index);
+
+            //这里可以发送ajax请求
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(10)(function(){
+  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+});
+
+/***/ }),
+
+/***/ 324:
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(17)(
+  /* script */
+  __webpack_require__(296),
+  /* template */
+  __webpack_require__(325),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/bison/__task/19_Caixie/__workspace/picker-resume/webpack/components/ui/pager.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] pager.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-35c97221", Component.options)
+  } else {
+    hotAPI.reload("data-v-35c97221", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 325:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('ul', {
+    staticClass: "pagination pagination-default pagination-xs"
+  }, [_c('li', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.current != 1),
+      expression: "current != 1"
+    }],
+    on: {
+      "click": function($event) {
+        _vm.current-- && _vm.goto(_vm.current)
+      }
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("上一页")])]), _vm._v(" "), _vm._l((_vm.pages), function(index) {
+    return _c('li', {
+      key: index,
+      class: {
+        'active': _vm.current == index
+      },
+      on: {
+        "click": function($event) {
+          _vm.goto(index)
+        }
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": "javascript:void(0);"
+      }
+    }, [_vm._v(_vm._s(index))])])
+  }), _vm._v(" "), _c('li', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.allpage != _vm.current && _vm.allpage != 0),
+      expression: "allpage != current && allpage != 0 "
+    }],
+    on: {
+      "click": function($event) {
+        _vm.current++ && _vm.goto(_vm.current++)
+      }
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("下一页")])])], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-35c97221", module.exports)
   }
 }
 
@@ -1162,7 +1337,7 @@ module.exports = function xhrAdapter(config) {
 
 /***/ }),
 
-/***/ 373:
+/***/ 376:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1176,15 +1351,15 @@ var _axios = __webpack_require__(61);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _profileCover = __webpack_require__(427);
+var _profileCover = __webpack_require__(429);
 
 var _profileCover2 = _interopRequireDefault(_profileCover);
 
-var _posts = __webpack_require__(426);
+var _posts = __webpack_require__(428);
 
 var _posts2 = _interopRequireDefault(_posts);
 
-var _pager = __webpack_require__(450);
+var _pager = __webpack_require__(324);
 
 var _pager2 = _interopRequireDefault(_pager);
 
@@ -1334,13 +1509,14 @@ new Vue({
         fetch: function fetch(type) {
             this.checked = [];
             var vue = this;
-            var _url = "/admin/posts/";
-            if (!type) {
-                _url += 'listgroup';
-            } else {
-                _url += type;
-            }
-            if (this.page != 0 && (0, _parseInt2.default)(this.page)) {
+            var _url = "/admin/api/posts";
+            // if (!type) {
+            //     _url += 'listgroup'
+            // }
+            // else {
+            //     _url += type;
+            // }
+            if (this.page !== 0 && (0, _parseInt2.default)(this.page)) {
                 _url += "?page=" + this.page;
             }
 
@@ -1348,7 +1524,6 @@ new Vue({
                 vue.pageAll = response.data.data;
                 vue.allpage = response.data.totalPages;
                 vue.pagedata = response.data;
-
                 eventHub.$emit("fetch");
             }).catch(function (error) {
                 if (error.response) {
@@ -1436,7 +1611,20 @@ module.exports = Cancel;
 
 /***/ }),
 
-/***/ 387:
+/***/ 39:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+
+/***/ 390:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1448,7 +1636,7 @@ var _stringify = __webpack_require__(90);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var _select = __webpack_require__(321);
+var _select = __webpack_require__(286);
 
 var _select2 = _interopRequireDefault(_select);
 
@@ -2180,7 +2368,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 388:
+/***/ 391:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2289,19 +2477,6 @@ exports.default = {
 
 /***/ }),
 
-/***/ 39:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function isCancel(value) {
-  return !!(value && value.__CANCEL__);
-};
-
-
-/***/ }),
-
 /***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2360,88 +2535,14 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ 411:
+/***/ 428:
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-exports.__esModule = true;
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-    name: 'pager',
-    data: function data() {
-        return {
-            current: this.page || 1,
-            showItem: 5
-        };
-    },
-    props: ["allpage", "page"],
-    computed: {
-        pages: function pages() {
-            var pag = [];
-            if (this.current < this.showItem) {
-                //如果当前的激活的项 小于要显示的条数
-                //总页数和要显示的条数那个大就显示多少条
-                var i = Math.min(this.showItem, this.allpage);
-                while (i) {
-                    pag.unshift(i--);
-                }
-            } else {
-                //当前页数大于显示页数了
-                var middle = this.current - Math.floor(this.showItem / 2),
-                    //从哪里开始
-                i = this.showItem;
-                if (middle > this.allpage - this.showItem) {
-                    middle = this.allpage - this.showItem + 1;
-                }
-                while (i--) {
-                    pag.push(middle++);
-                }
-            }
-            return pag;
-        }
-    },
-    methods: {
-        goto: function goto(index) {
-
-            if (index == this.current) return;
-            this.current = index;
-            //                    $.event.trigger({
-            //                        type: "message"
-            //                    });
-            this.$emit('increment', index);
-            eventHub.$emit('page', index);
-
-            //这里可以发送ajax请求
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 426:
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(18)(
+var Component = __webpack_require__(17)(
   /* script */
-  __webpack_require__(387),
+  __webpack_require__(390),
   /* template */
-  __webpack_require__(457),
+  __webpack_require__(458),
   /* scopeId */
   null,
   /* cssModules */
@@ -2469,12 +2570,12 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 427:
+/***/ 429:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(18)(
+var Component = __webpack_require__(17)(
   /* script */
-  __webpack_require__(388),
+  __webpack_require__(391),
   /* template */
   __webpack_require__(469),
   /* scopeId */
@@ -2691,42 +2792,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 450:
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(18)(
-  /* script */
-  __webpack_require__(411),
-  /* template */
-  __webpack_require__(459),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/bison/__task/19_Caixie/__workspace/picker-resume/webpack/components/ui/pager.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] pager.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-35c97221", Component.options)
-  } else {
-    hotAPI.reload("data-v-35c97221", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 457:
+/***/ 458:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -3349,72 +3415,6 @@ if (false) {
 
 /***/ }),
 
-/***/ 459:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ul', {
-    staticClass: "pagination pagination-default pagination-xs"
-  }, [_c('li', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.current != 1),
-      expression: "current != 1"
-    }],
-    on: {
-      "click": function($event) {
-        _vm.current-- && _vm.goto(_vm.current)
-      }
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("上一页")])]), _vm._v(" "), _vm._l((_vm.pages), function(index) {
-    return _c('li', {
-      key: index,
-      class: {
-        'active': _vm.current == index
-      },
-      on: {
-        "click": function($event) {
-          _vm.goto(index)
-        }
-      }
-    }, [_c('a', {
-      attrs: {
-        "href": "javascript:void(0);"
-      }
-    }, [_vm._v(_vm._s(index))])])
-  }), _vm._v(" "), _c('li', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.allpage != _vm.current && _vm.allpage != 0),
-      expression: "allpage != current && allpage != 0 "
-    }],
-    on: {
-      "click": function($event) {
-        _vm.current++ && _vm.goto(_vm.current++)
-      }
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("下一页")])])], 2)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-35c97221", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ 469:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3460,7 +3460,7 @@ if (false) {
 /***/ 487:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(373);
+module.exports = __webpack_require__(376);
 
 
 /***/ }),

@@ -156,14 +156,14 @@ new Vue({
         fetch(type){
             this.checked = [];
             let vue = this;
-            let _url = "/admin/posts/";
-            if (!type) {
-                _url += 'listgroup'
-            }
-            else {
-                _url += type;
-            }
-            if (this.page != 0 && Number.parseInt(this.page)) {
+            let _url = "/admin/api/posts";
+            // if (!type) {
+            //     _url += 'listgroup'
+            // }
+            // else {
+            //     _url += type;
+            // }
+            if (this.page !== 0 && Number.parseInt(this.page)) {
                 _url += "?page=" + this.page;
             }
 
@@ -172,10 +172,7 @@ new Vue({
                     vue.pageAll = response.data.data;
                     vue.allpage = response.data.totalPages;
                     vue.pagedata = response.data;
-
                     eventHub.$emit("fetch")
-
-
 
                 })
                 .catch(function (error) {

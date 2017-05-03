@@ -122,9 +122,11 @@ new Vue({
            this.isManagePosts = true;
         },
         editPost(post){
-            let _url = "/admin/post/" + post.id;
+            let _url = "/admin/api/post/" + post.id;
             this.$http.get(_url).then( (response) => {
-               this.post = response.data;
+               this.post = response.data.data;
+
+               // console.log(JSON.stringify(this.post))
                eventHub.$emit('update', this.post.content)
                // console.log(JSON.stringify(this.post))
                 // vue.pageAll = response.data.data;
@@ -182,7 +184,7 @@ new Vue({
             // vue.post.categorys = this.checkedCates;
             // vue.terms = this.checkedCates;
 
-            this.$http.post('/admin/post', vue.post)
+            this.$http.post('/admin/api/post', vue.post)
 
                 .then(function (response) {
                     let data = response.data;
@@ -197,7 +199,7 @@ new Vue({
                 .catch(function (error) {
                     console.log(error);
                 });
-
+        //
 
         },
 
@@ -324,14 +326,14 @@ new Vue({
         fetch(type){
             this.checked = [];
             let vue = this;
-            let _url = "/admin/posts/";
-            if (!type) {
-                _url += 'listgroup'
-            }
-            else {
-                _url += type;
-            }
-            if (this.page != 0 && Number.parseInt(this.page)) {
+            let _url = "/admin/api/posts";
+            // if (!type) {
+            //     _url += 'listgroup'
+            // }
+            // else {
+            //     _url += type;
+            // }
+            if (this.page !== 0 && Number.parseInt(this.page)) {
                 _url += "?page=" + this.page;
             }
 

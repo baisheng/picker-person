@@ -68,7 +68,7 @@
 /************************************************************************/
 /******/ ({
 
-/***/ 18:
+/***/ 17:
 /***/ (function(module, exports) {
 
 // this module is a runtime utility for cleaner component module output and will
@@ -126,13 +126,13 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 374:
+/***/ 377:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _jsonEditor = __webpack_require__(449);
+var _jsonEditor = __webpack_require__(451);
 
 var _jsonEditor2 = _interopRequireDefault(_jsonEditor);
 
@@ -325,7 +325,7 @@ new Vue({
 
 /***/ }),
 
-/***/ 410:
+/***/ 413:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -333,7 +333,7 @@ new Vue({
 
 exports.__esModule = true;
 
-var _jsonEditor = __webpack_require__(423);
+var _jsonEditor = __webpack_require__(425);
 
 var _jsonEditor2 = _interopRequireDefault(_jsonEditor);
 
@@ -392,7 +392,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 423:
+/***/ 425:
 /***/ (function(module, exports) {
 
 /*! JSON Editor v0.7.28 - JSON Schema -> HTML Editor
@@ -8446,12 +8446,12 @@ JSONEditor.defaults.resolvers.unshift(function(schema) {
 
 /***/ }),
 
-/***/ 449:
+/***/ 451:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(18)(
+var Component = __webpack_require__(17)(
   /* script */
-  __webpack_require__(410),
+  __webpack_require__(413),
   /* template */
   __webpack_require__(470),
   /* scopeId */
@@ -8504,7 +8504,7 @@ if (false) {
 /***/ 488:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(374);
+module.exports = __webpack_require__(377);
 
 
 /***/ })

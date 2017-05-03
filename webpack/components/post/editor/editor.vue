@@ -1,5 +1,5 @@
 <template>
-    <div class="panel panel-white" :class="{ 'codeview': !isView, 'fullscreen': isFullScreen}">
+    <div class="panel panel-default note-editor" :class="{ 'codeview': !isView, 'fullscreen': isFullScreen}">
 
         <div class="panel-heading">
             <input type="text"
@@ -111,43 +111,13 @@
             <li
                     data-original-title="帮助"><a><i class="note-icon-question"></i></a></li>
         </ul>
-        <textarea id="_editor" class="note-codable  note-editable"></textarea>
+        <textarea id="_editor" class="note-codable  "></textarea>
     </div>
 
 
 </template>
 
 <style>
-    /*.shadowBox {*/
-    /*position: absolute;*/
-    /*background: #ddd;*/
-    /*width: 268px;*/
-    /*height: 418px;*/
-    /*top: 50%;*/
-    /*left: 50%;*/
-    /*margin-top: -180px;*/
-    /*margin-left: -134px;*/
-    /*border-radius: 16px;*/
-    /*filter: blur(50px);*/
-    /*-webkit-filter: blur(50px);*/
-    /*}*/
-
-    .shadowBox {
-        background: #999;
-        width: 250px;
-        height: 158px;
-
-        position: fixed;
-        right: calc(10% - 0px);
-        margin-right: -100px;
-        top: 200px;
-        border-radius: 16px;
-        filter: blur(50px);
-        /*z-index: 9998;*/
-        z-index: 10;
-        -webkit-filter: blur(50px);
-    }
-
     .snippet--content {
         font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
         max-height: 220px;
@@ -202,25 +172,6 @@
         box-shadow: none;
     }
 
-    /*.doc-comment-box {*/
-    /*width: 260px;*/
-    /*background: #fff;*/
-    /*box-shadow: 0 1px 4px rgba(0, 0, 0, .2);*/
-    /*border-radius: 2px;*/
-    /*position: absolute;*/
-    /*right: 0;*/
-    /*bottom: 0;*/
-    /*margin-left: 0;*/
-    /*cursor: pointer;*/
-    /*transition: opacity .3s ease-out, margin-left .3s ease, top .3s ease;*/
-    /*}*/
-
-    /*.doc-comment-box.active {*/
-    /*cursor: default;*/
-    /*box-shadow: 0 0 20px #c8c8c8;*/
-    /*margin-left: -30px;*/
-    /*width: 290px;*/
-    /*}*/
 
 
 </style>

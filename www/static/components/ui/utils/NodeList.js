@@ -151,7 +151,7 @@ module.exports = function(it, key){
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = __webpack_require__(82)
-  , defined = __webpack_require__(17);
+  , defined = __webpack_require__(18);
 module.exports = function(it){
   return IObject(defined(it));
 };
@@ -250,17 +250,6 @@ module.exports = $export;
 
 /***/ }),
 
-/***/ 17:
-/***/ (function(module, exports) {
-
-// 7.2.1 RequireObjectCoercible(argument)
-module.exports = function(it){
-  if(it == undefined)throw TypeError("Can't call method on  " + it);
-  return it;
-};
-
-/***/ }),
-
 /***/ 176:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -308,6 +297,17 @@ exports.default = function () {
     return Constructor;
   };
 }();
+
+/***/ }),
+
+/***/ 18:
+/***/ (function(module, exports) {
+
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function(it){
+  if(it == undefined)throw TypeError("Can't call method on  " + it);
+  return it;
+};
 
 /***/ }),
 
@@ -425,7 +425,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 294:
+/***/ 297:
 /***/ (function(module, exports, __webpack_require__) {
 
 // most Object methods by ES6 should accept primitives
@@ -530,7 +530,7 @@ module.exports = true;
 
 /***/ }),
 
-/***/ 383:
+/***/ 386:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -548,7 +548,7 @@ var _iterator = __webpack_require__(99);
 
 var _iterator2 = _interopRequireDefault(_iterator);
 
-var _getOwnPropertyNames = __webpack_require__(412);
+var _getOwnPropertyNames = __webpack_require__(414);
 
 var _getOwnPropertyNames2 = _interopRequireDefault(_getOwnPropertyNames);
 
@@ -1111,17 +1111,17 @@ module.exports = __webpack_require__(3) ? function(object, key, value){
 
 /***/ }),
 
-/***/ 412:
+/***/ 414:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(415), __esModule: true };
+module.exports = { "default": __webpack_require__(417), __esModule: true };
 
 /***/ }),
 
-/***/ 415:
+/***/ 417:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(417);
+__webpack_require__(419);
 var $Object = __webpack_require__(6).Object;
 module.exports = function getOwnPropertyNames(it){
   return $Object.getOwnPropertyNames(it);
@@ -1129,11 +1129,11 @@ module.exports = function getOwnPropertyNames(it){
 
 /***/ }),
 
-/***/ 417:
+/***/ 419:
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 Object.getOwnPropertyNames(O)
-__webpack_require__(294)('getOwnPropertyNames', function(){
+__webpack_require__(297)('getOwnPropertyNames', function(){
   return __webpack_require__(105).f;
 });
 
@@ -1304,7 +1304,7 @@ module.exports = __webpack_require__(4);
 /***/ 498:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(383);
+module.exports = __webpack_require__(386);
 
 
 /***/ }),
@@ -1410,7 +1410,7 @@ module.exports = Object.getPrototypeOf || function(O){
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(17);
+var defined = __webpack_require__(18);
 module.exports = function(it){
   return Object(defined(it));
 };
@@ -1546,7 +1546,7 @@ module.exports = __webpack_require__(3) ? Object.defineProperties : function def
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(25)
-  , defined   = __webpack_require__(17);
+  , defined   = __webpack_require__(18);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function(TO_STRING){

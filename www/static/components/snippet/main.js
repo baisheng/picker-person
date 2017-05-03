@@ -522,47 +522,6 @@ module.exports = $export;
 /***/ 17:
 /***/ (function(module, exports) {
 
-// 7.2.1 RequireObjectCoercible(argument)
-module.exports = function(it){
-  if(it == undefined)throw TypeError("Can't call method on  " + it);
-  return it;
-};
-
-/***/ }),
-
-/***/ 175:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(178), __esModule: true };
-
-/***/ }),
-
-/***/ 178:
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(181);
-module.exports = parseInt;
-
-/***/ }),
-
-/***/ 179:
-/***/ (function(module, exports, __webpack_require__) {
-
-var $parseInt = __webpack_require__(2).parseInt
-  , $trim     = __webpack_require__(180).trim
-  , ws        = __webpack_require__(106)
-  , hex       = /^[\-+]?0[xX]/;
-
-module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? function parseInt(str, radix){
-  var string = $trim(String(str), 3);
-  return $parseInt(string, (radix >>> 0) || (hex.test(string) ? 16 : 10));
-} : $parseInt;
-
-/***/ }),
-
-/***/ 18:
-/***/ (function(module, exports) {
-
 // this module is a runtime utility for cleaner component module output and will
 // be included in the final webpack user bundle
 
@@ -618,11 +577,52 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ 175:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(178), __esModule: true };
+
+/***/ }),
+
+/***/ 178:
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(181);
+module.exports = parseInt;
+
+/***/ }),
+
+/***/ 179:
+/***/ (function(module, exports, __webpack_require__) {
+
+var $parseInt = __webpack_require__(2).parseInt
+  , $trim     = __webpack_require__(180).trim
+  , ws        = __webpack_require__(106)
+  , hex       = /^[\-+]?0[xX]/;
+
+module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? function parseInt(str, radix){
+  var string = $trim(String(str), 3);
+  return $parseInt(string, (radix >>> 0) || (hex.test(string) ? 16 : 10));
+} : $parseInt;
+
+/***/ }),
+
+/***/ 18:
+/***/ (function(module, exports) {
+
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function(it){
+  if(it == undefined)throw TypeError("Can't call method on  " + it);
+  return it;
+};
+
+/***/ }),
+
 /***/ 180:
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(16)
-  , defined = __webpack_require__(17)
+  , defined = __webpack_require__(18)
   , fails   = __webpack_require__(10)
   , spaces  = __webpack_require__(106)
   , space   = '[' + spaces + ']'
@@ -661,6 +661,89 @@ var $export   = __webpack_require__(16)
   , $parseInt = __webpack_require__(179);
 // 20.1.2.13 Number.parseInt(string, radix)
 $export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', {parseInt: $parseInt});
+
+/***/ }),
+
+/***/ 186:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+//
+//
+//
+//
+//
+//
+//
+
+
+exports.default = {
+    props: ['options', 'value'],
+    mounted: function mounted() {
+        var vm = this;
+        var select_option = {
+            data: this.idFormat(this.options.data),
+            //            placeholder: 'Select an optio'
+            placeholder: this.options.placeholder == null ? "请选择一个选项" : this.options.placeholder
+        };
+        if (this.options.icon == true) {
+            select_option.templateResult = vm.iconFormat, select_option.minimumResultsForSearch = Infinity, select_option.templateSelection = vm.iconFormat, select_option.escapeMarkup = function (m) {
+                return m;
+            };
+        }
+        $(this.$el).val(this.value)
+        // init select2
+        .select2(select_option)
+        // emit event on change.
+        .on('change', function () {
+            vm.$emit('input', this.value);
+        });
+    },
+    methods: {
+        iconFormat: function iconFormat(item) {
+            var originalOption = item.element;
+
+            if (!item.id) {
+                return item.text;
+            }
+            var $icon = item.text;
+            if (item.icon != null && item.icon != undefined) {
+                $icon = "<i class='icon-" + item.icon + "'></i>" + item.text;
+            }
+            return $icon;
+        },
+        dataFormat: function dataFormat(data) {
+            return $.map(data, function (obj) {
+                obj.text = obj.text || obj.name; // replace name with the property used for the text
+
+                return obj;
+            });
+        },
+        idFormat: function idFormat(data) {
+            return $.map(data, function (obj) {
+                obj.id = obj.id || obj.slug; // replace pk with your identifier
+
+                return obj;
+            });
+        }
+    },
+    watch: {
+        value: function value(_value) {
+            // update value
+            $(this.$el).val(_value);
+        },
+        options: function options(_options) {
+            // update options
+            $(this.$el).select2({ data: _options });
+        }
+    },
+    destroyed: function destroyed() {
+        $(this.$el).off().select2('destroy');
+    }
+};
 
 /***/ }),
 
@@ -816,107 +899,14 @@ module.exports = !__webpack_require__(3) && !__webpack_require__(10)(function(){
 
 /***/ }),
 
-/***/ 293:
+/***/ 286:
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-exports.__esModule = true;
-//
-//
-//
-//
-//
-//
-//
-
-
-exports.default = {
-    props: ['options', 'value'],
-    mounted: function mounted() {
-        var vm = this;
-        var select_option = {
-            data: this.idFormat(this.options.data),
-            //            placeholder: 'Select an optio'
-            placeholder: this.options.placeholder == null ? "请选择一个选项" : this.options.placeholder
-        };
-        if (this.options.icon == true) {
-            select_option.templateResult = vm.iconFormat, select_option.minimumResultsForSearch = Infinity, select_option.templateSelection = vm.iconFormat, select_option.escapeMarkup = function (m) {
-                return m;
-            };
-        }
-        $(this.$el).val(this.value)
-        // init select2
-        .select2(select_option)
-        // emit event on change.
-        .on('change', function () {
-            vm.$emit('input', this.value);
-        });
-    },
-    methods: {
-        iconFormat: function iconFormat(item) {
-            var originalOption = item.element;
-
-            if (!item.id) {
-                return item.text;
-            }
-            var $icon = item.text;
-            if (item.icon != null && item.icon != undefined) {
-                $icon = "<i class='icon-" + item.icon + "'></i>" + item.text;
-            }
-            return $icon;
-        },
-        dataFormat: function dataFormat(data) {
-            return $.map(data, function (obj) {
-                obj.text = obj.text || obj.name; // replace name with the property used for the text
-
-                return obj;
-            });
-        },
-        idFormat: function idFormat(data) {
-            return $.map(data, function (obj) {
-                obj.id = obj.id || obj.slug; // replace pk with your identifier
-
-                return obj;
-            });
-        }
-    },
-    watch: {
-        value: function value(_value) {
-            // update value
-            $(this.$el).val(_value);
-        },
-        options: function options(_options) {
-            // update options
-            $(this.$el).select2({ data: _options });
-        }
-    },
-    destroyed: function destroyed() {
-        $(this.$el).off().select2('destroy');
-    }
-};
-
-/***/ }),
-
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(10)(function(){
-  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
-});
-
-/***/ }),
-
-/***/ 321:
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(18)(
+var Component = __webpack_require__(17)(
   /* script */
-  __webpack_require__(293),
+  __webpack_require__(186),
   /* template */
-  __webpack_require__(322),
+  __webpack_require__(288),
   /* scopeId */
   null,
   /* cssModules */
@@ -944,7 +934,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 322:
+/***/ 288:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -957,6 +947,16 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-8f11fbd8", module.exports)
   }
 }
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(10)(function(){
+  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+});
 
 /***/ }),
 
@@ -1209,13 +1209,13 @@ module.exports = Cancel;
 
 /***/ }),
 
-/***/ 380:
+/***/ 383:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _defineProperty2 = __webpack_require__(414);
+var _defineProperty2 = __webpack_require__(416);
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
@@ -1233,7 +1233,7 @@ var _axios = __webpack_require__(61);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _select = __webpack_require__(321);
+var _select = __webpack_require__(286);
 
 var _select2 = _interopRequireDefault(_select);
 
@@ -1829,7 +1829,7 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ 414:
+/***/ 416:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2050,7 +2050,7 @@ process.umask = function() { return 0; };
 /***/ 495:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(380);
+module.exports = __webpack_require__(383);
 
 
 /***/ }),
