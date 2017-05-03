@@ -1,7 +1,9 @@
 // import PageButton from './page-button.vue'
 import axios from 'axios'
 Vue.prototype.$http = axios;
-
+import Posts from './posts.vue'
+import Editor from './editor/editor.vue';
+import Pager from '../ui/pager.vue';
 
 //数组删除某项功能
 // Array.prototype.remove = function (dx) {
@@ -20,6 +22,10 @@ Vue.prototype.$http = axios;
 new Vue({
     el: "#app",
     components: {
+        Posts,
+        Editor,
+        Pager
+
         // PageButton
         // Datepicker
     },
@@ -40,13 +46,30 @@ new Vue({
         allpage: 0,
         total: 1,
         page: 0,
-        status: '',
         current: 1,
         pagedata: {},
-        isActive: true,
         isToolbar: false,
         checkboxModel: [],
         checked: [],
+
+        autoExcerpt: true,
+
+        post: {
+            id: '',
+            title: '',
+            content: '',
+            terms: []
+        },
+        selected: {
+            wordHtml: '',
+            wordCount: 0,
+            word: ''
+        },
+        status: 'init',
+        isActive: true,
+        is_cover: false,
+        checkedCates: [],
+        isManagePosts: false
     },
     created: function () {
         var vue = this;
@@ -95,6 +118,131 @@ new Vue({
 
     },
     methods: {
+        managePosts(){
+           this.isManagePosts = true;
+        },
+        editPost(post){
+            let _url = "/admin/post/" + post.id;
+            this.$http.get(_url).then( (response) => {
+               this.post = response.data;
+               eventHub.$emit('update', this.post.content)
+               // console.log(JSON.stringify(this.post))
+                // vue.pageAll = response.data.data;
+                // vue.allpage = response.data.totalPages;
+                // vue.pagedata = response.data;
+
+                // console.log(JSON.stringify(response))
+                // vue.resume = response.data.data.content_json;
+                // let content = JSON.parse(response.data.data.conten)
+                // vue.resume = content.resume;
+                // console.log(content['resume'].basics.name);
+                // console.log(response.status);
+                // console.log(response.statusText);
+                // console.log(response.headers);
+                // console.log(response.config);
+            })
+                .catch(function (error) {
+                    if (error.response) {
+                        // The request was made, but the server responded with a status code
+                        // that falls out of the range of 2xx
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                });
+        },
+        modelChangeEvent: function (model, code) {
+            model.content = code;
+            this.save();
+        },
+        publish: function () {
+            this.save('publish');
+        },
+        _saving(){
+            this.status = 'saving';
+        },
+        _editing(){
+            this.status = 'editing';
+        },
+        _success(){
+            this.status = 'success';
+
+        },
+        save: function (post_status) {
+            this.status = 'saving';
+
+            let vue = this;
+
+            if (!vue.post.id && vue.post.content === null) return;
+            vue.post.autoExcerpt = this.autoExcerpt;
+            // vue.post.categorys = this.checkedCates;
+            // vue.terms = this.checkedCates;
+
+            this.$http.post('/admin/post', vue.post)
+
+                .then(function (response) {
+                    let data = response.data;
+                    if (data._id !== null) {
+                        vue.post.id = data._id;
+                        vue._success();
+
+                        History.pushState({state: 1}, "State 1", '/admin/post/' + vue.post.id.toString());
+                    }
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+
+        },
+
+        saveTerm(term){
+
+            let post_id = this.post.id;
+
+            if (post_id === '' || post_id === null) return;
+
+            let post_data = {
+                term_id: term.id,
+                object_id: post_id,
+                terms: this.post.terms
+            }
+
+            this.$http.post('/admin/post/relation', post_data)
+
+                .then(function (response) {
+                    let data = response.data;
+                    // if (data._id !== null) {
+                    //     vue.post.id = data._id;
+                    //     vue._success();
+                    //
+                    //     History.pushState({state: 1}, "State 1", '/admin/post/' + vue.post.id.toString());
+                    // }
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+
+        check: function (cate) {
+
+            for (let _cate of this.post.terms) {
+                if (_cate === cate) {
+                    console.log(cate.id + "减少")
+                } else {
+                    console.log(cate.id + "添加")
+                }
+            }
+            // console.log(JSON.stringify(cate))
+        },
+
+
         render: function () {
             var vue = this;
 
@@ -173,13 +321,12 @@ new Vue({
                     console.log(error.config);
                 });
         },
-
         fetch(type){
             this.checked = [];
             let vue = this;
             let _url = "/admin/posts/";
             if (!type) {
-                _url += 'list'
+                _url += 'listgroup'
             }
             else {
                 _url += type;
@@ -194,25 +341,17 @@ new Vue({
                     vue.allpage = response.data.totalPages;
                     vue.pagedata = response.data;
 
-                    // console.log(JSON.stringify(response))
-                    // vue.resume = response.data.data.content_json;
-                    // let content = JSON.parse(response.data.data.conten)
-                    // vue.resume = content.resume;
-                    // console.log(content['resume'].basics.name);
-                    // console.log(response.status);
-                    // console.log(response.statusText);
-                    // console.log(response.headers);
-                    // console.log(response.config);
+                    eventHub.$emit("fetch")
+
+
+
                 })
                 .catch(function (error) {
                     if (error.response) {
-                        // The request was made, but the server responded with a status code
-                        // that falls out of the range of 2xx
                         console.log(error.response.data);
                         console.log(error.response.status);
                         console.log(error.response.headers);
                     } else {
-                        // Something happened in setting up the request that triggered an Error
                         console.log('Error', error.message);
                     }
                     console.log(error.config);
@@ -220,15 +359,29 @@ new Vue({
 
         },
 
-
         urlParam: function (name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
             // decodeURIComponent()
             if (r != null)return decodeURI(r[2]);
             return null;
-        }
+        },
 
+        onChange(content){
+            console.log(JSON.stringify(content))
+            this.post.content = content;
+            this._editing();
+            this.save();
+        },
+        onSelection(selected){
+            this.selected = selected;
+        },
+        clearAndSnippet(){
+            eventHub.$emit('replaceSelection', "")
+        },
+        copyAndSnippet(){
+            eventHub.$emit('replaceSelection', "")
+        }
     },
     watch: {//深度 watcher
         'checked': function () {
@@ -243,6 +396,25 @@ new Vue({
                 });
             }
 
+        },
+        'post.title': function () {
+            this._editing();
+            this.save();
+        },
+        'post.terms': function (val, oldVal) {
+            // 在 JavaScript 中，如何求出两个数组的交集和差集？
+            // https://www.zhihu.com/question/19863166
+            // ES7 Array.prototype.includes (stage 2 proposal)
+
+            // 当有新值变化时进行处理
+            if (oldVal.length > 0) {
+                // 获得变化的值
+                let difference = oldVal.concat(val).filter(v => !oldVal.includes(v) || !val.includes(v));
+                // console.log(JSON.stringify(difference))
+
+                this.saveTerm(difference[0]);
+
+            }
         }
     },
     computed: {
@@ -262,6 +434,30 @@ new Vue({
 
                 this.checked = checked;
             }
+        },
+        btnStatus: function () {
+            if (this.status === 'loading') {
+                return 'disabled'
+
+            } else if (this.status === 'success') {
+                return ''
+            }
+            return '';
+        },
+        classObject: function () {
+
+            if (this.status === 'saving') {
+                return 'icon-sync spinner text-primary'
+            } else if (this.status === 'success') {
+                this.loadingText = '更换完成';
+                return 'icon-sync text-success';
+            } else if (this.status === 'error') {
+                this.loadingText = '更换失败';
+                return 'icon-warning22 text-warning'
+            }
+
+            return 'icon-sync';
+
         }
     }
 });

@@ -42,13 +42,17 @@ export default class extends Base {
                 // console.log(JSON.stringify(snippets))
                 // console.log(JSON.stringify(snippets) + "xxxxxxxxx")
                 // console.log(JSON.stringify(post.terms))
+
                 this.assign("post", post);
+
+                return this.json(post)
 
             }else {
                 this.assign("post", null);
+                return this.json({})
             }
 
-            return this.display();
+            // return this.display();
 
         }
 

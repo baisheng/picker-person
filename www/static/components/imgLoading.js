@@ -63,12 +63,12 @@
 /******/ 	__webpack_require__.p = "../static";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 493);
+/******/ 	return __webpack_require__(__webpack_require__.s = 481);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 371:
+/***/ 369:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -112,10 +112,10 @@ var imgloading = exports.imgloading = {
 
 /***/ }),
 
-/***/ 493:
+/***/ 481:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(371);
+module.exports = __webpack_require__(369);
 
 
 /***/ })

@@ -1,6 +1,6 @@
 <template>
     <!--<div class="row" v-masonry transition-duration="0.3s" item-selector=".item" >-->
-        <div class="row" data-plugin="masonry">
+    <div class="row" data-plugin="masonry">
 
 
         <div class="col-lg-6 col-md-6 col-xs-12 masonry-item" v-for="_ in posts">
@@ -426,10 +426,10 @@
 
 <script>
     //    import Article from './article.vue'
-//    import VueMasonryPlugin from 'vue-masonry';
-    import Select2 from '../../ui/select2.vue'
+    //    import VueMasonryPlugin from 'vue-masonry';
+    import Select2 from '../ui/select2.vue'
 
-//    Vue.use(VueMasonryPlugin)
+    //    Vue.use(VueMasonryPlugin)
     export default {
         props: ['posts', 'position'],
 
@@ -529,7 +529,7 @@
 
 //                    vue.render();
 //                    Prism.highlightAll();
-                    // DOM updated
+            // DOM updated
 //                })
 //            },
             setting: function (id) {

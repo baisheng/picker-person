@@ -63,12 +63,12 @@
 /******/ 	__webpack_require__.p = "../static";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 511);
+/******/ 	return __webpack_require__(__webpack_require__.s = 499);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 386:
+/***/ 384:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -273,10 +273,10 @@ function VueFixer(vue) {
 
 /***/ }),
 
-/***/ 511:
+/***/ 499:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(386);
+module.exports = __webpack_require__(384);
 
 
 /***/ })

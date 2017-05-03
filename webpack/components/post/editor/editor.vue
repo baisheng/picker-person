@@ -569,6 +569,17 @@
         },
         mounted: function () {
 
+            eventHub.$on('init', (content) => {
+                this.sourceData = content;
+                this.value(this.sourceData);
+
+            })
+
+            eventHub.$on('update', (content) => {
+                this.sourceData = content;
+                this.value(this.sourceData);
+
+            })
             eventHub.$on('replaceSelection', (content) => {
                 this.clearAndSnippet(content)
             })
@@ -617,7 +628,6 @@
 
 
             // 初始化值
-            this.value(scope.sourceData);
         },
 
 

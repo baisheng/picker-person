@@ -63,12 +63,12 @@
 /******/ 	__webpack_require__.p = "../static";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 500);
+/******/ 	return __webpack_require__(__webpack_require__.s = 488);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 17:
+/***/ 18:
 /***/ (function(module, exports) {
 
 // this module is a runtime utility for cleaner component module output and will
@@ -126,13 +126,13 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 376:
+/***/ 374:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _jsonEditor = __webpack_require__(459);
+var _jsonEditor = __webpack_require__(449);
 
 var _jsonEditor2 = _interopRequireDefault(_jsonEditor);
 
@@ -325,7 +325,7 @@ new Vue({
 
 /***/ }),
 
-/***/ 411:
+/***/ 410:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -333,7 +333,7 @@ new Vue({
 
 exports.__esModule = true;
 
-var _jsonEditor = __webpack_require__(431);
+var _jsonEditor = __webpack_require__(423);
 
 var _jsonEditor2 = _interopRequireDefault(_jsonEditor);
 
@@ -392,7 +392,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 431:
+/***/ 423:
 /***/ (function(module, exports) {
 
 /*! JSON Editor v0.7.28 - JSON Schema -> HTML Editor
@@ -8446,14 +8446,14 @@ JSONEditor.defaults.resolvers.unshift(function(schema) {
 
 /***/ }),
 
-/***/ 459:
+/***/ 449:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(17)(
+var Component = __webpack_require__(18)(
   /* script */
-  __webpack_require__(411),
+  __webpack_require__(410),
   /* template */
-  __webpack_require__(481),
+  __webpack_require__(470),
   /* scopeId */
   null,
   /* cssModules */
@@ -8481,7 +8481,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 481:
+/***/ 470:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -8501,10 +8501,10 @@ if (false) {
 
 /***/ }),
 
-/***/ 500:
+/***/ 488:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(376);
+module.exports = __webpack_require__(374);
 
 
 /***/ })

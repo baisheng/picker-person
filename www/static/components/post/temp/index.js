@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "../static";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 505);
+/******/ 	return __webpack_require__(__webpack_require__.s = 493);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -73,7 +73,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(40);
+var bind = __webpack_require__(41);
 
 /*global toString:true*/
 
@@ -373,7 +373,8 @@ module.exports = {
 
 
 /***/ }),
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ (function(module, exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
@@ -382,17 +383,73 @@ var global = module.exports = typeof window != 'undefined' && window.Math == Mat
 if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(9)(function(){
+module.exports = !__webpack_require__(10)(function(){
   return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
 });
 
 /***/ }),
-/* 3 */,
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var dP         = __webpack_require__(5)
+  , createDesc = __webpack_require__(15);
+module.exports = __webpack_require__(3) ? function(object, key, value){
+  return dP.f(object, key, createDesc(1, value));
+} : function(object, key, value){
+  object[key] = value;
+  return object;
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject       = __webpack_require__(13)
+  , IE8_DOM_DEFINE = __webpack_require__(26)
+  , toPrimitive    = __webpack_require__(20)
+  , dP             = Object.defineProperty;
+
+exports.f = __webpack_require__(3) ? Object.defineProperty : function defineProperty(O, P, Attributes){
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if(IE8_DOM_DEFINE)try {
+    return dP(O, P, Attributes);
+  } catch(e){ /* empty */ }
+  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
+  if('value' in Attributes)O[P] = Attributes.value;
+  return O;
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var core = module.exports = {version: '2.4.0'};
+if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store      = __webpack_require__(31)('wks')
+  , uid        = __webpack_require__(22)
+  , Symbol     = __webpack_require__(2).Symbol
+  , USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function(name){
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -475,7 +532,7 @@ var UNESCAPE_ALL_RE = new RegExp(UNESCAPE_MD_RE.source + '|' + ENTITY_RE.source,
 
 var DIGITAL_ENTITY_TEST_RE = /^#((?:x[a-f0-9]{1,8}|[0-9]{1,8}))/i;
 
-var entities = __webpack_require__(227);
+var entities = __webpack_require__(286);
 
 function replaceEntityPattern(match, name) {
   var code = 0;
@@ -581,7 +638,7 @@ function isWhiteSpace(code) {
 ////////////////////////////////////////////////////////////////////////////////
 
 /*eslint-disable max-len*/
-var UNICODE_PUNCT_RE = __webpack_require__(79);
+var UNICODE_PUNCT_RE = __webpack_require__(52);
 
 // Currently without astral characters support.
 function isPunctChar(ch) {
@@ -652,8 +709,8 @@ function normalizeReference(str) {
 // bundled size (e.g. a browser build).
 //
 exports.lib                 = {};
-exports.lib.mdurl           = __webpack_require__(102);
-exports.lib.ucmicro         = __webpack_require__(170);
+exports.lib.mdurl           = __webpack_require__(93);
+exports.lib.ucmicro         = __webpack_require__(155);
 
 exports.assign              = assign;
 exports.isString            = isString;
@@ -674,48 +731,7 @@ exports.normalizeReference  = normalizeReference;
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-var core = module.exports = {version: '2.4.0'};
-if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP         = __webpack_require__(7)
-  , createDesc = __webpack_require__(15);
-module.exports = __webpack_require__(2) ? function(object, key, value){
-  return dP.f(object, key, createDesc(1, value));
-} : function(object, key, value){
-  object[key] = value;
-  return object;
-};
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject       = __webpack_require__(12)
-  , IE8_DOM_DEFINE = __webpack_require__(25)
-  , toPrimitive    = __webpack_require__(18)
-  , dP             = Object.defineProperty;
-
-exports.f = __webpack_require__(2) ? Object.defineProperty : function defineProperty(O, P, Attributes){
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if(IE8_DOM_DEFINE)try {
-    return dP(O, P, Attributes);
-  } catch(e){ /* empty */ }
-  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
-  if('value' in Attributes)O[P] = Attributes.value;
-  return O;
-};
-
-/***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = function(it){
@@ -723,7 +739,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = function(exec){
@@ -733,22 +749,6 @@ module.exports = function(exec){
     return true;
   }
 };
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store      = __webpack_require__(30)('wks')
-  , uid        = __webpack_require__(24)
-  , Symbol     = __webpack_require__(1).Symbol
-  , USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function(name){
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
 
 /***/ }),
 /* 11 */
@@ -763,31 +763,45 @@ module.exports = function(it, key){
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(8);
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = __webpack_require__(82)
+  , defined = __webpack_require__(17);
 module.exports = function(it){
-  if(!isObject(it))throw TypeError(it + ' is not an object!');
-  return it;
+  return IObject(defined(it));
 };
 
 /***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(72)
-  , defined = __webpack_require__(16);
+var isObject = __webpack_require__(9);
 module.exports = function(it){
-  return IObject(defined(it));
+  if(!isObject(it))throw TypeError(it + ' is not an object!');
+  return it;
 };
 
 /***/ }),
-/* 14 */
+/* 14 */,
+/* 15 */
+/***/ (function(module, exports) {
+
+module.exports = function(bitmap, value){
+  return {
+    enumerable  : !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable    : !(bitmap & 4),
+    value       : value
+  };
+};
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global    = __webpack_require__(1)
-  , core      = __webpack_require__(5)
-  , ctx       = __webpack_require__(33)
-  , hide      = __webpack_require__(6)
+var global    = __webpack_require__(2)
+  , core      = __webpack_require__(6)
+  , ctx       = __webpack_require__(35)
+  , hide      = __webpack_require__(4)
   , PROTOTYPE = 'prototype';
 
 var $export = function(type, name, source){
@@ -847,20 +861,7 @@ $export.R = 128; // real proto method for `library`
 module.exports = $export;
 
 /***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-module.exports = function(bitmap, value){
-  return {
-    enumerable  : !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable    : !(bitmap & 4),
-    value       : value
-  };
-};
-
-/***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 // 7.2.1 RequireObjectCoercible(argument)
@@ -870,7 +871,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 // this module is a runtime utility for cleaner component module output and will
@@ -927,11 +928,17 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 18 */
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = {};
+
+/***/ }),
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(8);
+var isObject = __webpack_require__(9);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function(it, S){
@@ -944,11 +951,11 @@ module.exports = function(it, S){
 };
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(8)
-  , document = __webpack_require__(1).document
+var isObject = __webpack_require__(9)
+  , document = __webpack_require__(2).document
   // in old IE typeof document.createElement is 'object'
   , is = isObject(document) && isObject(document.createElement);
 module.exports = function(it){
@@ -956,14 +963,24 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 20 */
+/* 22 */
+/***/ (function(module, exports) {
+
+var id = 0
+  , px = Math.random();
+module.exports = function(key){
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(68);
+var normalizeHeaderName = __webpack_require__(76);
 
 var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 var DEFAULT_CONTENT_TYPE = {
@@ -980,10 +997,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(36);
+    adapter = __webpack_require__(37);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(36);
+    adapter = __webpack_require__(37);
   }
   return adapter;
 }
@@ -1054,17 +1071,20 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44)))
 
 /***/ }),
-/* 21 */,
-/* 22 */
-/***/ (function(module, exports) {
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = {};
+var shared = __webpack_require__(31)('keys')
+  , uid    = __webpack_require__(22);
+module.exports = function(key){
+  return shared[key] || (shared[key] = uid(key));
+};
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports) {
 
 // 7.1.4 ToInteger
@@ -1075,45 +1095,15 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 24 */
-/***/ (function(module, exports) {
-
-var id = 0
-  , px = Math.random();
-module.exports = function(key){
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-};
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = !__webpack_require__(2) && !__webpack_require__(9)(function(){
-  return Object.defineProperty(__webpack_require__(19)('div'), 'a', {get: function(){ return 7; }}).a != 7;
-});
-
-/***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shared = __webpack_require__(30)('keys')
-  , uid    = __webpack_require__(24);
-module.exports = function(key){
-  return shared[key] || (shared[key] = uid(key));
-};
+module.exports = !__webpack_require__(3) && !__webpack_require__(10)(function(){
+  return Object.defineProperty(__webpack_require__(21)('div'), 'a', {get: function(){ return 7; }}).a != 7;
+});
 
 /***/ }),
-/* 27 */,
-/* 28 */
-/***/ (function(module, exports) {
-
-// IE 8- don't enum bug keys
-module.exports = (
-  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-).split(',');
-
-/***/ }),
-/* 29 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
@@ -1125,10 +1115,32 @@ module.exports = Object.keys || function keys(O){
 };
 
 /***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+// IE 8- don't enum bug keys
+module.exports = (
+  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+).split(',');
+
+/***/ }),
+/* 29 */,
 /* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(1)
+var def = __webpack_require__(5).f
+  , has = __webpack_require__(11)
+  , TAG = __webpack_require__(7)('toStringTag');
+
+module.exports = function(it, tag, stat){
+  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
+};
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(2)
   , SHARED = '__core-js_shared__'
   , store  = global[SHARED] || (global[SHARED] = {});
 module.exports = function(key){
@@ -1136,8 +1148,8 @@ module.exports = function(key){
 };
 
 /***/ }),
-/* 31 */,
-/* 32 */
+/* 32 */,
+/* 33 */
 /***/ (function(module, exports) {
 
 module.exports = function(it){
@@ -1146,11 +1158,21 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 33 */
+/* 34 */
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = function(it){
+  return toString.call(it).slice(8, -1);
+};
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(32);
+var aFunction = __webpack_require__(33);
 module.exports = function(fn, that, length){
   aFunction(fn);
   if(that === undefined)return fn;
@@ -1171,19 +1193,355 @@ module.exports = function(fn, that, length){
 };
 
 /***/ }),
-/* 34 */
+/* 36 */
+/***/ (function(module, exports) {
+
+module.exports = true;
+
+/***/ }),
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(7).f
-  , has = __webpack_require__(11)
-  , TAG = __webpack_require__(10)('toStringTag');
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
 
-module.exports = function(it, tag, stat){
-  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
+var utils = __webpack_require__(0);
+var settle = __webpack_require__(68);
+var buildURL = __webpack_require__(71);
+var parseHeaders = __webpack_require__(77);
+var isURLSameOrigin = __webpack_require__(75);
+var createError = __webpack_require__(40);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(70);
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if (process.env.NODE_ENV !== 'test' &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED'));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(73);
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        if (request.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44)))
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(67);
+
+/**
+ * Create an Error with the specified message, config, error code, and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ @ @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, response);
+};
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var LIBRARY        = __webpack_require__(36)
+  , $export        = __webpack_require__(16)
+  , redefine       = __webpack_require__(48)
+  , hide           = __webpack_require__(4)
+  , has            = __webpack_require__(11)
+  , Iterators      = __webpack_require__(19)
+  , $iterCreate    = __webpack_require__(83)
+  , setToStringTag = __webpack_require__(30)
+  , getPrototypeOf = __webpack_require__(58)
+  , ITERATOR       = __webpack_require__(7)('iterator')
+  , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
+  , FF_ITERATOR    = '@@iterator'
+  , KEYS           = 'keys'
+  , VALUES         = 'values';
+
+var returnThis = function(){ return this; };
+
+module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED){
+  $iterCreate(Constructor, NAME, next);
+  var getMethod = function(kind){
+    if(!BUGGY && kind in proto)return proto[kind];
+    switch(kind){
+      case KEYS: return function keys(){ return new Constructor(this, kind); };
+      case VALUES: return function values(){ return new Constructor(this, kind); };
+    } return function entries(){ return new Constructor(this, kind); };
+  };
+  var TAG        = NAME + ' Iterator'
+    , DEF_VALUES = DEFAULT == VALUES
+    , VALUES_BUG = false
+    , proto      = Base.prototype
+    , $native    = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT]
+    , $default   = $native || getMethod(DEFAULT)
+    , $entries   = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined
+    , $anyNative = NAME == 'Array' ? proto.entries || $native : $native
+    , methods, key, IteratorPrototype;
+  // Fix native
+  if($anyNative){
+    IteratorPrototype = getPrototypeOf($anyNative.call(new Base));
+    if(IteratorPrototype !== Object.prototype){
+      // Set @@toStringTag to native iterators
+      setToStringTag(IteratorPrototype, TAG, true);
+      // fix for some old engines
+      if(!LIBRARY && !has(IteratorPrototype, ITERATOR))hide(IteratorPrototype, ITERATOR, returnThis);
+    }
+  }
+  // fix Array#{values, @@iterator}.name in V8 / FF
+  if(DEF_VALUES && $native && $native.name !== VALUES){
+    VALUES_BUG = true;
+    $default = function values(){ return $native.call(this); };
+  }
+  // Define iterator
+  if((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])){
+    hide(proto, ITERATOR, $default);
+  }
+  // Plug for library
+  Iterators[NAME] = $default;
+  Iterators[TAG]  = returnThis;
+  if(DEFAULT){
+    methods = {
+      values:  DEF_VALUES ? $default : getMethod(VALUES),
+      keys:    IS_SET     ? $default : getMethod(KEYS),
+      entries: $entries
+    };
+    if(FORCED)for(key in methods){
+      if(!(key in proto))redefine(proto, key, methods[key]);
+    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
+  }
+  return methods;
 };
 
 /***/ }),
-/* 35 */
+/* 43 */,
+/* 44 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1369,371 +1727,13 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var settle = __webpack_require__(60);
-var buildURL = __webpack_require__(63);
-var parseHeaders = __webpack_require__(69);
-var isURLSameOrigin = __webpack_require__(67);
-var createError = __webpack_require__(39);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(62);
-
-module.exports = function xhrAdapter(config) {
-  return new Promise(function dispatchXhrRequest(resolve, reject) {
-    var requestData = config.data;
-    var requestHeaders = config.headers;
-
-    if (utils.isFormData(requestData)) {
-      delete requestHeaders['Content-Type']; // Let the browser set it
-    }
-
-    var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if (process.env.NODE_ENV !== 'test' &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
-
-    // HTTP basic authentication
-    if (config.auth) {
-      var username = config.auth.username || '';
-      var password = config.auth.password || '';
-      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
-    }
-
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
-
-    // Set the request timeout in MS
-    request.timeout = config.timeout;
-
-    // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
-        return;
-      }
-
-      // The request errored out and we didn't get a response, this will be
-      // handled by onerror instead
-      // With one exception: request that using file: protocol, most browsers
-      // will return status as 0 even though it's a successful request
-      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
-        return;
-      }
-
-      // Prepare the response
-      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
-      var response = {
-        data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
-        headers: responseHeaders,
-        config: config,
-        request: request
-      };
-
-      settle(resolve, reject, response);
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle low level network errors
-    request.onerror = function handleError() {
-      // Real errors are hidden from us by the browser
-      // onerror should only fire if it's a network error
-      reject(createError('Network Error', config));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle timeout
-    request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED'));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Add xsrf header
-    // This is only done if running in a standard browser environment.
-    // Specifically not if we're in a web worker, or react-native.
-    if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(65);
-
-      // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-          cookies.read(config.xsrfCookieName) :
-          undefined;
-
-      if (xsrfValue) {
-        requestHeaders[config.xsrfHeaderName] = xsrfValue;
-      }
-    }
-
-    // Add headers to the request
-    if ('setRequestHeader' in request) {
-      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
-        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
-          // Remove Content-Type if data is undefined
-          delete requestHeaders[key];
-        } else {
-          // Otherwise add header to the request
-          request.setRequestHeader(key, val);
-        }
-      });
-    }
-
-    // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
-    }
-
-    // Add responseType to request if needed
-    if (config.responseType) {
-      try {
-        request.responseType = config.responseType;
-      } catch (e) {
-        if (request.responseType !== 'json') {
-          throw e;
-        }
-      }
-    }
-
-    // Handle progress if needed
-    if (typeof config.onDownloadProgress === 'function') {
-      request.addEventListener('progress', config.onDownloadProgress);
-    }
-
-    // Not all browsers support upload events
-    if (typeof config.onUploadProgress === 'function' && request.upload) {
-      request.upload.addEventListener('progress', config.onUploadProgress);
-    }
-
-    if (config.cancelToken) {
-      // Handle cancellation
-      config.cancelToken.promise.then(function onCanceled(cancel) {
-        if (!request) {
-          return;
-        }
-
-        request.abort();
-        reject(cancel);
-        // Clean up request
-        request = null;
-      });
-    }
-
-    if (requestData === undefined) {
-      requestData = null;
-    }
-
-    // Send the request
-    request.send(requestData);
-  });
-};
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)))
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * A `Cancel` is an object that is thrown when an operation is canceled.
- *
- * @class
- * @param {string=} message The message.
- */
-function Cancel(message) {
-  this.message = message;
-}
-
-Cancel.prototype.toString = function toString() {
-  return 'Cancel' + (this.message ? ': ' + this.message : '');
-};
-
-Cancel.prototype.__CANCEL__ = true;
-
-module.exports = Cancel;
-
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function isCancel(value) {
-  return !!(value && value.__CANCEL__);
-};
-
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var enhanceError = __webpack_require__(59);
-
-/**
- * Create an Error with the specified message, config, error code, and response.
- *
- * @param {string} message The error message.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- @ @param {Object} [response] The response.
- * @returns {Error} The created error.
- */
-module.exports = function createError(message, config, code, response) {
-  var error = new Error(message);
-  return enhanceError(error, config, code, response);
-};
-
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function bind(fn, thisArg) {
-  return function wrap() {
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-    return fn.apply(thisArg, args);
-  };
-};
-
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = function(it){
-  return toString.call(it).slice(8, -1);
-};
-
-/***/ }),
-/* 42 */,
-/* 43 */
-/***/ (function(module, exports) {
-
-module.exports = true;
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var LIBRARY        = __webpack_require__(43)
-  , $export        = __webpack_require__(14)
-  , redefine       = __webpack_require__(48)
-  , hide           = __webpack_require__(6)
-  , has            = __webpack_require__(11)
-  , Iterators      = __webpack_require__(22)
-  , $iterCreate    = __webpack_require__(85)
-  , setToStringTag = __webpack_require__(34)
-  , getPrototypeOf = __webpack_require__(81)
-  , ITERATOR       = __webpack_require__(10)('iterator')
-  , BUGGY          = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
-  , FF_ITERATOR    = '@@iterator'
-  , KEYS           = 'keys'
-  , VALUES         = 'values';
-
-var returnThis = function(){ return this; };
-
-module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED){
-  $iterCreate(Constructor, NAME, next);
-  var getMethod = function(kind){
-    if(!BUGGY && kind in proto)return proto[kind];
-    switch(kind){
-      case KEYS: return function keys(){ return new Constructor(this, kind); };
-      case VALUES: return function values(){ return new Constructor(this, kind); };
-    } return function entries(){ return new Constructor(this, kind); };
-  };
-  var TAG        = NAME + ' Iterator'
-    , DEF_VALUES = DEFAULT == VALUES
-    , VALUES_BUG = false
-    , proto      = Base.prototype
-    , $native    = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT]
-    , $default   = $native || getMethod(DEFAULT)
-    , $entries   = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined
-    , $anyNative = NAME == 'Array' ? proto.entries || $native : $native
-    , methods, key, IteratorPrototype;
-  // Fix native
-  if($anyNative){
-    IteratorPrototype = getPrototypeOf($anyNative.call(new Base));
-    if(IteratorPrototype !== Object.prototype){
-      // Set @@toStringTag to native iterators
-      setToStringTag(IteratorPrototype, TAG, true);
-      // fix for some old engines
-      if(!LIBRARY && !has(IteratorPrototype, ITERATOR))hide(IteratorPrototype, ITERATOR, returnThis);
-    }
-  }
-  // fix Array#{values, @@iterator}.name in V8 / FF
-  if(DEF_VALUES && $native && $native.name !== VALUES){
-    VALUES_BUG = true;
-    $default = function values(){ return $native.call(this); };
-  }
-  // Define iterator
-  if((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])){
-    hide(proto, ITERATOR, $default);
-  }
-  // Plug for library
-  Iterators[NAME] = $default;
-  Iterators[TAG]  = returnThis;
-  if(DEFAULT){
-    methods = {
-      values:  DEF_VALUES ? $default : getMethod(VALUES),
-      keys:    IS_SET     ? $default : getMethod(KEYS),
-      entries: $entries
-    };
-    if(FORCED)for(key in methods){
-      if(!(key in proto))redefine(proto, key, methods[key]);
-    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
-  }
-  return methods;
-};
-
-/***/ }),
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has          = __webpack_require__(11)
-  , toIObject    = __webpack_require__(13)
-  , arrayIndexOf = __webpack_require__(71)(false)
-  , IE_PROTO     = __webpack_require__(26)('IE_PROTO');
+  , toIObject    = __webpack_require__(12)
+  , arrayIndexOf = __webpack_require__(80)(false)
+  , IE_PROTO     = __webpack_require__(24)('IE_PROTO');
 
 module.exports = function(object, names){
   var O      = toIObject(object)
@@ -1749,7 +1749,63 @@ module.exports = function(object, names){
 };
 
 /***/ }),
-/* 46 */
+/* 46 */,
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+var anObject    = __webpack_require__(13)
+  , dPs         = __webpack_require__(85)
+  , enumBugKeys = __webpack_require__(28)
+  , IE_PROTO    = __webpack_require__(24)('IE_PROTO')
+  , Empty       = function(){ /* empty */ }
+  , PROTOTYPE   = 'prototype';
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var createDict = function(){
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = __webpack_require__(21)('iframe')
+    , i      = enumBugKeys.length
+    , lt     = '<'
+    , gt     = '>'
+    , iframeDocument;
+  iframe.style.display = 'none';
+  __webpack_require__(81).appendChild(iframe);
+  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+  // createDict = iframe.contentWindow.Object;
+  // html.removeChild(iframe);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while(i--)delete createDict[PROTOTYPE][enumBugKeys[i]];
+  return createDict();
+};
+
+module.exports = Object.create || function create(O, Properties){
+  var result;
+  if(O !== null){
+    Empty[PROTOTYPE] = anObject(O);
+    result = new Empty;
+    Empty[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(4);
+
+/***/ }),
+/* 49 */,
+/* 50 */,
+/* 51 */
 /***/ (function(module, exports) {
 
 /**
@@ -1861,62 +1917,55 @@ module.exports = {
 
 
 /***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 52 */
+/***/ (function(module, exports) {
 
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject    = __webpack_require__(12)
-  , dPs         = __webpack_require__(87)
-  , enumBugKeys = __webpack_require__(28)
-  , IE_PROTO    = __webpack_require__(26)('IE_PROTO')
-  , Empty       = function(){ /* empty */ }
-  , PROTOTYPE   = 'prototype';
-
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict = function(){
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(19)('iframe')
-    , i      = enumBugKeys.length
-    , lt     = '<'
-    , gt     = '>'
-    , iframeDocument;
-  iframe.style.display = 'none';
-  __webpack_require__(84).appendChild(iframe);
-  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
-  // createDict = iframe.contentWindow.Object;
-  // html.removeChild(iframe);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
-  createDict = iframeDocument.F;
-  while(i--)delete createDict[PROTOTYPE][enumBugKeys[i]];
-  return createDict();
-};
-
-module.exports = Object.create || function create(O, Properties){
-  var result;
-  if(O !== null){
-    Empty[PROTOTYPE] = anObject(O);
-    result = new Empty;
-    Empty[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = createDict();
-  return Properties === undefined ? result : dPs(result, Properties);
-};
-
+module.exports=/[!-#%-\*,-/:;\?@\[-\]_\{\}\xA1\xA7\xAB\xB6\xB7\xBB\xBF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u0AF0\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166D\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2308-\u230B\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E44\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA8FC\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]|\uD800[\uDD00-\uDD02\uDF9F\uDFD0]|\uD801\uDD6F|\uD802[\uDC57\uDD1F\uDD3F\uDE50-\uDE58\uDE7F\uDEF0-\uDEF6\uDF39-\uDF3F\uDF99-\uDF9C]|\uD804[\uDC47-\uDC4D\uDCBB\uDCBC\uDCBE-\uDCC1\uDD40-\uDD43\uDD74\uDD75\uDDC5-\uDDC9\uDDCD\uDDDB\uDDDD-\uDDDF\uDE38-\uDE3D\uDEA9]|\uD805[\uDC4B-\uDC4F\uDC5B\uDC5D\uDCC6\uDDC1-\uDDD7\uDE41-\uDE43\uDE60-\uDE6C\uDF3C-\uDF3E]|\uD807[\uDC41-\uDC45\uDC70\uDC71]|\uD809[\uDC70-\uDC74]|\uD81A[\uDE6E\uDE6F\uDEF5\uDF37-\uDF3B\uDF44]|\uD82F\uDC9F|\uD836[\uDE87-\uDE8B]|\uD83A[\uDD5E\uDD5F]/
 
 /***/ }),
-/* 48 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(6);
+"use strict";
+
+var $at  = __webpack_require__(86)(true);
+
+// 21.1.3.27 String.prototype[@@iterator]()
+__webpack_require__(42)(String, 'String', function(iterated){
+  this._t = String(iterated); // target
+  this._i = 0;                // next index
+// 21.1.5.2.1 %StringIteratorPrototype%.next()
+}, function(){
+  var O     = this._t
+    , index = this._i
+    , point;
+  if(index >= O.length)return {value: undefined, done: true};
+  point = $at(O, index);
+  this._i += point.length;
+  return {value: point, done: false};
+});
 
 /***/ }),
-/* 49 */,
-/* 50 */,
-/* 51 */
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(89);
+var global        = __webpack_require__(2)
+  , hide          = __webpack_require__(4)
+  , Iterators     = __webpack_require__(19)
+  , TO_STRING_TAG = __webpack_require__(7)('toStringTag');
+
+for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
+  var NAME       = collections[i]
+    , Collection = global[NAME]
+    , proto      = Collection && Collection.prototype;
+  if(proto && !proto[TO_STRING_TAG])hide(proto, TO_STRING_TAG, NAME);
+  Iterators[NAME] = Iterators.Array;
+}
+
+/***/ }),
+/* 55 */,
+/* 56 */
 /***/ (function(module, exports) {
 
 /**
@@ -1962,32 +2011,78 @@ module.exports = ParseError;
 
 
 /***/ }),
-/* 52 */
+/* 57 */,
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
+var has         = __webpack_require__(11)
+  , toObject    = __webpack_require__(59)
+  , IE_PROTO    = __webpack_require__(24)('IE_PROTO')
+  , ObjectProto = Object.prototype;
+
+module.exports = Object.getPrototypeOf || function(O){
+  O = toObject(O);
+  if(has(O, IE_PROTO))return O[IE_PROTO];
+  if(typeof O.constructor == 'function' && O instanceof O.constructor){
+    return O.constructor.prototype;
+  } return O instanceof Object ? ObjectProto : null;
+};
+
+/***/ }),
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(16);
+var defined = __webpack_require__(17);
 module.exports = function(it){
   return Object(defined(it));
 };
 
 /***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 60 */
+/***/ (function(module, exports) {
 
-module.exports = __webpack_require__(54);
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
 
 /***/ }),
-/* 54 */
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(62);
+
+/***/ }),
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(40);
-var Axios = __webpack_require__(56);
-var defaults = __webpack_require__(20);
+var bind = __webpack_require__(41);
+var Axios = __webpack_require__(64);
+var defaults = __webpack_require__(23);
 
 /**
  * Create an instance of Axios
@@ -2020,15 +2115,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(37);
-axios.CancelToken = __webpack_require__(55);
-axios.isCancel = __webpack_require__(38);
+axios.Cancel = __webpack_require__(38);
+axios.CancelToken = __webpack_require__(63);
+axios.isCancel = __webpack_require__(39);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(70);
+axios.spread = __webpack_require__(78);
 
 module.exports = axios;
 
@@ -2037,13 +2132,13 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 55 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(37);
+var Cancel = __webpack_require__(38);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -2101,18 +2196,18 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 56 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(20);
+var defaults = __webpack_require__(23);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(57);
-var dispatchRequest = __webpack_require__(58);
-var isAbsoluteURL = __webpack_require__(66);
-var combineURLs = __webpack_require__(64);
+var InterceptorManager = __webpack_require__(65);
+var dispatchRequest = __webpack_require__(66);
+var isAbsoluteURL = __webpack_require__(74);
+var combineURLs = __webpack_require__(72);
 
 /**
  * Create a new instance of Axios
@@ -2193,7 +2288,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 57 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2252,16 +2347,16 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 58 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(61);
-var isCancel = __webpack_require__(38);
-var defaults = __webpack_require__(20);
+var transformData = __webpack_require__(69);
+var isCancel = __webpack_require__(39);
+var defaults = __webpack_require__(23);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -2338,7 +2433,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 59 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2364,13 +2459,13 @@ module.exports = function enhanceError(error, config, code, response) {
 
 
 /***/ }),
-/* 60 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(39);
+var createError = __webpack_require__(40);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -2396,7 +2491,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 61 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2423,7 +2518,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 62 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2466,7 +2561,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 63 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2541,7 +2636,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 64 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2560,7 +2655,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 65 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2620,7 +2715,7 @@ module.exports = (
 
 
 /***/ }),
-/* 66 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2641,7 +2736,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 67 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2716,7 +2811,7 @@ module.exports = (
 
 
 /***/ }),
-/* 68 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2735,7 +2830,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 69 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2779,7 +2874,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 70 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2813,14 +2908,20 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 71 */
+/* 79 */
+/***/ (function(module, exports) {
+
+module.exports = function(){ /* empty */ };
+
+/***/ }),
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(13)
-  , toLength  = __webpack_require__(75)
-  , toIndex   = __webpack_require__(74);
+var toIObject = __webpack_require__(12)
+  , toLength  = __webpack_require__(88)
+  , toIndex   = __webpack_require__(87);
 module.exports = function(IS_INCLUDES){
   return function($this, el, fromIndex){
     var O      = toIObject($this)
@@ -2839,158 +2940,34 @@ module.exports = function(IS_INCLUDES){
 };
 
 /***/ }),
-/* 72 */
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(2).document && document.documentElement;
+
+/***/ }),
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(41);
+var cof = __webpack_require__(34);
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
 
 /***/ }),
-/* 73 */,
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toInteger = __webpack_require__(23)
-  , max       = Math.max
-  , min       = Math.min;
-module.exports = function(index, length){
-  index = toInteger(index);
-  return index < 0 ? max(index + length, 0) : min(index, length);
-};
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.15 ToLength
-var toInteger = __webpack_require__(23)
-  , min       = Math.min;
-module.exports = function(it){
-  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
-};
-
-/***/ }),
-/* 76 */,
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $at  = __webpack_require__(89)(true);
-
-// 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(44)(String, 'String', function(iterated){
-  this._t = String(iterated); // target
-  this._i = 0;                // next index
-// 21.1.5.2.1 %StringIteratorPrototype%.next()
-}, function(){
-  var O     = this._t
-    , index = this._i
-    , point;
-  if(index >= O.length)return {value: undefined, done: true};
-  point = $at(O, index);
-  this._i += point.length;
-  return {value: point, done: false};
-});
-
-/***/ }),
-/* 78 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(90);
-var global        = __webpack_require__(1)
-  , hide          = __webpack_require__(6)
-  , Iterators     = __webpack_require__(22)
-  , TO_STRING_TAG = __webpack_require__(10)('toStringTag');
-
-for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList', 'CSSRuleList'], i = 0; i < 5; i++){
-  var NAME       = collections[i]
-    , Collection = global[NAME]
-    , proto      = Collection && Collection.prototype;
-  if(proto && !proto[TO_STRING_TAG])hide(proto, TO_STRING_TAG, NAME);
-  Iterators[NAME] = Iterators.Array;
-}
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports) {
-
-module.exports=/[!-#%-\*,-/:;\?@\[-\]_\{\}\xA1\xA7\xAB\xB6\xB7\xBB\xBF\u037E\u0387\u055A-\u055F\u0589\u058A\u05BE\u05C0\u05C3\u05C6\u05F3\u05F4\u0609\u060A\u060C\u060D\u061B\u061E\u061F\u066A-\u066D\u06D4\u0700-\u070D\u07F7-\u07F9\u0830-\u083E\u085E\u0964\u0965\u0970\u0AF0\u0DF4\u0E4F\u0E5A\u0E5B\u0F04-\u0F12\u0F14\u0F3A-\u0F3D\u0F85\u0FD0-\u0FD4\u0FD9\u0FDA\u104A-\u104F\u10FB\u1360-\u1368\u1400\u166D\u166E\u169B\u169C\u16EB-\u16ED\u1735\u1736\u17D4-\u17D6\u17D8-\u17DA\u1800-\u180A\u1944\u1945\u1A1E\u1A1F\u1AA0-\u1AA6\u1AA8-\u1AAD\u1B5A-\u1B60\u1BFC-\u1BFF\u1C3B-\u1C3F\u1C7E\u1C7F\u1CC0-\u1CC7\u1CD3\u2010-\u2027\u2030-\u2043\u2045-\u2051\u2053-\u205E\u207D\u207E\u208D\u208E\u2308-\u230B\u2329\u232A\u2768-\u2775\u27C5\u27C6\u27E6-\u27EF\u2983-\u2998\u29D8-\u29DB\u29FC\u29FD\u2CF9-\u2CFC\u2CFE\u2CFF\u2D70\u2E00-\u2E2E\u2E30-\u2E44\u3001-\u3003\u3008-\u3011\u3014-\u301F\u3030\u303D\u30A0\u30FB\uA4FE\uA4FF\uA60D-\uA60F\uA673\uA67E\uA6F2-\uA6F7\uA874-\uA877\uA8CE\uA8CF\uA8F8-\uA8FA\uA8FC\uA92E\uA92F\uA95F\uA9C1-\uA9CD\uA9DE\uA9DF\uAA5C-\uAA5F\uAADE\uAADF\uAAF0\uAAF1\uABEB\uFD3E\uFD3F\uFE10-\uFE19\uFE30-\uFE52\uFE54-\uFE61\uFE63\uFE68\uFE6A\uFE6B\uFF01-\uFF03\uFF05-\uFF0A\uFF0C-\uFF0F\uFF1A\uFF1B\uFF1F\uFF20\uFF3B-\uFF3D\uFF3F\uFF5B\uFF5D\uFF5F-\uFF65]|\uD800[\uDD00-\uDD02\uDF9F\uDFD0]|\uD801\uDD6F|\uD802[\uDC57\uDD1F\uDD3F\uDE50-\uDE58\uDE7F\uDEF0-\uDEF6\uDF39-\uDF3F\uDF99-\uDF9C]|\uD804[\uDC47-\uDC4D\uDCBB\uDCBC\uDCBE-\uDCC1\uDD40-\uDD43\uDD74\uDD75\uDDC5-\uDDC9\uDDCD\uDDDB\uDDDD-\uDDDF\uDE38-\uDE3D\uDEA9]|\uD805[\uDC4B-\uDC4F\uDC5B\uDC5D\uDCC6\uDDC1-\uDDD7\uDE41-\uDE43\uDE60-\uDE6C\uDF3C-\uDF3E]|\uD807[\uDC41-\uDC45\uDC70\uDC71]|\uD809[\uDC70-\uDC74]|\uD81A[\uDE6E\uDE6F\uDEF5\uDF37-\uDF3B\uDF44]|\uD82F\uDC9F|\uD836[\uDE87-\uDE8B]|\uD83A[\uDD5E\uDD5F]/
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has         = __webpack_require__(11)
-  , toObject    = __webpack_require__(52)
-  , IE_PROTO    = __webpack_require__(26)('IE_PROTO')
-  , ObjectProto = Object.prototype;
-
-module.exports = Object.getPrototypeOf || function(O){
-  O = toObject(O);
-  if(has(O, IE_PROTO))return O[IE_PROTO];
-  if(typeof O.constructor == 'function' && O instanceof O.constructor){
-    return O.constructor.prototype;
-  } return O instanceof Object ? ObjectProto : null;
-};
-
-/***/ }),
-/* 82 */,
 /* 83 */
-/***/ (function(module, exports) {
-
-module.exports = function(){ /* empty */ };
-
-/***/ }),
-/* 84 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(1).document && document.documentElement;
-
-/***/ }),
-/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var create         = __webpack_require__(47)
   , descriptor     = __webpack_require__(15)
-  , setToStringTag = __webpack_require__(34)
+  , setToStringTag = __webpack_require__(30)
   , IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(6)(IteratorPrototype, __webpack_require__(10)('iterator'), function(){ return this; });
+__webpack_require__(4)(IteratorPrototype, __webpack_require__(7)('iterator'), function(){ return this; });
 
 module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
@@ -2998,7 +2975,7 @@ module.exports = function(Constructor, NAME, next){
 };
 
 /***/ }),
-/* 86 */
+/* 84 */
 /***/ (function(module, exports) {
 
 module.exports = function(done, value){
@@ -3006,14 +2983,14 @@ module.exports = function(done, value){
 };
 
 /***/ }),
-/* 87 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP       = __webpack_require__(7)
-  , anObject = __webpack_require__(12)
-  , getKeys  = __webpack_require__(29);
+var dP       = __webpack_require__(5)
+  , anObject = __webpack_require__(13)
+  , getKeys  = __webpack_require__(27);
 
-module.exports = __webpack_require__(2) ? Object.defineProperties : function defineProperties(O, Properties){
+module.exports = __webpack_require__(3) ? Object.defineProperties : function defineProperties(O, Properties){
   anObject(O);
   var keys   = getKeys(Properties)
     , length = keys.length
@@ -3024,12 +3001,11 @@ module.exports = __webpack_require__(2) ? Object.defineProperties : function def
 };
 
 /***/ }),
-/* 88 */,
-/* 89 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(23)
-  , defined   = __webpack_require__(16);
+var toInteger = __webpack_require__(25)
+  , defined   = __webpack_require__(17);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function(TO_STRING){
@@ -3047,21 +3023,44 @@ module.exports = function(TO_STRING){
 };
 
 /***/ }),
-/* 90 */
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toInteger = __webpack_require__(25)
+  , max       = Math.max
+  , min       = Math.min;
+module.exports = function(index, length){
+  index = toInteger(index);
+  return index < 0 ? max(index + length, 0) : min(index, length);
+};
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.15 ToLength
+var toInteger = __webpack_require__(25)
+  , min       = Math.min;
+module.exports = function(it){
+  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+};
+
+/***/ }),
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(83)
-  , step             = __webpack_require__(86)
-  , Iterators        = __webpack_require__(22)
-  , toIObject        = __webpack_require__(13);
+var addToUnscopables = __webpack_require__(79)
+  , step             = __webpack_require__(84)
+  , Iterators        = __webpack_require__(19)
+  , toIObject        = __webpack_require__(12);
 
 // 22.1.3.4 Array.prototype.entries()
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(44)(Array, 'Array', function(iterated, kind){
+module.exports = __webpack_require__(42)(Array, 'Array', function(iterated, kind){
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -3087,209 +3086,50 @@ addToUnscopables('values');
 addToUnscopables('entries');
 
 /***/ }),
+/* 90 */,
 /* 91 */,
 /* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* eslint no-unused-vars:0 */
-
-var Style = __webpack_require__(115);
-
-/**
- * This file contains metrics regarding fonts and individual symbols. The sigma
- * and xi variables, as well as the metricMap map contain data extracted from
- * TeX, TeX font metrics, and the TTF files. These data are then exposed via the
- * `metrics` variable and the getCharacterMetrics function.
- */
-
-// These font metrics are extracted from TeX by using
-// \font\a=cmmi10
-// \showthe\fontdimenX\a
-// where X is the corresponding variable number. These correspond to the font
-// parameters of the symbol fonts. In TeX, there are actually three sets of
-// dimensions, one for each of textstyle, scriptstyle, and scriptscriptstyle,
-// but we only use the textstyle ones, and scale certain dimensions accordingly.
-// See the TeXbook, page 441.
-var sigma1 = 0.025;
-var sigma2 = 0;
-var sigma3 = 0;
-var sigma4 = 0;
-var sigma5 = 0.431;
-var sigma6 = 1;
-var sigma7 = 0;
-var sigma8 = 0.677;
-var sigma9 = 0.394;
-var sigma10 = 0.444;
-var sigma11 = 0.686;
-var sigma12 = 0.345;
-var sigma13 = 0.413;
-var sigma14 = 0.363;
-var sigma15 = 0.289;
-var sigma16 = 0.150;
-var sigma17 = 0.247;
-var sigma18 = 0.386;
-var sigma19 = 0.050;
-var sigma20 = 2.390;
-var sigma21 = 1.01;
-var sigma21Script = 0.81;
-var sigma21ScriptScript = 0.71;
-var sigma22 = 0.250;
-
-// These font metrics are extracted from TeX by using
-// \font\a=cmex10
-// \showthe\fontdimenX\a
-// where X is the corresponding variable number. These correspond to the font
-// parameters of the extension fonts (family 3). See the TeXbook, page 441.
-var xi1 = 0;
-var xi2 = 0;
-var xi3 = 0;
-var xi4 = 0;
-var xi5 = 0.431;
-var xi6 = 1;
-var xi7 = 0;
-var xi8 = 0.04;
-var xi9 = 0.111;
-var xi10 = 0.166;
-var xi11 = 0.2;
-var xi12 = 0.6;
-var xi13 = 0.1;
-
-// This value determines how large a pt is, for metrics which are defined in
-// terms of pts.
-// This value is also used in katex.less; if you change it make sure the values
-// match.
-var ptPerEm = 10.0;
-
-// The space between adjacent `|` columns in an array definition. From
-// `\showthe\doublerulesep` in LaTeX.
-var doubleRuleSep = 2.0 / ptPerEm;
-
-/**
- * This is just a mapping from common names to real metrics
- */
-var metrics = {
-    xHeight: sigma5,
-    quad: sigma6,
-    num1: sigma8,
-    num2: sigma9,
-    num3: sigma10,
-    denom1: sigma11,
-    denom2: sigma12,
-    sup1: sigma13,
-    sup2: sigma14,
-    sup3: sigma15,
-    sub1: sigma16,
-    sub2: sigma17,
-    supDrop: sigma18,
-    subDrop: sigma19,
-    axisHeight: sigma22,
-    defaultRuleThickness: xi8,
-    bigOpSpacing1: xi9,
-    bigOpSpacing2: xi10,
-    bigOpSpacing3: xi11,
-    bigOpSpacing4: xi12,
-    bigOpSpacing5: xi13,
-    ptPerEm: ptPerEm,
-    emPerEx: sigma5 / sigma6,
-    doubleRuleSep: doubleRuleSep,
-
-    // TODO(alpert): Missing parallel structure here. We should probably add
-    // style-specific metrics for all of these.
-    delim1: sigma20,
-    getDelim2: function(style) {
-        if (style.size === Style.TEXT.size) {
-            return sigma21;
-        } else if (style.size === Style.SCRIPT.size) {
-            return sigma21Script;
-        } else if (style.size === Style.SCRIPTSCRIPT.size) {
-            return sigma21ScriptScript;
-        }
-        throw new Error("Unexpected style size: " + style.size);
-    },
-};
-
-// This map contains a mapping from font name and character code to character
-// metrics, including height, depth, italic correction, and skew (kern from the
-// character to the corresponding \skewchar)
-// This map is generated via `make metrics`. It should not be changed manually.
-var metricMap = __webpack_require__(255);
-
-/**
- * This function is a convenience function for looking up information in the
- * metricMap table. It takes a character as a string, and a style.
- *
- * Note: the `width` property may be undefined if fontMetricsData.js wasn't
- * built using `Make extended_metrics`.
- */
-var getCharacterMetrics = function(character, style) {
-    var metrics = metricMap[style][character.charCodeAt(0)];
-    if (metrics) {
-        return {
-            depth: metrics[0],
-            height: metrics[1],
-            italic: metrics[2],
-            skew: metrics[3],
-            width: metrics[4],
-        };
-    }
-};
-
-module.exports = {
-    metrics: metrics,
-    getCharacterMetrics: getCharacterMetrics,
-};
-
-
-/***/ }),
-/* 102 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 
-module.exports.encode = __webpack_require__(165);
-module.exports.decode = __webpack_require__(164);
-module.exports.format = __webpack_require__(166);
-module.exports.parse  = __webpack_require__(167);
+module.exports.encode = __webpack_require__(150);
+module.exports.decode = __webpack_require__(149);
+module.exports.format = __webpack_require__(151);
+module.exports.parse  = __webpack_require__(152);
 
 
 /***/ }),
-/* 103 */
+/* 94 */
 /***/ (function(module, exports) {
 
 module.exports=/[\0-\x1F\x7F-\x9F]/
 
 /***/ }),
-/* 104 */
+/* 95 */
 /***/ (function(module, exports) {
 
 module.exports=/[ \xA0\u1680\u2000-\u200A\u202F\u205F\u3000]/
 
 /***/ }),
-/* 105 */
+/* 96 */
 /***/ (function(module, exports) {
 
 module.exports=/[\0-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/
 
 /***/ }),
-/* 106 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(132), __esModule: true };
+module.exports = { "default": __webpack_require__(120), __esModule: true };
 
 /***/ }),
-/* 107 */,
-/* 108 */
+/* 98 */,
+/* 99 */,
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3303,9 +3143,9 @@ module.exports = { "default": __webpack_require__(132), __esModule: true };
 
 
 
-var base64 = __webpack_require__(109)
-var ieee754 = __webpack_require__(113)
-var isArray = __webpack_require__(114)
+var base64 = __webpack_require__(101)
+var ieee754 = __webpack_require__(112)
+var isArray = __webpack_require__(113)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -5083,10 +4923,10 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(80)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(60)))
 
 /***/ }),
-/* 109 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5207,10 +5047,17 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
 /* 110 */,
 /* 111 */,
-/* 112 */,
-/* 113 */
+/* 112 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -5300,7 +5147,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -5311,1368 +5158,162 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 115 */
-/***/ (function(module, exports) {
-
-/**
- * This file contains information and classes for the various kinds of styles
- * used in TeX. It provides a generic `Style` class, which holds information
- * about a specific style. It then provides instances of all the different kinds
- * of styles possible, and provides functions to move between them and get
- * information about them.
- */
-
-/**
- * The main style class. Contains a unique id for the style, a size (which is
- * the same for cramped and uncramped version of a style), a cramped flag, and a
- * size multiplier, which gives the size difference between a style and
- * textstyle.
- */
-function Style(id, size, multiplier, cramped) {
-    this.id = id;
-    this.size = size;
-    this.cramped = cramped;
-    this.sizeMultiplier = multiplier;
-}
-
-/**
- * Get the style of a superscript given a base in the current style.
- */
-Style.prototype.sup = function() {
-    return styles[sup[this.id]];
-};
-
-/**
- * Get the style of a subscript given a base in the current style.
- */
-Style.prototype.sub = function() {
-    return styles[sub[this.id]];
-};
-
-/**
- * Get the style of a fraction numerator given the fraction in the current
- * style.
- */
-Style.prototype.fracNum = function() {
-    return styles[fracNum[this.id]];
-};
-
-/**
- * Get the style of a fraction denominator given the fraction in the current
- * style.
- */
-Style.prototype.fracDen = function() {
-    return styles[fracDen[this.id]];
-};
-
-/**
- * Get the cramped version of a style (in particular, cramping a cramped style
- * doesn't change the style).
- */
-Style.prototype.cramp = function() {
-    return styles[cramp[this.id]];
-};
-
-/**
- * HTML class name, like "displaystyle cramped"
- */
-Style.prototype.cls = function() {
-    return sizeNames[this.size] + (this.cramped ? " cramped" : " uncramped");
-};
-
-/**
- * HTML Reset class name, like "reset-textstyle"
- */
-Style.prototype.reset = function() {
-    return resetNames[this.size];
-};
-
-// IDs of the different styles
-var D = 0;
-var Dc = 1;
-var T = 2;
-var Tc = 3;
-var S = 4;
-var Sc = 5;
-var SS = 6;
-var SSc = 7;
-
-// String names for the different sizes
-var sizeNames = [
-    "displaystyle textstyle",
-    "textstyle",
-    "scriptstyle",
-    "scriptscriptstyle",
-];
-
-// Reset names for the different sizes
-var resetNames = [
-    "reset-textstyle",
-    "reset-textstyle",
-    "reset-scriptstyle",
-    "reset-scriptscriptstyle",
-];
-
-// Instances of the different styles
-var styles = [
-    new Style(D, 0, 1.0, false),
-    new Style(Dc, 0, 1.0, true),
-    new Style(T, 1, 1.0, false),
-    new Style(Tc, 1, 1.0, true),
-    new Style(S, 2, 0.7, false),
-    new Style(Sc, 2, 0.7, true),
-    new Style(SS, 3, 0.5, false),
-    new Style(SSc, 3, 0.5, true),
-];
-
-// Lookup tables for switching from one style to another
-var sup = [S, Sc, S, Sc, SS, SSc, SS, SSc];
-var sub = [Sc, Sc, Sc, Sc, SSc, SSc, SSc, SSc];
-var fracNum = [T, Tc, S, Sc, SS, SSc, SS, SSc];
-var fracDen = [Tc, Tc, Sc, Sc, SSc, SSc, SSc, SSc];
-var cramp = [Dc, Dc, Tc, Tc, Sc, Sc, SSc, SSc];
-
-// We only export some of the styles. Also, we don't export the `Style` class so
-// no more styles can be generated.
-module.exports = {
-    DISPLAY: styles[D],
-    TEXT: styles[T],
-    SCRIPT: styles[S],
-    SCRIPTSCRIPT: styles[SS],
-};
-
-
-/***/ }),
-/* 116 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* eslint no-console:0 */
-/**
- * This module contains general functions that can be used for building
- * different kinds of domTree nodes in a consistent manner.
- */
+/* eslint no-unused-vars:0 */
 
-var domTree = __webpack_require__(221);
-var fontMetrics = __webpack_require__(101);
-var symbols = __webpack_require__(117);
-var utils = __webpack_require__(46);
-
-var greekCapitals = [
-    "\\Gamma",
-    "\\Delta",
-    "\\Theta",
-    "\\Lambda",
-    "\\Xi",
-    "\\Pi",
-    "\\Sigma",
-    "\\Upsilon",
-    "\\Phi",
-    "\\Psi",
-    "\\Omega",
-];
-
-var dotlessLetters = [
-    "\u0131",   // dotless i, \imath
-    "\u0237",   // dotless j, \jmath
-];
+var Style = __webpack_require__(136);
 
 /**
- * Makes a symbolNode after translation via the list of symbols in symbols.js.
- * Correctly pulls out metrics for the character, and optionally takes a list of
- * classes to be attached to the node.
+ * This file contains metrics regarding fonts and individual symbols. The sigma
+ * and xi variables, as well as the metricMap map contain data extracted from
+ * TeX, TeX font metrics, and the TTF files. These data are then exposed via the
+ * `metrics` variable and the getCharacterMetrics function.
  */
-var makeSymbol = function(value, style, mode, color, classes) {
-    // Replace the value with its replaced value from symbol.js
-    if (symbols[mode][value] && symbols[mode][value].replace) {
-        value = symbols[mode][value].replace;
-    }
 
-    var metrics = fontMetrics.getCharacterMetrics(value, style);
+// These font metrics are extracted from TeX by using
+// \font\a=cmmi10
+// \showthe\fontdimenX\a
+// where X is the corresponding variable number. These correspond to the font
+// parameters of the symbol fonts. In TeX, there are actually three sets of
+// dimensions, one for each of textstyle, scriptstyle, and scriptscriptstyle,
+// but we only use the textstyle ones, and scale certain dimensions accordingly.
+// See the TeXbook, page 441.
+var sigma1 = 0.025;
+var sigma2 = 0;
+var sigma3 = 0;
+var sigma4 = 0;
+var sigma5 = 0.431;
+var sigma6 = 1;
+var sigma7 = 0;
+var sigma8 = 0.677;
+var sigma9 = 0.394;
+var sigma10 = 0.444;
+var sigma11 = 0.686;
+var sigma12 = 0.345;
+var sigma13 = 0.413;
+var sigma14 = 0.363;
+var sigma15 = 0.289;
+var sigma16 = 0.150;
+var sigma17 = 0.247;
+var sigma18 = 0.386;
+var sigma19 = 0.050;
+var sigma20 = 2.390;
+var sigma21 = 1.01;
+var sigma21Script = 0.81;
+var sigma21ScriptScript = 0.71;
+var sigma22 = 0.250;
 
-    var symbolNode;
+// These font metrics are extracted from TeX by using
+// \font\a=cmex10
+// \showthe\fontdimenX\a
+// where X is the corresponding variable number. These correspond to the font
+// parameters of the extension fonts (family 3). See the TeXbook, page 441.
+var xi1 = 0;
+var xi2 = 0;
+var xi3 = 0;
+var xi4 = 0;
+var xi5 = 0.431;
+var xi6 = 1;
+var xi7 = 0;
+var xi8 = 0.04;
+var xi9 = 0.111;
+var xi10 = 0.166;
+var xi11 = 0.2;
+var xi12 = 0.6;
+var xi13 = 0.1;
+
+// This value determines how large a pt is, for metrics which are defined in
+// terms of pts.
+// This value is also used in katex.less; if you change it make sure the values
+// match.
+var ptPerEm = 10.0;
+
+// The space between adjacent `|` columns in an array definition. From
+// `\showthe\doublerulesep` in LaTeX.
+var doubleRuleSep = 2.0 / ptPerEm;
+
+/**
+ * This is just a mapping from common names to real metrics
+ */
+var metrics = {
+    xHeight: sigma5,
+    quad: sigma6,
+    num1: sigma8,
+    num2: sigma9,
+    num3: sigma10,
+    denom1: sigma11,
+    denom2: sigma12,
+    sup1: sigma13,
+    sup2: sigma14,
+    sup3: sigma15,
+    sub1: sigma16,
+    sub2: sigma17,
+    supDrop: sigma18,
+    subDrop: sigma19,
+    axisHeight: sigma22,
+    defaultRuleThickness: xi8,
+    bigOpSpacing1: xi9,
+    bigOpSpacing2: xi10,
+    bigOpSpacing3: xi11,
+    bigOpSpacing4: xi12,
+    bigOpSpacing5: xi13,
+    ptPerEm: ptPerEm,
+    emPerEx: sigma5 / sigma6,
+    doubleRuleSep: doubleRuleSep,
+
+    // TODO(alpert): Missing parallel structure here. We should probably add
+    // style-specific metrics for all of these.
+    delim1: sigma20,
+    getDelim2: function(style) {
+        if (style.size === Style.TEXT.size) {
+            return sigma21;
+        } else if (style.size === Style.SCRIPT.size) {
+            return sigma21Script;
+        } else if (style.size === Style.SCRIPTSCRIPT.size) {
+            return sigma21ScriptScript;
+        }
+        throw new Error("Unexpected style size: " + style.size);
+    },
+};
+
+// This map contains a mapping from font name and character code to character
+// metrics, including height, depth, italic correction, and skew (kern from the
+// character to the corresponding \skewchar)
+// This map is generated via `make metrics`. It should not be changed manually.
+var metricMap = __webpack_require__(304);
+
+/**
+ * This function is a convenience function for looking up information in the
+ * metricMap table. It takes a character as a string, and a style.
+ *
+ * Note: the `width` property may be undefined if fontMetricsData.js wasn't
+ * built using `Make extended_metrics`.
+ */
+var getCharacterMetrics = function(character, style) {
+    var metrics = metricMap[style][character.charCodeAt(0)];
     if (metrics) {
-        symbolNode = new domTree.symbolNode(
-            value, metrics.height, metrics.depth, metrics.italic, metrics.skew,
-            classes);
-    } else {
-        // TODO(emily): Figure out a good way to only print this in development
-        typeof console !== "undefined" && console.warn(
-            "No character metrics for '" + value + "' in style '" +
-                style + "'");
-        symbolNode = new domTree.symbolNode(value, 0, 0, 0, 0, classes);
+        return {
+            depth: metrics[0],
+            height: metrics[1],
+            italic: metrics[2],
+            skew: metrics[3],
+            width: metrics[4],
+        };
     }
-
-    if (color) {
-        symbolNode.style.color = color;
-    }
-
-    return symbolNode;
-};
-
-/**
- * Makes a symbol in Main-Regular or AMS-Regular.
- * Used for rel, bin, open, close, inner, and punct.
- */
-var mathsym = function(value, mode, color, classes) {
-    // Decide what font to render the symbol in by its entry in the symbols
-    // table.
-    // Have a special case for when the value = \ because the \ is used as a
-    // textord in unsupported command errors but cannot be parsed as a regular
-    // text ordinal and is therefore not present as a symbol in the symbols
-    // table for text
-    if (value === "\\" || symbols[mode][value].font === "main") {
-        return makeSymbol(value, "Main-Regular", mode, color, classes);
-    } else {
-        return makeSymbol(
-            value, "AMS-Regular", mode, color, classes.concat(["amsrm"]));
-    }
-};
-
-/**
- * Makes a symbol in the default font for mathords and textords.
- */
-var mathDefault = function(value, mode, color, classes, type) {
-    if (type === "mathord") {
-        return mathit(value, mode, color, classes);
-    } else if (type === "textord") {
-        return makeSymbol(
-            value, "Main-Regular", mode, color, classes.concat(["mathrm"]));
-    } else {
-        throw new Error("unexpected type: " + type + " in mathDefault");
-    }
-};
-
-/**
- * Makes a symbol in the italic math font.
- */
-var mathit = function(value, mode, color, classes) {
-    if (/[0-9]/.test(value.charAt(0)) ||
-            // glyphs for \imath and \jmath do not exist in Math-Italic so we
-            // need to use Main-Italic instead
-            utils.contains(dotlessLetters, value) ||
-            utils.contains(greekCapitals, value)) {
-        return makeSymbol(
-            value, "Main-Italic", mode, color, classes.concat(["mainit"]));
-    } else {
-        return makeSymbol(
-            value, "Math-Italic", mode, color, classes.concat(["mathit"]));
-    }
-};
-
-/**
- * Makes either a mathord or textord in the correct font and color.
- */
-var makeOrd = function(group, options, type) {
-    var mode = group.mode;
-    var value = group.value;
-    if (symbols[mode][value] && symbols[mode][value].replace) {
-        value = symbols[mode][value].replace;
-    }
-
-    var classes = ["mord"];
-    var color = options.getColor();
-
-    var font = options.font;
-    if (font) {
-        if (font === "mathit" || utils.contains(dotlessLetters, value)) {
-            return mathit(value, mode, color, classes);
-        } else {
-            var fontName = fontMap[font].fontName;
-            if (fontMetrics.getCharacterMetrics(value, fontName)) {
-                return makeSymbol(
-                    value, fontName, mode, color, classes.concat([font]));
-            } else {
-                return mathDefault(value, mode, color, classes, type);
-            }
-        }
-    } else {
-        return mathDefault(value, mode, color, classes, type);
-    }
-};
-
-/**
- * Calculate the height, depth, and maxFontSize of an element based on its
- * children.
- */
-var sizeElementFromChildren = function(elem) {
-    var height = 0;
-    var depth = 0;
-    var maxFontSize = 0;
-
-    if (elem.children) {
-        for (var i = 0; i < elem.children.length; i++) {
-            if (elem.children[i].height > height) {
-                height = elem.children[i].height;
-            }
-            if (elem.children[i].depth > depth) {
-                depth = elem.children[i].depth;
-            }
-            if (elem.children[i].maxFontSize > maxFontSize) {
-                maxFontSize = elem.children[i].maxFontSize;
-            }
-        }
-    }
-
-    elem.height = height;
-    elem.depth = depth;
-    elem.maxFontSize = maxFontSize;
-};
-
-/**
- * Makes a span with the given list of classes, list of children, and color.
- */
-var makeSpan = function(classes, children, color) {
-    var span = new domTree.span(classes, children);
-
-    sizeElementFromChildren(span);
-
-    if (color) {
-        span.style.color = color;
-    }
-
-    return span;
-};
-
-/**
- * Makes a document fragment with the given list of children.
- */
-var makeFragment = function(children) {
-    var fragment = new domTree.documentFragment(children);
-
-    sizeElementFromChildren(fragment);
-
-    return fragment;
-};
-
-/**
- * Makes an element placed in each of the vlist elements to ensure that each
- * element has the same max font size. To do this, we create a zero-width space
- * with the correct font size.
- */
-var makeFontSizer = function(options, fontSize) {
-    var fontSizeInner = makeSpan([], [new domTree.symbolNode("\u200b")]);
-    fontSizeInner.style.fontSize =
-        (fontSize / options.style.sizeMultiplier) + "em";
-
-    var fontSizer = makeSpan(
-        ["fontsize-ensurer", "reset-" + options.size, "size5"],
-        [fontSizeInner]);
-
-    return fontSizer;
-};
-
-/**
- * Makes a vertical list by stacking elements and kerns on top of each other.
- * Allows for many different ways of specifying the positioning method.
- *
- * Arguments:
- *  - children: A list of child or kern nodes to be stacked on top of each other
- *              (i.e. the first element will be at the bottom, and the last at
- *              the top). Element nodes are specified as
- *                {type: "elem", elem: node}
- *              while kern nodes are specified as
- *                {type: "kern", size: size}
- *  - positionType: The method by which the vlist should be positioned. Valid
- *                  values are:
- *                   - "individualShift": The children list only contains elem
- *                                        nodes, and each node contains an extra
- *                                        "shift" value of how much it should be
- *                                        shifted (note that shifting is always
- *                                        moving downwards). positionData is
- *                                        ignored.
- *                   - "top": The positionData specifies the topmost point of
- *                            the vlist (note this is expected to be a height,
- *                            so positive values move up)
- *                   - "bottom": The positionData specifies the bottommost point
- *                               of the vlist (note this is expected to be a
- *                               depth, so positive values move down
- *                   - "shift": The vlist will be positioned such that its
- *                              baseline is positionData away from the baseline
- *                              of the first child. Positive values move
- *                              downwards.
- *                   - "firstBaseline": The vlist will be positioned such that
- *                                      its baseline is aligned with the
- *                                      baseline of the first child.
- *                                      positionData is ignored. (this is
- *                                      equivalent to "shift" with
- *                                      positionData=0)
- *  - positionData: Data used in different ways depending on positionType
- *  - options: An Options object
- *
- */
-var makeVList = function(children, positionType, positionData, options) {
-    var depth;
-    var currPos;
-    var i;
-    if (positionType === "individualShift") {
-        var oldChildren = children;
-        children = [oldChildren[0]];
-
-        // Add in kerns to the list of children to get each element to be
-        // shifted to the correct specified shift
-        depth = -oldChildren[0].shift - oldChildren[0].elem.depth;
-        currPos = depth;
-        for (i = 1; i < oldChildren.length; i++) {
-            var diff = -oldChildren[i].shift - currPos -
-                oldChildren[i].elem.depth;
-            var size = diff -
-                (oldChildren[i - 1].elem.height +
-                 oldChildren[i - 1].elem.depth);
-
-            currPos = currPos + diff;
-
-            children.push({type: "kern", size: size});
-            children.push(oldChildren[i]);
-        }
-    } else if (positionType === "top") {
-        // We always start at the bottom, so calculate the bottom by adding up
-        // all the sizes
-        var bottom = positionData;
-        for (i = 0; i < children.length; i++) {
-            if (children[i].type === "kern") {
-                bottom -= children[i].size;
-            } else {
-                bottom -= children[i].elem.height + children[i].elem.depth;
-            }
-        }
-        depth = bottom;
-    } else if (positionType === "bottom") {
-        depth = -positionData;
-    } else if (positionType === "shift") {
-        depth = -children[0].elem.depth - positionData;
-    } else if (positionType === "firstBaseline") {
-        depth = -children[0].elem.depth;
-    } else {
-        depth = 0;
-    }
-
-    // Make the fontSizer
-    var maxFontSize = 0;
-    for (i = 0; i < children.length; i++) {
-        if (children[i].type === "elem") {
-            maxFontSize = Math.max(maxFontSize, children[i].elem.maxFontSize);
-        }
-    }
-    var fontSizer = makeFontSizer(options, maxFontSize);
-
-    // Create a new list of actual children at the correct offsets
-    var realChildren = [];
-    currPos = depth;
-    for (i = 0; i < children.length; i++) {
-        if (children[i].type === "kern") {
-            currPos += children[i].size;
-        } else {
-            var child = children[i].elem;
-
-            var shift = -child.depth - currPos;
-            currPos += child.height + child.depth;
-
-            var childWrap = makeSpan([], [fontSizer, child]);
-            childWrap.height -= shift;
-            childWrap.depth += shift;
-            childWrap.style.top = shift + "em";
-
-            realChildren.push(childWrap);
-        }
-    }
-
-    // Add in an element at the end with no offset to fix the calculation of
-    // baselines in some browsers (namely IE, sometimes safari)
-    var baselineFix = makeSpan(
-        ["baseline-fix"], [fontSizer, new domTree.symbolNode("\u200b")]);
-    realChildren.push(baselineFix);
-
-    var vlist = makeSpan(["vlist"], realChildren);
-    // Fix the final height and depth, in case there were kerns at the ends
-    // since the makeSpan calculation won't take that in to account.
-    vlist.height = Math.max(currPos, vlist.height);
-    vlist.depth = Math.max(-depth, vlist.depth);
-    return vlist;
-};
-
-// A table of size -> font size for the different sizing functions
-var sizingMultiplier = {
-    size1: 0.5,
-    size2: 0.7,
-    size3: 0.8,
-    size4: 0.9,
-    size5: 1.0,
-    size6: 1.2,
-    size7: 1.44,
-    size8: 1.73,
-    size9: 2.07,
-    size10: 2.49,
-};
-
-// A map of spacing functions to their attributes, like size and corresponding
-// CSS class
-var spacingFunctions = {
-    "\\qquad": {
-        size: "2em",
-        className: "qquad",
-    },
-    "\\quad": {
-        size: "1em",
-        className: "quad",
-    },
-    "\\enspace": {
-        size: "0.5em",
-        className: "enspace",
-    },
-    "\\;": {
-        size: "0.277778em",
-        className: "thickspace",
-    },
-    "\\:": {
-        size: "0.22222em",
-        className: "mediumspace",
-    },
-    "\\,": {
-        size: "0.16667em",
-        className: "thinspace",
-    },
-    "\\!": {
-        size: "-0.16667em",
-        className: "negativethinspace",
-    },
-};
-
-/**
- * Maps TeX font commands to objects containing:
- * - variant: string used for "mathvariant" attribute in buildMathML.js
- * - fontName: the "style" parameter to fontMetrics.getCharacterMetrics
- */
-// A map between tex font commands an MathML mathvariant attribute values
-var fontMap = {
-    // styles
-    "mathbf": {
-        variant: "bold",
-        fontName: "Main-Bold",
-    },
-    "mathrm": {
-        variant: "normal",
-        fontName: "Main-Regular",
-    },
-
-    // "mathit" is missing because it requires the use of two fonts: Main-Italic
-    // and Math-Italic.  This is handled by a special case in makeOrd which ends
-    // up calling mathit.
-
-    // families
-    "mathbb": {
-        variant: "double-struck",
-        fontName: "AMS-Regular",
-    },
-    "mathcal": {
-        variant: "script",
-        fontName: "Caligraphic-Regular",
-    },
-    "mathfrak": {
-        variant: "fraktur",
-        fontName: "Fraktur-Regular",
-    },
-    "mathscr": {
-        variant: "script",
-        fontName: "Script-Regular",
-    },
-    "mathsf": {
-        variant: "sans-serif",
-        fontName: "SansSerif-Regular",
-    },
-    "mathtt": {
-        variant: "monospace",
-        fontName: "Typewriter-Regular",
-    },
 };
 
 module.exports = {
-    fontMap: fontMap,
-    makeSymbol: makeSymbol,
-    mathsym: mathsym,
-    makeSpan: makeSpan,
-    makeFragment: makeFragment,
-    makeVList: makeVList,
-    makeOrd: makeOrd,
-    sizingMultiplier: sizingMultiplier,
-    spacingFunctions: spacingFunctions,
+    metrics: metrics,
+    getCharacterMetrics: getCharacterMetrics,
 };
 
 
 /***/ }),
+/* 115 */,
+/* 116 */,
 /* 117 */
-/***/ (function(module, exports) {
-
-/**
- * This file holds a list of all no-argument functions and single-character
- * symbols (like 'a' or ';').
- *
- * For each of the symbols, there are three properties they can have:
- * - font (required): the font to be used for this symbol. Either "main" (the
-     normal font), or "ams" (the ams fonts).
- * - group (required): the ParseNode group type the symbol should have (i.e.
-     "textord", "mathord", etc).
-     See https://github.com/Khan/KaTeX/wiki/Examining-TeX#group-types
- * - replace: the character that this symbol or function should be
- *   replaced with (i.e. "\phi" has a replace value of "\u03d5", the phi
- *   character in the main font).
- *
- * The outermost map in the table indicates what mode the symbols should be
- * accepted in (e.g. "math" or "text").
- */
-
-module.exports = {
-    math: {},
-    text: {},
-};
-
-function defineSymbol(mode, font, group, replace, name) {
-    module.exports[mode][name] = {
-        font: font,
-        group: group,
-        replace: replace,
-    };
-}
-
-// Some abbreviations for commonly used strings.
-// This helps minify the code, and also spotting typos using jshint.
-
-// modes:
-var math = "math";
-var text = "text";
-
-// fonts:
-var main = "main";
-var ams = "ams";
-
-// groups:
-var accent = "accent";
-var bin = "bin";
-var close = "close";
-var inner = "inner";
-var mathord = "mathord";
-var op = "op";
-var open = "open";
-var punct = "punct";
-var rel = "rel";
-var spacing = "spacing";
-var textord = "textord";
-
-// Now comes the symbol table
-
-// Relation Symbols
-defineSymbol(math, main, rel, "\u2261", "\\equiv");
-defineSymbol(math, main, rel, "\u227a", "\\prec");
-defineSymbol(math, main, rel, "\u227b", "\\succ");
-defineSymbol(math, main, rel, "\u223c", "\\sim");
-defineSymbol(math, main, rel, "\u22a5", "\\perp");
-defineSymbol(math, main, rel, "\u2aaf", "\\preceq");
-defineSymbol(math, main, rel, "\u2ab0", "\\succeq");
-defineSymbol(math, main, rel, "\u2243", "\\simeq");
-defineSymbol(math, main, rel, "\u2223", "\\mid");
-defineSymbol(math, main, rel, "\u226a", "\\ll");
-defineSymbol(math, main, rel, "\u226b", "\\gg");
-defineSymbol(math, main, rel, "\u224d", "\\asymp");
-defineSymbol(math, main, rel, "\u2225", "\\parallel");
-defineSymbol(math, main, rel, "\u22c8", "\\bowtie");
-defineSymbol(math, main, rel, "\u2323", "\\smile");
-defineSymbol(math, main, rel, "\u2291", "\\sqsubseteq");
-defineSymbol(math, main, rel, "\u2292", "\\sqsupseteq");
-defineSymbol(math, main, rel, "\u2250", "\\doteq");
-defineSymbol(math, main, rel, "\u2322", "\\frown");
-defineSymbol(math, main, rel, "\u220b", "\\ni");
-defineSymbol(math, main, rel, "\u221d", "\\propto");
-defineSymbol(math, main, rel, "\u22a2", "\\vdash");
-defineSymbol(math, main, rel, "\u22a3", "\\dashv");
-defineSymbol(math, main, rel, "\u220b", "\\owns");
-
-// Punctuation
-defineSymbol(math, main, punct, "\u002e", "\\ldotp");
-defineSymbol(math, main, punct, "\u22c5", "\\cdotp");
-
-// Misc Symbols
-defineSymbol(math, main, textord, "\u0023", "\\#");
-defineSymbol(math, main, textord, "\u0026", "\\&");
-defineSymbol(math, main, textord, "\u2135", "\\aleph");
-defineSymbol(math, main, textord, "\u2200", "\\forall");
-defineSymbol(math, main, textord, "\u210f", "\\hbar");
-defineSymbol(math, main, textord, "\u2203", "\\exists");
-defineSymbol(math, main, textord, "\u2207", "\\nabla");
-defineSymbol(math, main, textord, "\u266d", "\\flat");
-defineSymbol(math, main, textord, "\u2113", "\\ell");
-defineSymbol(math, main, textord, "\u266e", "\\natural");
-defineSymbol(math, main, textord, "\u2663", "\\clubsuit");
-defineSymbol(math, main, textord, "\u2118", "\\wp");
-defineSymbol(math, main, textord, "\u266f", "\\sharp");
-defineSymbol(math, main, textord, "\u2662", "\\diamondsuit");
-defineSymbol(math, main, textord, "\u211c", "\\Re");
-defineSymbol(math, main, textord, "\u2661", "\\heartsuit");
-defineSymbol(math, main, textord, "\u2111", "\\Im");
-defineSymbol(math, main, textord, "\u2660", "\\spadesuit");
-
-// Math and Text
-defineSymbol(math, main, textord, "\u2020", "\\dag");
-defineSymbol(math, main, textord, "\u2021", "\\ddag");
-
-// Large Delimiters
-defineSymbol(math, main, close, "\u23b1", "\\rmoustache");
-defineSymbol(math, main, open, "\u23b0", "\\lmoustache");
-defineSymbol(math, main, close, "\u27ef", "\\rgroup");
-defineSymbol(math, main, open, "\u27ee", "\\lgroup");
-
-// Binary Operators
-defineSymbol(math, main, bin, "\u2213", "\\mp");
-defineSymbol(math, main, bin, "\u2296", "\\ominus");
-defineSymbol(math, main, bin, "\u228e", "\\uplus");
-defineSymbol(math, main, bin, "\u2293", "\\sqcap");
-defineSymbol(math, main, bin, "\u2217", "\\ast");
-defineSymbol(math, main, bin, "\u2294", "\\sqcup");
-defineSymbol(math, main, bin, "\u25ef", "\\bigcirc");
-defineSymbol(math, main, bin, "\u2219", "\\bullet");
-defineSymbol(math, main, bin, "\u2021", "\\ddagger");
-defineSymbol(math, main, bin, "\u2240", "\\wr");
-defineSymbol(math, main, bin, "\u2a3f", "\\amalg");
-
-// Arrow Symbols
-defineSymbol(math, main, rel, "\u27f5", "\\longleftarrow");
-defineSymbol(math, main, rel, "\u21d0", "\\Leftarrow");
-defineSymbol(math, main, rel, "\u27f8", "\\Longleftarrow");
-defineSymbol(math, main, rel, "\u27f6", "\\longrightarrow");
-defineSymbol(math, main, rel, "\u21d2", "\\Rightarrow");
-defineSymbol(math, main, rel, "\u27f9", "\\Longrightarrow");
-defineSymbol(math, main, rel, "\u2194", "\\leftrightarrow");
-defineSymbol(math, main, rel, "\u27f7", "\\longleftrightarrow");
-defineSymbol(math, main, rel, "\u21d4", "\\Leftrightarrow");
-defineSymbol(math, main, rel, "\u27fa", "\\Longleftrightarrow");
-defineSymbol(math, main, rel, "\u21a6", "\\mapsto");
-defineSymbol(math, main, rel, "\u27fc", "\\longmapsto");
-defineSymbol(math, main, rel, "\u2197", "\\nearrow");
-defineSymbol(math, main, rel, "\u21a9", "\\hookleftarrow");
-defineSymbol(math, main, rel, "\u21aa", "\\hookrightarrow");
-defineSymbol(math, main, rel, "\u2198", "\\searrow");
-defineSymbol(math, main, rel, "\u21bc", "\\leftharpoonup");
-defineSymbol(math, main, rel, "\u21c0", "\\rightharpoonup");
-defineSymbol(math, main, rel, "\u2199", "\\swarrow");
-defineSymbol(math, main, rel, "\u21bd", "\\leftharpoondown");
-defineSymbol(math, main, rel, "\u21c1", "\\rightharpoondown");
-defineSymbol(math, main, rel, "\u2196", "\\nwarrow");
-defineSymbol(math, main, rel, "\u21cc", "\\rightleftharpoons");
-
-// AMS Negated Binary Relations
-defineSymbol(math, ams, rel, "\u226e", "\\nless");
-defineSymbol(math, ams, rel, "\ue010", "\\nleqslant");
-defineSymbol(math, ams, rel, "\ue011", "\\nleqq");
-defineSymbol(math, ams, rel, "\u2a87", "\\lneq");
-defineSymbol(math, ams, rel, "\u2268", "\\lneqq");
-defineSymbol(math, ams, rel, "\ue00c", "\\lvertneqq");
-defineSymbol(math, ams, rel, "\u22e6", "\\lnsim");
-defineSymbol(math, ams, rel, "\u2a89", "\\lnapprox");
-defineSymbol(math, ams, rel, "\u2280", "\\nprec");
-defineSymbol(math, ams, rel, "\u22e0", "\\npreceq");
-defineSymbol(math, ams, rel, "\u22e8", "\\precnsim");
-defineSymbol(math, ams, rel, "\u2ab9", "\\precnapprox");
-defineSymbol(math, ams, rel, "\u2241", "\\nsim");
-defineSymbol(math, ams, rel, "\ue006", "\\nshortmid");
-defineSymbol(math, ams, rel, "\u2224", "\\nmid");
-defineSymbol(math, ams, rel, "\u22ac", "\\nvdash");
-defineSymbol(math, ams, rel, "\u22ad", "\\nvDash");
-defineSymbol(math, ams, rel, "\u22ea", "\\ntriangleleft");
-defineSymbol(math, ams, rel, "\u22ec", "\\ntrianglelefteq");
-defineSymbol(math, ams, rel, "\u228a", "\\subsetneq");
-defineSymbol(math, ams, rel, "\ue01a", "\\varsubsetneq");
-defineSymbol(math, ams, rel, "\u2acb", "\\subsetneqq");
-defineSymbol(math, ams, rel, "\ue017", "\\varsubsetneqq");
-defineSymbol(math, ams, rel, "\u226f", "\\ngtr");
-defineSymbol(math, ams, rel, "\ue00f", "\\ngeqslant");
-defineSymbol(math, ams, rel, "\ue00e", "\\ngeqq");
-defineSymbol(math, ams, rel, "\u2a88", "\\gneq");
-defineSymbol(math, ams, rel, "\u2269", "\\gneqq");
-defineSymbol(math, ams, rel, "\ue00d", "\\gvertneqq");
-defineSymbol(math, ams, rel, "\u22e7", "\\gnsim");
-defineSymbol(math, ams, rel, "\u2a8a", "\\gnapprox");
-defineSymbol(math, ams, rel, "\u2281", "\\nsucc");
-defineSymbol(math, ams, rel, "\u22e1", "\\nsucceq");
-defineSymbol(math, ams, rel, "\u22e9", "\\succnsim");
-defineSymbol(math, ams, rel, "\u2aba", "\\succnapprox");
-defineSymbol(math, ams, rel, "\u2246", "\\ncong");
-defineSymbol(math, ams, rel, "\ue007", "\\nshortparallel");
-defineSymbol(math, ams, rel, "\u2226", "\\nparallel");
-defineSymbol(math, ams, rel, "\u22af", "\\nVDash");
-defineSymbol(math, ams, rel, "\u22eb", "\\ntriangleright");
-defineSymbol(math, ams, rel, "\u22ed", "\\ntrianglerighteq");
-defineSymbol(math, ams, rel, "\ue018", "\\nsupseteqq");
-defineSymbol(math, ams, rel, "\u228b", "\\supsetneq");
-defineSymbol(math, ams, rel, "\ue01b", "\\varsupsetneq");
-defineSymbol(math, ams, rel, "\u2acc", "\\supsetneqq");
-defineSymbol(math, ams, rel, "\ue019", "\\varsupsetneqq");
-defineSymbol(math, ams, rel, "\u22ae", "\\nVdash");
-defineSymbol(math, ams, rel, "\u2ab5", "\\precneqq");
-defineSymbol(math, ams, rel, "\u2ab6", "\\succneqq");
-defineSymbol(math, ams, rel, "\ue016", "\\nsubseteqq");
-defineSymbol(math, ams, bin, "\u22b4", "\\unlhd");
-defineSymbol(math, ams, bin, "\u22b5", "\\unrhd");
-
-// AMS Negated Arrows
-defineSymbol(math, ams, rel, "\u219a", "\\nleftarrow");
-defineSymbol(math, ams, rel, "\u219b", "\\nrightarrow");
-defineSymbol(math, ams, rel, "\u21cd", "\\nLeftarrow");
-defineSymbol(math, ams, rel, "\u21cf", "\\nRightarrow");
-defineSymbol(math, ams, rel, "\u21ae", "\\nleftrightarrow");
-defineSymbol(math, ams, rel, "\u21ce", "\\nLeftrightarrow");
-
-// AMS Misc
-defineSymbol(math, ams, rel, "\u25b3", "\\vartriangle");
-defineSymbol(math, ams, textord, "\u210f", "\\hslash");
-defineSymbol(math, ams, textord, "\u25bd", "\\triangledown");
-defineSymbol(math, ams, textord, "\u25ca", "\\lozenge");
-defineSymbol(math, ams, textord, "\u24c8", "\\circledS");
-defineSymbol(math, ams, textord, "\u00ae", "\\circledR");
-defineSymbol(math, ams, textord, "\u2221", "\\measuredangle");
-defineSymbol(math, ams, textord, "\u2204", "\\nexists");
-defineSymbol(math, ams, textord, "\u2127", "\\mho");
-defineSymbol(math, ams, textord, "\u2132", "\\Finv");
-defineSymbol(math, ams, textord, "\u2141", "\\Game");
-defineSymbol(math, ams, textord, "\u006b", "\\Bbbk");
-defineSymbol(math, ams, textord, "\u2035", "\\backprime");
-defineSymbol(math, ams, textord, "\u25b2", "\\blacktriangle");
-defineSymbol(math, ams, textord, "\u25bc", "\\blacktriangledown");
-defineSymbol(math, ams, textord, "\u25a0", "\\blacksquare");
-defineSymbol(math, ams, textord, "\u29eb", "\\blacklozenge");
-defineSymbol(math, ams, textord, "\u2605", "\\bigstar");
-defineSymbol(math, ams, textord, "\u2222", "\\sphericalangle");
-defineSymbol(math, ams, textord, "\u2201", "\\complement");
-defineSymbol(math, ams, textord, "\u00f0", "\\eth");
-defineSymbol(math, ams, textord, "\u2571", "\\diagup");
-defineSymbol(math, ams, textord, "\u2572", "\\diagdown");
-defineSymbol(math, ams, textord, "\u25a1", "\\square");
-defineSymbol(math, ams, textord, "\u25a1", "\\Box");
-defineSymbol(math, ams, textord, "\u25ca", "\\Diamond");
-defineSymbol(math, ams, textord, "\u00a5", "\\yen");
-defineSymbol(math, ams, textord, "\u2713", "\\checkmark");
-
-// AMS Hebrew
-defineSymbol(math, ams, textord, "\u2136", "\\beth");
-defineSymbol(math, ams, textord, "\u2138", "\\daleth");
-defineSymbol(math, ams, textord, "\u2137", "\\gimel");
-
-// AMS Greek
-defineSymbol(math, ams, textord, "\u03dd", "\\digamma");
-defineSymbol(math, ams, textord, "\u03f0", "\\varkappa");
-
-// AMS Delimiters
-defineSymbol(math, ams, open, "\u250c", "\\ulcorner");
-defineSymbol(math, ams, close, "\u2510", "\\urcorner");
-defineSymbol(math, ams, open, "\u2514", "\\llcorner");
-defineSymbol(math, ams, close, "\u2518", "\\lrcorner");
-
-// AMS Binary Relations
-defineSymbol(math, ams, rel, "\u2266", "\\leqq");
-defineSymbol(math, ams, rel, "\u2a7d", "\\leqslant");
-defineSymbol(math, ams, rel, "\u2a95", "\\eqslantless");
-defineSymbol(math, ams, rel, "\u2272", "\\lesssim");
-defineSymbol(math, ams, rel, "\u2a85", "\\lessapprox");
-defineSymbol(math, ams, rel, "\u224a", "\\approxeq");
-defineSymbol(math, ams, bin, "\u22d6", "\\lessdot");
-defineSymbol(math, ams, rel, "\u22d8", "\\lll");
-defineSymbol(math, ams, rel, "\u2276", "\\lessgtr");
-defineSymbol(math, ams, rel, "\u22da", "\\lesseqgtr");
-defineSymbol(math, ams, rel, "\u2a8b", "\\lesseqqgtr");
-defineSymbol(math, ams, rel, "\u2251", "\\doteqdot");
-defineSymbol(math, ams, rel, "\u2253", "\\risingdotseq");
-defineSymbol(math, ams, rel, "\u2252", "\\fallingdotseq");
-defineSymbol(math, ams, rel, "\u223d", "\\backsim");
-defineSymbol(math, ams, rel, "\u22cd", "\\backsimeq");
-defineSymbol(math, ams, rel, "\u2ac5", "\\subseteqq");
-defineSymbol(math, ams, rel, "\u22d0", "\\Subset");
-defineSymbol(math, ams, rel, "\u228f", "\\sqsubset");
-defineSymbol(math, ams, rel, "\u227c", "\\preccurlyeq");
-defineSymbol(math, ams, rel, "\u22de", "\\curlyeqprec");
-defineSymbol(math, ams, rel, "\u227e", "\\precsim");
-defineSymbol(math, ams, rel, "\u2ab7", "\\precapprox");
-defineSymbol(math, ams, rel, "\u22b2", "\\vartriangleleft");
-defineSymbol(math, ams, rel, "\u22b4", "\\trianglelefteq");
-defineSymbol(math, ams, rel, "\u22a8", "\\vDash");
-defineSymbol(math, ams, rel, "\u22aa", "\\Vvdash");
-defineSymbol(math, ams, rel, "\u2323", "\\smallsmile");
-defineSymbol(math, ams, rel, "\u2322", "\\smallfrown");
-defineSymbol(math, ams, rel, "\u224f", "\\bumpeq");
-defineSymbol(math, ams, rel, "\u224e", "\\Bumpeq");
-defineSymbol(math, ams, rel, "\u2267", "\\geqq");
-defineSymbol(math, ams, rel, "\u2a7e", "\\geqslant");
-defineSymbol(math, ams, rel, "\u2a96", "\\eqslantgtr");
-defineSymbol(math, ams, rel, "\u2273", "\\gtrsim");
-defineSymbol(math, ams, rel, "\u2a86", "\\gtrapprox");
-defineSymbol(math, ams, bin, "\u22d7", "\\gtrdot");
-defineSymbol(math, ams, rel, "\u22d9", "\\ggg");
-defineSymbol(math, ams, rel, "\u2277", "\\gtrless");
-defineSymbol(math, ams, rel, "\u22db", "\\gtreqless");
-defineSymbol(math, ams, rel, "\u2a8c", "\\gtreqqless");
-defineSymbol(math, ams, rel, "\u2256", "\\eqcirc");
-defineSymbol(math, ams, rel, "\u2257", "\\circeq");
-defineSymbol(math, ams, rel, "\u225c", "\\triangleq");
-defineSymbol(math, ams, rel, "\u223c", "\\thicksim");
-defineSymbol(math, ams, rel, "\u2248", "\\thickapprox");
-defineSymbol(math, ams, rel, "\u2ac6", "\\supseteqq");
-defineSymbol(math, ams, rel, "\u22d1", "\\Supset");
-defineSymbol(math, ams, rel, "\u2290", "\\sqsupset");
-defineSymbol(math, ams, rel, "\u227d", "\\succcurlyeq");
-defineSymbol(math, ams, rel, "\u22df", "\\curlyeqsucc");
-defineSymbol(math, ams, rel, "\u227f", "\\succsim");
-defineSymbol(math, ams, rel, "\u2ab8", "\\succapprox");
-defineSymbol(math, ams, rel, "\u22b3", "\\vartriangleright");
-defineSymbol(math, ams, rel, "\u22b5", "\\trianglerighteq");
-defineSymbol(math, ams, rel, "\u22a9", "\\Vdash");
-defineSymbol(math, ams, rel, "\u2223", "\\shortmid");
-defineSymbol(math, ams, rel, "\u2225", "\\shortparallel");
-defineSymbol(math, ams, rel, "\u226c", "\\between");
-defineSymbol(math, ams, rel, "\u22d4", "\\pitchfork");
-defineSymbol(math, ams, rel, "\u221d", "\\varpropto");
-defineSymbol(math, ams, rel, "\u25c0", "\\blacktriangleleft");
-defineSymbol(math, ams, rel, "\u2234", "\\therefore");
-defineSymbol(math, ams, rel, "\u220d", "\\backepsilon");
-defineSymbol(math, ams, rel, "\u25b6", "\\blacktriangleright");
-defineSymbol(math, ams, rel, "\u2235", "\\because");
-defineSymbol(math, ams, rel, "\u22d8", "\\llless");
-defineSymbol(math, ams, rel, "\u22d9", "\\gggtr");
-defineSymbol(math, ams, bin, "\u22b2", "\\lhd");
-defineSymbol(math, ams, bin, "\u22b3", "\\rhd");
-defineSymbol(math, ams, rel, "\u2242", "\\eqsim");
-defineSymbol(math, main, rel, "\u22c8", "\\Join");
-defineSymbol(math, ams, rel, "\u2251", "\\Doteq");
-
-// AMS Binary Operators
-defineSymbol(math, ams, bin, "\u2214", "\\dotplus");
-defineSymbol(math, ams, bin, "\u2216", "\\smallsetminus");
-defineSymbol(math, ams, bin, "\u22d2", "\\Cap");
-defineSymbol(math, ams, bin, "\u22d3", "\\Cup");
-defineSymbol(math, ams, bin, "\u2a5e", "\\doublebarwedge");
-defineSymbol(math, ams, bin, "\u229f", "\\boxminus");
-defineSymbol(math, ams, bin, "\u229e", "\\boxplus");
-defineSymbol(math, ams, bin, "\u22c7", "\\divideontimes");
-defineSymbol(math, ams, bin, "\u22c9", "\\ltimes");
-defineSymbol(math, ams, bin, "\u22ca", "\\rtimes");
-defineSymbol(math, ams, bin, "\u22cb", "\\leftthreetimes");
-defineSymbol(math, ams, bin, "\u22cc", "\\rightthreetimes");
-defineSymbol(math, ams, bin, "\u22cf", "\\curlywedge");
-defineSymbol(math, ams, bin, "\u22ce", "\\curlyvee");
-defineSymbol(math, ams, bin, "\u229d", "\\circleddash");
-defineSymbol(math, ams, bin, "\u229b", "\\circledast");
-defineSymbol(math, ams, bin, "\u22c5", "\\centerdot");
-defineSymbol(math, ams, bin, "\u22ba", "\\intercal");
-defineSymbol(math, ams, bin, "\u22d2", "\\doublecap");
-defineSymbol(math, ams, bin, "\u22d3", "\\doublecup");
-defineSymbol(math, ams, bin, "\u22a0", "\\boxtimes");
-
-// AMS Arrows
-defineSymbol(math, ams, rel, "\u21e2", "\\dashrightarrow");
-defineSymbol(math, ams, rel, "\u21e0", "\\dashleftarrow");
-defineSymbol(math, ams, rel, "\u21c7", "\\leftleftarrows");
-defineSymbol(math, ams, rel, "\u21c6", "\\leftrightarrows");
-defineSymbol(math, ams, rel, "\u21da", "\\Lleftarrow");
-defineSymbol(math, ams, rel, "\u219e", "\\twoheadleftarrow");
-defineSymbol(math, ams, rel, "\u21a2", "\\leftarrowtail");
-defineSymbol(math, ams, rel, "\u21ab", "\\looparrowleft");
-defineSymbol(math, ams, rel, "\u21cb", "\\leftrightharpoons");
-defineSymbol(math, ams, rel, "\u21b6", "\\curvearrowleft");
-defineSymbol(math, ams, rel, "\u21ba", "\\circlearrowleft");
-defineSymbol(math, ams, rel, "\u21b0", "\\Lsh");
-defineSymbol(math, ams, rel, "\u21c8", "\\upuparrows");
-defineSymbol(math, ams, rel, "\u21bf", "\\upharpoonleft");
-defineSymbol(math, ams, rel, "\u21c3", "\\downharpoonleft");
-defineSymbol(math, ams, rel, "\u22b8", "\\multimap");
-defineSymbol(math, ams, rel, "\u21ad", "\\leftrightsquigarrow");
-defineSymbol(math, ams, rel, "\u21c9", "\\rightrightarrows");
-defineSymbol(math, ams, rel, "\u21c4", "\\rightleftarrows");
-defineSymbol(math, ams, rel, "\u21a0", "\\twoheadrightarrow");
-defineSymbol(math, ams, rel, "\u21a3", "\\rightarrowtail");
-defineSymbol(math, ams, rel, "\u21ac", "\\looparrowright");
-defineSymbol(math, ams, rel, "\u21b7", "\\curvearrowright");
-defineSymbol(math, ams, rel, "\u21bb", "\\circlearrowright");
-defineSymbol(math, ams, rel, "\u21b1", "\\Rsh");
-defineSymbol(math, ams, rel, "\u21ca", "\\downdownarrows");
-defineSymbol(math, ams, rel, "\u21be", "\\upharpoonright");
-defineSymbol(math, ams, rel, "\u21c2", "\\downharpoonright");
-defineSymbol(math, ams, rel, "\u21dd", "\\rightsquigarrow");
-defineSymbol(math, ams, rel, "\u21dd", "\\leadsto");
-defineSymbol(math, ams, rel, "\u21db", "\\Rrightarrow");
-defineSymbol(math, ams, rel, "\u21be", "\\restriction");
-
-defineSymbol(math, main, textord, "\u2018", "`");
-defineSymbol(math, main, textord, "$", "\\$");
-defineSymbol(math, main, textord, "%", "\\%");
-defineSymbol(math, main, textord, "_", "\\_");
-defineSymbol(math, main, textord, "\u2220", "\\angle");
-defineSymbol(math, main, textord, "\u221e", "\\infty");
-defineSymbol(math, main, textord, "\u2032", "\\prime");
-defineSymbol(math, main, textord, "\u25b3", "\\triangle");
-defineSymbol(math, main, textord, "\u0393", "\\Gamma");
-defineSymbol(math, main, textord, "\u0394", "\\Delta");
-defineSymbol(math, main, textord, "\u0398", "\\Theta");
-defineSymbol(math, main, textord, "\u039b", "\\Lambda");
-defineSymbol(math, main, textord, "\u039e", "\\Xi");
-defineSymbol(math, main, textord, "\u03a0", "\\Pi");
-defineSymbol(math, main, textord, "\u03a3", "\\Sigma");
-defineSymbol(math, main, textord, "\u03a5", "\\Upsilon");
-defineSymbol(math, main, textord, "\u03a6", "\\Phi");
-defineSymbol(math, main, textord, "\u03a8", "\\Psi");
-defineSymbol(math, main, textord, "\u03a9", "\\Omega");
-defineSymbol(math, main, textord, "\u00ac", "\\neg");
-defineSymbol(math, main, textord, "\u00ac", "\\lnot");
-defineSymbol(math, main, textord, "\u22a4", "\\top");
-defineSymbol(math, main, textord, "\u22a5", "\\bot");
-defineSymbol(math, main, textord, "\u2205", "\\emptyset");
-defineSymbol(math, ams, textord, "\u2205", "\\varnothing");
-defineSymbol(math, main, mathord, "\u03b1", "\\alpha");
-defineSymbol(math, main, mathord, "\u03b2", "\\beta");
-defineSymbol(math, main, mathord, "\u03b3", "\\gamma");
-defineSymbol(math, main, mathord, "\u03b4", "\\delta");
-defineSymbol(math, main, mathord, "\u03f5", "\\epsilon");
-defineSymbol(math, main, mathord, "\u03b6", "\\zeta");
-defineSymbol(math, main, mathord, "\u03b7", "\\eta");
-defineSymbol(math, main, mathord, "\u03b8", "\\theta");
-defineSymbol(math, main, mathord, "\u03b9", "\\iota");
-defineSymbol(math, main, mathord, "\u03ba", "\\kappa");
-defineSymbol(math, main, mathord, "\u03bb", "\\lambda");
-defineSymbol(math, main, mathord, "\u03bc", "\\mu");
-defineSymbol(math, main, mathord, "\u03bd", "\\nu");
-defineSymbol(math, main, mathord, "\u03be", "\\xi");
-defineSymbol(math, main, mathord, "o", "\\omicron");
-defineSymbol(math, main, mathord, "\u03c0", "\\pi");
-defineSymbol(math, main, mathord, "\u03c1", "\\rho");
-defineSymbol(math, main, mathord, "\u03c3", "\\sigma");
-defineSymbol(math, main, mathord, "\u03c4", "\\tau");
-defineSymbol(math, main, mathord, "\u03c5", "\\upsilon");
-defineSymbol(math, main, mathord, "\u03d5", "\\phi");
-defineSymbol(math, main, mathord, "\u03c7", "\\chi");
-defineSymbol(math, main, mathord, "\u03c8", "\\psi");
-defineSymbol(math, main, mathord, "\u03c9", "\\omega");
-defineSymbol(math, main, mathord, "\u03b5", "\\varepsilon");
-defineSymbol(math, main, mathord, "\u03d1", "\\vartheta");
-defineSymbol(math, main, mathord, "\u03d6", "\\varpi");
-defineSymbol(math, main, mathord, "\u03f1", "\\varrho");
-defineSymbol(math, main, mathord, "\u03c2", "\\varsigma");
-defineSymbol(math, main, mathord, "\u03c6", "\\varphi");
-defineSymbol(math, main, bin, "\u2217", "*");
-defineSymbol(math, main, bin, "+", "+");
-defineSymbol(math, main, bin, "\u2212", "-");
-defineSymbol(math, main, bin, "\u22c5", "\\cdot");
-defineSymbol(math, main, bin, "\u2218", "\\circ");
-defineSymbol(math, main, bin, "\u00f7", "\\div");
-defineSymbol(math, main, bin, "\u00b1", "\\pm");
-defineSymbol(math, main, bin, "\u00d7", "\\times");
-defineSymbol(math, main, bin, "\u2229", "\\cap");
-defineSymbol(math, main, bin, "\u222a", "\\cup");
-defineSymbol(math, main, bin, "\u2216", "\\setminus");
-defineSymbol(math, main, bin, "\u2227", "\\land");
-defineSymbol(math, main, bin, "\u2228", "\\lor");
-defineSymbol(math, main, bin, "\u2227", "\\wedge");
-defineSymbol(math, main, bin, "\u2228", "\\vee");
-defineSymbol(math, main, textord, "\u221a", "\\surd");
-defineSymbol(math, main, open, "(", "(");
-defineSymbol(math, main, open, "[", "[");
-defineSymbol(math, main, open, "\u27e8", "\\langle");
-defineSymbol(math, main, open, "\u2223", "\\lvert");
-defineSymbol(math, main, open, "\u2225", "\\lVert");
-defineSymbol(math, main, close, ")", ")");
-defineSymbol(math, main, close, "]", "]");
-defineSymbol(math, main, close, "?", "?");
-defineSymbol(math, main, close, "!", "!");
-defineSymbol(math, main, close, "\u27e9", "\\rangle");
-defineSymbol(math, main, close, "\u2223", "\\rvert");
-defineSymbol(math, main, close, "\u2225", "\\rVert");
-defineSymbol(math, main, rel, "=", "=");
-defineSymbol(math, main, rel, "<", "<");
-defineSymbol(math, main, rel, ">", ">");
-defineSymbol(math, main, rel, ":", ":");
-defineSymbol(math, main, rel, "\u2248", "\\approx");
-defineSymbol(math, main, rel, "\u2245", "\\cong");
-defineSymbol(math, main, rel, "\u2265", "\\ge");
-defineSymbol(math, main, rel, "\u2265", "\\geq");
-defineSymbol(math, main, rel, "\u2190", "\\gets");
-defineSymbol(math, main, rel, ">", "\\gt");
-defineSymbol(math, main, rel, "\u2208", "\\in");
-defineSymbol(math, main, rel, "\u2209", "\\notin");
-defineSymbol(math, main, rel, "\u2282", "\\subset");
-defineSymbol(math, main, rel, "\u2283", "\\supset");
-defineSymbol(math, main, rel, "\u2286", "\\subseteq");
-defineSymbol(math, main, rel, "\u2287", "\\supseteq");
-defineSymbol(math, ams, rel, "\u2288", "\\nsubseteq");
-defineSymbol(math, ams, rel, "\u2289", "\\nsupseteq");
-defineSymbol(math, main, rel, "\u22a8", "\\models");
-defineSymbol(math, main, rel, "\u2190", "\\leftarrow");
-defineSymbol(math, main, rel, "\u2264", "\\le");
-defineSymbol(math, main, rel, "\u2264", "\\leq");
-defineSymbol(math, main, rel, "<", "\\lt");
-defineSymbol(math, main, rel, "\u2260", "\\ne");
-defineSymbol(math, main, rel, "\u2260", "\\neq");
-defineSymbol(math, main, rel, "\u2192", "\\rightarrow");
-defineSymbol(math, main, rel, "\u2192", "\\to");
-defineSymbol(math, ams, rel, "\u2271", "\\ngeq");
-defineSymbol(math, ams, rel, "\u2270", "\\nleq");
-defineSymbol(math, main, spacing, null, "\\!");
-defineSymbol(math, main, spacing, "\u00a0", "\\ ");
-defineSymbol(math, main, spacing, "\u00a0", "~");
-defineSymbol(math, main, spacing, null, "\\,");
-defineSymbol(math, main, spacing, null, "\\:");
-defineSymbol(math, main, spacing, null, "\\;");
-defineSymbol(math, main, spacing, null, "\\enspace");
-defineSymbol(math, main, spacing, null, "\\qquad");
-defineSymbol(math, main, spacing, null, "\\quad");
-defineSymbol(math, main, spacing, "\u00a0", "\\space");
-defineSymbol(math, main, punct, ",", ",");
-defineSymbol(math, main, punct, ";", ";");
-defineSymbol(math, main, punct, ":", "\\colon");
-defineSymbol(math, ams, bin, "\u22bc", "\\barwedge");
-defineSymbol(math, ams, bin, "\u22bb", "\\veebar");
-defineSymbol(math, main, bin, "\u2299", "\\odot");
-defineSymbol(math, main, bin, "\u2295", "\\oplus");
-defineSymbol(math, main, bin, "\u2297", "\\otimes");
-defineSymbol(math, main, textord, "\u2202", "\\partial");
-defineSymbol(math, main, bin, "\u2298", "\\oslash");
-defineSymbol(math, ams, bin, "\u229a", "\\circledcirc");
-defineSymbol(math, ams, bin, "\u22a1", "\\boxdot");
-defineSymbol(math, main, bin, "\u25b3", "\\bigtriangleup");
-defineSymbol(math, main, bin, "\u25bd", "\\bigtriangledown");
-defineSymbol(math, main, bin, "\u2020", "\\dagger");
-defineSymbol(math, main, bin, "\u22c4", "\\diamond");
-defineSymbol(math, main, bin, "\u22c6", "\\star");
-defineSymbol(math, main, bin, "\u25c3", "\\triangleleft");
-defineSymbol(math, main, bin, "\u25b9", "\\triangleright");
-defineSymbol(math, main, open, "{", "\\{");
-defineSymbol(math, main, close, "}", "\\}");
-defineSymbol(math, main, open, "{", "\\lbrace");
-defineSymbol(math, main, close, "}", "\\rbrace");
-defineSymbol(math, main, open, "[", "\\lbrack");
-defineSymbol(math, main, close, "]", "\\rbrack");
-defineSymbol(math, main, open, "\u230a", "\\lfloor");
-defineSymbol(math, main, close, "\u230b", "\\rfloor");
-defineSymbol(math, main, open, "\u2308", "\\lceil");
-defineSymbol(math, main, close, "\u2309", "\\rceil");
-defineSymbol(math, main, textord, "\\", "\\backslash");
-defineSymbol(math, main, textord, "\u2223", "|");
-defineSymbol(math, main, textord, "\u2223", "\\vert");
-defineSymbol(math, main, textord, "\u2225", "\\|");
-defineSymbol(math, main, textord, "\u2225", "\\Vert");
-defineSymbol(math, main, rel, "\u2191", "\\uparrow");
-defineSymbol(math, main, rel, "\u21d1", "\\Uparrow");
-defineSymbol(math, main, rel, "\u2193", "\\downarrow");
-defineSymbol(math, main, rel, "\u21d3", "\\Downarrow");
-defineSymbol(math, main, rel, "\u2195", "\\updownarrow");
-defineSymbol(math, main, rel, "\u21d5", "\\Updownarrow");
-defineSymbol(math, math, op, "\u2210", "\\coprod");
-defineSymbol(math, math, op, "\u22c1", "\\bigvee");
-defineSymbol(math, math, op, "\u22c0", "\\bigwedge");
-defineSymbol(math, math, op, "\u2a04", "\\biguplus");
-defineSymbol(math, math, op, "\u22c2", "\\bigcap");
-defineSymbol(math, math, op, "\u22c3", "\\bigcup");
-defineSymbol(math, math, op, "\u222b", "\\int");
-defineSymbol(math, math, op, "\u222b", "\\intop");
-defineSymbol(math, math, op, "\u222c", "\\iint");
-defineSymbol(math, math, op, "\u222d", "\\iiint");
-defineSymbol(math, math, op, "\u220f", "\\prod");
-defineSymbol(math, math, op, "\u2211", "\\sum");
-defineSymbol(math, math, op, "\u2a02", "\\bigotimes");
-defineSymbol(math, math, op, "\u2a01", "\\bigoplus");
-defineSymbol(math, math, op, "\u2a00", "\\bigodot");
-defineSymbol(math, math, op, "\u222e", "\\oint");
-defineSymbol(math, math, op, "\u2a06", "\\bigsqcup");
-defineSymbol(math, math, op, "\u222b", "\\smallint");
-defineSymbol(math, main, inner, "\u2026", "\\ldots");
-defineSymbol(math, main, inner, "\u22ef", "\\cdots");
-defineSymbol(math, main, inner, "\u22f1", "\\ddots");
-defineSymbol(math, main, textord, "\u22ee", "\\vdots");
-defineSymbol(math, main, accent, "\u00b4", "\\acute");
-defineSymbol(math, main, accent, "\u0060", "\\grave");
-defineSymbol(math, main, accent, "\u00a8", "\\ddot");
-defineSymbol(math, main, accent, "\u007e", "\\tilde");
-defineSymbol(math, main, accent, "\u00af", "\\bar");
-defineSymbol(math, main, accent, "\u02d8", "\\breve");
-defineSymbol(math, main, accent, "\u02c7", "\\check");
-defineSymbol(math, main, accent, "\u005e", "\\hat");
-defineSymbol(math, main, accent, "\u20d7", "\\vec");
-defineSymbol(math, main, accent, "\u02d9", "\\dot");
-defineSymbol(math, main, mathord, "\u0131", "\\imath");
-defineSymbol(math, main, mathord, "\u0237", "\\jmath");
-
-defineSymbol(text, main, spacing, "\u00a0", "\\ ");
-defineSymbol(text, main, spacing, "\u00a0", " ");
-defineSymbol(text, main, spacing, "\u00a0", "~");
-
-// There are lots of symbols which are the same, so we add them in afterwards.
-var i;
-var ch;
-
-// All of these are textords in math mode
-var mathTextSymbols = "0123456789/@.\"";
-for (i = 0; i < mathTextSymbols.length; i++) {
-    ch = mathTextSymbols.charAt(i);
-    defineSymbol(math, main, textord, ch, ch);
-}
-
-// All of these are textords in text mode
-var textSymbols = "0123456789`!@*()-=+[]'\";:?/.,";
-for (i = 0; i < textSymbols.length; i++) {
-    ch = textSymbols.charAt(i);
-    defineSymbol(text, main, textord, ch, ch);
-}
-
-// All of these are textords in text mode, and mathords in math mode
-var letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-for (i = 0; i < letters.length; i++) {
-    ch = letters.charAt(i);
-    defineSymbol(math, main, mathord, ch, ch);
-    defineSymbol(text, main, textord, ch, ch);
-}
-
-
-/***/ }),
-/* 118 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// Parse link destination
-//
-
-
-
-var isSpace     = __webpack_require__(4).isSpace;
-var unescapeAll = __webpack_require__(4).unescapeAll;
-
-
-module.exports = function parseLinkDestination(str, pos, max) {
-  var code, level,
-      lines = 0,
-      start = pos,
-      result = {
-        ok: false,
-        pos: 0,
-        lines: 0,
-        str: ''
-      };
-
-  if (str.charCodeAt(pos) === 0x3C /* < */) {
-    pos++;
-    while (pos < max) {
-      code = str.charCodeAt(pos);
-      if (code === 0x0A /* \n */ || isSpace(code)) { return result; }
-      if (code === 0x3E /* > */) {
-        result.pos = pos + 1;
-        result.str = unescapeAll(str.slice(start + 1, pos));
-        result.ok = true;
-        return result;
-      }
-      if (code === 0x5C /* \ */ && pos + 1 < max) {
-        pos += 2;
-        continue;
-      }
-
-      pos++;
-    }
-
-    // no closing '>'
-    return result;
-  }
-
-  // this should be ... } else { ... branch
-
-  level = 0;
-  while (pos < max) {
-    code = str.charCodeAt(pos);
-
-    if (code === 0x20) { break; }
-
-    // ascii control characters
-    if (code < 0x20 || code === 0x7F) { break; }
-
-    if (code === 0x5C /* \ */ && pos + 1 < max) {
-      pos += 2;
-      continue;
-    }
-
-    if (code === 0x28 /* ( */) {
-      level++;
-      if (level > 1) { break; }
-    }
-
-    if (code === 0x29 /* ) */) {
-      level--;
-      if (level < 0) { break; }
-    }
-
-    pos++;
-  }
-
-  if (start === pos) { return result; }
-
-  result.str = unescapeAll(str.slice(start, pos));
-  result.lines = lines;
-  result.pos = pos;
-  result.ok = true;
-  return result;
-};
-
-
-/***/ }),
-/* 119 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-// Parse link title
-//
-
-
-
-var unescapeAll = __webpack_require__(4).unescapeAll;
-
-
-module.exports = function parseLinkTitle(str, pos, max) {
-  var code,
-      marker,
-      lines = 0,
-      start = pos,
-      result = {
-        ok: false,
-        pos: 0,
-        lines: 0,
-        str: ''
-      };
-
-  if (pos >= max) { return result; }
-
-  marker = str.charCodeAt(pos);
-
-  if (marker !== 0x22 /* " */ && marker !== 0x27 /* ' */ && marker !== 0x28 /* ( */) { return result; }
-
-  pos++;
-
-  // if opening marker is "(", switch it to closing marker ")"
-  if (marker === 0x28) { marker = 0x29; }
-
-  while (pos < max) {
-    code = str.charCodeAt(pos);
-    if (code === marker) {
-      result.pos = pos + 1;
-      result.lines = lines;
-      result.str = unescapeAll(str.slice(start + 1, pos));
-      result.ok = true;
-      return result;
-    } else if (code === 0x0A) {
-      lines++;
-    } else if (code === 0x5C /* \ */ && pos + 1 < max) {
-      pos++;
-      if (str.charCodeAt(pos) === 0x0A) {
-        lines++;
-      }
-    }
-
-    pos++;
-  }
-
-  return result;
-};
-
-
-/***/ }),
-/* 120 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -6700,33 +5341,23 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */
+/* 118 */,
+/* 119 */,
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(78);
-__webpack_require__(77);
-module.exports = __webpack_require__(144);
+__webpack_require__(54);
+__webpack_require__(53);
+module.exports = __webpack_require__(129);
 
 /***/ }),
-/* 133 */,
-/* 134 */,
-/* 135 */
+/* 121 */,
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
-var cof = __webpack_require__(41)
-  , TAG = __webpack_require__(10)('toStringTag')
+var cof = __webpack_require__(34)
+  , TAG = __webpack_require__(7)('toStringTag')
   // ES3 wrong here
   , ARG = cof(function(){ return arguments; }()) == 'Arguments';
 
@@ -6749,44 +5380,41 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var classof   = __webpack_require__(135)
-  , ITERATOR  = __webpack_require__(10)('iterator')
-  , Iterators = __webpack_require__(22);
-module.exports = __webpack_require__(5).getIteratorMethod = function(it){
+var classof   = __webpack_require__(122)
+  , ITERATOR  = __webpack_require__(7)('iterator')
+  , Iterators = __webpack_require__(19);
+module.exports = __webpack_require__(6).getIteratorMethod = function(it){
   if(it != undefined)return it[ITERATOR]
     || it['@@iterator']
     || Iterators[classof(it)];
 };
 
 /***/ }),
-/* 144 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(12)
-  , get      = __webpack_require__(143);
-module.exports = __webpack_require__(5).getIterator = function(it){
+var anObject = __webpack_require__(13)
+  , get      = __webpack_require__(128);
+module.exports = __webpack_require__(6).getIterator = function(it){
   var iterFn = get(it);
   if(typeof iterFn != 'function')throw TypeError(it + ' is not iterable!');
   return anObject(iterFn.call(it));
 };
 
 /***/ }),
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {/*
@@ -6865,10 +5493,10 @@ function toComment(sourceMap) {
   return '/*# ' + data + ' */';
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(108).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(100).Buffer))
 
 /***/ }),
-/* 151 */
+/* 135 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -9000,7 +7628,1221 @@ module.exports = {
 };
 
 /***/ }),
-/* 152 */
+/* 136 */
+/***/ (function(module, exports) {
+
+/**
+ * This file contains information and classes for the various kinds of styles
+ * used in TeX. It provides a generic `Style` class, which holds information
+ * about a specific style. It then provides instances of all the different kinds
+ * of styles possible, and provides functions to move between them and get
+ * information about them.
+ */
+
+/**
+ * The main style class. Contains a unique id for the style, a size (which is
+ * the same for cramped and uncramped version of a style), a cramped flag, and a
+ * size multiplier, which gives the size difference between a style and
+ * textstyle.
+ */
+function Style(id, size, multiplier, cramped) {
+    this.id = id;
+    this.size = size;
+    this.cramped = cramped;
+    this.sizeMultiplier = multiplier;
+}
+
+/**
+ * Get the style of a superscript given a base in the current style.
+ */
+Style.prototype.sup = function() {
+    return styles[sup[this.id]];
+};
+
+/**
+ * Get the style of a subscript given a base in the current style.
+ */
+Style.prototype.sub = function() {
+    return styles[sub[this.id]];
+};
+
+/**
+ * Get the style of a fraction numerator given the fraction in the current
+ * style.
+ */
+Style.prototype.fracNum = function() {
+    return styles[fracNum[this.id]];
+};
+
+/**
+ * Get the style of a fraction denominator given the fraction in the current
+ * style.
+ */
+Style.prototype.fracDen = function() {
+    return styles[fracDen[this.id]];
+};
+
+/**
+ * Get the cramped version of a style (in particular, cramping a cramped style
+ * doesn't change the style).
+ */
+Style.prototype.cramp = function() {
+    return styles[cramp[this.id]];
+};
+
+/**
+ * HTML class name, like "displaystyle cramped"
+ */
+Style.prototype.cls = function() {
+    return sizeNames[this.size] + (this.cramped ? " cramped" : " uncramped");
+};
+
+/**
+ * HTML Reset class name, like "reset-textstyle"
+ */
+Style.prototype.reset = function() {
+    return resetNames[this.size];
+};
+
+// IDs of the different styles
+var D = 0;
+var Dc = 1;
+var T = 2;
+var Tc = 3;
+var S = 4;
+var Sc = 5;
+var SS = 6;
+var SSc = 7;
+
+// String names for the different sizes
+var sizeNames = [
+    "displaystyle textstyle",
+    "textstyle",
+    "scriptstyle",
+    "scriptscriptstyle",
+];
+
+// Reset names for the different sizes
+var resetNames = [
+    "reset-textstyle",
+    "reset-textstyle",
+    "reset-scriptstyle",
+    "reset-scriptscriptstyle",
+];
+
+// Instances of the different styles
+var styles = [
+    new Style(D, 0, 1.0, false),
+    new Style(Dc, 0, 1.0, true),
+    new Style(T, 1, 1.0, false),
+    new Style(Tc, 1, 1.0, true),
+    new Style(S, 2, 0.7, false),
+    new Style(Sc, 2, 0.7, true),
+    new Style(SS, 3, 0.5, false),
+    new Style(SSc, 3, 0.5, true),
+];
+
+// Lookup tables for switching from one style to another
+var sup = [S, Sc, S, Sc, SS, SSc, SS, SSc];
+var sub = [Sc, Sc, Sc, Sc, SSc, SSc, SSc, SSc];
+var fracNum = [T, Tc, S, Sc, SS, SSc, SS, SSc];
+var fracDen = [Tc, Tc, Sc, Sc, SSc, SSc, SSc, SSc];
+var cramp = [Dc, Dc, Tc, Tc, Sc, Sc, SSc, SSc];
+
+// We only export some of the styles. Also, we don't export the `Style` class so
+// no more styles can be generated.
+module.exports = {
+    DISPLAY: styles[D],
+    TEXT: styles[T],
+    SCRIPT: styles[S],
+    SCRIPTSCRIPT: styles[SS],
+};
+
+
+/***/ }),
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* eslint no-console:0 */
+/**
+ * This module contains general functions that can be used for building
+ * different kinds of domTree nodes in a consistent manner.
+ */
+
+var domTree = __webpack_require__(234);
+var fontMetrics = __webpack_require__(114);
+var symbols = __webpack_require__(138);
+var utils = __webpack_require__(51);
+
+var greekCapitals = [
+    "\\Gamma",
+    "\\Delta",
+    "\\Theta",
+    "\\Lambda",
+    "\\Xi",
+    "\\Pi",
+    "\\Sigma",
+    "\\Upsilon",
+    "\\Phi",
+    "\\Psi",
+    "\\Omega",
+];
+
+var dotlessLetters = [
+    "\u0131",   // dotless i, \imath
+    "\u0237",   // dotless j, \jmath
+];
+
+/**
+ * Makes a symbolNode after translation via the list of symbols in symbols.js.
+ * Correctly pulls out metrics for the character, and optionally takes a list of
+ * classes to be attached to the node.
+ */
+var makeSymbol = function(value, style, mode, color, classes) {
+    // Replace the value with its replaced value from symbol.js
+    if (symbols[mode][value] && symbols[mode][value].replace) {
+        value = symbols[mode][value].replace;
+    }
+
+    var metrics = fontMetrics.getCharacterMetrics(value, style);
+
+    var symbolNode;
+    if (metrics) {
+        symbolNode = new domTree.symbolNode(
+            value, metrics.height, metrics.depth, metrics.italic, metrics.skew,
+            classes);
+    } else {
+        // TODO(emily): Figure out a good way to only print this in development
+        typeof console !== "undefined" && console.warn(
+            "No character metrics for '" + value + "' in style '" +
+                style + "'");
+        symbolNode = new domTree.symbolNode(value, 0, 0, 0, 0, classes);
+    }
+
+    if (color) {
+        symbolNode.style.color = color;
+    }
+
+    return symbolNode;
+};
+
+/**
+ * Makes a symbol in Main-Regular or AMS-Regular.
+ * Used for rel, bin, open, close, inner, and punct.
+ */
+var mathsym = function(value, mode, color, classes) {
+    // Decide what font to render the symbol in by its entry in the symbols
+    // table.
+    // Have a special case for when the value = \ because the \ is used as a
+    // textord in unsupported command errors but cannot be parsed as a regular
+    // text ordinal and is therefore not present as a symbol in the symbols
+    // table for text
+    if (value === "\\" || symbols[mode][value].font === "main") {
+        return makeSymbol(value, "Main-Regular", mode, color, classes);
+    } else {
+        return makeSymbol(
+            value, "AMS-Regular", mode, color, classes.concat(["amsrm"]));
+    }
+};
+
+/**
+ * Makes a symbol in the default font for mathords and textords.
+ */
+var mathDefault = function(value, mode, color, classes, type) {
+    if (type === "mathord") {
+        return mathit(value, mode, color, classes);
+    } else if (type === "textord") {
+        return makeSymbol(
+            value, "Main-Regular", mode, color, classes.concat(["mathrm"]));
+    } else {
+        throw new Error("unexpected type: " + type + " in mathDefault");
+    }
+};
+
+/**
+ * Makes a symbol in the italic math font.
+ */
+var mathit = function(value, mode, color, classes) {
+    if (/[0-9]/.test(value.charAt(0)) ||
+            // glyphs for \imath and \jmath do not exist in Math-Italic so we
+            // need to use Main-Italic instead
+            utils.contains(dotlessLetters, value) ||
+            utils.contains(greekCapitals, value)) {
+        return makeSymbol(
+            value, "Main-Italic", mode, color, classes.concat(["mainit"]));
+    } else {
+        return makeSymbol(
+            value, "Math-Italic", mode, color, classes.concat(["mathit"]));
+    }
+};
+
+/**
+ * Makes either a mathord or textord in the correct font and color.
+ */
+var makeOrd = function(group, options, type) {
+    var mode = group.mode;
+    var value = group.value;
+    if (symbols[mode][value] && symbols[mode][value].replace) {
+        value = symbols[mode][value].replace;
+    }
+
+    var classes = ["mord"];
+    var color = options.getColor();
+
+    var font = options.font;
+    if (font) {
+        if (font === "mathit" || utils.contains(dotlessLetters, value)) {
+            return mathit(value, mode, color, classes);
+        } else {
+            var fontName = fontMap[font].fontName;
+            if (fontMetrics.getCharacterMetrics(value, fontName)) {
+                return makeSymbol(
+                    value, fontName, mode, color, classes.concat([font]));
+            } else {
+                return mathDefault(value, mode, color, classes, type);
+            }
+        }
+    } else {
+        return mathDefault(value, mode, color, classes, type);
+    }
+};
+
+/**
+ * Calculate the height, depth, and maxFontSize of an element based on its
+ * children.
+ */
+var sizeElementFromChildren = function(elem) {
+    var height = 0;
+    var depth = 0;
+    var maxFontSize = 0;
+
+    if (elem.children) {
+        for (var i = 0; i < elem.children.length; i++) {
+            if (elem.children[i].height > height) {
+                height = elem.children[i].height;
+            }
+            if (elem.children[i].depth > depth) {
+                depth = elem.children[i].depth;
+            }
+            if (elem.children[i].maxFontSize > maxFontSize) {
+                maxFontSize = elem.children[i].maxFontSize;
+            }
+        }
+    }
+
+    elem.height = height;
+    elem.depth = depth;
+    elem.maxFontSize = maxFontSize;
+};
+
+/**
+ * Makes a span with the given list of classes, list of children, and color.
+ */
+var makeSpan = function(classes, children, color) {
+    var span = new domTree.span(classes, children);
+
+    sizeElementFromChildren(span);
+
+    if (color) {
+        span.style.color = color;
+    }
+
+    return span;
+};
+
+/**
+ * Makes a document fragment with the given list of children.
+ */
+var makeFragment = function(children) {
+    var fragment = new domTree.documentFragment(children);
+
+    sizeElementFromChildren(fragment);
+
+    return fragment;
+};
+
+/**
+ * Makes an element placed in each of the vlist elements to ensure that each
+ * element has the same max font size. To do this, we create a zero-width space
+ * with the correct font size.
+ */
+var makeFontSizer = function(options, fontSize) {
+    var fontSizeInner = makeSpan([], [new domTree.symbolNode("\u200b")]);
+    fontSizeInner.style.fontSize =
+        (fontSize / options.style.sizeMultiplier) + "em";
+
+    var fontSizer = makeSpan(
+        ["fontsize-ensurer", "reset-" + options.size, "size5"],
+        [fontSizeInner]);
+
+    return fontSizer;
+};
+
+/**
+ * Makes a vertical list by stacking elements and kerns on top of each other.
+ * Allows for many different ways of specifying the positioning method.
+ *
+ * Arguments:
+ *  - children: A list of child or kern nodes to be stacked on top of each other
+ *              (i.e. the first element will be at the bottom, and the last at
+ *              the top). Element nodes are specified as
+ *                {type: "elem", elem: node}
+ *              while kern nodes are specified as
+ *                {type: "kern", size: size}
+ *  - positionType: The method by which the vlist should be positioned. Valid
+ *                  values are:
+ *                   - "individualShift": The children list only contains elem
+ *                                        nodes, and each node contains an extra
+ *                                        "shift" value of how much it should be
+ *                                        shifted (note that shifting is always
+ *                                        moving downwards). positionData is
+ *                                        ignored.
+ *                   - "top": The positionData specifies the topmost point of
+ *                            the vlist (note this is expected to be a height,
+ *                            so positive values move up)
+ *                   - "bottom": The positionData specifies the bottommost point
+ *                               of the vlist (note this is expected to be a
+ *                               depth, so positive values move down
+ *                   - "shift": The vlist will be positioned such that its
+ *                              baseline is positionData away from the baseline
+ *                              of the first child. Positive values move
+ *                              downwards.
+ *                   - "firstBaseline": The vlist will be positioned such that
+ *                                      its baseline is aligned with the
+ *                                      baseline of the first child.
+ *                                      positionData is ignored. (this is
+ *                                      equivalent to "shift" with
+ *                                      positionData=0)
+ *  - positionData: Data used in different ways depending on positionType
+ *  - options: An Options object
+ *
+ */
+var makeVList = function(children, positionType, positionData, options) {
+    var depth;
+    var currPos;
+    var i;
+    if (positionType === "individualShift") {
+        var oldChildren = children;
+        children = [oldChildren[0]];
+
+        // Add in kerns to the list of children to get each element to be
+        // shifted to the correct specified shift
+        depth = -oldChildren[0].shift - oldChildren[0].elem.depth;
+        currPos = depth;
+        for (i = 1; i < oldChildren.length; i++) {
+            var diff = -oldChildren[i].shift - currPos -
+                oldChildren[i].elem.depth;
+            var size = diff -
+                (oldChildren[i - 1].elem.height +
+                 oldChildren[i - 1].elem.depth);
+
+            currPos = currPos + diff;
+
+            children.push({type: "kern", size: size});
+            children.push(oldChildren[i]);
+        }
+    } else if (positionType === "top") {
+        // We always start at the bottom, so calculate the bottom by adding up
+        // all the sizes
+        var bottom = positionData;
+        for (i = 0; i < children.length; i++) {
+            if (children[i].type === "kern") {
+                bottom -= children[i].size;
+            } else {
+                bottom -= children[i].elem.height + children[i].elem.depth;
+            }
+        }
+        depth = bottom;
+    } else if (positionType === "bottom") {
+        depth = -positionData;
+    } else if (positionType === "shift") {
+        depth = -children[0].elem.depth - positionData;
+    } else if (positionType === "firstBaseline") {
+        depth = -children[0].elem.depth;
+    } else {
+        depth = 0;
+    }
+
+    // Make the fontSizer
+    var maxFontSize = 0;
+    for (i = 0; i < children.length; i++) {
+        if (children[i].type === "elem") {
+            maxFontSize = Math.max(maxFontSize, children[i].elem.maxFontSize);
+        }
+    }
+    var fontSizer = makeFontSizer(options, maxFontSize);
+
+    // Create a new list of actual children at the correct offsets
+    var realChildren = [];
+    currPos = depth;
+    for (i = 0; i < children.length; i++) {
+        if (children[i].type === "kern") {
+            currPos += children[i].size;
+        } else {
+            var child = children[i].elem;
+
+            var shift = -child.depth - currPos;
+            currPos += child.height + child.depth;
+
+            var childWrap = makeSpan([], [fontSizer, child]);
+            childWrap.height -= shift;
+            childWrap.depth += shift;
+            childWrap.style.top = shift + "em";
+
+            realChildren.push(childWrap);
+        }
+    }
+
+    // Add in an element at the end with no offset to fix the calculation of
+    // baselines in some browsers (namely IE, sometimes safari)
+    var baselineFix = makeSpan(
+        ["baseline-fix"], [fontSizer, new domTree.symbolNode("\u200b")]);
+    realChildren.push(baselineFix);
+
+    var vlist = makeSpan(["vlist"], realChildren);
+    // Fix the final height and depth, in case there were kerns at the ends
+    // since the makeSpan calculation won't take that in to account.
+    vlist.height = Math.max(currPos, vlist.height);
+    vlist.depth = Math.max(-depth, vlist.depth);
+    return vlist;
+};
+
+// A table of size -> font size for the different sizing functions
+var sizingMultiplier = {
+    size1: 0.5,
+    size2: 0.7,
+    size3: 0.8,
+    size4: 0.9,
+    size5: 1.0,
+    size6: 1.2,
+    size7: 1.44,
+    size8: 1.73,
+    size9: 2.07,
+    size10: 2.49,
+};
+
+// A map of spacing functions to their attributes, like size and corresponding
+// CSS class
+var spacingFunctions = {
+    "\\qquad": {
+        size: "2em",
+        className: "qquad",
+    },
+    "\\quad": {
+        size: "1em",
+        className: "quad",
+    },
+    "\\enspace": {
+        size: "0.5em",
+        className: "enspace",
+    },
+    "\\;": {
+        size: "0.277778em",
+        className: "thickspace",
+    },
+    "\\:": {
+        size: "0.22222em",
+        className: "mediumspace",
+    },
+    "\\,": {
+        size: "0.16667em",
+        className: "thinspace",
+    },
+    "\\!": {
+        size: "-0.16667em",
+        className: "negativethinspace",
+    },
+};
+
+/**
+ * Maps TeX font commands to objects containing:
+ * - variant: string used for "mathvariant" attribute in buildMathML.js
+ * - fontName: the "style" parameter to fontMetrics.getCharacterMetrics
+ */
+// A map between tex font commands an MathML mathvariant attribute values
+var fontMap = {
+    // styles
+    "mathbf": {
+        variant: "bold",
+        fontName: "Main-Bold",
+    },
+    "mathrm": {
+        variant: "normal",
+        fontName: "Main-Regular",
+    },
+
+    // "mathit" is missing because it requires the use of two fonts: Main-Italic
+    // and Math-Italic.  This is handled by a special case in makeOrd which ends
+    // up calling mathit.
+
+    // families
+    "mathbb": {
+        variant: "double-struck",
+        fontName: "AMS-Regular",
+    },
+    "mathcal": {
+        variant: "script",
+        fontName: "Caligraphic-Regular",
+    },
+    "mathfrak": {
+        variant: "fraktur",
+        fontName: "Fraktur-Regular",
+    },
+    "mathscr": {
+        variant: "script",
+        fontName: "Script-Regular",
+    },
+    "mathsf": {
+        variant: "sans-serif",
+        fontName: "SansSerif-Regular",
+    },
+    "mathtt": {
+        variant: "monospace",
+        fontName: "Typewriter-Regular",
+    },
+};
+
+module.exports = {
+    fontMap: fontMap,
+    makeSymbol: makeSymbol,
+    mathsym: mathsym,
+    makeSpan: makeSpan,
+    makeFragment: makeFragment,
+    makeVList: makeVList,
+    makeOrd: makeOrd,
+    sizingMultiplier: sizingMultiplier,
+    spacingFunctions: spacingFunctions,
+};
+
+
+/***/ }),
+/* 138 */
+/***/ (function(module, exports) {
+
+/**
+ * This file holds a list of all no-argument functions and single-character
+ * symbols (like 'a' or ';').
+ *
+ * For each of the symbols, there are three properties they can have:
+ * - font (required): the font to be used for this symbol. Either "main" (the
+     normal font), or "ams" (the ams fonts).
+ * - group (required): the ParseNode group type the symbol should have (i.e.
+     "textord", "mathord", etc).
+     See https://github.com/Khan/KaTeX/wiki/Examining-TeX#group-types
+ * - replace: the character that this symbol or function should be
+ *   replaced with (i.e. "\phi" has a replace value of "\u03d5", the phi
+ *   character in the main font).
+ *
+ * The outermost map in the table indicates what mode the symbols should be
+ * accepted in (e.g. "math" or "text").
+ */
+
+module.exports = {
+    math: {},
+    text: {},
+};
+
+function defineSymbol(mode, font, group, replace, name) {
+    module.exports[mode][name] = {
+        font: font,
+        group: group,
+        replace: replace,
+    };
+}
+
+// Some abbreviations for commonly used strings.
+// This helps minify the code, and also spotting typos using jshint.
+
+// modes:
+var math = "math";
+var text = "text";
+
+// fonts:
+var main = "main";
+var ams = "ams";
+
+// groups:
+var accent = "accent";
+var bin = "bin";
+var close = "close";
+var inner = "inner";
+var mathord = "mathord";
+var op = "op";
+var open = "open";
+var punct = "punct";
+var rel = "rel";
+var spacing = "spacing";
+var textord = "textord";
+
+// Now comes the symbol table
+
+// Relation Symbols
+defineSymbol(math, main, rel, "\u2261", "\\equiv");
+defineSymbol(math, main, rel, "\u227a", "\\prec");
+defineSymbol(math, main, rel, "\u227b", "\\succ");
+defineSymbol(math, main, rel, "\u223c", "\\sim");
+defineSymbol(math, main, rel, "\u22a5", "\\perp");
+defineSymbol(math, main, rel, "\u2aaf", "\\preceq");
+defineSymbol(math, main, rel, "\u2ab0", "\\succeq");
+defineSymbol(math, main, rel, "\u2243", "\\simeq");
+defineSymbol(math, main, rel, "\u2223", "\\mid");
+defineSymbol(math, main, rel, "\u226a", "\\ll");
+defineSymbol(math, main, rel, "\u226b", "\\gg");
+defineSymbol(math, main, rel, "\u224d", "\\asymp");
+defineSymbol(math, main, rel, "\u2225", "\\parallel");
+defineSymbol(math, main, rel, "\u22c8", "\\bowtie");
+defineSymbol(math, main, rel, "\u2323", "\\smile");
+defineSymbol(math, main, rel, "\u2291", "\\sqsubseteq");
+defineSymbol(math, main, rel, "\u2292", "\\sqsupseteq");
+defineSymbol(math, main, rel, "\u2250", "\\doteq");
+defineSymbol(math, main, rel, "\u2322", "\\frown");
+defineSymbol(math, main, rel, "\u220b", "\\ni");
+defineSymbol(math, main, rel, "\u221d", "\\propto");
+defineSymbol(math, main, rel, "\u22a2", "\\vdash");
+defineSymbol(math, main, rel, "\u22a3", "\\dashv");
+defineSymbol(math, main, rel, "\u220b", "\\owns");
+
+// Punctuation
+defineSymbol(math, main, punct, "\u002e", "\\ldotp");
+defineSymbol(math, main, punct, "\u22c5", "\\cdotp");
+
+// Misc Symbols
+defineSymbol(math, main, textord, "\u0023", "\\#");
+defineSymbol(math, main, textord, "\u0026", "\\&");
+defineSymbol(math, main, textord, "\u2135", "\\aleph");
+defineSymbol(math, main, textord, "\u2200", "\\forall");
+defineSymbol(math, main, textord, "\u210f", "\\hbar");
+defineSymbol(math, main, textord, "\u2203", "\\exists");
+defineSymbol(math, main, textord, "\u2207", "\\nabla");
+defineSymbol(math, main, textord, "\u266d", "\\flat");
+defineSymbol(math, main, textord, "\u2113", "\\ell");
+defineSymbol(math, main, textord, "\u266e", "\\natural");
+defineSymbol(math, main, textord, "\u2663", "\\clubsuit");
+defineSymbol(math, main, textord, "\u2118", "\\wp");
+defineSymbol(math, main, textord, "\u266f", "\\sharp");
+defineSymbol(math, main, textord, "\u2662", "\\diamondsuit");
+defineSymbol(math, main, textord, "\u211c", "\\Re");
+defineSymbol(math, main, textord, "\u2661", "\\heartsuit");
+defineSymbol(math, main, textord, "\u2111", "\\Im");
+defineSymbol(math, main, textord, "\u2660", "\\spadesuit");
+
+// Math and Text
+defineSymbol(math, main, textord, "\u2020", "\\dag");
+defineSymbol(math, main, textord, "\u2021", "\\ddag");
+
+// Large Delimiters
+defineSymbol(math, main, close, "\u23b1", "\\rmoustache");
+defineSymbol(math, main, open, "\u23b0", "\\lmoustache");
+defineSymbol(math, main, close, "\u27ef", "\\rgroup");
+defineSymbol(math, main, open, "\u27ee", "\\lgroup");
+
+// Binary Operators
+defineSymbol(math, main, bin, "\u2213", "\\mp");
+defineSymbol(math, main, bin, "\u2296", "\\ominus");
+defineSymbol(math, main, bin, "\u228e", "\\uplus");
+defineSymbol(math, main, bin, "\u2293", "\\sqcap");
+defineSymbol(math, main, bin, "\u2217", "\\ast");
+defineSymbol(math, main, bin, "\u2294", "\\sqcup");
+defineSymbol(math, main, bin, "\u25ef", "\\bigcirc");
+defineSymbol(math, main, bin, "\u2219", "\\bullet");
+defineSymbol(math, main, bin, "\u2021", "\\ddagger");
+defineSymbol(math, main, bin, "\u2240", "\\wr");
+defineSymbol(math, main, bin, "\u2a3f", "\\amalg");
+
+// Arrow Symbols
+defineSymbol(math, main, rel, "\u27f5", "\\longleftarrow");
+defineSymbol(math, main, rel, "\u21d0", "\\Leftarrow");
+defineSymbol(math, main, rel, "\u27f8", "\\Longleftarrow");
+defineSymbol(math, main, rel, "\u27f6", "\\longrightarrow");
+defineSymbol(math, main, rel, "\u21d2", "\\Rightarrow");
+defineSymbol(math, main, rel, "\u27f9", "\\Longrightarrow");
+defineSymbol(math, main, rel, "\u2194", "\\leftrightarrow");
+defineSymbol(math, main, rel, "\u27f7", "\\longleftrightarrow");
+defineSymbol(math, main, rel, "\u21d4", "\\Leftrightarrow");
+defineSymbol(math, main, rel, "\u27fa", "\\Longleftrightarrow");
+defineSymbol(math, main, rel, "\u21a6", "\\mapsto");
+defineSymbol(math, main, rel, "\u27fc", "\\longmapsto");
+defineSymbol(math, main, rel, "\u2197", "\\nearrow");
+defineSymbol(math, main, rel, "\u21a9", "\\hookleftarrow");
+defineSymbol(math, main, rel, "\u21aa", "\\hookrightarrow");
+defineSymbol(math, main, rel, "\u2198", "\\searrow");
+defineSymbol(math, main, rel, "\u21bc", "\\leftharpoonup");
+defineSymbol(math, main, rel, "\u21c0", "\\rightharpoonup");
+defineSymbol(math, main, rel, "\u2199", "\\swarrow");
+defineSymbol(math, main, rel, "\u21bd", "\\leftharpoondown");
+defineSymbol(math, main, rel, "\u21c1", "\\rightharpoondown");
+defineSymbol(math, main, rel, "\u2196", "\\nwarrow");
+defineSymbol(math, main, rel, "\u21cc", "\\rightleftharpoons");
+
+// AMS Negated Binary Relations
+defineSymbol(math, ams, rel, "\u226e", "\\nless");
+defineSymbol(math, ams, rel, "\ue010", "\\nleqslant");
+defineSymbol(math, ams, rel, "\ue011", "\\nleqq");
+defineSymbol(math, ams, rel, "\u2a87", "\\lneq");
+defineSymbol(math, ams, rel, "\u2268", "\\lneqq");
+defineSymbol(math, ams, rel, "\ue00c", "\\lvertneqq");
+defineSymbol(math, ams, rel, "\u22e6", "\\lnsim");
+defineSymbol(math, ams, rel, "\u2a89", "\\lnapprox");
+defineSymbol(math, ams, rel, "\u2280", "\\nprec");
+defineSymbol(math, ams, rel, "\u22e0", "\\npreceq");
+defineSymbol(math, ams, rel, "\u22e8", "\\precnsim");
+defineSymbol(math, ams, rel, "\u2ab9", "\\precnapprox");
+defineSymbol(math, ams, rel, "\u2241", "\\nsim");
+defineSymbol(math, ams, rel, "\ue006", "\\nshortmid");
+defineSymbol(math, ams, rel, "\u2224", "\\nmid");
+defineSymbol(math, ams, rel, "\u22ac", "\\nvdash");
+defineSymbol(math, ams, rel, "\u22ad", "\\nvDash");
+defineSymbol(math, ams, rel, "\u22ea", "\\ntriangleleft");
+defineSymbol(math, ams, rel, "\u22ec", "\\ntrianglelefteq");
+defineSymbol(math, ams, rel, "\u228a", "\\subsetneq");
+defineSymbol(math, ams, rel, "\ue01a", "\\varsubsetneq");
+defineSymbol(math, ams, rel, "\u2acb", "\\subsetneqq");
+defineSymbol(math, ams, rel, "\ue017", "\\varsubsetneqq");
+defineSymbol(math, ams, rel, "\u226f", "\\ngtr");
+defineSymbol(math, ams, rel, "\ue00f", "\\ngeqslant");
+defineSymbol(math, ams, rel, "\ue00e", "\\ngeqq");
+defineSymbol(math, ams, rel, "\u2a88", "\\gneq");
+defineSymbol(math, ams, rel, "\u2269", "\\gneqq");
+defineSymbol(math, ams, rel, "\ue00d", "\\gvertneqq");
+defineSymbol(math, ams, rel, "\u22e7", "\\gnsim");
+defineSymbol(math, ams, rel, "\u2a8a", "\\gnapprox");
+defineSymbol(math, ams, rel, "\u2281", "\\nsucc");
+defineSymbol(math, ams, rel, "\u22e1", "\\nsucceq");
+defineSymbol(math, ams, rel, "\u22e9", "\\succnsim");
+defineSymbol(math, ams, rel, "\u2aba", "\\succnapprox");
+defineSymbol(math, ams, rel, "\u2246", "\\ncong");
+defineSymbol(math, ams, rel, "\ue007", "\\nshortparallel");
+defineSymbol(math, ams, rel, "\u2226", "\\nparallel");
+defineSymbol(math, ams, rel, "\u22af", "\\nVDash");
+defineSymbol(math, ams, rel, "\u22eb", "\\ntriangleright");
+defineSymbol(math, ams, rel, "\u22ed", "\\ntrianglerighteq");
+defineSymbol(math, ams, rel, "\ue018", "\\nsupseteqq");
+defineSymbol(math, ams, rel, "\u228b", "\\supsetneq");
+defineSymbol(math, ams, rel, "\ue01b", "\\varsupsetneq");
+defineSymbol(math, ams, rel, "\u2acc", "\\supsetneqq");
+defineSymbol(math, ams, rel, "\ue019", "\\varsupsetneqq");
+defineSymbol(math, ams, rel, "\u22ae", "\\nVdash");
+defineSymbol(math, ams, rel, "\u2ab5", "\\precneqq");
+defineSymbol(math, ams, rel, "\u2ab6", "\\succneqq");
+defineSymbol(math, ams, rel, "\ue016", "\\nsubseteqq");
+defineSymbol(math, ams, bin, "\u22b4", "\\unlhd");
+defineSymbol(math, ams, bin, "\u22b5", "\\unrhd");
+
+// AMS Negated Arrows
+defineSymbol(math, ams, rel, "\u219a", "\\nleftarrow");
+defineSymbol(math, ams, rel, "\u219b", "\\nrightarrow");
+defineSymbol(math, ams, rel, "\u21cd", "\\nLeftarrow");
+defineSymbol(math, ams, rel, "\u21cf", "\\nRightarrow");
+defineSymbol(math, ams, rel, "\u21ae", "\\nleftrightarrow");
+defineSymbol(math, ams, rel, "\u21ce", "\\nLeftrightarrow");
+
+// AMS Misc
+defineSymbol(math, ams, rel, "\u25b3", "\\vartriangle");
+defineSymbol(math, ams, textord, "\u210f", "\\hslash");
+defineSymbol(math, ams, textord, "\u25bd", "\\triangledown");
+defineSymbol(math, ams, textord, "\u25ca", "\\lozenge");
+defineSymbol(math, ams, textord, "\u24c8", "\\circledS");
+defineSymbol(math, ams, textord, "\u00ae", "\\circledR");
+defineSymbol(math, ams, textord, "\u2221", "\\measuredangle");
+defineSymbol(math, ams, textord, "\u2204", "\\nexists");
+defineSymbol(math, ams, textord, "\u2127", "\\mho");
+defineSymbol(math, ams, textord, "\u2132", "\\Finv");
+defineSymbol(math, ams, textord, "\u2141", "\\Game");
+defineSymbol(math, ams, textord, "\u006b", "\\Bbbk");
+defineSymbol(math, ams, textord, "\u2035", "\\backprime");
+defineSymbol(math, ams, textord, "\u25b2", "\\blacktriangle");
+defineSymbol(math, ams, textord, "\u25bc", "\\blacktriangledown");
+defineSymbol(math, ams, textord, "\u25a0", "\\blacksquare");
+defineSymbol(math, ams, textord, "\u29eb", "\\blacklozenge");
+defineSymbol(math, ams, textord, "\u2605", "\\bigstar");
+defineSymbol(math, ams, textord, "\u2222", "\\sphericalangle");
+defineSymbol(math, ams, textord, "\u2201", "\\complement");
+defineSymbol(math, ams, textord, "\u00f0", "\\eth");
+defineSymbol(math, ams, textord, "\u2571", "\\diagup");
+defineSymbol(math, ams, textord, "\u2572", "\\diagdown");
+defineSymbol(math, ams, textord, "\u25a1", "\\square");
+defineSymbol(math, ams, textord, "\u25a1", "\\Box");
+defineSymbol(math, ams, textord, "\u25ca", "\\Diamond");
+defineSymbol(math, ams, textord, "\u00a5", "\\yen");
+defineSymbol(math, ams, textord, "\u2713", "\\checkmark");
+
+// AMS Hebrew
+defineSymbol(math, ams, textord, "\u2136", "\\beth");
+defineSymbol(math, ams, textord, "\u2138", "\\daleth");
+defineSymbol(math, ams, textord, "\u2137", "\\gimel");
+
+// AMS Greek
+defineSymbol(math, ams, textord, "\u03dd", "\\digamma");
+defineSymbol(math, ams, textord, "\u03f0", "\\varkappa");
+
+// AMS Delimiters
+defineSymbol(math, ams, open, "\u250c", "\\ulcorner");
+defineSymbol(math, ams, close, "\u2510", "\\urcorner");
+defineSymbol(math, ams, open, "\u2514", "\\llcorner");
+defineSymbol(math, ams, close, "\u2518", "\\lrcorner");
+
+// AMS Binary Relations
+defineSymbol(math, ams, rel, "\u2266", "\\leqq");
+defineSymbol(math, ams, rel, "\u2a7d", "\\leqslant");
+defineSymbol(math, ams, rel, "\u2a95", "\\eqslantless");
+defineSymbol(math, ams, rel, "\u2272", "\\lesssim");
+defineSymbol(math, ams, rel, "\u2a85", "\\lessapprox");
+defineSymbol(math, ams, rel, "\u224a", "\\approxeq");
+defineSymbol(math, ams, bin, "\u22d6", "\\lessdot");
+defineSymbol(math, ams, rel, "\u22d8", "\\lll");
+defineSymbol(math, ams, rel, "\u2276", "\\lessgtr");
+defineSymbol(math, ams, rel, "\u22da", "\\lesseqgtr");
+defineSymbol(math, ams, rel, "\u2a8b", "\\lesseqqgtr");
+defineSymbol(math, ams, rel, "\u2251", "\\doteqdot");
+defineSymbol(math, ams, rel, "\u2253", "\\risingdotseq");
+defineSymbol(math, ams, rel, "\u2252", "\\fallingdotseq");
+defineSymbol(math, ams, rel, "\u223d", "\\backsim");
+defineSymbol(math, ams, rel, "\u22cd", "\\backsimeq");
+defineSymbol(math, ams, rel, "\u2ac5", "\\subseteqq");
+defineSymbol(math, ams, rel, "\u22d0", "\\Subset");
+defineSymbol(math, ams, rel, "\u228f", "\\sqsubset");
+defineSymbol(math, ams, rel, "\u227c", "\\preccurlyeq");
+defineSymbol(math, ams, rel, "\u22de", "\\curlyeqprec");
+defineSymbol(math, ams, rel, "\u227e", "\\precsim");
+defineSymbol(math, ams, rel, "\u2ab7", "\\precapprox");
+defineSymbol(math, ams, rel, "\u22b2", "\\vartriangleleft");
+defineSymbol(math, ams, rel, "\u22b4", "\\trianglelefteq");
+defineSymbol(math, ams, rel, "\u22a8", "\\vDash");
+defineSymbol(math, ams, rel, "\u22aa", "\\Vvdash");
+defineSymbol(math, ams, rel, "\u2323", "\\smallsmile");
+defineSymbol(math, ams, rel, "\u2322", "\\smallfrown");
+defineSymbol(math, ams, rel, "\u224f", "\\bumpeq");
+defineSymbol(math, ams, rel, "\u224e", "\\Bumpeq");
+defineSymbol(math, ams, rel, "\u2267", "\\geqq");
+defineSymbol(math, ams, rel, "\u2a7e", "\\geqslant");
+defineSymbol(math, ams, rel, "\u2a96", "\\eqslantgtr");
+defineSymbol(math, ams, rel, "\u2273", "\\gtrsim");
+defineSymbol(math, ams, rel, "\u2a86", "\\gtrapprox");
+defineSymbol(math, ams, bin, "\u22d7", "\\gtrdot");
+defineSymbol(math, ams, rel, "\u22d9", "\\ggg");
+defineSymbol(math, ams, rel, "\u2277", "\\gtrless");
+defineSymbol(math, ams, rel, "\u22db", "\\gtreqless");
+defineSymbol(math, ams, rel, "\u2a8c", "\\gtreqqless");
+defineSymbol(math, ams, rel, "\u2256", "\\eqcirc");
+defineSymbol(math, ams, rel, "\u2257", "\\circeq");
+defineSymbol(math, ams, rel, "\u225c", "\\triangleq");
+defineSymbol(math, ams, rel, "\u223c", "\\thicksim");
+defineSymbol(math, ams, rel, "\u2248", "\\thickapprox");
+defineSymbol(math, ams, rel, "\u2ac6", "\\supseteqq");
+defineSymbol(math, ams, rel, "\u22d1", "\\Supset");
+defineSymbol(math, ams, rel, "\u2290", "\\sqsupset");
+defineSymbol(math, ams, rel, "\u227d", "\\succcurlyeq");
+defineSymbol(math, ams, rel, "\u22df", "\\curlyeqsucc");
+defineSymbol(math, ams, rel, "\u227f", "\\succsim");
+defineSymbol(math, ams, rel, "\u2ab8", "\\succapprox");
+defineSymbol(math, ams, rel, "\u22b3", "\\vartriangleright");
+defineSymbol(math, ams, rel, "\u22b5", "\\trianglerighteq");
+defineSymbol(math, ams, rel, "\u22a9", "\\Vdash");
+defineSymbol(math, ams, rel, "\u2223", "\\shortmid");
+defineSymbol(math, ams, rel, "\u2225", "\\shortparallel");
+defineSymbol(math, ams, rel, "\u226c", "\\between");
+defineSymbol(math, ams, rel, "\u22d4", "\\pitchfork");
+defineSymbol(math, ams, rel, "\u221d", "\\varpropto");
+defineSymbol(math, ams, rel, "\u25c0", "\\blacktriangleleft");
+defineSymbol(math, ams, rel, "\u2234", "\\therefore");
+defineSymbol(math, ams, rel, "\u220d", "\\backepsilon");
+defineSymbol(math, ams, rel, "\u25b6", "\\blacktriangleright");
+defineSymbol(math, ams, rel, "\u2235", "\\because");
+defineSymbol(math, ams, rel, "\u22d8", "\\llless");
+defineSymbol(math, ams, rel, "\u22d9", "\\gggtr");
+defineSymbol(math, ams, bin, "\u22b2", "\\lhd");
+defineSymbol(math, ams, bin, "\u22b3", "\\rhd");
+defineSymbol(math, ams, rel, "\u2242", "\\eqsim");
+defineSymbol(math, main, rel, "\u22c8", "\\Join");
+defineSymbol(math, ams, rel, "\u2251", "\\Doteq");
+
+// AMS Binary Operators
+defineSymbol(math, ams, bin, "\u2214", "\\dotplus");
+defineSymbol(math, ams, bin, "\u2216", "\\smallsetminus");
+defineSymbol(math, ams, bin, "\u22d2", "\\Cap");
+defineSymbol(math, ams, bin, "\u22d3", "\\Cup");
+defineSymbol(math, ams, bin, "\u2a5e", "\\doublebarwedge");
+defineSymbol(math, ams, bin, "\u229f", "\\boxminus");
+defineSymbol(math, ams, bin, "\u229e", "\\boxplus");
+defineSymbol(math, ams, bin, "\u22c7", "\\divideontimes");
+defineSymbol(math, ams, bin, "\u22c9", "\\ltimes");
+defineSymbol(math, ams, bin, "\u22ca", "\\rtimes");
+defineSymbol(math, ams, bin, "\u22cb", "\\leftthreetimes");
+defineSymbol(math, ams, bin, "\u22cc", "\\rightthreetimes");
+defineSymbol(math, ams, bin, "\u22cf", "\\curlywedge");
+defineSymbol(math, ams, bin, "\u22ce", "\\curlyvee");
+defineSymbol(math, ams, bin, "\u229d", "\\circleddash");
+defineSymbol(math, ams, bin, "\u229b", "\\circledast");
+defineSymbol(math, ams, bin, "\u22c5", "\\centerdot");
+defineSymbol(math, ams, bin, "\u22ba", "\\intercal");
+defineSymbol(math, ams, bin, "\u22d2", "\\doublecap");
+defineSymbol(math, ams, bin, "\u22d3", "\\doublecup");
+defineSymbol(math, ams, bin, "\u22a0", "\\boxtimes");
+
+// AMS Arrows
+defineSymbol(math, ams, rel, "\u21e2", "\\dashrightarrow");
+defineSymbol(math, ams, rel, "\u21e0", "\\dashleftarrow");
+defineSymbol(math, ams, rel, "\u21c7", "\\leftleftarrows");
+defineSymbol(math, ams, rel, "\u21c6", "\\leftrightarrows");
+defineSymbol(math, ams, rel, "\u21da", "\\Lleftarrow");
+defineSymbol(math, ams, rel, "\u219e", "\\twoheadleftarrow");
+defineSymbol(math, ams, rel, "\u21a2", "\\leftarrowtail");
+defineSymbol(math, ams, rel, "\u21ab", "\\looparrowleft");
+defineSymbol(math, ams, rel, "\u21cb", "\\leftrightharpoons");
+defineSymbol(math, ams, rel, "\u21b6", "\\curvearrowleft");
+defineSymbol(math, ams, rel, "\u21ba", "\\circlearrowleft");
+defineSymbol(math, ams, rel, "\u21b0", "\\Lsh");
+defineSymbol(math, ams, rel, "\u21c8", "\\upuparrows");
+defineSymbol(math, ams, rel, "\u21bf", "\\upharpoonleft");
+defineSymbol(math, ams, rel, "\u21c3", "\\downharpoonleft");
+defineSymbol(math, ams, rel, "\u22b8", "\\multimap");
+defineSymbol(math, ams, rel, "\u21ad", "\\leftrightsquigarrow");
+defineSymbol(math, ams, rel, "\u21c9", "\\rightrightarrows");
+defineSymbol(math, ams, rel, "\u21c4", "\\rightleftarrows");
+defineSymbol(math, ams, rel, "\u21a0", "\\twoheadrightarrow");
+defineSymbol(math, ams, rel, "\u21a3", "\\rightarrowtail");
+defineSymbol(math, ams, rel, "\u21ac", "\\looparrowright");
+defineSymbol(math, ams, rel, "\u21b7", "\\curvearrowright");
+defineSymbol(math, ams, rel, "\u21bb", "\\circlearrowright");
+defineSymbol(math, ams, rel, "\u21b1", "\\Rsh");
+defineSymbol(math, ams, rel, "\u21ca", "\\downdownarrows");
+defineSymbol(math, ams, rel, "\u21be", "\\upharpoonright");
+defineSymbol(math, ams, rel, "\u21c2", "\\downharpoonright");
+defineSymbol(math, ams, rel, "\u21dd", "\\rightsquigarrow");
+defineSymbol(math, ams, rel, "\u21dd", "\\leadsto");
+defineSymbol(math, ams, rel, "\u21db", "\\Rrightarrow");
+defineSymbol(math, ams, rel, "\u21be", "\\restriction");
+
+defineSymbol(math, main, textord, "\u2018", "`");
+defineSymbol(math, main, textord, "$", "\\$");
+defineSymbol(math, main, textord, "%", "\\%");
+defineSymbol(math, main, textord, "_", "\\_");
+defineSymbol(math, main, textord, "\u2220", "\\angle");
+defineSymbol(math, main, textord, "\u221e", "\\infty");
+defineSymbol(math, main, textord, "\u2032", "\\prime");
+defineSymbol(math, main, textord, "\u25b3", "\\triangle");
+defineSymbol(math, main, textord, "\u0393", "\\Gamma");
+defineSymbol(math, main, textord, "\u0394", "\\Delta");
+defineSymbol(math, main, textord, "\u0398", "\\Theta");
+defineSymbol(math, main, textord, "\u039b", "\\Lambda");
+defineSymbol(math, main, textord, "\u039e", "\\Xi");
+defineSymbol(math, main, textord, "\u03a0", "\\Pi");
+defineSymbol(math, main, textord, "\u03a3", "\\Sigma");
+defineSymbol(math, main, textord, "\u03a5", "\\Upsilon");
+defineSymbol(math, main, textord, "\u03a6", "\\Phi");
+defineSymbol(math, main, textord, "\u03a8", "\\Psi");
+defineSymbol(math, main, textord, "\u03a9", "\\Omega");
+defineSymbol(math, main, textord, "\u00ac", "\\neg");
+defineSymbol(math, main, textord, "\u00ac", "\\lnot");
+defineSymbol(math, main, textord, "\u22a4", "\\top");
+defineSymbol(math, main, textord, "\u22a5", "\\bot");
+defineSymbol(math, main, textord, "\u2205", "\\emptyset");
+defineSymbol(math, ams, textord, "\u2205", "\\varnothing");
+defineSymbol(math, main, mathord, "\u03b1", "\\alpha");
+defineSymbol(math, main, mathord, "\u03b2", "\\beta");
+defineSymbol(math, main, mathord, "\u03b3", "\\gamma");
+defineSymbol(math, main, mathord, "\u03b4", "\\delta");
+defineSymbol(math, main, mathord, "\u03f5", "\\epsilon");
+defineSymbol(math, main, mathord, "\u03b6", "\\zeta");
+defineSymbol(math, main, mathord, "\u03b7", "\\eta");
+defineSymbol(math, main, mathord, "\u03b8", "\\theta");
+defineSymbol(math, main, mathord, "\u03b9", "\\iota");
+defineSymbol(math, main, mathord, "\u03ba", "\\kappa");
+defineSymbol(math, main, mathord, "\u03bb", "\\lambda");
+defineSymbol(math, main, mathord, "\u03bc", "\\mu");
+defineSymbol(math, main, mathord, "\u03bd", "\\nu");
+defineSymbol(math, main, mathord, "\u03be", "\\xi");
+defineSymbol(math, main, mathord, "o", "\\omicron");
+defineSymbol(math, main, mathord, "\u03c0", "\\pi");
+defineSymbol(math, main, mathord, "\u03c1", "\\rho");
+defineSymbol(math, main, mathord, "\u03c3", "\\sigma");
+defineSymbol(math, main, mathord, "\u03c4", "\\tau");
+defineSymbol(math, main, mathord, "\u03c5", "\\upsilon");
+defineSymbol(math, main, mathord, "\u03d5", "\\phi");
+defineSymbol(math, main, mathord, "\u03c7", "\\chi");
+defineSymbol(math, main, mathord, "\u03c8", "\\psi");
+defineSymbol(math, main, mathord, "\u03c9", "\\omega");
+defineSymbol(math, main, mathord, "\u03b5", "\\varepsilon");
+defineSymbol(math, main, mathord, "\u03d1", "\\vartheta");
+defineSymbol(math, main, mathord, "\u03d6", "\\varpi");
+defineSymbol(math, main, mathord, "\u03f1", "\\varrho");
+defineSymbol(math, main, mathord, "\u03c2", "\\varsigma");
+defineSymbol(math, main, mathord, "\u03c6", "\\varphi");
+defineSymbol(math, main, bin, "\u2217", "*");
+defineSymbol(math, main, bin, "+", "+");
+defineSymbol(math, main, bin, "\u2212", "-");
+defineSymbol(math, main, bin, "\u22c5", "\\cdot");
+defineSymbol(math, main, bin, "\u2218", "\\circ");
+defineSymbol(math, main, bin, "\u00f7", "\\div");
+defineSymbol(math, main, bin, "\u00b1", "\\pm");
+defineSymbol(math, main, bin, "\u00d7", "\\times");
+defineSymbol(math, main, bin, "\u2229", "\\cap");
+defineSymbol(math, main, bin, "\u222a", "\\cup");
+defineSymbol(math, main, bin, "\u2216", "\\setminus");
+defineSymbol(math, main, bin, "\u2227", "\\land");
+defineSymbol(math, main, bin, "\u2228", "\\lor");
+defineSymbol(math, main, bin, "\u2227", "\\wedge");
+defineSymbol(math, main, bin, "\u2228", "\\vee");
+defineSymbol(math, main, textord, "\u221a", "\\surd");
+defineSymbol(math, main, open, "(", "(");
+defineSymbol(math, main, open, "[", "[");
+defineSymbol(math, main, open, "\u27e8", "\\langle");
+defineSymbol(math, main, open, "\u2223", "\\lvert");
+defineSymbol(math, main, open, "\u2225", "\\lVert");
+defineSymbol(math, main, close, ")", ")");
+defineSymbol(math, main, close, "]", "]");
+defineSymbol(math, main, close, "?", "?");
+defineSymbol(math, main, close, "!", "!");
+defineSymbol(math, main, close, "\u27e9", "\\rangle");
+defineSymbol(math, main, close, "\u2223", "\\rvert");
+defineSymbol(math, main, close, "\u2225", "\\rVert");
+defineSymbol(math, main, rel, "=", "=");
+defineSymbol(math, main, rel, "<", "<");
+defineSymbol(math, main, rel, ">", ">");
+defineSymbol(math, main, rel, ":", ":");
+defineSymbol(math, main, rel, "\u2248", "\\approx");
+defineSymbol(math, main, rel, "\u2245", "\\cong");
+defineSymbol(math, main, rel, "\u2265", "\\ge");
+defineSymbol(math, main, rel, "\u2265", "\\geq");
+defineSymbol(math, main, rel, "\u2190", "\\gets");
+defineSymbol(math, main, rel, ">", "\\gt");
+defineSymbol(math, main, rel, "\u2208", "\\in");
+defineSymbol(math, main, rel, "\u2209", "\\notin");
+defineSymbol(math, main, rel, "\u2282", "\\subset");
+defineSymbol(math, main, rel, "\u2283", "\\supset");
+defineSymbol(math, main, rel, "\u2286", "\\subseteq");
+defineSymbol(math, main, rel, "\u2287", "\\supseteq");
+defineSymbol(math, ams, rel, "\u2288", "\\nsubseteq");
+defineSymbol(math, ams, rel, "\u2289", "\\nsupseteq");
+defineSymbol(math, main, rel, "\u22a8", "\\models");
+defineSymbol(math, main, rel, "\u2190", "\\leftarrow");
+defineSymbol(math, main, rel, "\u2264", "\\le");
+defineSymbol(math, main, rel, "\u2264", "\\leq");
+defineSymbol(math, main, rel, "<", "\\lt");
+defineSymbol(math, main, rel, "\u2260", "\\ne");
+defineSymbol(math, main, rel, "\u2260", "\\neq");
+defineSymbol(math, main, rel, "\u2192", "\\rightarrow");
+defineSymbol(math, main, rel, "\u2192", "\\to");
+defineSymbol(math, ams, rel, "\u2271", "\\ngeq");
+defineSymbol(math, ams, rel, "\u2270", "\\nleq");
+defineSymbol(math, main, spacing, null, "\\!");
+defineSymbol(math, main, spacing, "\u00a0", "\\ ");
+defineSymbol(math, main, spacing, "\u00a0", "~");
+defineSymbol(math, main, spacing, null, "\\,");
+defineSymbol(math, main, spacing, null, "\\:");
+defineSymbol(math, main, spacing, null, "\\;");
+defineSymbol(math, main, spacing, null, "\\enspace");
+defineSymbol(math, main, spacing, null, "\\qquad");
+defineSymbol(math, main, spacing, null, "\\quad");
+defineSymbol(math, main, spacing, "\u00a0", "\\space");
+defineSymbol(math, main, punct, ",", ",");
+defineSymbol(math, main, punct, ";", ";");
+defineSymbol(math, main, punct, ":", "\\colon");
+defineSymbol(math, ams, bin, "\u22bc", "\\barwedge");
+defineSymbol(math, ams, bin, "\u22bb", "\\veebar");
+defineSymbol(math, main, bin, "\u2299", "\\odot");
+defineSymbol(math, main, bin, "\u2295", "\\oplus");
+defineSymbol(math, main, bin, "\u2297", "\\otimes");
+defineSymbol(math, main, textord, "\u2202", "\\partial");
+defineSymbol(math, main, bin, "\u2298", "\\oslash");
+defineSymbol(math, ams, bin, "\u229a", "\\circledcirc");
+defineSymbol(math, ams, bin, "\u22a1", "\\boxdot");
+defineSymbol(math, main, bin, "\u25b3", "\\bigtriangleup");
+defineSymbol(math, main, bin, "\u25bd", "\\bigtriangledown");
+defineSymbol(math, main, bin, "\u2020", "\\dagger");
+defineSymbol(math, main, bin, "\u22c4", "\\diamond");
+defineSymbol(math, main, bin, "\u22c6", "\\star");
+defineSymbol(math, main, bin, "\u25c3", "\\triangleleft");
+defineSymbol(math, main, bin, "\u25b9", "\\triangleright");
+defineSymbol(math, main, open, "{", "\\{");
+defineSymbol(math, main, close, "}", "\\}");
+defineSymbol(math, main, open, "{", "\\lbrace");
+defineSymbol(math, main, close, "}", "\\rbrace");
+defineSymbol(math, main, open, "[", "\\lbrack");
+defineSymbol(math, main, close, "]", "\\rbrack");
+defineSymbol(math, main, open, "\u230a", "\\lfloor");
+defineSymbol(math, main, close, "\u230b", "\\rfloor");
+defineSymbol(math, main, open, "\u2308", "\\lceil");
+defineSymbol(math, main, close, "\u2309", "\\rceil");
+defineSymbol(math, main, textord, "\\", "\\backslash");
+defineSymbol(math, main, textord, "\u2223", "|");
+defineSymbol(math, main, textord, "\u2223", "\\vert");
+defineSymbol(math, main, textord, "\u2225", "\\|");
+defineSymbol(math, main, textord, "\u2225", "\\Vert");
+defineSymbol(math, main, rel, "\u2191", "\\uparrow");
+defineSymbol(math, main, rel, "\u21d1", "\\Uparrow");
+defineSymbol(math, main, rel, "\u2193", "\\downarrow");
+defineSymbol(math, main, rel, "\u21d3", "\\Downarrow");
+defineSymbol(math, main, rel, "\u2195", "\\updownarrow");
+defineSymbol(math, main, rel, "\u21d5", "\\Updownarrow");
+defineSymbol(math, math, op, "\u2210", "\\coprod");
+defineSymbol(math, math, op, "\u22c1", "\\bigvee");
+defineSymbol(math, math, op, "\u22c0", "\\bigwedge");
+defineSymbol(math, math, op, "\u2a04", "\\biguplus");
+defineSymbol(math, math, op, "\u22c2", "\\bigcap");
+defineSymbol(math, math, op, "\u22c3", "\\bigcup");
+defineSymbol(math, math, op, "\u222b", "\\int");
+defineSymbol(math, math, op, "\u222b", "\\intop");
+defineSymbol(math, math, op, "\u222c", "\\iint");
+defineSymbol(math, math, op, "\u222d", "\\iiint");
+defineSymbol(math, math, op, "\u220f", "\\prod");
+defineSymbol(math, math, op, "\u2211", "\\sum");
+defineSymbol(math, math, op, "\u2a02", "\\bigotimes");
+defineSymbol(math, math, op, "\u2a01", "\\bigoplus");
+defineSymbol(math, math, op, "\u2a00", "\\bigodot");
+defineSymbol(math, math, op, "\u222e", "\\oint");
+defineSymbol(math, math, op, "\u2a06", "\\bigsqcup");
+defineSymbol(math, math, op, "\u222b", "\\smallint");
+defineSymbol(math, main, inner, "\u2026", "\\ldots");
+defineSymbol(math, main, inner, "\u22ef", "\\cdots");
+defineSymbol(math, main, inner, "\u22f1", "\\ddots");
+defineSymbol(math, main, textord, "\u22ee", "\\vdots");
+defineSymbol(math, main, accent, "\u00b4", "\\acute");
+defineSymbol(math, main, accent, "\u0060", "\\grave");
+defineSymbol(math, main, accent, "\u00a8", "\\ddot");
+defineSymbol(math, main, accent, "\u007e", "\\tilde");
+defineSymbol(math, main, accent, "\u00af", "\\bar");
+defineSymbol(math, main, accent, "\u02d8", "\\breve");
+defineSymbol(math, main, accent, "\u02c7", "\\check");
+defineSymbol(math, main, accent, "\u005e", "\\hat");
+defineSymbol(math, main, accent, "\u20d7", "\\vec");
+defineSymbol(math, main, accent, "\u02d9", "\\dot");
+defineSymbol(math, main, mathord, "\u0131", "\\imath");
+defineSymbol(math, main, mathord, "\u0237", "\\jmath");
+
+defineSymbol(text, main, spacing, "\u00a0", "\\ ");
+defineSymbol(text, main, spacing, "\u00a0", " ");
+defineSymbol(text, main, spacing, "\u00a0", "~");
+
+// There are lots of symbols which are the same, so we add them in afterwards.
+var i;
+var ch;
+
+// All of these are textords in math mode
+var mathTextSymbols = "0123456789/@.\"";
+for (i = 0; i < mathTextSymbols.length; i++) {
+    ch = mathTextSymbols.charAt(i);
+    defineSymbol(math, main, textord, ch, ch);
+}
+
+// All of these are textords in text mode
+var textSymbols = "0123456789`!@*()-=+[]'\";:?/.,";
+for (i = 0; i < textSymbols.length; i++) {
+    ch = textSymbols.charAt(i);
+    defineSymbol(text, main, textord, ch, ch);
+}
+
+// All of these are textords in text mode, and mathords in math mode
+var letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+for (i = 0; i < letters.length; i++) {
+    ch = letters.charAt(i);
+    defineSymbol(math, main, mathord, ch, ch);
+    defineSymbol(text, main, textord, ch, ch);
+}
+
+
+/***/ }),
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9232,18 +9074,18 @@ module.exports = function deflist_plugin(md) {
 
 
 /***/ }),
-/* 153 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 
-var emojies_defs      = __webpack_require__(154);
-var emojies_shortcuts = __webpack_require__(155);
-var emoji_html        = __webpack_require__(157);
-var emoji_replace     = __webpack_require__(158);
-var normalize_opts    = __webpack_require__(156);
+var emojies_defs      = __webpack_require__(141);
+var emojies_shortcuts = __webpack_require__(142);
+var emoji_html        = __webpack_require__(144);
+var emoji_replace     = __webpack_require__(145);
+var normalize_opts    = __webpack_require__(143);
 
 
 module.exports = function emoji_plugin(md, options) {
@@ -9262,7 +9104,7 @@ module.exports = function emoji_plugin(md, options) {
 
 
 /***/ }),
-/* 154 */
+/* 141 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -10634,7 +10476,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 155 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10682,7 +10524,7 @@ module.exports = {
 
 
 /***/ }),
-/* 156 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10748,7 +10590,7 @@ module.exports = function normalize_opts(options) {
 
 
 /***/ }),
-/* 157 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10760,7 +10602,7 @@ module.exports = function emoji_html(tokens, idx /*, options, env */) {
 
 
 /***/ }),
-/* 158 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10856,7 +10698,7 @@ module.exports = function create_rule(md, emojies, shortcuts, scanRE, replaceRE)
 
 
 /***/ }),
-/* 159 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10983,7 +10825,7 @@ module.exports = function ins_plugin(md) {
 
 
 /***/ }),
-/* 160 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11056,7 +10898,7 @@ module.exports = function sub_plugin(md) {
 
 
 /***/ }),
-/* 161 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11128,9 +10970,7 @@ module.exports = function sup_plugin(md) {
 
 
 /***/ }),
-/* 162 */,
-/* 163 */,
-/* 164 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11259,7 +11099,7 @@ module.exports = decode;
 
 
 /***/ }),
-/* 165 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11364,7 +11204,7 @@ module.exports = encode;
 
 
 /***/ }),
-/* 166 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11396,7 +11236,7 @@ module.exports = function format(url) {
 
 
 /***/ }),
-/* 167 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11715,7 +11555,7 @@ module.exports = urlParse;
 
 
 /***/ }),
-/* 168 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -12251,30 +12091,453 @@ module.exports = urlParse;
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(120)(module), __webpack_require__(80)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(117)(module), __webpack_require__(60)))
 
 /***/ }),
-/* 169 */
+/* 154 */
 /***/ (function(module, exports) {
 
 module.exports=/[\xAD\u0600-\u0605\u061C\u06DD\u070F\u08E2\u180E\u200B-\u200F\u202A-\u202E\u2060-\u2064\u2066-\u206F\uFEFF\uFFF9-\uFFFB]|\uD804\uDCBD|\uD82F[\uDCA0-\uDCA3]|\uD834[\uDD73-\uDD7A]|\uDB40[\uDC01\uDC20-\uDC7F]/
 
 /***/ }),
-/* 170 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.Any = __webpack_require__(105);
-exports.Cc  = __webpack_require__(103);
-exports.Cf  = __webpack_require__(169);
-exports.P   = __webpack_require__(79);
-exports.Z   = __webpack_require__(104);
+exports.Any = __webpack_require__(96);
+exports.Cc  = __webpack_require__(94);
+exports.Cf  = __webpack_require__(154);
+exports.P   = __webpack_require__(52);
+exports.Z   = __webpack_require__(95);
 
 
 /***/ }),
-/* 171 */
+/* 156 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Parse link destination
+//
+
+
+
+var isSpace     = __webpack_require__(8).isSpace;
+var unescapeAll = __webpack_require__(8).unescapeAll;
+
+
+module.exports = function parseLinkDestination(str, pos, max) {
+  var code, level,
+      lines = 0,
+      start = pos,
+      result = {
+        ok: false,
+        pos: 0,
+        lines: 0,
+        str: ''
+      };
+
+  if (str.charCodeAt(pos) === 0x3C /* < */) {
+    pos++;
+    while (pos < max) {
+      code = str.charCodeAt(pos);
+      if (code === 0x0A /* \n */ || isSpace(code)) { return result; }
+      if (code === 0x3E /* > */) {
+        result.pos = pos + 1;
+        result.str = unescapeAll(str.slice(start + 1, pos));
+        result.ok = true;
+        return result;
+      }
+      if (code === 0x5C /* \ */ && pos + 1 < max) {
+        pos += 2;
+        continue;
+      }
+
+      pos++;
+    }
+
+    // no closing '>'
+    return result;
+  }
+
+  // this should be ... } else { ... branch
+
+  level = 0;
+  while (pos < max) {
+    code = str.charCodeAt(pos);
+
+    if (code === 0x20) { break; }
+
+    // ascii control characters
+    if (code < 0x20 || code === 0x7F) { break; }
+
+    if (code === 0x5C /* \ */ && pos + 1 < max) {
+      pos += 2;
+      continue;
+    }
+
+    if (code === 0x28 /* ( */) {
+      level++;
+      if (level > 1) { break; }
+    }
+
+    if (code === 0x29 /* ) */) {
+      level--;
+      if (level < 0) { break; }
+    }
+
+    pos++;
+  }
+
+  if (start === pos) { return result; }
+
+  result.str = unescapeAll(str.slice(start, pos));
+  result.lines = lines;
+  result.pos = pos;
+  result.ok = true;
+  return result;
+};
+
+
+/***/ }),
+/* 157 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Parse link title
+//
+
+
+
+var unescapeAll = __webpack_require__(8).unescapeAll;
+
+
+module.exports = function parseLinkTitle(str, pos, max) {
+  var code,
+      marker,
+      lines = 0,
+      start = pos,
+      result = {
+        ok: false,
+        pos: 0,
+        lines: 0,
+        str: ''
+      };
+
+  if (pos >= max) { return result; }
+
+  marker = str.charCodeAt(pos);
+
+  if (marker !== 0x22 /* " */ && marker !== 0x27 /* ' */ && marker !== 0x28 /* ( */) { return result; }
+
+  pos++;
+
+  // if opening marker is "(", switch it to closing marker ")"
+  if (marker === 0x28) { marker = 0x29; }
+
+  while (pos < max) {
+    code = str.charCodeAt(pos);
+    if (code === marker) {
+      result.pos = pos + 1;
+      result.lines = lines;
+      result.str = unescapeAll(str.slice(start + 1, pos));
+      result.ok = true;
+      return result;
+    } else if (code === 0x0A) {
+      lines++;
+    } else if (code === 0x5C /* \ */ && pos + 1 < max) {
+      pos++;
+      if (str.charCodeAt(pos) === 0x0A) {
+        lines++;
+      }
+    }
+
+    pos++;
+  }
+
+  return result;
+};
+
+
+/***/ }),
+/* 158 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(159)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 159 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12329,7 +12592,7 @@ module.exports = function parseLinkLabel(state, start, disableNested) {
 
 
 /***/ }),
-/* 172 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12688,7 +12951,7 @@ module.exports = Ruler;
 
 
 /***/ }),
-/* 173 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12892,269 +13155,6 @@ module.exports = Token;
 
 
 /***/ }),
-/* 174 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-var hasDocument = typeof document !== 'undefined'
-
-if (typeof DEBUG !== 'undefined' && DEBUG) {
-  if (!hasDocument) {
-    throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
-    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-  ) }
-}
-
-var listToStyles = __webpack_require__(175)
-
-/*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/}
-
-var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
-var singletonElement = null
-var singletonCounter = 0
-var isProduction = false
-var noop = function () {}
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
-
-module.exports = function (parentId, list, _isProduction) {
-  isProduction = _isProduction
-
-  var styles = listToStyles(parentId, list)
-  addStylesToDom(styles)
-
-  return function update (newList) {
-    var mayRemove = []
-    for (var i = 0; i < styles.length; i++) {
-      var item = styles[i]
-      var domStyle = stylesInDom[item.id]
-      domStyle.refs--
-      mayRemove.push(domStyle)
-    }
-    if (newList) {
-      styles = listToStyles(parentId, newList)
-      addStylesToDom(styles)
-    } else {
-      styles = []
-    }
-    for (var i = 0; i < mayRemove.length; i++) {
-      var domStyle = mayRemove[i]
-      if (domStyle.refs === 0) {
-        for (var j = 0; j < domStyle.parts.length; j++) {
-          domStyle.parts[j]()
-        }
-        delete stylesInDom[domStyle.id]
-      }
-    }
-  }
-}
-
-function addStylesToDom (styles /* Array<StyleObject> */) {
-  for (var i = 0; i < styles.length; i++) {
-    var item = styles[i]
-    var domStyle = stylesInDom[item.id]
-    if (domStyle) {
-      domStyle.refs++
-      for (var j = 0; j < domStyle.parts.length; j++) {
-        domStyle.parts[j](item.parts[j])
-      }
-      for (; j < item.parts.length; j++) {
-        domStyle.parts.push(addStyle(item.parts[j]))
-      }
-      if (domStyle.parts.length > item.parts.length) {
-        domStyle.parts.length = item.parts.length
-      }
-    } else {
-      var parts = []
-      for (var j = 0; j < item.parts.length; j++) {
-        parts.push(addStyle(item.parts[j]))
-      }
-      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
-    }
-  }
-}
-
-function createStyleElement () {
-  var styleElement = document.createElement('style')
-  styleElement.type = 'text/css'
-  head.appendChild(styleElement)
-  return styleElement
-}
-
-function addStyle (obj /* StyleObjectPart */) {
-  var update, remove
-  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
-
-  if (styleElement) {
-    if (isProduction) {
-      // has SSR styles and in production mode.
-      // simply do nothing.
-      return noop
-    } else {
-      // has SSR styles but in dev mode.
-      // for some reason Chrome can't handle source map in server-rendered
-      // style tags - source maps in <style> only works if the style tag is
-      // created and inserted dynamically. So we remove the server rendered
-      // styles and inject new ones.
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  if (isOldIE) {
-    // use singleton mode for IE9.
-    var styleIndex = singletonCounter++
-    styleElement = singletonElement || (singletonElement = createStyleElement())
-    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
-    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-  } else {
-    // use multi-style-tag mode in all other cases
-    styleElement = createStyleElement()
-    update = applyToTag.bind(null, styleElement)
-    remove = function () {
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  update(obj)
-
-  return function updateStyle (newObj /* StyleObjectPart */) {
-    if (newObj) {
-      if (newObj.css === obj.css &&
-          newObj.media === obj.media &&
-          newObj.sourceMap === obj.sourceMap) {
-        return
-      }
-      update(obj = newObj)
-    } else {
-      remove()
-    }
-  }
-}
-
-var replaceText = (function () {
-  var textStore = []
-
-  return function (index, replacement) {
-    textStore[index] = replacement
-    return textStore.filter(Boolean).join('\n')
-  }
-})()
-
-function applyToSingletonTag (styleElement, index, remove, obj) {
-  var css = remove ? '' : obj.css
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = replaceText(index, css)
-  } else {
-    var cssNode = document.createTextNode(css)
-    var childNodes = styleElement.childNodes
-    if (childNodes[index]) styleElement.removeChild(childNodes[index])
-    if (childNodes.length) {
-      styleElement.insertBefore(cssNode, childNodes[index])
-    } else {
-      styleElement.appendChild(cssNode)
-    }
-  }
-}
-
-function applyToTag (styleElement, obj) {
-  var css = obj.css
-  var media = obj.media
-  var sourceMap = obj.sourceMap
-
-  if (media) {
-    styleElement.setAttribute('media', media)
-  }
-
-  if (sourceMap) {
-    // https://developer.chrome.com/devtools/docs/javascript-debugging
-    // this makes source maps inside style tags work properly in Chrome
-    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
-    // http://stackoverflow.com/a/26603875
-    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-  }
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild)
-    }
-    styleElement.appendChild(document.createTextNode(css))
-  }
-}
-
-
-/***/ }),
-/* 175 */
-/***/ (function(module, exports) {
-
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-module.exports = function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
-
-/***/ }),
-/* 176 */,
-/* 177 */,
-/* 178 */,
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */,
-/* 183 */,
-/* 184 */,
 /* 185 */,
 /* 186 */,
 /* 187 */,
@@ -13190,7 +13190,20 @@ module.exports = function listToStyles (parentId, list) {
 /* 217 */,
 /* 218 */,
 /* 219 */,
-/* 220 */
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */
 /***/ (function(module, exports) {
 
 /**
@@ -13224,7 +13237,7 @@ module.exports = Settings;
 
 
 /***/ }),
-/* 221 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -13237,7 +13250,7 @@ module.exports = Settings;
  * Similar functions for working with MathML nodes exist in mathMLTree.js.
  */
 
-var utils = __webpack_require__(46);
+var utils = __webpack_require__(51);
 
 /**
  * Create an HTML className based on a list of classes. In addition to joining
@@ -13499,7 +13512,7 @@ module.exports = {
 
 
 /***/ }),
-/* 222 */
+/* 235 */
 /***/ (function(module, exports) {
 
 /**
@@ -13518,11 +13531,57 @@ module.exports = {
 
 
 /***/ }),
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13531,11 +13590,11 @@ module.exports = {
 
 
 /*eslint quotes:0*/
-module.exports = __webpack_require__(151);
+module.exports = __webpack_require__(135);
 
 
 /***/ }),
-/* 228 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13570,7 +13629,7 @@ module.exports.HTML_OPEN_CLOSE_TAG_RE = HTML_OPEN_CLOSE_TAG_RE;
 
 
 /***/ }),
-/* 229 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13700,7 +13759,7 @@ module.exports.postProcess = function emphasis(state) {
 
 
 /***/ }),
-/* 230 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13824,7 +13883,8 @@ module.exports.postProcess = function strikethrough(state) {
 
 
 /***/ }),
-/* 231 */
+/* 290 */,
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13962,21 +14022,10 @@ module.exports = {
 };
 
 /***/ }),
-/* 232 */,
-/* 233 */,
-/* 234 */,
-/* 235 */,
-/* 236 */,
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint no-console:0 */
@@ -13988,12 +14037,12 @@ module.exports = {
  * errors in the expression, or errors in javascript handling.
  */
 
-var ParseError = __webpack_require__(51);
-var Settings = __webpack_require__(220);
+var ParseError = __webpack_require__(56);
+var Settings = __webpack_require__(233);
 
-var buildTree = __webpack_require__(252);
-var parseTree = __webpack_require__(258);
-var utils = __webpack_require__(46);
+var buildTree = __webpack_require__(301);
+var parseTree = __webpack_require__(307);
+var utils = __webpack_require__(51);
 
 /**
  * Parse and build an expression, and place that expression in the DOM node
@@ -14056,7 +14105,7 @@ module.exports = {
 
 
 /***/ }),
-/* 247 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -14072,9 +14121,9 @@ module.exports = {
  * kinds.
  */
 
-var matchAt = __webpack_require__(312);
+var matchAt = __webpack_require__(313);
 
-var ParseError = __webpack_require__(51);
+var ParseError = __webpack_require__(56);
 
 // The main lexer class
 function Lexer(input) {
@@ -14224,7 +14273,7 @@ module.exports = Lexer;
 
 
 /***/ }),
-/* 248 */
+/* 297 */
 /***/ (function(module, exports) {
 
 /**
@@ -14419,18 +14468,18 @@ module.exports = Options;
 
 
 /***/ }),
-/* 249 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint no-constant-condition:0 */
-var functions = __webpack_require__(256);
-var environments = __webpack_require__(254);
-var Lexer = __webpack_require__(247);
-var symbols = __webpack_require__(117);
-var utils = __webpack_require__(46);
+var functions = __webpack_require__(305);
+var environments = __webpack_require__(303);
+var Lexer = __webpack_require__(296);
+var symbols = __webpack_require__(138);
+var utils = __webpack_require__(51);
 
-var parseData = __webpack_require__(222);
-var ParseError = __webpack_require__(51);
+var parseData = __webpack_require__(235);
+var ParseError = __webpack_require__(56);
 
 /**
  * This file contains the parser used to parse out a TeX expression from the
@@ -15162,7 +15211,7 @@ module.exports = Parser;
 
 
 /***/ }),
-/* 250 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint no-console:0 */
@@ -15173,14 +15222,14 @@ module.exports = Parser;
  * called, to produce a final HTML tree.
  */
 
-var ParseError = __webpack_require__(51);
-var Style = __webpack_require__(115);
+var ParseError = __webpack_require__(56);
+var Style = __webpack_require__(136);
 
-var buildCommon = __webpack_require__(116);
-var delimiter = __webpack_require__(253);
-var domTree = __webpack_require__(221);
-var fontMetrics = __webpack_require__(101);
-var utils = __webpack_require__(46);
+var buildCommon = __webpack_require__(137);
+var delimiter = __webpack_require__(302);
+var domTree = __webpack_require__(234);
+var fontMetrics = __webpack_require__(114);
+var utils = __webpack_require__(51);
 
 var makeSpan = buildCommon.makeSpan;
 
@@ -16570,7 +16619,7 @@ module.exports = buildHTML;
 
 
 /***/ }),
-/* 251 */
+/* 300 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -16579,12 +16628,12 @@ module.exports = buildHTML;
  * parser.
  */
 
-var buildCommon = __webpack_require__(116);
-var fontMetrics = __webpack_require__(101);
-var mathMLTree = __webpack_require__(257);
-var ParseError = __webpack_require__(51);
-var symbols = __webpack_require__(117);
-var utils = __webpack_require__(46);
+var buildCommon = __webpack_require__(137);
+var fontMetrics = __webpack_require__(114);
+var mathMLTree = __webpack_require__(306);
+var ParseError = __webpack_require__(56);
+var symbols = __webpack_require__(138);
+var utils = __webpack_require__(51);
 
 var makeSpan = buildCommon.makeSpan;
 var fontMap = buildCommon.fontMap;
@@ -17109,15 +17158,15 @@ module.exports = buildMathML;
 
 
 /***/ }),
-/* 252 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var buildHTML = __webpack_require__(250);
-var buildMathML = __webpack_require__(251);
-var buildCommon = __webpack_require__(116);
-var Options = __webpack_require__(248);
-var Settings = __webpack_require__(220);
-var Style = __webpack_require__(115);
+var buildHTML = __webpack_require__(299);
+var buildMathML = __webpack_require__(300);
+var buildCommon = __webpack_require__(137);
+var Options = __webpack_require__(297);
+var Settings = __webpack_require__(233);
+var Style = __webpack_require__(136);
 
 var makeSpan = buildCommon.makeSpan;
 
@@ -17155,7 +17204,7 @@ module.exports = buildTree;
 
 
 /***/ }),
-/* 253 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -17180,13 +17229,13 @@ module.exports = buildTree;
  * used in `\left` and `\right`.
  */
 
-var ParseError = __webpack_require__(51);
-var Style = __webpack_require__(115);
+var ParseError = __webpack_require__(56);
+var Style = __webpack_require__(136);
 
-var buildCommon = __webpack_require__(116);
-var fontMetrics = __webpack_require__(101);
-var symbols = __webpack_require__(117);
-var utils = __webpack_require__(46);
+var buildCommon = __webpack_require__(137);
+var fontMetrics = __webpack_require__(114);
+var symbols = __webpack_require__(138);
+var utils = __webpack_require__(51);
 
 var makeSpan = buildCommon.makeSpan;
 
@@ -17703,13 +17752,13 @@ module.exports = {
 
 
 /***/ }),
-/* 254 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* eslint no-constant-condition:0 */
-var fontMetrics = __webpack_require__(101);
-var parseData = __webpack_require__(222);
-var ParseError = __webpack_require__(51);
+var fontMetrics = __webpack_require__(114);
+var parseData = __webpack_require__(235);
+var ParseError = __webpack_require__(56);
 
 var ParseNode = parseData.ParseNode;
 
@@ -17930,7 +17979,7 @@ defineEnvironment("aligned", {
 
 
 /***/ }),
-/* 255 */
+/* 304 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -19688,11 +19737,11 @@ module.exports = {
 
 
 /***/ }),
-/* 256 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var utils = __webpack_require__(46);
-var ParseError = __webpack_require__(51);
+var utils = __webpack_require__(51);
+var ParseError = __webpack_require__(56);
 
 /* This file contains a list of functions that we parse, identified by
  * the calls to defineFunction.
@@ -20274,7 +20323,7 @@ defineFunction(["\\begin", "\\end"], {
 
 
 /***/ }),
-/* 257 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -20287,7 +20336,7 @@ defineFunction(["\\begin", "\\end"], {
  * domTree.js, creating namespaced DOM nodes and HTML text markup respectively.
  */
 
-var utils = __webpack_require__(46);
+var utils = __webpack_require__(51);
 
 /**
  * This node represents a general purpose MathML node of any type. The
@@ -20382,7 +20431,7 @@ module.exports = {
 
 
 /***/ }),
-/* 258 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -20390,7 +20439,7 @@ module.exports = {
  * TODO(emily): Remove this
  */
 
-var Parser = __webpack_require__(249);
+var Parser = __webpack_require__(298);
 
 /**
  * Parses an expression using a Parser, then returns the parsed result.
@@ -20405,9 +20454,7 @@ module.exports = parseTree;
 
 
 /***/ }),
-/* 259 */,
-/* 260 */,
-/* 261 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20562,8 +20609,7 @@ module.exports = function sub_plugin(md) {
 
 
 /***/ }),
-/* 262 */,
-/* 263 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20690,7 +20736,7 @@ module.exports = function ins_plugin(md) {
 
 
 /***/ }),
-/* 264 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20706,7 +20752,7 @@ for rendering output.
 /*jslint node: true */
 
 
-var katex = __webpack_require__(246);
+var katex = __webpack_require__(295);
 
 // Test if potential opening or closing delimieter
 // Assumes that there is a "$" at state.src[pos]
@@ -20894,7 +20940,7 @@ module.exports = function math_plugin(md, options) {
 
 
 /***/ }),
-/* 265 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21090,11 +21136,11 @@ exports.default = function (md, options) {
   }
 };
 
-var _clone = __webpack_require__(266);
+var _clone = __webpack_require__(312);
 
 var _clone2 = _interopRequireDefault(_clone);
 
-var _uslug = __webpack_require__(314);
+var _uslug = __webpack_require__(315);
 
 var _uslug2 = _interopRequireDefault(_uslug);
 
@@ -21208,7 +21254,7 @@ var generateTocMarkdownFromArray = function generateTocMarkdownFromArray(heading
 };
 
 /***/ }),
-/* 266 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {var clone = (function() {
@@ -21463,55 +21509,10 @@ if (typeof module === 'object' && module.exports) {
   module.exports = clone;
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(108).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(100).Buffer))
 
 /***/ }),
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */,
-/* 281 */,
-/* 282 */,
-/* 283 */,
-/* 284 */,
-/* 285 */,
-/* 286 */,
-/* 287 */,
-/* 288 */,
-/* 289 */,
-/* 290 */,
-/* 291 */,
-/* 292 */,
-/* 293 */,
-/* 294 */,
-/* 295 */,
-/* 296 */,
-/* 297 */,
-/* 298 */,
-/* 299 */,
-/* 300 */,
-/* 301 */,
-/* 302 */,
-/* 303 */,
-/* 304 */,
-/* 305 */,
-/* 306 */,
-/* 307 */,
-/* 308 */,
-/* 309 */,
-/* 310 */,
-/* 311 */,
-/* 312 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21559,7 +21560,7 @@ function matchAt(re, str, pos) {
 module.exports = matchAt;
 
 /***/ }),
-/* 313 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (root) {
@@ -22007,13 +22008,13 @@ UChar.udata={
 
 
 /***/ }),
-/* 314 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(319);
+module.exports = __webpack_require__(320);
 
 /***/ }),
-/* 315 */
+/* 316 */
 /***/ (function(module, exports) {
 
 /* 
@@ -22034,7 +22035,7 @@ exports.L = [65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81,
 
 
 /***/ }),
-/* 316 */
+/* 317 */
 /***/ (function(module, exports) {
 
 /*
@@ -22053,7 +22054,7 @@ exports.M = [768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780, 78
 
 
 /***/ }),
-/* 317 */
+/* 318 */
 /***/ (function(module, exports) {
 
 /*
@@ -22072,7 +22073,7 @@ exports.N = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 178, 179, 185, 188, 189, 19
 
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports) {
 
 /*
@@ -22091,15 +22092,15 @@ exports.Z = [32, 160, 5760, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200
 
 
 /***/ }),
-/* 319 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function() {
-  var L = __webpack_require__(315).L,
-      N = __webpack_require__(317).N,
-      Z = __webpack_require__(318).Z,
-      M = __webpack_require__(316).M,
-      unorm = __webpack_require__(313);
+  var L = __webpack_require__(316).L,
+      N = __webpack_require__(318).N,
+      Z = __webpack_require__(319).Z,
+      M = __webpack_require__(317).M,
+      unorm = __webpack_require__(314);
 
   var _unicodeCategory = function(code) {
     if (~L.indexOf(code)) return 'L';
@@ -22154,11 +22155,9 @@ exports.Z = [32, 160, 5760, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200
 }());
 
 /***/ }),
-/* 320 */,
 /* 321 */,
 /* 322 */,
-/* 323 */,
-/* 324 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -22169,7 +22168,7 @@ exports.Z = [32, 160, 5760, 8192, 8193, 8194, 8195, 8196, 8197, 8198, 8199, 8200
 
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
-		module.exports = factory(__webpack_require__(106), __webpack_require__(328), __webpack_require__(153), __webpack_require__(160), __webpack_require__(161), __webpack_require__(327), __webpack_require__(152), __webpack_require__(261), __webpack_require__(263), __webpack_require__(159), __webpack_require__(265), __webpack_require__(264));
+		module.exports = factory(__webpack_require__(97), __webpack_require__(327), __webpack_require__(140), __webpack_require__(147), __webpack_require__(148), __webpack_require__(326), __webpack_require__(139), __webpack_require__(308), __webpack_require__(309), __webpack_require__(146), __webpack_require__(311), __webpack_require__(310));
 	else if(typeof define === 'function' && define.amd)
 		define(["babel-runtime/core-js/get-iterator", "markdown-it", "markdown-it-emoji", "markdown-it-sub", "markdown-it-sup", "markdown-it-footnote", "markdown-it-deflist", "markdown-it-abbr", "markdown-it-ins", "markdown-it-mark", "markdown-it-toc-and-anchor", "markdown-it-katex"], factory);
 	else if(typeof exports === 'object')
@@ -22562,7 +22561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 ;
 
 /***/ }),
-/* 325 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22718,7 +22717,7 @@ function createNormalizer() {
 function compile(self) {
 
   // Load & clone RE patterns.
-  var re = self.re = assign({}, __webpack_require__(326));
+  var re = self.re = assign({}, __webpack_require__(325));
 
   // Define dynamic patterns
   var tlds = self.__tlds__.slice();
@@ -23195,17 +23194,17 @@ module.exports = LinkifyIt;
 
 
 /***/ }),
-/* 326 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 // Use direct extract instead of `regenerate` to reduse browserified size
-var src_Any = exports.src_Any = __webpack_require__(105).source;
-var src_Cc  = exports.src_Cc = __webpack_require__(103).source;
-var src_Z   = exports.src_Z  = __webpack_require__(104).source;
-var src_P   = exports.src_P  = __webpack_require__(79).source;
+var src_Any = exports.src_Any = __webpack_require__(96).source;
+var src_Cc  = exports.src_Cc = __webpack_require__(94).source;
+var src_Z   = exports.src_Z  = __webpack_require__(95).source;
+var src_P   = exports.src_P  = __webpack_require__(52).source;
 
 // \p{\Z\P\Cc\CF} (white spaces + control + format + punctuation)
 var src_ZPCc = exports.src_ZPCc = [ src_Z, src_P, src_Cc ].join('|');
@@ -23364,7 +23363,7 @@ exports.tpl_link_no_ip_fuzzy =
 
 
 /***/ }),
-/* 327 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23697,18 +23696,18 @@ module.exports = function sub_plugin(md) {
 
 
 /***/ }),
-/* 328 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 
-module.exports = __webpack_require__(331);
+module.exports = __webpack_require__(330);
 
 
 /***/ }),
-/* 329 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23783,7 +23782,7 @@ module.exports = [
 
 
 /***/ }),
-/* 330 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23791,13 +23790,13 @@ module.exports = [
 
 
 
-exports.parseLinkLabel       = __webpack_require__(171);
-exports.parseLinkDestination = __webpack_require__(118);
-exports.parseLinkTitle       = __webpack_require__(119);
+exports.parseLinkLabel       = __webpack_require__(182);
+exports.parseLinkDestination = __webpack_require__(156);
+exports.parseLinkTitle       = __webpack_require__(157);
 
 
 /***/ }),
-/* 331 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23806,21 +23805,21 @@ exports.parseLinkTitle       = __webpack_require__(119);
 
 
 
-var utils        = __webpack_require__(4);
-var helpers      = __webpack_require__(330);
-var Renderer     = __webpack_require__(338);
-var ParserCore   = __webpack_require__(333);
-var ParserBlock  = __webpack_require__(332);
-var ParserInline = __webpack_require__(334);
-var LinkifyIt    = __webpack_require__(325);
-var mdurl        = __webpack_require__(102);
-var punycode     = __webpack_require__(168);
+var utils        = __webpack_require__(8);
+var helpers      = __webpack_require__(329);
+var Renderer     = __webpack_require__(337);
+var ParserCore   = __webpack_require__(332);
+var ParserBlock  = __webpack_require__(331);
+var ParserInline = __webpack_require__(333);
+var LinkifyIt    = __webpack_require__(324);
+var mdurl        = __webpack_require__(93);
+var punycode     = __webpack_require__(153);
 
 
 var config = {
-  'default': __webpack_require__(336),
-  zero: __webpack_require__(337),
-  commonmark: __webpack_require__(335)
+  'default': __webpack_require__(335),
+  zero: __webpack_require__(336),
+  commonmark: __webpack_require__(334)
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -24381,7 +24380,7 @@ module.exports = MarkdownIt;
 
 
 /***/ }),
-/* 332 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24393,23 +24392,23 @@ module.exports = MarkdownIt;
 
 
 
-var Ruler           = __webpack_require__(172);
+var Ruler           = __webpack_require__(183);
 
 
 var _rules = [
   // First 2 params - rule name & source. Secondary array - list of rules,
   // which can be terminated by this one.
-  [ 'table',      __webpack_require__(350),      [ 'paragraph', 'reference' ] ],
-  [ 'code',       __webpack_require__(340) ],
-  [ 'fence',      __webpack_require__(341),      [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
-  [ 'blockquote', __webpack_require__(339), [ 'paragraph', 'reference', 'list' ] ],
-  [ 'hr',         __webpack_require__(343),         [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
-  [ 'list',       __webpack_require__(346),       [ 'paragraph', 'reference', 'blockquote' ] ],
-  [ 'reference',  __webpack_require__(348) ],
-  [ 'heading',    __webpack_require__(342),    [ 'paragraph', 'reference', 'blockquote' ] ],
-  [ 'lheading',   __webpack_require__(345) ],
-  [ 'html_block', __webpack_require__(344), [ 'paragraph', 'reference', 'blockquote' ] ],
-  [ 'paragraph',  __webpack_require__(347) ]
+  [ 'table',      __webpack_require__(349),      [ 'paragraph', 'reference' ] ],
+  [ 'code',       __webpack_require__(339) ],
+  [ 'fence',      __webpack_require__(340),      [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
+  [ 'blockquote', __webpack_require__(338), [ 'paragraph', 'reference', 'list' ] ],
+  [ 'hr',         __webpack_require__(342),         [ 'paragraph', 'reference', 'blockquote', 'list' ] ],
+  [ 'list',       __webpack_require__(345),       [ 'paragraph', 'reference', 'blockquote' ] ],
+  [ 'reference',  __webpack_require__(347) ],
+  [ 'heading',    __webpack_require__(341),    [ 'paragraph', 'reference', 'blockquote' ] ],
+  [ 'lheading',   __webpack_require__(344) ],
+  [ 'html_block', __webpack_require__(343), [ 'paragraph', 'reference', 'blockquote' ] ],
+  [ 'paragraph',  __webpack_require__(346) ]
 ];
 
 
@@ -24506,14 +24505,14 @@ ParserBlock.prototype.parse = function (src, md, env, outTokens) {
 };
 
 
-ParserBlock.prototype.State = __webpack_require__(349);
+ParserBlock.prototype.State = __webpack_require__(348);
 
 
 module.exports = ParserBlock;
 
 
 /***/ }),
-/* 333 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24526,16 +24525,16 @@ module.exports = ParserBlock;
 
 
 
-var Ruler  = __webpack_require__(172);
+var Ruler  = __webpack_require__(183);
 
 
 var _rules = [
-  [ 'normalize',      __webpack_require__(354)      ],
-  [ 'block',          __webpack_require__(351)          ],
-  [ 'inline',         __webpack_require__(352)         ],
-  [ 'linkify',        __webpack_require__(353)        ],
-  [ 'replacements',   __webpack_require__(355)   ],
-  [ 'smartquotes',    __webpack_require__(356)    ]
+  [ 'normalize',      __webpack_require__(353)      ],
+  [ 'block',          __webpack_require__(350)          ],
+  [ 'inline',         __webpack_require__(351)         ],
+  [ 'linkify',        __webpack_require__(352)        ],
+  [ 'replacements',   __webpack_require__(354)   ],
+  [ 'smartquotes',    __webpack_require__(355)    ]
 ];
 
 
@@ -24571,14 +24570,14 @@ Core.prototype.process = function (state) {
   }
 };
 
-Core.prototype.State = __webpack_require__(357);
+Core.prototype.State = __webpack_require__(356);
 
 
 module.exports = Core;
 
 
 /***/ }),
-/* 334 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24590,31 +24589,31 @@ module.exports = Core;
 
 
 
-var Ruler           = __webpack_require__(172);
+var Ruler           = __webpack_require__(183);
 
 
 ////////////////////////////////////////////////////////////////////////////////
 // Parser rules
 
 var _rules = [
-  [ 'text',            __webpack_require__(368) ],
-  [ 'newline',         __webpack_require__(366) ],
-  [ 'escape',          __webpack_require__(362) ],
-  [ 'backticks',       __webpack_require__(359) ],
-  [ 'strikethrough',   __webpack_require__(230).tokenize ],
-  [ 'emphasis',        __webpack_require__(229).tokenize ],
-  [ 'link',            __webpack_require__(365) ],
-  [ 'image',           __webpack_require__(364) ],
-  [ 'autolink',        __webpack_require__(358) ],
-  [ 'html_inline',     __webpack_require__(363) ],
-  [ 'entity',          __webpack_require__(361) ]
+  [ 'text',            __webpack_require__(367) ],
+  [ 'newline',         __webpack_require__(365) ],
+  [ 'escape',          __webpack_require__(361) ],
+  [ 'backticks',       __webpack_require__(358) ],
+  [ 'strikethrough',   __webpack_require__(289).tokenize ],
+  [ 'emphasis',        __webpack_require__(288).tokenize ],
+  [ 'link',            __webpack_require__(364) ],
+  [ 'image',           __webpack_require__(363) ],
+  [ 'autolink',        __webpack_require__(357) ],
+  [ 'html_inline',     __webpack_require__(362) ],
+  [ 'entity',          __webpack_require__(360) ]
 ];
 
 var _rules2 = [
-  [ 'balance_pairs',   __webpack_require__(360) ],
-  [ 'strikethrough',   __webpack_require__(230).postProcess ],
-  [ 'emphasis',        __webpack_require__(229).postProcess ],
-  [ 'text_collapse',   __webpack_require__(369) ]
+  [ 'balance_pairs',   __webpack_require__(359) ],
+  [ 'strikethrough',   __webpack_require__(289).postProcess ],
+  [ 'emphasis',        __webpack_require__(288).postProcess ],
+  [ 'text_collapse',   __webpack_require__(368) ]
 ];
 
 
@@ -24755,14 +24754,14 @@ ParserInline.prototype.parse = function (str, md, env, outTokens) {
 };
 
 
-ParserInline.prototype.State = __webpack_require__(367);
+ParserInline.prototype.State = __webpack_require__(366);
 
 
 module.exports = ParserInline;
 
 
 /***/ }),
-/* 335 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24849,7 +24848,7 @@ module.exports = {
 
 
 /***/ }),
-/* 336 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24897,7 +24896,7 @@ module.exports = {
 
 
 /***/ }),
-/* 337 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24966,7 +24965,7 @@ module.exports = {
 
 
 /***/ }),
-/* 338 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24980,9 +24979,9 @@ module.exports = {
 
 
 
-var assign          = __webpack_require__(4).assign;
-var unescapeAll     = __webpack_require__(4).unescapeAll;
-var escapeHtml      = __webpack_require__(4).escapeHtml;
+var assign          = __webpack_require__(8).assign;
+var unescapeAll     = __webpack_require__(8).unescapeAll;
+var escapeHtml      = __webpack_require__(8).escapeHtml;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -25310,7 +25309,7 @@ module.exports = Renderer;
 
 
 /***/ }),
-/* 339 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25318,7 +25317,7 @@ module.exports = Renderer;
 
 
 
-var isSpace = __webpack_require__(4).isSpace;
+var isSpace = __webpack_require__(8).isSpace;
 
 
 module.exports = function blockquote(state, startLine, endLine, silent) {
@@ -25491,7 +25490,7 @@ module.exports = function blockquote(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 340 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25542,7 +25541,7 @@ module.exports = function code(state, startLine, endLine/*, silent*/) {
 
 
 /***/ }),
-/* 341 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25640,7 +25639,7 @@ module.exports = function fence(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 342 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25648,7 +25647,7 @@ module.exports = function fence(state, startLine, endLine, silent) {
 
 
 
-var isSpace = __webpack_require__(4).isSpace;
+var isSpace = __webpack_require__(8).isSpace;
 
 
 module.exports = function heading(state, startLine, endLine, silent) {
@@ -25699,7 +25698,7 @@ module.exports = function heading(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 343 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25707,7 +25706,7 @@ module.exports = function heading(state, startLine, endLine, silent) {
 
 
 
-var isSpace = __webpack_require__(4).isSpace;
+var isSpace = __webpack_require__(8).isSpace;
 
 
 module.exports = function hr(state, startLine, endLine, silent) {
@@ -25748,7 +25747,7 @@ module.exports = function hr(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 344 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25757,8 +25756,8 @@ module.exports = function hr(state, startLine, endLine, silent) {
 
 
 
-var block_names = __webpack_require__(329);
-var HTML_OPEN_CLOSE_TAG_RE = __webpack_require__(228).HTML_OPEN_CLOSE_TAG_RE;
+var block_names = __webpack_require__(328);
+var HTML_OPEN_CLOSE_TAG_RE = __webpack_require__(287).HTML_OPEN_CLOSE_TAG_RE;
 
 // An array of opening and corresponding closing sequences for html tags,
 // last argument defines whether it can terminate a paragraph or not
@@ -25826,7 +25825,7 @@ module.exports = function html_block(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 345 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25908,7 +25907,7 @@ module.exports = function lheading(state, startLine, endLine/*, silent*/) {
 
 
 /***/ }),
-/* 346 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25916,7 +25915,7 @@ module.exports = function lheading(state, startLine, endLine/*, silent*/) {
 
 
 
-var isSpace = __webpack_require__(4).isSpace;
+var isSpace = __webpack_require__(8).isSpace;
 
 
 // Search `[-+*][\n ]`, returns next pos arter marker on success
@@ -26225,7 +26224,7 @@ module.exports = function list(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 347 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26279,17 +26278,17 @@ module.exports = function paragraph(state, startLine/*, endLine*/) {
 
 
 /***/ }),
-/* 348 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 
-var parseLinkDestination = __webpack_require__(118);
-var parseLinkTitle       = __webpack_require__(119);
-var normalizeReference   = __webpack_require__(4).normalizeReference;
-var isSpace              = __webpack_require__(4).isSpace;
+var parseLinkDestination = __webpack_require__(156);
+var parseLinkTitle       = __webpack_require__(157);
+var normalizeReference   = __webpack_require__(8).normalizeReference;
+var isSpace              = __webpack_require__(8).isSpace;
 
 
 module.exports = function reference(state, startLine, _endLine, silent) {
@@ -26477,7 +26476,7 @@ module.exports = function reference(state, startLine, _endLine, silent) {
 
 
 /***/ }),
-/* 349 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26485,8 +26484,8 @@ module.exports = function reference(state, startLine, _endLine, silent) {
 
 
 
-var Token = __webpack_require__(173);
-var isSpace = __webpack_require__(4).isSpace;
+var Token = __webpack_require__(184);
+var isSpace = __webpack_require__(8).isSpace;
 
 
 function StateBlock(src, md, env, tokens) {
@@ -26691,7 +26690,7 @@ module.exports = StateBlock;
 
 
 /***/ }),
-/* 350 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26872,7 +26871,7 @@ module.exports = function table(state, startLine, endLine, silent) {
 
 
 /***/ }),
-/* 351 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26895,7 +26894,7 @@ module.exports = function block(state) {
 
 
 /***/ }),
-/* 352 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26915,7 +26914,7 @@ module.exports = function inline(state) {
 
 
 /***/ }),
-/* 353 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26926,7 +26925,7 @@ module.exports = function inline(state) {
 
 
 
-var arrayReplaceAt = __webpack_require__(4).arrayReplaceAt;
+var arrayReplaceAt = __webpack_require__(8).arrayReplaceAt;
 
 
 function isLinkOpen(str) {
@@ -27055,7 +27054,7 @@ module.exports = function linkify(state) {
 
 
 /***/ }),
-/* 354 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27082,7 +27081,7 @@ module.exports = function inline(state) {
 
 
 /***/ }),
-/* 355 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27178,7 +27177,7 @@ module.exports = function replace(state) {
 
 
 /***/ }),
-/* 356 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27187,9 +27186,9 @@ module.exports = function replace(state) {
 
 
 
-var isWhiteSpace   = __webpack_require__(4).isWhiteSpace;
-var isPunctChar    = __webpack_require__(4).isPunctChar;
-var isMdAsciiPunct = __webpack_require__(4).isMdAsciiPunct;
+var isWhiteSpace   = __webpack_require__(8).isWhiteSpace;
+var isPunctChar    = __webpack_require__(8).isPunctChar;
+var isMdAsciiPunct = __webpack_require__(8).isMdAsciiPunct;
 
 var QUOTE_TEST_RE = /['"]/;
 var QUOTE_RE = /['"]/g;
@@ -27378,7 +27377,7 @@ module.exports = function smartquotes(state) {
 
 
 /***/ }),
-/* 357 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27386,7 +27385,7 @@ module.exports = function smartquotes(state) {
 //
 
 
-var Token = __webpack_require__(173);
+var Token = __webpack_require__(184);
 
 
 function StateCore(src, md, env) {
@@ -27405,7 +27404,7 @@ module.exports = StateCore;
 
 
 /***/ }),
-/* 358 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27484,7 +27483,7 @@ module.exports = function autolink(state, silent) {
 
 
 /***/ }),
-/* 359 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27534,7 +27533,7 @@ module.exports = function backtick(state, silent) {
 
 
 /***/ }),
-/* 360 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27577,7 +27576,7 @@ module.exports = function link_pairs(state) {
 
 
 /***/ }),
-/* 361 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27585,10 +27584,10 @@ module.exports = function link_pairs(state) {
 
 
 
-var entities          = __webpack_require__(227);
-var has               = __webpack_require__(4).has;
-var isValidEntityCode = __webpack_require__(4).isValidEntityCode;
-var fromCodePoint     = __webpack_require__(4).fromCodePoint;
+var entities          = __webpack_require__(286);
+var has               = __webpack_require__(8).has;
+var isValidEntityCode = __webpack_require__(8).isValidEntityCode;
+var fromCodePoint     = __webpack_require__(8).fromCodePoint;
 
 
 var DIGITAL_RE = /^&#((?:x[a-f0-9]{1,8}|[0-9]{1,8}));/i;
@@ -27632,7 +27631,7 @@ module.exports = function entity(state, silent) {
 
 
 /***/ }),
-/* 362 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27640,7 +27639,7 @@ module.exports = function entity(state, silent) {
 
 
 
-var isSpace = __webpack_require__(4).isSpace;
+var isSpace = __webpack_require__(8).isSpace;
 
 var ESCAPED = [];
 
@@ -27691,7 +27690,7 @@ module.exports = function escape(state, silent) {
 
 
 /***/ }),
-/* 363 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27700,7 +27699,7 @@ module.exports = function escape(state, silent) {
 
 
 
-var HTML_TAG_RE = __webpack_require__(228).HTML_TAG_RE;
+var HTML_TAG_RE = __webpack_require__(287).HTML_TAG_RE;
 
 
 function isLetter(ch) {
@@ -27745,7 +27744,7 @@ module.exports = function html_inline(state, silent) {
 
 
 /***/ }),
-/* 364 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27753,11 +27752,11 @@ module.exports = function html_inline(state, silent) {
 
 
 
-var parseLinkLabel       = __webpack_require__(171);
-var parseLinkDestination = __webpack_require__(118);
-var parseLinkTitle       = __webpack_require__(119);
-var normalizeReference   = __webpack_require__(4).normalizeReference;
-var isSpace              = __webpack_require__(4).isSpace;
+var parseLinkLabel       = __webpack_require__(182);
+var parseLinkDestination = __webpack_require__(156);
+var parseLinkTitle       = __webpack_require__(157);
+var normalizeReference   = __webpack_require__(8).normalizeReference;
+var isSpace              = __webpack_require__(8).isSpace;
 
 
 module.exports = function image(state, silent) {
@@ -27907,7 +27906,7 @@ module.exports = function image(state, silent) {
 
 
 /***/ }),
-/* 365 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27915,11 +27914,11 @@ module.exports = function image(state, silent) {
 
 
 
-var parseLinkLabel       = __webpack_require__(171);
-var parseLinkDestination = __webpack_require__(118);
-var parseLinkTitle       = __webpack_require__(119);
-var normalizeReference   = __webpack_require__(4).normalizeReference;
-var isSpace              = __webpack_require__(4).isSpace;
+var parseLinkLabel       = __webpack_require__(182);
+var parseLinkDestination = __webpack_require__(156);
+var parseLinkTitle       = __webpack_require__(157);
+var normalizeReference   = __webpack_require__(8).normalizeReference;
+var isSpace              = __webpack_require__(8).isSpace;
 
 
 module.exports = function link(state, silent) {
@@ -28061,7 +28060,7 @@ module.exports = function link(state, silent) {
 
 
 /***/ }),
-/* 366 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28107,7 +28106,7 @@ module.exports = function newline(state, silent) {
 
 
 /***/ }),
-/* 367 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28116,10 +28115,10 @@ module.exports = function newline(state, silent) {
 
 
 
-var Token          = __webpack_require__(173);
-var isWhiteSpace   = __webpack_require__(4).isWhiteSpace;
-var isPunctChar    = __webpack_require__(4).isPunctChar;
-var isMdAsciiPunct = __webpack_require__(4).isMdAsciiPunct;
+var Token          = __webpack_require__(184);
+var isWhiteSpace   = __webpack_require__(8).isWhiteSpace;
+var isPunctChar    = __webpack_require__(8).isPunctChar;
+var isMdAsciiPunct = __webpack_require__(8).isMdAsciiPunct;
 
 
 function StateInline(src, md, env, outTokens) {
@@ -28244,7 +28243,7 @@ module.exports = StateInline;
 
 
 /***/ }),
-/* 368 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28340,7 +28339,7 @@ module.exports = function text(state, silent) {
 
 
 /***/ }),
-/* 369 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28380,6 +28379,7 @@ module.exports = function text_collapse(state) {
 
 
 /***/ }),
+/* 369 */,
 /* 370 */,
 /* 371 */,
 /* 372 */,
@@ -28388,27 +28388,25 @@ module.exports = function text_collapse(state) {
 /* 375 */,
 /* 376 */,
 /* 377 */,
-/* 378 */,
-/* 379 */,
-/* 380 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _getIterator2 = __webpack_require__(106);
+var _getIterator2 = __webpack_require__(97);
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
-var _axios = __webpack_require__(53);
+var _axios = __webpack_require__(61);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _editable = __webpack_require__(458);
+var _editable = __webpack_require__(448);
 
 var _editable2 = _interopRequireDefault(_editable);
 
-var _editor = __webpack_require__(439);
+var _editor = __webpack_require__(429);
 
 var _editor2 = _interopRequireDefault(_editor);
 
@@ -28667,6 +28665,8 @@ new Vue({
 });
 
 /***/ }),
+/* 379 */,
+/* 380 */,
 /* 381 */,
 /* 382 */,
 /* 383 */,
@@ -28676,8 +28676,7 @@ new Vue({
 /* 387 */,
 /* 388 */,
 /* 389 */,
-/* 390 */,
-/* 391 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28997,11 +28996,11 @@ var _methods; //
 //
 //
 
-var _vueMarkdown = __webpack_require__(324);
+var _vueMarkdown = __webpack_require__(323);
 
 var _vueMarkdown2 = _interopRequireDefault(_vueMarkdown);
 
-var _rangeFn = __webpack_require__(231);
+var _rangeFn = __webpack_require__(291);
 
 var _rangeFn2 = _interopRequireDefault(_rangeFn);
 
@@ -29194,6 +29193,7 @@ exports.default = {
 };
 
 /***/ }),
+/* 391 */,
 /* 392 */,
 /* 393 */,
 /* 394 */,
@@ -29211,8 +29211,7 @@ exports.default = {
 /* 406 */,
 /* 407 */,
 /* 408 */,
-/* 409 */,
-/* 410 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29240,6 +29239,7 @@ exports.default = {
 };
 
 /***/ }),
+/* 410 */,
 /* 411 */,
 /* 412 */,
 /* 413 */,
@@ -29248,15 +29248,10 @@ exports.default = {
 /* 416 */,
 /* 417 */,
 /* 418 */,
-/* 419 */,
-/* 420 */,
-/* 421 */,
-/* 422 */,
-/* 423 */,
-/* 424 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(150)(undefined);
+exports = module.exports = __webpack_require__(134)(undefined);
 // imports
 
 
@@ -29267,32 +29262,27 @@ exports.push([module.i, "\n.note-editor .note-codable {\n    display: none;\n   
 
 
 /***/ }),
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */,
+/* 424 */,
 /* 425 */,
 /* 426 */,
 /* 427 */,
 /* 428 */,
-/* 429 */,
-/* 430 */,
-/* 431 */,
-/* 432 */,
-/* 433 */,
-/* 434 */,
-/* 435 */,
-/* 436 */,
-/* 437 */,
-/* 438 */,
-/* 439 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(487)
+__webpack_require__(476)
 
-var Component = __webpack_require__(17)(
+var Component = __webpack_require__(18)(
   /* script */
-  __webpack_require__(391),
+  __webpack_require__(390),
   /* template */
-  __webpack_require__(479),
+  __webpack_require__(468),
   /* scopeId */
   null,
   /* cssModules */
@@ -29319,6 +29309,16 @@ module.exports = Component.exports
 
 
 /***/ }),
+/* 430 */,
+/* 431 */,
+/* 432 */,
+/* 433 */,
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */,
+/* 439 */,
 /* 440 */,
 /* 441 */,
 /* 442 */,
@@ -29327,24 +29327,14 @@ module.exports = Component.exports
 /* 445 */,
 /* 446 */,
 /* 447 */,
-/* 448 */,
-/* 449 */,
-/* 450 */,
-/* 451 */,
-/* 452 */,
-/* 453 */,
-/* 454 */,
-/* 455 */,
-/* 456 */,
-/* 457 */,
-/* 458 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(17)(
+var Component = __webpack_require__(18)(
   /* script */
-  __webpack_require__(410),
+  __webpack_require__(409),
   /* template */
-  __webpack_require__(462),
+  __webpack_require__(451),
   /* scopeId */
   null,
   /* cssModules */
@@ -29371,10 +29361,9 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 459 */,
-/* 460 */,
-/* 461 */,
-/* 462 */
+/* 449 */,
+/* 450 */,
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -29399,23 +29388,23 @@ if (false) {
 }
 
 /***/ }),
+/* 452 */,
+/* 453 */,
+/* 454 */,
+/* 455 */,
+/* 456 */,
+/* 457 */,
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
 /* 463 */,
 /* 464 */,
 /* 465 */,
 /* 466 */,
 /* 467 */,
-/* 468 */,
-/* 469 */,
-/* 470 */,
-/* 471 */,
-/* 472 */,
-/* 473 */,
-/* 474 */,
-/* 475 */,
-/* 476 */,
-/* 477 */,
-/* 478 */,
-/* 479 */
+/* 468 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -30243,24 +30232,24 @@ if (false) {
 }
 
 /***/ }),
-/* 480 */,
-/* 481 */,
-/* 482 */,
-/* 483 */,
-/* 484 */,
-/* 485 */,
-/* 486 */,
-/* 487 */
+/* 469 */,
+/* 470 */,
+/* 471 */,
+/* 472 */,
+/* 473 */,
+/* 474 */,
+/* 475 */,
+/* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(424);
+var content = __webpack_require__(419);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(174)("73d1bcb6", content, false);
+var update = __webpack_require__(158)("73d1bcb6", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -30276,27 +30265,26 @@ if(false) {
 }
 
 /***/ }),
+/* 477 */,
+/* 478 */,
+/* 479 */,
+/* 480 */,
+/* 481 */,
+/* 482 */,
+/* 483 */,
+/* 484 */,
+/* 485 */,
+/* 486 */,
+/* 487 */,
 /* 488 */,
 /* 489 */,
 /* 490 */,
 /* 491 */,
 /* 492 */,
-/* 493 */,
-/* 494 */,
-/* 495 */,
-/* 496 */,
-/* 497 */,
-/* 498 */,
-/* 499 */,
-/* 500 */,
-/* 501 */,
-/* 502 */,
-/* 503 */,
-/* 504 */,
-/* 505 */
+/* 493 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(380);
+module.exports = __webpack_require__(378);
 
 
 /***/ })
