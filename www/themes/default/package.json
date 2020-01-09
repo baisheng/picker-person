@@ -30,7 +30,7 @@
     "webpack": "^2.3.3"
   },
   "dependencies": {
-    "axios": "^0.16.1",
+    "axios": "^0.19.1",
     "embed-js": "^4.2.2",
     "gulp-clean-css": "^3.0.3",
     "marked": "^0.3.6",
