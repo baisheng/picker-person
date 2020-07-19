@@ -18,7 +18,7 @@
     "html-metadata": "git://github.com/wikimedia/html-metadata.git",
     "jimp": "^0.2.27",
     "jsonwebtoken": "^7.3.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.19",
     "markdown-it-deflist": "^2.0.1",
     "markdown-toc": "^1.1.0",
     "marked": "^0.3.6",
