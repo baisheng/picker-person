@@ -10,7 +10,7 @@
     "buildPro": "export NODE_ENV=production && gulp proUpload"
   },
   "dependencies": {
-    "axios": "^0.15.3",
+    "axios": "^0.21.1",
     "babel-runtime": "6.x.x",
     "cheerio": "^0.22.0",
     "css-loader": "^0.27.3",
