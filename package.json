@@ -30,7 +30,7 @@
     "markdown-toc": "^1.1.0",
     "marked": "^0.3.6",
     "moment": "^2.17.1",
-    "nodemailer": "^3.0.2",
+    "nodemailer": "^6.4.16",
     "nunjucks": "^3.0.0",
     "nunjucks-markdown": "^2.0.1",
     "phpass": "^0.1.1",
